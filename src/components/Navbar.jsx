@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-
+import { Link } from "react-router-dom";
 export default function Navbar() {
   const shouldReduceMotion = useReducedMotion();
 
@@ -59,12 +59,12 @@ export default function Navbar() {
       <nav aria-label="Main Navigation">
         <ul className="flex items-center gap-7 sm:gap-10 text-[11px] sm:text-xs uppercase tracking-[0.22em] font-medium text-[#A3A3A3]">
           <li>
-            <a
-              href="#Homek"
-              className="nav-link text-[#A3A3A3] hover:text-[#EDEDED] transition-colors duration-300 py-1"
-            >
-              Home
-            </a>
+             <Link
+  to="/"
+  className="nav-link py-1"
+>
+  Home
+</Link>
           </li>
           <li>
             <a
@@ -75,12 +75,14 @@ export default function Navbar() {
             </a>
           </li>
           <li>
-            <a
-              href="#clubs"
-              className="nav-link text-[#A3A3A3] hover:text-[#EDEDED] transition-colors duration-300 py-1"
-            >
-              Club
-            </a>
+            <li>
+  <Link
+  to="/clubs"
+  className="nav-link py-1"
+>
+  Clubs
+</Link>
+</li>
           </li>
           <li>
             <a
@@ -91,12 +93,12 @@ export default function Navbar() {
             </a>
           </li>
           <li>
-            <a
-              href="#events"
-              className="nav-link text-[#A3A3A3] hover:text-[#EDEDED] transition-colors duration-300 py-1"
-            >
-              Events
-            </a>
+             <Link
+  to="/events"
+  className="nav-link py-1"
+>
+  Events
+</Link>
           </li>
           <li>
   <a

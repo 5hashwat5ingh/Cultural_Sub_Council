@@ -1,5 +1,5 @@
-
 import React, { useRef, useState } from "react";
+
 import {
   motion,
   useScroll,
@@ -7,6 +7,7 @@ import {
   useMotionValueEvent,
   useReducedMotion,
 } from "framer-motion";
+
 import StoryText from "./StoryText";
 
 const DEFAULT_STORIES = [
@@ -60,7 +61,13 @@ const DEFAULT_STORIES = [
   },
 ];
 
-const VIEWPORT_HEIGHT = 66;
+/*
+  IMAGE DIMENSIONS
+
+  156vh = total visible image viewport height.
+  Each story occupies 1/3 of that viewport.
+*/
+const VIEWPORT_HEIGHT = 156;
 const SLOT_HEIGHT = VIEWPORT_HEIGHT / 3;
 
 export default function ScrollStory({
@@ -75,19 +82,31 @@ export default function ScrollStory({
 
   const totalStories = stories.length;
 
+  /*
+    Total distance the image stack needs to travel.
+  */
   const maxTranslate = (totalStories - 1) * SLOT_HEIGHT;
 
+  /*
+    Track scrolling through the entire section.
+  */
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
   });
 
+  /*
+    Move the image stack upward as the user scrolls.
+  */
   const translateY = useTransform(
     scrollYProgress,
     [0, 1],
     ["0vh", `-${maxTranslate}vh`]
   );
 
+  /*
+    Detect which story is currently active.
+  */
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     const index = Math.min(
       totalStories - 1,
@@ -102,12 +121,38 @@ export default function ScrollStory({
       ref={sectionRef}
       className={`relative h-[600vh] w-full bg-[#0A0A0A] ${className}`}
     >
-      {/* STICKY VIEWPORT */}
+      {/* =========================================================
+          STICKY VIEWPORT
+      ========================================================= */}
+
       <div className="sticky top-0 h-screen w-full overflow-hidden">
-        <div className="mx-auto grid h-full w-full max-w-7xl grid-cols-1 lg:grid-cols-2 gap-10 px-6 sm:px-12 lg:px-20">
-          {/* LEFT TEXT */}
-          <div className="flex h-full items-center min-w-0">
-            <div className="w-full max-w-xl">
+        <div
+          className="
+            mx-auto
+            grid
+            h-full
+            w-full
+            max-w-7xl
+            grid-cols-1
+            gap-10
+            px-6
+            sm:px-12
+            lg:grid-cols-2
+            lg:px-20
+          "
+        >
+          {/* =====================================================
+              LEFT TEXT
+              ===================================================== */}
+
+          <div className="relative h-screen min-w-0">
+            {/*
+              This container is exactly h-screen.
+
+              The text is positioned at 50% of the viewport,
+              NOT relative to the 156vh image container.
+            */}
+            <div className="absolute left-0 top-1/2 w-full max-w-xl -translate-y-1/2">
               <StoryText
                 story={stories[activeIndex]}
                 activeIndex={activeIndex}
@@ -116,16 +161,62 @@ export default function ScrollStory({
             </div>
           </div>
 
-          {/* RIGHT IMAGE AREA */}
-          <div className="flex h-full items-center justify-center min-w-0">
-            <div
-              className="relative w-full max-w-[540px] overflow-hidden rounded-2xl"
-              style={{ height: `${VIEWPORT_HEIGHT}vh` }}
-            >
-              {/* Gradient masks */}
-              <div className="pointer-events-none absolute inset-x-0 top-0 z-20 h-16 bg-gradient-to-b from-[#0A0A0A] to-transparent" />
+          {/* =====================================================
+              RIGHT IMAGE AREA
+              ===================================================== */}
 
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-16 bg-gradient-to-t from-[#0A0A0A] to-transparent" />
+          <div className="flex h-full min-w-0 items-center justify-center">
+            <div
+              className="
+                relative
+                w-full
+                max-w-[540px]
+                overflow-hidden
+                rounded-2xl
+              "
+              style={{
+                height: `${VIEWPORT_HEIGHT}vh`,
+              }}
+            >
+              {/* =================================================
+                  TOP GRADIENT MASK
+              ================================================= */}
+
+              <div
+                className="
+                  pointer-events-none
+                  absolute
+                  inset-x-0
+                  top-0
+                  z-20
+                  h-20
+                  bg-gradient-to-b
+                  from-[#0A0A0A]
+                  to-transparent
+                "
+              />
+
+              {/* =================================================
+                  BOTTOM GRADIENT MASK
+              ================================================= */}
+
+              <div
+                className="
+                  pointer-events-none
+                  absolute
+                  inset-x-0
+                  bottom-0
+                  z-20
+                  h-20
+                  bg-gradient-to-t
+                  from-[#0A0A0A]
+                  to-transparent
+                "
+              />
+
+              {/* =================================================
+                  IMAGE STACK
+              ================================================= */}
 
               <motion.div
                 style={{
@@ -133,11 +224,20 @@ export default function ScrollStory({
                 }}
                 className="flex flex-col will-change-transform"
               >
-                {/* TOP SPACER */}
+                {/* =================================================
+                    TOP SPACER
+                ================================================= */}
+
                 <div
                   className="shrink-0"
-                  style={{ height: `${SLOT_HEIGHT}vh` }}
+                  style={{
+                    height: `${SLOT_HEIGHT}vh`,
+                  }}
                 />
+
+                {/* =================================================
+                    STORIES
+                ================================================= */}
 
                 {stories.map((story, index) => {
                   const active = index === activeIndex;
@@ -145,8 +245,16 @@ export default function ScrollStory({
                   return (
                     <div
                       key={story.number}
-                      className="flex shrink-0 items-center justify-center p-2"
-                      style={{ height: `${SLOT_HEIGHT}vh` }}
+                      className="
+                        flex
+                        shrink-0
+                        items-center
+                        justify-center
+                        p-2
+                      "
+                      style={{
+                        height: `${SLOT_HEIGHT}vh`,
+                      }}
                     >
                       <motion.div
                         animate={{
@@ -157,19 +265,37 @@ export default function ScrollStory({
                           duration: 0.45,
                           ease: [0.22, 1, 0.36, 1],
                         }}
-                        className={`relative h-full w-full overflow-hidden rounded-xl border ${
-                          active
-                            ? "border-white/30"
-                            : "border-white/10"
-                        }`}
+                        className={`
+                          relative
+                          h-full
+                          w-full
+                          overflow-hidden
+                          rounded-xl
+                          border
+                          ${
+                            active
+                              ? "border-white/30"
+                              : "border-white/10"
+                          }
+                        `}
                       >
+                        {/* IMAGE */}
+
                         <img
                           src={story.image}
                           alt={story.alt}
-                          className="h-full w-full object-cover"
+                          className="
+                            h-full
+                            w-full
+                            object-cover
+                          "
                         />
 
+                        {/* DARK OVERLAY */}
+
                         <div className="absolute inset-0 bg-black/10" />
+
+                        {/* IMAGE LABEL */}
 
                         <div className="absolute bottom-4 left-4">
                           <span className="text-xs tracking-[0.3em] text-white/80">
@@ -185,10 +311,15 @@ export default function ScrollStory({
                   );
                 })}
 
-                {/* BOTTOM SPACER */}
+                {/* =================================================
+                    BOTTOM SPACER
+                ================================================= */}
+
                 <div
                   className="shrink-0"
-                  style={{ height: `${SLOT_HEIGHT}vh` }}
+                  style={{
+                    height: `${SLOT_HEIGHT}vh`,
+                  }}
                 />
               </motion.div>
             </div>
