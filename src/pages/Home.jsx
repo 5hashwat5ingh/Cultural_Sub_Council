@@ -13,10 +13,6 @@ export default function Home() {
   const [animationKey, setAnimationKey] = useState(0);
   const shouldReduceMotion = useReducedMotion();
 
-  /* =========================================================
-     REPLAY
-  ========================================================= */
-
   const handleReplay = useCallback(() => {
     window.scrollTo({
       top: 0,
@@ -28,10 +24,6 @@ export default function Home() {
     }, 500);
   }, []);
 
-  /* =========================================================
-     INTRO TEXT
-  ========================================================= */
-
   const paragraphText =
     "Great experiences begin with simple ideas, thoughtful design, and meaningful interactions that people remember.";
 
@@ -41,15 +33,16 @@ export default function Home() {
         relative
         w-full
         overflow-x-clip
-        bg-[#0A0A0A]
-        text-[#EDEDED]
+        bg-[#2B0A12]
+        text-[#F8F1DF]
         font-sans
-        selection:bg-[#EDEDED]
-        selection:text-[#0A0A0A]
+        selection:bg-[#C9A24D]
+        selection:text-[#081A33]
       "
     >
+
       {/* =====================================================
-          BACKGROUND GRAIN
+          GRAIN
       ===================================================== */}
 
       <div
@@ -64,15 +57,13 @@ export default function Home() {
       />
 
       {/* =====================================================
-          AMBIENT GLOW
+          ROYAL BLUE AMBIENT GLOW
       ===================================================== */}
 
       <motion.div
         animate={
           shouldReduceMotion
-            ? {
-                opacity: 0.6,
-              }
+            ? { opacity: 0.45 }
             : {
                 x: ["-2%", "3%", "-1%", "-2%"],
                 y: ["-2%", "2%", "-3%", "-2%"],
@@ -87,8 +78,8 @@ export default function Home() {
         className="
           pointer-events-none
           fixed
-          left-[15%]
-          top-[20%]
+          left-[5%]
+          top-[8%]
           z-0
           h-[45vw]
           w-[45vw]
@@ -97,30 +88,44 @@ export default function Home() {
           max-h-[650px]
           max-w-[650px]
           rounded-full
-          bg-ambient-radial
+          bg-maroon-radial
           blur-3xl
         "
         aria-hidden="true"
       />
 
       {/* =====================================================
-          SECONDARY GLOW
+          GOLD AMBIENT GLOW
       ===================================================== */}
 
-      <div
+      <motion.div
+        animate={
+          shouldReduceMotion
+            ? { opacity: 0.25 }
+            : {
+                x: ["2%", "-2%", "1%", "2%"],
+                y: ["2%", "-1%", "2%", "2%"],
+                scale: [1, 1.04, 0.97, 1],
+              }
+        }
+        transition={{
+          duration: 18,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
         className="
           pointer-events-none
           fixed
-          bottom-[10%]
-          right-[10%]
+          bottom-[5%]
+          right-[3%]
           z-0
           h-[35vw]
           w-[35vw]
-          max-h-[450px]
-          max-w-[450px]
+          max-h-[500px]
+          max-w-[500px]
           rounded-full
-          bg-[radial-gradient(circle,rgba(255,255,255,0.025)_0%,rgba(10,10,10,0)_70%)]
-          blur-2xl
+          bg-gold-radial
+          blur-3xl
         "
         aria-hidden="true"
       />
@@ -135,6 +140,7 @@ export default function Home() {
           relative
           z-20
           min-h-screen
+          bg-[#2B0A12]
         "
       >
         <PageReveal />
@@ -149,13 +155,33 @@ export default function Home() {
             min-h-screen
             items-center
             px-6
-            pt-24
             pb-20
+            pt-24
             sm:px-12
             lg:px-20
             xl:px-28
           "
         >
+
+          {/* =================================================
+              HERITAGE ARCHITECTURAL LINES
+          ================================================= */}
+
+         
+
+          
+          {/* =================================================
+              TOP LEFT ORNAMENT
+          ================================================= */}
+
+          
+
+          {/* =================================================
+              BOTTOM RIGHT ORNAMENT
+          ================================================= */}
+
+          
+
           <div
             className="
               mx-auto
@@ -166,6 +192,7 @@ export default function Home() {
               xl:ml-[6%]
             "
           >
+
             {/* =================================================
                 EYEBROW
             ================================================= */}
@@ -173,14 +200,8 @@ export default function Home() {
             <motion.div
               initial={
                 shouldReduceMotion
-                  ? {
-                      opacity: 1,
-                      y: 0,
-                    }
-                  : {
-                      opacity: 0,
-                      y: 14,
-                    }
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 0, y: 14 }
               }
               animate={{
                 opacity: 1,
@@ -193,19 +214,31 @@ export default function Home() {
               }}
               className="mb-6 sm:mb-8"
             >
-              <span
-                className="
-                  inline-block
-                  text-[11px]
-                  font-medium
-                  uppercase
-                  tracking-[0.24em]
-                  text-[#8A8A8A]
-                  sm:text-xs
-                "
-              >
-                CREATE • PERFORM • BELONG.
-              </span>
+              <div className="flex items-center gap-2">
+
+                <span
+                  className="
+                    h-[0.5px]
+                    w-10
+                    bg-[#C9A24D]
+                    sm:w-18
+                  "
+                />
+
+                <span
+                  className="
+                    text-[11px]
+                    font-medium
+                    uppercase
+                    tracking-[0.24em]
+                    text-[#C9A24D]
+                    sm:text-xs
+                  "
+                >
+                  CREATE • PERFORM • BELONG.
+                </span>
+
+              </div>
             </motion.div>
 
             {/* =================================================
@@ -213,6 +246,7 @@ export default function Home() {
             ================================================= */}
 
             <div className="mb-8 sm:mb-10">
+
               <TextReveal
                 text={"A Stage \nFor Every Expression"}
                 as="h1"
@@ -221,13 +255,33 @@ export default function Home() {
                   font-semibold
                   leading-[0.94]
                   tracking-[-0.035em]
-                  text-[#EDEDED]
+                  text-[#F8F1DF]
                 "
                 delay={0.5}
                 duration={0.9}
                 stagger={0.1}
                 ease={[0.22, 1, 0.36, 1]}
               />
+
+            </div>
+
+            {/* =================================================
+                GOLD ACCENT
+            ================================================= */}
+
+            
+            {/* =================================================
+                HERITAGE ORNAMENT
+            ================================================= */}
+
+            <div className="mb-7 flex items-center gap-2">
+
+              <span className="h-px w-8 bg-[#C9A24D]/60" />
+
+              <span className="h-1.5 w-1.5 rotate-45 bg-[#D9B86C]" />
+
+              <span className="h-px w-12 bg-[#C9A24D]/25" />
+
             </div>
 
             {/* =================================================
@@ -237,14 +291,8 @@ export default function Home() {
             <motion.p
               initial={
                 shouldReduceMotion
-                  ? {
-                      opacity: 1,
-                      y: 0,
-                    }
-                  : {
-                      opacity: 0,
-                      y: 20,
-                    }
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 0, y: 20 }
               }
               animate={{
                 opacity: 1,
@@ -261,7 +309,7 @@ export default function Home() {
                 text-base
                 font-normal
                 leading-relaxed
-                text-[#8A8A8A]
+                text-[#D8C7AA]
                 sm:mb-12
                 sm:text-lg
                 lg:text-xl
@@ -270,6 +318,7 @@ export default function Home() {
               A collective of minds, talents, and stories shaping the
               cultural spirit of our campus.
             </motion.p>
+
           </div>
 
           {/* =================================================
@@ -279,12 +328,8 @@ export default function Home() {
           <motion.div
             initial={
               shouldReduceMotion
-                ? {
-                    opacity: 1,
-                  }
-                : {
-                    opacity: 0,
-                  }
+                ? { opacity: 1 }
+                : { opacity: 0 }
             }
             animate={{
               opacity: 1,
@@ -303,7 +348,7 @@ export default function Home() {
               text-[10px]
               uppercase
               tracking-[0.24em]
-              text-[#737373]
+              text-[#D8C7AA]
               sm:left-12
               sm:text-[11px]
               lg:left-28
@@ -311,15 +356,18 @@ export default function Home() {
           >
             <span>Scroll</span>
 
-            <span className="animate-bounce text-[13px] leading-none">
+            <span className="animate-bounce text-[16px] text-[#C9A24D]">
               ↓
             </span>
+
           </motion.div>
+
         </main>
+
       </div>
 
       {/* =====================================================
-          INTRO / MANIFESTO
+          MANIFESTO
       ===================================================== */}
 
       <section
@@ -329,6 +377,9 @@ export default function Home() {
           z-20
           m-0
           w-full
+          border-t
+          border-[#C9A24D]/10
+          bg-[#3A0D18]
           p-0
         "
       >
@@ -343,7 +394,7 @@ export default function Home() {
       </section>
 
       {/* =====================================================
-          FACULTY MESSAGES
+          FACULTY
       ===================================================== */}
 
       <section
@@ -353,6 +404,9 @@ export default function Home() {
           z-20
           m-0
           w-full
+          border-t
+          border-[#C9A24D]/10
+          bg-[#3A0D18]
           p-0
         "
       >
@@ -370,6 +424,9 @@ export default function Home() {
           z-20
           m-0
           w-full
+          border-t
+          border-[#C9A24D]/10
+          bg-[#2B0A12]
           p-0
         "
       >
@@ -377,7 +434,7 @@ export default function Home() {
       </section>
 
       {/* =====================================================
-          FOOTER / CONTACT
+          FOOTER
       ===================================================== */}
 
       <footer
@@ -388,8 +445,8 @@ export default function Home() {
           m-0
           w-full
           border-t
-          border-white/5
-          bg-[#0A0A0A]
+          border-[#C9A24D]/20
+          bg-[#1D070D]
           px-6
           py-16
           sm:px-12
@@ -398,6 +455,7 @@ export default function Home() {
           lg:py-24
         "
       >
+
         <div
           className="
             mx-auto
@@ -411,40 +469,43 @@ export default function Home() {
             md:items-end
           "
         >
-          {/* =================================================
-              FOOTER BRAND
-          ================================================= */}
+
+          {/* Footer Brand */}
 
           <div>
-            <span
-              className="
-                mb-3
-                block
-                text-xs
-                uppercase
-                tracking-[0.25em]
-                text-[#8A8A8A]
-              "
-            >
-              Get in Touch
-            </span>
+
+            <div className="mb-3 flex items-center gap-3">
+
+              <span className="h-2 w-2 rotate-45 bg-[#C9A24D]" />
+
+              <span
+                className="
+                  text-xs
+                  uppercase
+                  tracking-[0.25em]
+                  text-[#C9A24D]
+                "
+              >
+                Get in Touch
+              </span>
+
+            </div>
 
             <p
               className="
                 text-2xl
                 font-medium
                 tracking-tight
-                text-[#EDEDED]
+                text-[#F7EBD0]
                 sm:text-4xl
               "
             >
               Cultural Sub Council
             </p>
+
           </div>
 
-          {/* =================================================
-              FOOTER NAVIGATION
-          ================================================= */}
+          {/* Footer Links */}
 
           <div
             className="
@@ -454,16 +515,18 @@ export default function Home() {
               text-xs
               uppercase
               tracking-[0.2em]
-              text-[#8A8A8A]
+              text-[#D8C7AA]
               sm:flex-row
               sm:gap-12
             "
           >
+
             <a
               href="#work"
               className="
                 transition-colors
-                hover:text-[#EDEDED]
+                duration-300
+                hover:text-[#C6A15B]
               "
             >
               Clubs
@@ -473,7 +536,8 @@ export default function Home() {
               href="#manifesto"
               className="
                 transition-colors
-                hover:text-[#EDEDED]
+                duration-300
+                hover:text-[#C9A24D]
               "
             >
               About
@@ -483,24 +547,29 @@ export default function Home() {
               href="#contact"
               className="
                 transition-colors
-                hover:text-[#EDEDED]
+                duration-300
+                hover:text-[#C9A24D]
               "
             >
               Contact
             </a>
 
-            <span className="text-[#555]">
+            <span className="text-[#8F7663]">
               © {new Date().getFullYear()} Cultural Sub Council
             </span>
+
           </div>
+
         </div>
+
       </footer>
 
       {/* =====================================================
-          REPLAY BUTTON
+          REPLAY
       ===================================================== */}
 
       <ReplayButton onReplay={handleReplay} />
+
     </div>
   );
 }

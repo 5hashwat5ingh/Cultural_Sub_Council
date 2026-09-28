@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-
+import Navbar from "../components/Navbar";
 /* =========================================================
    EVENTS
 ========================================================= */
@@ -571,6 +571,7 @@ export default function Events() {
           bg-black
         "
       >
+        {<Navbar />}
 
         {/* STICKY VIEWPORT */}
 

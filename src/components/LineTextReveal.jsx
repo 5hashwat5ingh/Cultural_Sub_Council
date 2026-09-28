@@ -16,14 +16,11 @@ export default function LineTextReveal({
 simple ideas, thoughtful design,
 and meaningful interactions that
 people remember.`,
-
   className = "",
   eyebrow = "PERSPECTIVE / CRAFT",
-
   duration = 1.9,
   stagger = 0.12,
   delay = 0.05,
-
   once = false,
   amount = 0.25,
 }) {
@@ -39,11 +36,9 @@ people remember.`,
     amount,
   });
 
-  /*
-   * -----------------------------------------
-   * WORDS FOR LINE MEASUREMENT
-   * -----------------------------------------
-   */
+  /* =========================================================
+     WORDS FOR LINE MEASUREMENT
+  ========================================================= */
 
   const words = (text || "")
     .replace(/\n/g, " ")
@@ -51,11 +46,9 @@ people remember.`,
     .split(/\s+/)
     .filter(Boolean);
 
-  /*
-   * -----------------------------------------
-   * DETECT ACTUAL VISUAL LINES
-   * -----------------------------------------
-   */
+  /* =========================================================
+     DETECT ACTUAL VISUAL LINES
+  ========================================================= */
 
   const calculateLines = () => {
     const container = measureRef.current;
@@ -87,7 +80,6 @@ people remember.`,
       }
 
       currentLine.push(word.textContent);
-
       currentTop = top;
     });
 
@@ -98,21 +90,17 @@ people remember.`,
     setLines(detectedLines);
   };
 
-  /*
-   * -----------------------------------------
-   * INITIAL MEASUREMENT
-   * -----------------------------------------
-   */
+  /* =========================================================
+     INITIAL MEASUREMENT
+  ========================================================= */
 
   useLayoutEffect(() => {
     calculateLines();
   }, [text]);
 
-  /*
-   * -----------------------------------------
-   * RESPONSIVE MEASUREMENT
-   * -----------------------------------------
-   */
+  /* =========================================================
+     RESPONSIVE MEASUREMENT
+  ========================================================= */
 
   useEffect(() => {
     let resizeTimer;
@@ -127,10 +115,6 @@ people remember.`,
 
     window.addEventListener("resize", handleResize);
 
-    /*
-     * Recalculate when container dimensions change
-     */
-
     let observer;
 
     if (
@@ -143,10 +127,6 @@ people remember.`,
 
       observer.observe(measureRef.current);
     }
-
-    /*
-     * Recalculate after fonts load
-     */
 
     if (document.fonts?.ready) {
       document.fonts.ready.then(() => {
@@ -168,11 +148,9 @@ people remember.`,
     };
   }, [text]);
 
-  /*
-   * -----------------------------------------
-   * FALLBACK
-   * -----------------------------------------
-   */
+  /* =========================================================
+     FALLBACK
+  ========================================================= */
 
   const visibleLines =
     lines.length > 0
@@ -182,11 +160,9 @@ people remember.`,
           .map((line) => line.trim())
           .filter(Boolean);
 
-  /*
-   * -----------------------------------------
-   * CONTAINER ANIMATION
-   * -----------------------------------------
-   */
+  /* =========================================================
+     CONTAINER ANIMATION
+  ========================================================= */
 
   const containerVariants = {
     hidden: {},
@@ -199,11 +175,9 @@ people remember.`,
     },
   };
 
-  /*
-   * -----------------------------------------
-   * LINE ANIMATION
-   * -----------------------------------------
-   */
+  /* =========================================================
+     LINE ANIMATION
+  ========================================================= */
 
   const lineVariants = {
     hidden: {
@@ -217,7 +191,6 @@ people remember.`,
 
       transition: {
         duration: shouldReduceMotion ? 0 : duration,
-
         ease: [0.22, 1, 0.36, 1],
       },
     },
@@ -234,7 +207,7 @@ people remember.`,
         items-center
         justify-center
         overflow-hidden
-        bg-[#0A0A0A]
+        bg-[#3A0D18]
         px-6
         py-32
         sm:px-12
@@ -244,11 +217,49 @@ people remember.`,
         ${className}
       `}
     >
-      <div className="relative mx-auto w-full max-w-[1100px]">
+      {/* =====================================================
+          MAROON AMBIENT GLOW
+      ===================================================== */}
 
-        {/* =====================================
+      <div
+        className="
+          pointer-events-none
+          absolute
+          left-[-15%]
+          top-[15%]
+          h-[450px]
+          w-[450px]
+          rounded-full
+          bg-[radial-gradient(circle,rgba(122,27,47,0.22)_0%,rgba(58,13,24,0)_70%)]
+          blur-3xl
+        "
+        aria-hidden="true"
+      />
+
+      {/* =====================================================
+          GOLD AMBIENT GLOW
+      ===================================================== */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          bottom-[-15%]
+          right-[-10%]
+          h-[400px]
+          w-[400px]
+          rounded-full
+          bg-[radial-gradient(circle,rgba(198,161,91,0.14)_0%,rgba(198,161,91,0)_70%)]
+          blur-3xl
+        "
+        aria-hidden="true"
+      />
+
+      <div className="relative z-10 mx-auto w-full max-w-[1100px]">
+
+        {/* =====================================================
             INVISIBLE LINE MEASUREMENT
-        ===================================== */}
+        ===================================================== */}
 
         <div
           ref={measureRef}
@@ -281,9 +292,9 @@ people remember.`,
           ))}
         </div>
 
-        {/* =====================================
+        {/* =====================================================
             EYEBROW
-        ===================================== */}
+        ===================================================== */}
 
         {eyebrow && (
           <motion.div
@@ -308,24 +319,37 @@ people remember.`,
             }}
             className="mb-8 sm:mb-12"
           >
-            <span
-              className="
-                text-[10px]
-                font-medium
-                uppercase
-                tracking-[0.28em]
-                text-white/40
-                sm:text-xs
-              "
-            >
-              {eyebrow}
-            </span>
+            <div className="flex items-center gap-4">
+
+              <span
+                className="
+                  text-[10px]
+                  font-medium
+                  uppercase
+                  tracking-[0.28em]
+                  text-[#C6A15B]
+                  sm:text-xs
+                "
+              >
+                {eyebrow}
+              </span>
+
+              <span
+                className="
+                  h-px
+                  w-10
+                  bg-[#C6A15B]/40
+                  sm:w-16
+                "
+              />
+
+            </div>
           </motion.div>
         )}
 
-        {/* =====================================
+        {/* =====================================================
             TEXT REVEAL
-        ===================================== */}
+        ===================================================== */}
 
         <motion.div
           variants={containerVariants}
@@ -336,14 +360,10 @@ people remember.`,
             font-medium
             leading-[1.08]
             tracking-[-0.035em]
-            text-[#F1F1F1]
+            text-[#F7EBD0]
           "
         >
           {visibleLines.map((line, index) => (
-            /*
-             * IMPORTANT:
-             * This is the mask.
-             */
             <div
               key={`${index}-${line}`}
               className="
@@ -364,6 +384,40 @@ people remember.`,
             </div>
           ))}
         </motion.div>
+
+        {/* =====================================================
+            GOLD DECORATIVE LINE
+        ===================================================== */}
+
+        <motion.div
+          initial={{
+            width: 0,
+            opacity: 0,
+          }}
+          animate={
+            isInView
+              ? {
+                  width: "72px",
+                  opacity: 1,
+                }
+              : {
+                  width: 0,
+                  opacity: 0,
+                }
+          }
+          transition={{
+            duration: shouldReduceMotion ? 0 : 1,
+            delay: shouldReduceMotion ? 0 : 0.9,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          className="
+            mt-10
+            h-[2px]
+            bg-[#C6A15B]
+            sm:mt-14
+          "
+        />
+
       </div>
     </section>
   );

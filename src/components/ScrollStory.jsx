@@ -61,12 +61,10 @@ const DEFAULT_STORIES = [
   },
 ];
 
-/*
-  IMAGE DIMENSIONS
+/* =========================================================
+   IMAGE DIMENSIONS
+========================================================= */
 
-  156vh = total visible image viewport height.
-  Each story occupies 1/3 of that viewport.
-*/
 const VIEWPORT_HEIGHT = 156;
 const SLOT_HEIGHT = VIEWPORT_HEIGHT / 3;
 
@@ -75,57 +73,71 @@ export default function ScrollStory({
   className = "",
 }) {
   const sectionRef = useRef(null);
-
   const [activeIndex, setActiveIndex] = useState(0);
 
   const reduceMotion = useReducedMotion();
-
   const totalStories = stories.length;
 
-  /*
-    Total distance the image stack needs to travel.
-  */
-  const maxTranslate = (totalStories - 1) * SLOT_HEIGHT;
+  const maxTranslate =
+    (totalStories - 1) * SLOT_HEIGHT;
 
-  /*
-    Track scrolling through the entire section.
-  */
+  /* =========================================================
+     SCROLL PROGRESS
+  ========================================================= */
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
   });
 
-  /*
-    Move the image stack upward as the user scrolls.
-  */
+  /* =========================================================
+     IMAGE STACK MOVEMENT
+  ========================================================= */
+
   const translateY = useTransform(
     scrollYProgress,
     [0, 1],
     ["0vh", `-${maxTranslate}vh`]
   );
 
-  /*
-    Detect which story is currently active.
-  */
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    const index = Math.min(
-      totalStories - 1,
-      Math.round(latest * (totalStories - 1))
-    );
+  /* =========================================================
+     ACTIVE STORY
+  ========================================================= */
 
-    setActiveIndex((prev) => (prev === index ? prev : index));
-  });
+  useMotionValueEvent(
+    scrollYProgress,
+    "change",
+    (latest) => {
+      const index = Math.min(
+        totalStories - 1,
+        Math.round(
+          latest * (totalStories - 1)
+        )
+      );
+
+      setActiveIndex((prev) =>
+        prev === index ? prev : index
+      );
+    }
+  );
 
   return (
     <section
       ref={sectionRef}
-      className={`relative h-[600vh] w-full bg-[#0A0A0A] ${className}`}
+      className={`
+        relative
+        h-[600vh]
+        w-full
+        bg-[#2B0A12]
+        ${className}
+      `}
     >
-      {/* =========================================================
+      {/* =====================================================
           STICKY VIEWPORT
-      ========================================================= */}
+      ===================================================== */}
 
       <div className="sticky top-0 h-screen w-full overflow-hidden">
+
         <div
           className="
             mx-auto
@@ -141,31 +153,31 @@ export default function ScrollStory({
             lg:px-20
           "
         >
-          {/* =====================================================
+
+          {/* =================================================
               LEFT TEXT
-              ===================================================== */}
+          ================================================= */}
 
           <div className="relative h-screen min-w-0">
-            {/*
-              This container is exactly h-screen.
 
-              The text is positioned at 50% of the viewport,
-              NOT relative to the 156vh image container.
-            */}
             <div className="absolute left-0 top-1/2 w-full max-w-xl -translate-y-1/2">
+
               <StoryText
                 story={stories[activeIndex]}
                 activeIndex={activeIndex}
                 total={totalStories}
               />
+
             </div>
+
           </div>
 
-          {/* =====================================================
+          {/* =================================================
               RIGHT IMAGE AREA
-              ===================================================== */}
+          ================================================= */}
 
           <div className="flex h-full min-w-0 items-center justify-center">
+
             <div
               className="
                 relative
@@ -178,8 +190,9 @@ export default function ScrollStory({
                 height: `${VIEWPORT_HEIGHT}vh`,
               }}
             >
+
               {/* =================================================
-                  TOP GRADIENT MASK
+                  TOP MAROON MASK
               ================================================= */}
 
               <div
@@ -189,15 +202,15 @@ export default function ScrollStory({
                   inset-x-0
                   top-0
                   z-20
-                  h-20
+                  h-24
                   bg-gradient-to-b
-                  from-[#0A0A0A]
+                  from-[#2B0A12]
                   to-transparent
                 "
               />
 
               {/* =================================================
-                  BOTTOM GRADIENT MASK
+                  BOTTOM MAROON MASK
               ================================================= */}
 
               <div
@@ -207,9 +220,9 @@ export default function ScrollStory({
                   inset-x-0
                   bottom-0
                   z-20
-                  h-20
+                  h-24
                   bg-gradient-to-t
-                  from-[#0A0A0A]
+                  from-[#2B0A12]
                   to-transparent
                 "
               />
@@ -220,13 +233,18 @@ export default function ScrollStory({
 
               <motion.div
                 style={{
-                  y: reduceMotion ? "0vh" : translateY,
+                  y: reduceMotion
+                    ? "0vh"
+                    : translateY,
                 }}
-                className="flex flex-col will-change-transform"
+                className="
+                  flex
+                  flex-col
+                  will-change-transform
+                "
               >
-                {/* =================================================
-                    TOP SPACER
-                ================================================= */}
+
+                {/* TOP SPACER */}
 
                 <div
                   className="shrink-0"
@@ -235,12 +253,11 @@ export default function ScrollStory({
                   }}
                 />
 
-                {/* =================================================
-                    STORIES
-                ================================================= */}
+                {/* STORIES */}
 
                 {stories.map((story, index) => {
-                  const active = index === activeIndex;
+                  const active =
+                    index === activeIndex;
 
                   return (
                     <div
@@ -256,6 +273,7 @@ export default function ScrollStory({
                         height: `${SLOT_HEIGHT}vh`,
                       }}
                     >
+
                       <motion.div
                         animate={{
                           scale: active ? 1 : 0.88,
@@ -263,7 +281,12 @@ export default function ScrollStory({
                         }}
                         transition={{
                           duration: 0.45,
-                          ease: [0.22, 1, 0.36, 1],
+                          ease: [
+                            0.22,
+                            1,
+                            0.36,
+                            1,
+                          ],
                         }}
                         className={`
                           relative
@@ -274,11 +297,12 @@ export default function ScrollStory({
                           border
                           ${
                             active
-                              ? "border-white/30"
-                              : "border-white/10"
+                              ? "border-[#C6A15B]/70"
+                              : "border-[#C6A15B]/15"
                           }
                         `}
                       >
+
                         {/* IMAGE */}
 
                         <img
@@ -291,29 +315,74 @@ export default function ScrollStory({
                           "
                         />
 
-                        {/* DARK OVERLAY */}
+                        {/* =================================================
+                            MAROON IMAGE OVERLAY
+                        ================================================= */}
 
-                        <div className="absolute inset-0 bg-black/10" />
+                        <div
+                          className="
+                            absolute
+                            inset-0
+                            bg-[#2B0A12]/20
+                            transition-opacity
+                            duration-500
+                            group-hover:bg-[#2B0A12]/10
+                          "
+                        />
 
-                        {/* IMAGE LABEL */}
+                        {/* =================================================
+                            GOLD IMAGE GRADIENT
+                        ================================================= */}
+
+                        <div
+                          className="
+                            pointer-events-none
+                            absolute
+                            inset-x-0
+                            bottom-0
+                            h-32
+                            bg-gradient-to-t
+                            from-[#2B0A12]/80
+                            via-[#2B0A12]/30
+                            to-transparent
+                          "
+                        />
+
+                        {/* =================================================
+                            IMAGE LABEL
+                        ================================================= */}
 
                         <div className="absolute bottom-4 left-4">
-                          <span className="text-xs tracking-[0.3em] text-white/80">
+
+                          <span
+                            className="
+                              text-xs
+                              tracking-[0.3em]
+                              text-[#D9B86C]
+                            "
+                          >
                             {story.number}
                           </span>
 
-                          <h3 className="text-lg font-medium text-white">
+                          <h3
+                            className="
+                              text-lg
+                              font-medium
+                              text-[#F7EBD0]
+                            "
+                          >
                             {story.title}
                           </h3>
+
                         </div>
+
                       </motion.div>
+
                     </div>
                   );
                 })}
 
-                {/* =================================================
-                    BOTTOM SPACER
-                ================================================= */}
+                {/* BOTTOM SPACER */}
 
                 <div
                   className="shrink-0"
@@ -321,11 +390,17 @@ export default function ScrollStory({
                     height: `${SLOT_HEIGHT}vh`,
                   }}
                 />
+
               </motion.div>
+
             </div>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
   );
 }

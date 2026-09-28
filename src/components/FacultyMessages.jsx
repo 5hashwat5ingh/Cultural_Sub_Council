@@ -33,7 +33,7 @@ export default function FacultyMessages() {
         relative
         w-full
         overflow-hidden
-        bg-[#0A0A0A]
+        bg-[#3A0D18]
         px-6
         py-24
         sm:px-10
@@ -41,9 +41,44 @@ export default function FacultyMessages() {
         lg:py-32
       "
     >
-      <div className="mx-auto w-full max-w-[1700px]">
+      {/* =====================================================
+          BACKGROUND GLOW
+      ===================================================== */}
 
-        {/* ================= HEADER ================= */}
+      {/* MAROON GLOW */}
+      <div
+        className="
+          pointer-events-none
+          absolute
+          left-[-10%]
+          top-[5%]
+          h-[500px]
+          w-[500px]
+          rounded-full
+          bg-[radial-gradient(circle,rgba(122,27,47,0.28)_0%,rgba(58,13,24,0)_70%)]
+          blur-3xl
+        "
+      />
+
+      {/* GOLD GLOW */}
+      <div
+        className="
+          pointer-events-none
+          absolute
+          bottom-[-10%]
+          right-[-5%]
+          h-[450px]
+          w-[450px]
+          rounded-full
+          bg-[radial-gradient(circle,rgba(198,161,91,0.14)_0%,rgba(198,161,91,0)_70%)]
+          blur-3xl
+        "
+      />
+
+      <div className="relative z-10 mx-auto w-full max-w-[1700px]">
+        {/* =====================================================
+            HEADER
+        ===================================================== */}
 
         <div
           className="
@@ -58,6 +93,8 @@ export default function FacultyMessages() {
           "
         >
           <div>
+            {/* LABEL */}
+
             <div className="mb-5 flex items-center gap-4">
               <span
                 className="
@@ -65,15 +102,17 @@ export default function FacultyMessages() {
                   font-medium
                   uppercase
                   tracking-[0.3em]
-                  text-white/40
+                  text-[#C6A15B]
                   sm:text-xs
                 "
               >
                 Faculty Messages
               </span>
 
-              <span className="h-px w-12 bg-white/20" />
+              <span className="h-px w-12 bg-[#C6A15B]/40" />
             </div>
+
+            {/* HEADING */}
 
             <h2
               className="
@@ -81,7 +120,7 @@ export default function FacultyMessages() {
                 font-medium
                 leading-[0.95]
                 tracking-[-0.05em]
-                text-[#F1F1F1]
+                text-[#F7EBD0]
                 sm:text-6xl
                 lg:text-7xl
               "
@@ -89,17 +128,16 @@ export default function FacultyMessages() {
               Voices Behind
               <br />
 
-              <span className="text-white/40">
+              <span className="text-[#D8C7AA]">
                 The Vision.
               </span>
             </h2>
           </div>
-
-          
         </div>
 
-
-        {/* ================= CARDS ================= */}
+        {/* =====================================================
+            FACULTY CARDS
+        ===================================================== */}
 
         <div
           className="
@@ -117,16 +155,14 @@ export default function FacultyMessages() {
             />
           ))}
         </div>
-
       </div>
     </section>
   );
 }
 
-
-/* ================================================= */
-/* FACULTY CARD */
-/* ================================================= */
+/* =========================================================
+   FACULTY CARD
+========================================================= */
 
 function FacultyCard({ faculty, index }) {
   return (
@@ -149,7 +185,7 @@ function FacultyCard({ faculty, index }) {
         ease: [0.22, 1, 0.36, 1],
       }}
       whileHover={{
-        y: -5,
+        y: -6,
       }}
       className="
         group
@@ -160,18 +196,41 @@ function FacultyCard({ faculty, index }) {
         overflow-hidden
         rounded-[22px]
         border
-        border-white/[0.12]
-        bg-white/[0.025]
+        border-[#C6A15B]/15
+        bg-[#4A1220]/45
         p-7
         transition-all
         duration-500
-        hover:border-white/[0.28]
-        hover:bg-white/[0.045]
+        hover:border-[#C6A15B]/45
+        hover:bg-[#4A1220]/65
         sm:p-8
       "
     >
+      {/* =====================================================
+          TOP GOLD ACCENT
+      ===================================================== */}
 
-      {/* ================= HOVER GLOW ================= */}
+      <div
+        className="
+          absolute
+          left-7
+          right-7
+          top-0
+          h-px
+          bg-gradient-to-r
+          from-transparent
+          via-[#C6A15B]/60
+          to-transparent
+          opacity-60
+          transition-opacity
+          duration-500
+          group-hover:opacity-100
+        "
+      />
+
+      {/* =====================================================
+          HOVER MAROON / GOLD GLOW
+      ===================================================== */}
 
       <div
         className="
@@ -182,16 +241,17 @@ function FacultyCard({ faculty, index }) {
           h-48
           w-48
           rounded-full
-          bg-white/[0.025]
+          bg-[#7A1B2F]/15
           blur-3xl
           transition-all
           duration-700
-          group-hover:bg-white/[0.07]
+          group-hover:bg-[#C6A15B]/10
         "
       />
 
-
-      {/* ================= MESSAGE AREA ================= */}
+      {/* =====================================================
+          MESSAGE AREA
+      ===================================================== */}
 
       <div
         className="
@@ -204,8 +264,9 @@ function FacultyCard({ faculty, index }) {
           sm:gap-5
         "
       >
-
-        {/* FACULTY IMAGE */}
+        {/* =================================================
+            FACULTY IMAGE
+        ================================================= */}
 
         <div
           className="
@@ -216,11 +277,12 @@ function FacultyCard({ faculty, index }) {
             overflow-hidden
             rounded-full
             border
-            border-white/20
-            bg-white/10
+            border-[#C6A15B]/35
+            bg-[#2B0A12]
             p-1
-            transition-transform
+            transition-all
             duration-700
+            group-hover:border-[#C6A15B]/70
             group-hover:scale-105
             sm:h-[90px]
             sm:w-[90px]
@@ -240,15 +302,26 @@ function FacultyCard({ faculty, index }) {
               group-hover:grayscale-0
             "
           />
+
+          {/* GOLD INNER RING */}
+
+          <div
+            className="
+              pointer-events-none
+              absolute
+              inset-1
+              rounded-full
+              border
+              border-[#C6A15B]/20
+            "
+          />
         </div>
 
-
-        {/* MESSAGE */}
+        {/* =================================================
+            MESSAGE
+        ================================================= */}
 
         <div className="flex min-w-0 flex-1 flex-col">
-
-          
-
           <p
             className="
               font-serif
@@ -256,43 +329,39 @@ function FacultyCard({ faculty, index }) {
               italic
               leading-[1.5]
               tracking-[-0.01em]
-              text-white/70
+              text-[#D8C7AA]
               sm:text-[16px]
             "
           >
             {faculty.message}
           </p>
-
         </div>
-
       </div>
 
-
-      {/* ================= BOTTOM ================= */}
+      {/* =====================================================
+          BOTTOM
+      ===================================================== */}
 
       <div className="relative z-10">
-
-        {/* Divider */}
+        {/* DIVIDER */}
 
         <div
           className="
-          mt-4
             mb-4
+            mt-4
             h-px
             w-full
-            bg-white/[0.12]
+            bg-[#C6A15B]/15
             transition-colors
             duration-500
-            group-hover:bg-white/25
+            group-hover:bg-[#C6A15B]/35
           "
         />
 
         <div className="flex items-end justify-between gap-4">
-
           {/* NAME + DESIGNATION */}
 
           <div className="min-w-0">
-
             <h3
               className="
                 truncate
@@ -300,7 +369,7 @@ function FacultyCard({ faculty, index }) {
                 font-semibold
                 uppercase
                 tracking-[0.16em]
-                text-white/90
+                text-[#F7EBD0]
               "
             >
               {faculty.name}
@@ -314,32 +383,31 @@ function FacultyCard({ faculty, index }) {
                 uppercase
                 leading-4
                 tracking-[0.18em]
-                text-white/35
+                text-[#D9B86C]
               "
             >
               {faculty.designation}
             </p>
-
           </div>
-
 
           {/* NUMBER */}
 
           <span
             className="
               shrink-0
+              font-mono
               text-[10px]
               tracking-[0.2em]
-              text-white/20
+              text-[#C6A15B]/45
+              transition-colors
+              duration-500
+              group-hover:text-[#C6A15B]
             "
           >
             0{index + 1}
           </span>
-
         </div>
-
       </div>
-
     </motion.article>
   );
 }

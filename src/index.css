@@ -7,62 +7,112 @@
     color-scheme: dark;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    background-color: #0a0a0a;
-    color: #ededed;
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    margin: 0;
+    background: #081a33;
+    color: #f8f1df;
+
+    font-family:
+      "Plus Jakarta Sans",
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      sans-serif;
+
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  ::selection {
+    background: #c9a24d;
+    color: #081a33;
   }
 }
 
-/* Subtle Film Grain Noise Texture */
+/* =========================================================
+   ROYAL BLUE GLOW
+========================================================= */
+
+.bg-royal-blue-radial {
+  background:
+    radial-gradient(
+      circle,
+      rgba(36, 82, 128, 0.42) 0%,
+      rgba(23, 63, 103, 0.24) 38%,
+      rgba(8, 26, 51, 0) 72%
+    );
+}
+
+/* =========================================================
+   ANTIQUE GOLD GLOW
+========================================================= */
+
+.bg-gold-radial {
+  background:
+    radial-gradient(
+      circle,
+      rgba(201, 162, 77, 0.16) 0%,
+      rgba(224, 184, 92, 0.07) 35%,
+      rgba(201, 162, 77, 0) 72%
+    );
+}
+
+/* =========================================================
+   FILM GRAIN
+========================================================= */
+
 .bg-grain {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.32'/%3E%3C/svg%3E");
+
+  background-repeat: repeat;
+  mix-blend-mode: soft-light;
+  opacity: 0.2;
 }
 
-/* Ambient Radial Glow */
-.bg-ambient-radial {
-  background: radial-gradient(
-    circle at 35% 45%,
-    rgba(255, 255, 255, 0.055) 0%,
-    rgba(255, 255, 255, 0.015) 35%,
-    rgba(10, 10, 10, 0) 70%
-  );
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-/* Micro-interaction: Nav Link Underline */
-.nav-link {
-  position: relative;
-  display: inline-block;
+::-webkit-scrollbar-track {
+  background: #061426;
 }
 
-.nav-link::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  transform: scaleX(0);
-  height: 1px;
-  bottom: -2px;
-  left: 0;
-  background-color: #ededed;
-  transform-origin: bottom right;
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+::-webkit-scrollbar-thumb {
+  background: #294766;
+  border-radius: 999px;
 }
 
-.nav-link:hover::after {
-  transform: scaleX(1);
-  transform-origin: bottom left;
+::-webkit-scrollbar-thumb:hover {
+  background: #c9a24d;
 }
 
-/* Reduced motion preference */
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
-  ::before,
-  ::after {
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
   }
 }

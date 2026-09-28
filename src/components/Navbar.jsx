@@ -86,7 +86,7 @@ export default function Navbar() {
           </li>
           <li>
             <a
-              href="#gallery"
+              href="gallery"
               className="nav-link text-[#A3A3A3] hover:text-[#EDEDED] transition-colors duration-300 py-1"
             >
               Gallery

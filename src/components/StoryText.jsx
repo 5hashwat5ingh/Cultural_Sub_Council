@@ -1,16 +1,16 @@
-import React from 'react';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import React from "react";
 
-/**
- * StoryText Component
- * Displays the sticky text description corresponding to the currently active image.
- * Uses AnimatePresence to perform a subtle fade + upward slide on entrance/exit.
- * 
- * @param {Object} story - The active story object { number, title, description }
- * @param {number} activeIndex - Index of currently focused image (0 to 5)
- * @param {number} total - Total count of stories
- */
-export default function StoryText({ story, activeIndex, total = 6 }) {
+import {
+  motion,
+  AnimatePresence,
+  useReducedMotion,
+} from "framer-motion";
+
+export default function StoryText({
+  story,
+  activeIndex,
+  total = 6,
+}) {
   const shouldReduceMotion = useReducedMotion();
 
   return (
@@ -23,7 +23,10 @@ export default function StoryText({ story, activeIndex, total = 6 }) {
               ? { opacity: 1, y: 0 }
               : { opacity: 0, y: 20 }
           }
-          animate={{ opacity: 1, y: 0 }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
           exit={
             shouldReduceMotion
               ? { opacity: 0 }
@@ -35,37 +38,98 @@ export default function StoryText({ story, activeIndex, total = 6 }) {
           }}
           className="flex flex-col"
         >
-          {/* Index & Section Label */}
-          <div className="flex items-center gap-3 mb-6 sm:mb-8">
-            <span className="text-xs sm:text-sm font-mono tracking-[0.25em] text-[#EDEDED]">
+          {/* =================================================
+              INDEX / CHAPTER
+          ================================================= */}
+
+          <div className="mb-6 flex items-center gap-3 sm:mb-8">
+            <span
+              className="
+                font-mono
+                text-xs
+                tracking-[0.25em]
+                text-[#C9A227]
+                sm:text-sm
+              "
+            >
               {story.number}
             </span>
-            <span className="w-6 sm:w-10 h-[1px] bg-white/20" />
-            <span className="text-[10px] sm:text-[11px] font-medium tracking-[0.25em] uppercase text-[#8A8A8A]">
-              CHAPTER {story.number} OF {String(total).padStart(2, '0')}
+
+            <span className="h-[1px] w-6 bg-[#C9A227]/40 sm:w-10" />
+
+            <span
+              className="
+                text-[10px]
+                font-medium
+                uppercase
+                tracking-[0.25em]
+                text-[#A99662]
+                sm:text-[11px]
+              "
+            >
+              CHAPTER {story.number} OF{" "}
+              {String(total).padStart(2, "0")}
             </span>
           </div>
 
-          {/* Story Title */}
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight uppercase text-[#EDEDED] leading-[1.04] mb-6">
+          {/* =================================================
+              TITLE
+          ================================================= */}
+
+          <h2
+            className="
+              mb-6
+              text-4xl
+              font-semibold
+              uppercase
+              leading-[1.04]
+              tracking-tight
+              text-[#F5F0E6]
+              sm:text-5xl
+              lg:text-6xl
+            "
+          >
             {story.title}
           </h2>
 
-          {/* Story Description */}
-          <p className="text-base sm:text-lg lg:text-xl text-[#8A8A8A] font-normal leading-relaxed max-w-md">
+          {/* =================================================
+              DESCRIPTION
+          ================================================= */}
+
+          <p
+            className="
+              max-w-md
+              text-base
+              font-normal
+              leading-relaxed
+              text-[#A9ADC0]
+              sm:text-lg
+              lg:text-xl
+            "
+          >
             {story.description}
           </p>
 
-          {/* Subtle Stepper Indicator */}
-          <div className="flex items-center gap-2 mt-10">
+          {/* =================================================
+              STEPPER
+          ================================================= */}
+
+          <div className="mt-10 flex items-center gap-2">
             {Array.from({ length: total }).map((_, idx) => (
               <span
                 key={`step-${idx}`}
-                className={`h-[2px] transition-all duration-500 ease-out rounded-full ${
-                  idx === activeIndex
-                    ? 'w-8 bg-[#EDEDED]'
-                    : 'w-2 bg-white/20'
-                }`}
+                className={`
+                  h-[2px]
+                  rounded-full
+                  transition-all
+                  duration-500
+                  ease-out
+                  ${
+                    idx === activeIndex
+                      ? "w-8 bg-[#C9A227]"
+                      : "w-2 bg-[#C9A227]/20"
+                  }
+                `}
               />
             ))}
           </div>
