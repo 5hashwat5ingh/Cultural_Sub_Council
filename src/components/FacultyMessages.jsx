@@ -33,7 +33,7 @@ export default function FacultyMessages() {
         relative
         w-full
         overflow-hidden
-        bg-[#3A0D18]
+        bg-[#2B0A12]
         px-6
         py-24
         sm:px-10

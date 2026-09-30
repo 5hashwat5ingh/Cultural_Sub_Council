@@ -690,7 +690,7 @@ export default function ClubsPage() {
                 >
       
                   <a
-                    href="#work"
+                    href="/Clubs"
                     className="
                       transition-colors
                       duration-300
@@ -701,14 +701,14 @@ export default function ClubsPage() {
                   </a>
       
                   <a
-                    href="#manifesto"
+                    href="/Team"
                     className="
                       transition-colors
                       duration-300
                       hover:text-[#C9A24D]
                     "
                   >
-                    About
+                    Teams
                   </a>
       
                   <a

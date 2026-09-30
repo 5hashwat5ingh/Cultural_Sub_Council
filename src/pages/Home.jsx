@@ -180,7 +180,21 @@ export default function Home() {
               BOTTOM RIGHT ORNAMENT
           ================================================= */}
 
-          
+          <div
+            className="
+              pointer-events-none
+              absolute
+              bottom-20
+              right-6
+              hidden
+              h-16
+              w-16
+              border-b
+              border-r
+              border-[#C9A24D]/30
+              lg:block
+            "
+          />
 
           <div
             className="
@@ -254,7 +268,7 @@ export default function Home() {
                   text-[clamp(3.1rem,7.4vw,8.5rem)]
                   font-semibold
                   leading-[0.94]
-                  tracking-[-0.035em]
+                  tracking-[-0.02em]
                   text-[#F8F1DF]
                 "
                 delay={0.5}
@@ -374,7 +388,6 @@ export default function Home() {
         id="manifesto"
         className="
           relative
-          z-20
           m-0
           w-full
           border-t
@@ -401,7 +414,6 @@ export default function Home() {
         id="messages"
         className="
           relative
-          z-20
           m-0
           w-full
           border-t
@@ -421,7 +433,6 @@ export default function Home() {
         id="work"
         className="
           relative
-          z-20
           m-0
           w-full
           border-t
@@ -568,7 +579,7 @@ export default function Home() {
           REPLAY
       ===================================================== */}
 
-      <ReplayButton onReplay={handleReplay} />
+      
 
     </div>
   );

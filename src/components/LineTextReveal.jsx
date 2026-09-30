@@ -207,7 +207,7 @@ people remember.`,
         items-center
         justify-center
         overflow-hidden
-        bg-[#3A0D18]
+        bg-[#2B0A12]
         px-6
         py-32
         sm:px-12
