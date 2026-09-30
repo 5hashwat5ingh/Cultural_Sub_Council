@@ -101,7 +101,7 @@ export default function Navbar({
 
         pointer-events-auto
 
-        ${Events ? "bg-white" : "bg-[#2B0A12]"}
+        ${Events ? "bg-transparent" : "bg-[#2B0A12]"}
       `}
     >
 
