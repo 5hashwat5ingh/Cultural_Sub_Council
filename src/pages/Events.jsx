@@ -11,7 +11,7 @@ const events = [
     title: "EVENTS",
     subtitle: "A NEW BEGINNING",
     image:
-      "/src/assets/hat.jpeg",
+      "https://res.cloudinary.com/yh0rqnnu/image/upload/f_auto,q_auto/WhatsApp_Image_2026-09-29_at_10.42.23_PM",
   },
   {
     number: "02",
