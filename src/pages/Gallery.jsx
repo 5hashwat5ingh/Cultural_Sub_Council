@@ -7,20 +7,19 @@ import {
   AnimatePresence,
   motion,
 } from "framer-motion";
+
 import Navbar from "../components/Navbar";
+
 import {
   galleryItems,
   galleryCategories,
 } from "../data/galleryData";
 
 import GalleryVideo from "../components/GalleryVideo";
-
-
-
-
+import LazyImage from "../components/LazyImage";
 
 /* =========================================================
-   ICON
+   CLOSE ICON
 ========================================================= */
 
 function CloseIcon() {
@@ -41,22 +40,16 @@ function CloseIcon() {
   );
 }
 
-
 /* =========================================================
    GALLERY PAGE
 ========================================================= */
 
 export default function Gallery() {
-  const [
-    activeCategory,
-    setActiveCategory,
-  ] = useState("All");
+  const [activeCategory, setActiveCategory] =
+    useState("All");
 
-  const [
-    selectedItem,
-    setSelectedItem,
-  ] = useState(null);
-
+  const [selectedItem, setSelectedItem] =
+    useState(null);
 
   /* =======================================================
      FILTER
@@ -70,15 +63,13 @@ export default function Gallery() {
             item.category === activeCategory
         );
 
-
   /* =======================================================
-     LOCK BODY SCROLL
+     LOCK BODY SCROLL WHEN VIEWER IS OPEN
   ======================================================= */
 
   useEffect(() => {
     if (selectedItem) {
-      document.body.style.overflow =
-        "hidden";
+      document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
     }
@@ -87,7 +78,6 @@ export default function Gallery() {
       document.body.style.overflow = "";
     };
   }, [selectedItem]);
-
 
   /* =======================================================
      ESCAPE KEY
@@ -113,40 +103,28 @@ export default function Gallery() {
     };
   }, []);
 
-
   /* =======================================================
-     GRID SIZE
+     RENDER
   ======================================================= */
 
-  const getGridClass = (item) => {
-    switch (item.size) {
-      case "tall":
-        return "col-span-1 row-span-2";
-
-      case "wide":
-        return "col-span-2 row-span-1";
-
-      case "large":
-        return "col-span-2 row-span-2";
-
-      case "normal":
-      default:
-        return "col-span-1 row-span-1";
-    }
-  };
-
-
   return (
-    
     <main
       className="
         min-h-screen
-        overflow-hidden
+        overflow-x-clip
         bg-[#2B0A12]
         text-[#F7EBD0]
       "
     >
-<Navbar Gallery/>
+
+      {/* =====================================================
+          NAVBAR
+      ===================================================== */}
+
+      {/* Gallery navbar scrolls away */}
+      <Navbar Gallery />
+
+
       {/* =====================================================
           HERO
       ===================================================== */}
@@ -168,7 +146,7 @@ export default function Gallery() {
         "
       >
 
-        {/* Maroon glow */}
+        {/* MAROON GLOW */}
 
         <div
           className="
@@ -184,7 +162,8 @@ export default function Gallery() {
           "
         />
 
-        {/* Gold glow */}
+
+        {/* GOLD GLOW */}
 
         <div
           className="
@@ -200,7 +179,8 @@ export default function Gallery() {
           "
         />
 
-        {/* Subtle bottom glow */}
+
+        {/* BOTTOM GLOW */}
 
         <div
           className="
@@ -218,6 +198,8 @@ export default function Gallery() {
         />
 
 
+        {/* HERO CONTENT */}
+
         <div
           className="
             relative
@@ -232,7 +214,7 @@ export default function Gallery() {
 
           <div>
 
-            {/* Eyebrow */}
+            {/* EYEBROW */}
 
             <motion.div
               initial={{
@@ -276,7 +258,7 @@ export default function Gallery() {
             </motion.div>
 
 
-            {/* Heading */}
+            {/* HEADING */}
 
             <motion.h1
               initial={{
@@ -306,11 +288,10 @@ export default function Gallery() {
               <span className="text-[#C6A15B]">
                 MOMENTS.
               </span>
-
             </motion.h1>
 
 
-            {/* Description */}
+            {/* DESCRIPTION */}
 
             <motion.p
               initial={{
@@ -341,7 +322,7 @@ export default function Gallery() {
             </motion.p>
 
 
-            {/* Bottom details */}
+            {/* DETAILS */}
 
             <motion.div
               initial={{
@@ -368,7 +349,9 @@ export default function Gallery() {
               "
             >
 
-              <span>Performances</span>
+              <span>
+                Performances
+              </span>
 
               <span
                 className="
@@ -379,7 +362,9 @@ export default function Gallery() {
                 "
               />
 
-              <span>Creativity</span>
+              <span>
+                Creativity
+              </span>
 
               <span
                 className="
@@ -390,25 +375,29 @@ export default function Gallery() {
                 "
               />
 
-              <span>Memories</span>
+              <span>
+                Memories
+              </span>
 
             </motion.div>
 
           </div>
 
         </div>
+
       </section>
 
 
       {/* =====================================================
-          CATEGORY FILTER
+          STICKY CATEGORY FILTER
       ===================================================== */}
 
       <section
         className="
           sticky
           top-0
-          z-40
+          z-[60]
+          w-full
           border-y
           border-[#C6A15B]/20
           bg-[#2B0A12]/95
@@ -427,6 +416,7 @@ export default function Gallery() {
             py-4
             sm:px-10
             lg:px-20
+            [&::-webkit-scrollbar]:hidden
           "
         >
 
@@ -434,7 +424,8 @@ export default function Gallery() {
             (category) => {
 
               const isActive =
-                activeCategory === category;
+                activeCategory ===
+                category;
 
               return (
                 <button
@@ -459,8 +450,20 @@ export default function Gallery() {
 
                     ${
                       isActive
-                        ? "border-[#C6A15B] bg-[#C6A15B] text-[#2B0A12] shadow-[0_0_25px_rgba(198,161,91,0.12)]"
-                        : "border-[#C6A15B]/25 bg-transparent text-[#D8C7AA] hover:border-[#C6A15B]/70 hover:bg-[#3A0D18] hover:text-[#D9B86C]"
+                        ? `
+                          border-[#C6A15B]
+                          bg-[#C6A15B]
+                          text-[#2B0A12]
+                          shadow-[0_0_25px_rgba(198,161,91,0.12)]
+                        `
+                        : `
+                          border-[#C6A15B]/25
+                          bg-transparent
+                          text-[#D8C7AA]
+                          hover:border-[#C6A15B]/70
+                          hover:bg-[#3A0D18]
+                          hover:text-[#D9B86C]
+                        `
                     }
                   `}
                 >
@@ -471,11 +474,12 @@ export default function Gallery() {
           )}
 
         </div>
+
       </section>
 
 
       {/* =====================================================
-          MIXED GALLERY
+          MIXED MASONRY GALLERY
       ===================================================== */}
 
       <section
@@ -500,27 +504,19 @@ export default function Gallery() {
           <motion.div
             layout
             className="
-              grid
-              auto-rows-[130px]
-              grid-cols-3
+              columns-2
               gap-1.5
-
-              sm:auto-rows-[190px]
+              sm:columns-3
               sm:gap-2
-
-              lg:auto-rows-[245px]
+              lg:columns-4
+              lg:gap-3
             "
           >
 
-            <AnimatePresence
-              mode="popLayout"
-            >
+            <AnimatePresence mode="popLayout">
 
               {filteredItems.map(
                 (item, index) => {
-
-                  const gridClass =
-                    getGridClass(item);
 
                   return (
                     <motion.button
@@ -528,56 +524,57 @@ export default function Gallery() {
                       layout
                       type="button"
                       onClick={() =>
-                        setSelectedItem(
-                          item
-                        )
+                        setSelectedItem(item)
                       }
                       initial={{
                         opacity: 0,
-                        scale: 0.96,
+                        y: 20,
                       }}
                       animate={{
                         opacity: 1,
-                        scale: 1,
+                        y: 0,
                       }}
                       exit={{
                         opacity: 0,
                         scale: 0.96,
                       }}
                       transition={{
-                        duration: 0.45,
+                        duration: 0.4,
                         delay: Math.min(
-                          index * 0.025,
-                          0.25
+                          index * 0.02,
+                          0.2
                         ),
                       }}
-                      className={`
+                      style={{
+                        contentVisibility: "auto",
+                        containIntrinsicSize:
+                          "400px",
+                      }}
+                      className="
                         group
                         relative
+                        mb-1.5
+                        block
+                        w-full
+                        break-inside-avoid
                         overflow-hidden
                         rounded-[3px]
                         bg-[#3A0D18]
-                        ${gridClass}
-                      `}
+                        sm:mb-2
+                        lg:mb-3
+                      "
                     >
 
-                      {/* =====================================
+                      {/* =================================================
                           PHOTO
-                      ===================================== */}
+                      ================================================= */}
 
                       {item.type ===
                         "photo" && (
-                        <img
+                        <LazyImage
                           src={item.image}
                           alt={item.title}
-                          loading="lazy"
-                          decoding="async"
                           className="
-                            absolute
-                            inset-0
-                            h-full
-                            w-full
-                            object-cover
                             transition-transform
                             duration-700
                             ease-out
@@ -587,44 +584,35 @@ export default function Gallery() {
                       )}
 
 
-                      {/* =====================================
-                          VIDEO PREVIEW
-                      ===================================== */}
+                      {/* =================================================
+                          VIDEO
+                      ================================================= */}
 
                       {item.type ===
                         "video" && (
-                        <GalleryVideo
-                          src={item.video}
-                          thumbnail={
-                            item.thumbnail
-                          }
-                          title={
-                            item.title
-                          }
-                        />
+                        <div
+                          className="
+                            relative
+                            aspect-[4/5]
+                            w-full
+                            overflow-hidden
+                            bg-[#1D070D]
+                          "
+                        >
+
+                          <GalleryVideo
+                            src={item.video}
+                            title={item.title}
+                          />
+
+                        </div>
                       )}
 
 
-                      {/* =====================================
-                          HOVER OVERLAY
-                      ===================================== */}
-
-                      <div
-                        className="
-                          pointer-events-none
-                          absolute
-                          inset-0
-                          bg-[#2B0A12]/10
-                          transition-all
-                          duration-500
-                          group-hover:bg-[#2B0A12]/45
-                        "
-                      />
-
-
-                      {/* =====================================
-                          GOLD BORDER
-                      ===================================== */}
+                      {/* =================================================
+                          GOLD BORDER ONLY
+                          NO DARK OVERLAY
+                      ================================================= */}
 
                       <div
                         className="
@@ -640,9 +628,9 @@ export default function Gallery() {
                       />
 
 
-                      {/* =====================================
-                          HOVER INFORMATION
-                      ===================================== */}
+                      {/* =================================================
+                          INFORMATION
+                      ================================================= */}
 
                       <div
                         className="
@@ -652,18 +640,18 @@ export default function Gallery() {
                           bottom-0
                           translate-y-4
                           bg-gradient-to-t
-                          from-[#1D070D]/90
-                          via-[#1D070D]/40
+                          from-[#1D070D]/95
+                          via-[#1D070D]/55
                           to-transparent
                           p-4
-                          pt-12
+                          pt-16
                           opacity-0
                           transition-all
                           duration-500
                           group-hover:translate-y-0
                           group-hover:opacity-100
                           sm:p-5
-                          sm:pt-16
+                          sm:pt-20
                         "
                       >
 
@@ -701,12 +689,8 @@ export default function Gallery() {
 
           </motion.div>
 
-
-          {/* Gallery footer */}
-
-          
-
         </div>
+
       </section>
 
 
@@ -744,7 +728,7 @@ export default function Gallery() {
             }
           >
 
-            {/* Close */}
+            {/* CLOSE BUTTON */}
 
             <button
               type="button"
@@ -778,7 +762,7 @@ export default function Gallery() {
             </button>
 
 
-            {/* Media */}
+            {/* MEDIA CONTAINER */}
 
             <motion.div
               initial={{
@@ -815,17 +799,15 @@ export default function Gallery() {
               "
             >
 
-              {/* Photo */}
+              {/* =================================================
+                  FULLSCREEN PHOTO
+              ================================================= */}
 
               {selectedItem.type ===
                 "photo" && (
                 <img
-                  src={
-                    selectedItem.image
-                  }
-                  alt={
-                    selectedItem.title
-                  }
+                  src={selectedItem.image}
+                  alt={selectedItem.title}
                   className="
                     max-h-[78vh]
                     max-w-[90vw]
@@ -835,16 +817,17 @@ export default function Gallery() {
               )}
 
 
-              {/* Video */}
+              {/* =================================================
+                  FULLSCREEN VIDEO
+              ================================================= */}
 
               {selectedItem.type ===
                 "video" && (
                 <video
-                  src={
-                    selectedItem.video
-                  }
+                  src={selectedItem.video}
                   controls
                   autoPlay
+                  muted
                   playsInline
                   preload="metadata"
                   className="
@@ -856,7 +839,9 @@ export default function Gallery() {
               )}
 
 
-              {/* Information */}
+              {/* =================================================
+                  INFORMATION
+              ================================================= */}
 
               <div
                 className="
@@ -883,9 +868,7 @@ export default function Gallery() {
                       text-[#C6A15B]
                     "
                   >
-                    {
-                      selectedItem.category
-                    }
+                    {selectedItem.category}
                   </p>
 
                   <h3
@@ -896,9 +879,7 @@ export default function Gallery() {
                       sm:text-base
                     "
                   >
-                    {
-                      selectedItem.title
-                    }
+                    {selectedItem.title}
                   </h3>
 
                 </div>
@@ -926,132 +907,153 @@ export default function Gallery() {
         )}
 
       </AnimatePresence>
+
+
+      {/* =====================================================
+          FOOTER
+      ===================================================== */}
+
       <footer
-              id="contact"
+        id="contact"
+        className="
+          relative
+          z-20
+          m-0
+          w-full
+          border-t
+          border-[#C9A24D]/20
+          bg-[#1D070D]
+          px-6
+          py-16
+          sm:px-12
+          sm:py-20
+          lg:px-20
+          lg:py-24
+        "
+      >
+
+        <div
+          className="
+            mx-auto
+            flex
+            max-w-7xl
+            flex-col
+            items-start
+            justify-between
+            gap-10
+            md:flex-row
+            md:items-end
+          "
+        >
+
+          {/* FOOTER BRAND */}
+
+          <div>
+
+            <div
               className="
-                relative
-                z-20
-                m-0
-                w-full
-                border-t
-                border-[#C9A24D]/20
-                bg-[#1D070D]
-                px-6
-                py-16
-                sm:px-12
-                sm:py-20
-                lg:px-20
-                lg:py-24
+                mb-3
+                flex
+                items-center
+                gap-3
               "
             >
-      
-              <div
+
+              <span
                 className="
-                  mx-auto
-                  flex
-                  max-w-7xl
-                  flex-col
-                  items-start
-                  justify-between
-                  gap-10
-                  md:flex-row
-                  md:items-end
+                  h-2
+                  w-2
+                  rotate-45
+                  bg-[#C9A24D]
+                "
+              />
+
+              <span
+                className="
+                  text-xs
+                  uppercase
+                  tracking-[0.25em]
+                  text-[#C9A24D]
                 "
               >
-      
-                {/* Footer Brand */}
-      
-                <div>
-      
-                  <div className="mb-3 flex items-center gap-3">
-      
-                    <span className="h-2 w-2 rotate-45 bg-[#C9A24D]" />
-      
-                    <span
-                      className="
-                        text-xs
-                        uppercase
-                        tracking-[0.25em]
-                        text-[#C9A24D]
-                      "
-                    >
-                      Get in Touch
-                    </span>
-      
-                  </div>
-      
-                  <p
-                    className="
-                      text-2xl
-                      font-medium
-                      tracking-tight
-                      text-[#F7EBD0]
-                      sm:text-4xl
-                    "
-                  >
-                    Cultural Sub Council
-                  </p>
-      
-                </div>
-      
-                {/* Footer Links */}
-      
-                <div
-                  className="
-                    flex
-                    flex-col
-                    gap-8
-                    text-xs
-                    uppercase
-                    tracking-[0.2em]
-                    text-[#D8C7AA]
-                    sm:flex-row
-                    sm:gap-12
-                  "
-                >
-      
-                  <a
-                    href="#work"
-                    className="
-                      transition-colors
-                      duration-300
-                      hover:text-[#C6A15B]
-                    "
-                  >
-                    Clubs
-                  </a>
-      
-                  <a
-                    href="#manifesto"
-                    className="
-                      transition-colors
-                      duration-300
-                      hover:text-[#C9A24D]
-                    "
-                  >
-                    About
-                  </a>
-      
-                  <a
-                    href="#contact"
-                    className="
-                      transition-colors
-                      duration-300
-                      hover:text-[#C9A24D]
-                    "
-                  >
-                    Contact
-                  </a>
-      
-                  <span className="text-[#8F7663]">
-                    © {new Date().getFullYear()} Cultural Sub Council
-                  </span>
-      
-                </div>
-      
-              </div>
-      
-            </footer>
+                Get in Touch
+              </span>
+
+            </div>
+
+            <p
+              className="
+                text-2xl
+                font-medium
+                tracking-tight
+                text-[#F7EBD0]
+                sm:text-4xl
+              "
+            >
+              Cultural Sub Council
+            </p>
+
+          </div>
+
+
+          {/* FOOTER LINKS */}
+
+          <div
+            className="
+              flex
+              flex-col
+              gap-8
+              text-xs
+              uppercase
+              tracking-[0.2em]
+              text-[#D8C7AA]
+              sm:flex-row
+              sm:gap-12
+            "
+          >
+
+            <a
+              href="#work"
+              className="
+                transition-colors
+                duration-300
+                hover:text-[#C6A15B]
+              "
+            >
+              Clubs
+            </a>
+
+            <a
+              href="#manifesto"
+              className="
+                transition-colors
+                duration-300
+                hover:text-[#C9A24D]
+              "
+            >
+              About
+            </a>
+
+            <a
+              href="#contact"
+              className="
+                transition-colors
+                duration-300
+                hover:text-[#C9A24D]
+              "
+            >
+              Contact
+            </a>
+
+            <span className="text-[#8F7663]">
+              © {new Date().getFullYear()} Cultural Sub Council
+            </span>
+
+          </div>
+
+        </div>
+
+      </footer>
 
     </main>
   );

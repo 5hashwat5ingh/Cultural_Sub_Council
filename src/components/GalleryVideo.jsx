@@ -1,141 +1,56 @@
-import React, {
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-function PlayIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      className="h-3.5 w-3.5"
-      aria-hidden="true"
-    >
-      <path
-        d="M8 5.5L18 12L8 18.5V5.5Z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}
-
-export default function GalleryVideo({
-  src,
-  thumbnail,
-  title,
-}) {
+export default function GalleryVideo({ src, title }) {
   const containerRef = useRef(null);
   const videoRef = useRef(null);
 
-  const [isNearViewport, setIsNearViewport] =
-    useState(false);
-
-  const [hasError, setHasError] =
-    useState(false);
-
-  /* =======================================================
-     OBSERVE VIEWPORT
-  ======================================================= */
+  const [isNearViewport, setIsNearViewport] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     const element = containerRef.current;
-
     if (!element) return;
 
-    const observer =
-      new IntersectionObserver(
-        ([entry]) => {
-          setIsNearViewport(
-            entry.isIntersecting
-          );
-        },
-        {
-          /*
-            Start loading slightly before the video
-            actually enters the screen.
-          */
-          rootMargin: "300px 0px",
-          threshold: 0.01,
-        }
-      );
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsNearViewport(entry.isIntersecting);
+      },
+      {
+        rootMargin: "250px 0px",
+        threshold: 0.05,
+      }
+    );
 
     observer.observe(element);
 
-    return () => {
-      observer.disconnect();
-    };
+    return () => observer.disconnect();
   }, []);
 
-  /* =======================================================
-     PLAY WHEN NEAR VIEWPORT
-  ======================================================= */
-
   useEffect(() => {
     const video = videoRef.current;
+    if (!video) return;
 
-    if (!video || !isNearViewport) {
-      return;
+    if (isNearViewport) {
+      const playVideo = async () => {
+        try {
+          await video.play();
+        } catch {
+          // Autoplay may be blocked by browser
+        }
+      };
+
+      playVideo();
+    } else {
+      video.pause();
     }
-
-    const playVideo = async () => {
-      try {
-        await video.play();
-      } catch {
-        /*
-          Some browsers may prevent autoplay.
-          The thumbnail remains visible.
-        */
-      }
-    };
-
-    playVideo();
-  }, [isNearViewport]);
-
-  /* =======================================================
-     PAUSE WHEN OUTSIDE VIEWPORT
-  ======================================================= */
-
-  useEffect(() => {
-    const video = videoRef.current;
-
-    if (!video || isNearViewport) {
-      return;
-    }
-
-    video.pause();
   }, [isNearViewport]);
 
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 overflow-hidden"
+      className="absolute inset-0 overflow-hidden bg-[#1D070D]"
     >
-
-      {/* =================================================
-          THUMBNAIL
-      ================================================= */}
-
-      <img
-        src={thumbnail}
-        alt={title}
-        loading="lazy"
-        className="
-          absolute
-          inset-0
-          h-full
-          w-full
-          object-cover
-        "
-      />
-
-      {/* =================================================
-          ACTUAL VIDEO
-
-          Only rendered when the card is close to
-          the viewport.
-      ================================================= */}
-
       {isNearViewport && !hasError && (
         <video
           ref={videoRef}
@@ -143,45 +58,45 @@ export default function GalleryVideo({
           muted
           loop
           playsInline
+          autoPlay
           preload="metadata"
+          onLoadedData={() => setIsReady(true)}
           onError={() => setHasError(true)}
-          className="
-            absolute
-            inset-0
-            h-full
-            w-full
+          className={`
+            absolute inset-0
+            h-full w-full
             object-cover
-          "
+            transition-opacity duration-500
+            ${isReady ? "opacity-100" : "opacity-0"}
+          `}
+          aria-label={title}
         />
       )}
 
-      {/* =================================================
-          PLAY INDICATOR
-      ================================================= */}
+      {/* Loading */}
+      {isNearViewport && !isReady && !hasError && (
+        <div className="absolute inset-0 flex items-center justify-center bg-[#1D070D]">
+          <div
+            className="
+              h-6 w-6
+              animate-spin
+              rounded-full
+              border-2
+              border-[#C6A15B]/20
+              border-t-[#C6A15B]
+            "
+          />
+        </div>
+      )}
 
-      <div
-        className="
-          absolute
-          right-4
-          top-4
-          flex
-          h-9
-          w-9
-          items-center
-          justify-center
-          rounded-full
-          border
-          border-white/40
-          bg-[#2B0A12]/50
-          text-white
-          backdrop-blur-md
-          transition-all
-          duration-300
-        "
-      >
-        <PlayIcon />
-      </div>
-
+      {/* Error */}
+      {hasError && (
+        <div className="absolute inset-0 flex items-center justify-center bg-[#3A0D18] px-5 text-center">
+          <span className="text-[9px] uppercase tracking-[0.2em] text-[#8F7663]">
+            Video unavailable
+          </span>
+        </div>
+      )}
     </div>
   );
 }
