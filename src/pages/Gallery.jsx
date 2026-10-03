@@ -9,6 +9,7 @@ import {
 } from "framer-motion";
 
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 import {
   galleryItems,
@@ -907,153 +908,9 @@ export default function Gallery() {
         )}
 
       </AnimatePresence>
+      <Footer />
 
-
-      {/* =====================================================
-          FOOTER
-      ===================================================== */}
-
-      <footer
-        id="contact"
-        className="
-          relative
-          z-20
-          m-0
-          w-full
-          border-t
-          border-[#C9A24D]/20
-          bg-[#1D070D]
-          px-6
-          py-16
-          sm:px-12
-          sm:py-20
-          lg:px-20
-          lg:py-24
-        "
-      >
-
-        <div
-          className="
-            mx-auto
-            flex
-            max-w-7xl
-            flex-col
-            items-start
-            justify-between
-            gap-10
-            md:flex-row
-            md:items-end
-          "
-        >
-
-          {/* FOOTER BRAND */}
-
-          <div>
-
-            <div
-              className="
-                mb-3
-                flex
-                items-center
-                gap-3
-              "
-            >
-
-              <span
-                className="
-                  h-2
-                  w-2
-                  rotate-45
-                  bg-[#C9A24D]
-                "
-              />
-
-              <span
-                className="
-                  text-xs
-                  uppercase
-                  tracking-[0.25em]
-                  text-[#C9A24D]
-                "
-              >
-                Get in Touch
-              </span>
-
-            </div>
-
-            <p
-              className="
-                text-2xl
-                font-medium
-                tracking-tight
-                text-[#F7EBD0]
-                sm:text-4xl
-              "
-            >
-              Cultural Sub Council
-            </p>
-
-          </div>
-
-
-          {/* FOOTER LINKS */}
-
-          <div
-            className="
-              flex
-              flex-col
-              gap-8
-              text-xs
-              uppercase
-              tracking-[0.2em]
-              text-[#D8C7AA]
-              sm:flex-row
-              sm:gap-12
-            "
-          >
-
-            <a
-              href="#work"
-              className="
-                transition-colors
-                duration-300
-                hover:text-[#C6A15B]
-              "
-            >
-              Clubs
-            </a>
-
-            <a
-              href="#manifesto"
-              className="
-                transition-colors
-                duration-300
-                hover:text-[#C9A24D]
-              "
-            >
-              About
-            </a>
-
-            <a
-              href="#contact"
-              className="
-                transition-colors
-                duration-300
-                hover:text-[#C9A24D]
-              "
-            >
-              Contact
-            </a>
-
-            <span className="text-[#8F7663]">
-              © {new Date().getFullYear()} Cultural Sub Council
-            </span>
-
-          </div>
-
-        </div>
-
-      </footer>
+      
 
     </main>
   );

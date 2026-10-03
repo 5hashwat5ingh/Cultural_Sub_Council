@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import ClubsPage from "./pages/Clubs";
 import Events from "./pages/Events";
 import Gallery from "./pages/Gallery";
+import Team from "./pages/Team";
 
 import Dance from "./pages/clubs/Dance";
 import Dramatics from "./pages/clubs/Dramatics";
@@ -29,6 +30,7 @@ export default function App() {
         <Route path="/clubs" element={<ClubsPage />} />
 
         <Route path="/events" element={<Events />} />
+        <Route path="/team" element={<Team />} />
          {/* Events */}
       <Route path="/events" element={<Events />} />
       <Route path="/events/heats-25" element={<Heats25 />} />

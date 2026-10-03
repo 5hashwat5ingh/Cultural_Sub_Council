@@ -2,27 +2,18 @@ import React, { useState, useCallback } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
 import Navbar from "../components/Navbar";
-import TextReveal from "../components/TextReveal";
+import Footer from "../components/Footer";
+import TextReveal from "../components/TypingText";
 import LineTextReveal from "../components/LineTextReveal";
 import ScrollStory from "../components/ScrollStory";
 import FacultyMessages from "../components/FacultyMessages";
 import PageReveal from "../components/PageReveal";
-import ReplayButton from "../components/ReplayButton";
 
 export default function Home() {
   const [animationKey, setAnimationKey] = useState(0);
   const shouldReduceMotion = useReducedMotion();
 
-  const handleReplay = useCallback(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-
-    setTimeout(() => {
-      setAnimationKey((prev) => prev + 1);
-    }, 500);
-  }, []);
+  
 
   const paragraphText =
     "Great experiences begin with simple ideas, thoughtful design, and meaningful interactions that people remember.";
@@ -274,22 +265,22 @@ export default function Home() {
             ================================================= */}
 
             <div className="mb-8 sm:mb-10">
-              <TextReveal
-                text={"A Stage \nFor Every Expression"}
-                as="h1"
-                className="
-                  text-[clamp(3.1rem,7.4vw,8.5rem)]
-                  font-semibold
-                  leading-[0.94]
-                  tracking-[-0.02em]
-                  text-[#F8F1DF]
-                "
-                delay={0.5}
-                duration={0.9}
-                stagger={0.1}
-                ease={[0.22, 1, 0.36, 1]}
-              />
-            </div>
+  <TextReveal
+    text={"A Stage \nFor Every Expression"}
+    as="h1"
+    className="
+      text-[clamp(3.1rem,7.4vw,8.5rem)]
+      font-semibold
+      leading-[0.94]
+      tracking-[-0.02em]
+      text-[#F8F1DF]
+    "
+    delay={0.5}
+    duration={0.9}
+    stagger={0.1}
+    ease={[0.22, 1, 0.36, 1]}
+  />
+</div>
 
             {/* =================================================
                 HERITAGE ORNAMENT
@@ -343,41 +334,7 @@ export default function Home() {
               SCROLL INDICATOR
           ================================================= */}
 
-          <motion.div
-            initial={
-              shouldReduceMotion
-                ? { opacity: 1 }
-                : { opacity: 0 }
-            }
-            animate={{
-              opacity: 1,
-            }}
-            transition={{
-              duration: shouldReduceMotion ? 0 : 0.8,
-              delay: shouldReduceMotion ? 0 : 1.7,
-            }}
-            className="
-              absolute
-              bottom-8
-              left-6
-              flex
-              items-center
-              gap-3
-              text-[10px]
-              uppercase
-              tracking-[0.24em]
-              text-[#D8C7AA]
-              sm:left-12
-              sm:text-[11px]
-              lg:left-28
-            "
-          >
-            <span>Scroll</span>
-
-            <span className="animate-bounce text-[16px] text-[#C9A24D]">
-              ↓
-            </span>
-          </motion.div>
+          
         </main>
       </div>
 
@@ -437,132 +394,12 @@ export default function Home() {
         "
       >
         <ScrollStory />
+        <Footer />
       </section>
 
-      {/* =====================================================
-          FOOTER
-      ===================================================== */}
+     
 
-      <footer
-        id="contact"
-        className="
-          relative
-          z-20
-          m-0
-          w-full
-          bg-[#1D070D]
-          px-6
-          py-16
-          sm:px-12
-          sm:py-20
-          lg:px-20
-          lg:py-24
-        "
-      >
-        <div
-          className="
-            mx-auto
-            flex
-            max-w-7xl
-            flex-col
-            items-start
-            justify-between
-            gap-10
-            md:flex-row
-            md:items-end
-          "
-        >
-          {/* Footer Brand */}
-
-          <div>
-            <div className="mb-3 flex items-center gap-3">
-              <span className="h-2 w-2 rotate-45 bg-[#C9A24D]" />
-
-              <span
-                className="
-                  text-xs
-                  uppercase
-                  tracking-[0.25em]
-                  text-[#C9A24D]
-                "
-              >
-                Get in Touch
-              </span>
-            </div>
-
-            <p
-              className="
-                text-2xl
-                font-medium
-                tracking-tight
-                text-[#F7EBD0]
-                sm:text-4xl
-              "
-            >
-              Cultural Sub Council
-            </p>
-          </div>
-
-          {/* Footer Links */}
-
-          <div
-            className="
-              flex
-              flex-col
-              gap-8
-              text-xs
-              uppercase
-              tracking-[0.2em]
-              text-[#D8C7AA]
-              sm:flex-row
-              sm:gap-12
-            "
-          >
-            <a
-              href="#work"
-              className="
-                transition-colors
-                duration-300
-                hover:text-[#C6A15B]
-              "
-            >
-              Clubs
-            </a>
-
-            <a
-              href="#manifesto"
-              className="
-                transition-colors
-                duration-300
-                hover:text-[#C9A24D]
-              "
-            >
-              About
-            </a>
-
-            <a
-              href="#contact"
-              className="
-                transition-colors
-                duration-300
-                hover:text-[#C9A24D]
-              "
-            >
-              Contact
-            </a>
-
-            <span className="text-[#8F7663]">
-              © {new Date().getFullYear()} Cultural Sub Council
-            </span>
-          </div>
-        </div>
-      </footer>
-
-      {/* =====================================================
-          REPLAY
-      ===================================================== */}
-
-      <ReplayButton onReplay={handleReplay} />
+     
     </div>
   );
 }

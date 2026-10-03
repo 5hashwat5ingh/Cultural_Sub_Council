@@ -267,7 +267,7 @@ export default function Navbar({
           {/* Teams */}
            <li>
             <Link
-              to="/#institution"
+              to="/team"
               className="
                 nav-link
                 py-1
@@ -651,10 +651,10 @@ export default function Navbar({
                 >
                   Events
                 </Link>
-{/* INSTITUTION */}
+{/* Team */}
 
                 <Link
-                  to="/#institution"
+                  to="/team"
                   onClick={closeMenu}
 
                   className="

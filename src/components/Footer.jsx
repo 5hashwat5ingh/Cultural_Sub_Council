@@ -1,0 +1,390 @@
+import React from "react";
+import { Mail, ArrowUpRight } from "lucide-react";
+import {
+  FaInstagram,
+  FaLinkedinIn,
+  FaYoutube,
+  FaFacebookF,
+} from "react-icons/fa";
+import { Link } from "react-router-dom";
+
+const socialLinks = [
+  {
+    name: "Instagram",
+    href: "https://www.instagram.com/",
+    icon: FaInstagram,
+  },
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/",
+    icon: FaLinkedinIn,
+  },
+  {
+    name: "YouTube",
+    href: "https://www.youtube.com/",
+    icon: FaYoutube,
+  },
+  {
+    name: "Facebook",
+    href: "https://www.facebook.com/",
+    icon: FaFacebookF,
+  },
+];
+
+export default function Footer() {
+  return (
+    <footer
+      id="contact"
+      className="
+        relative
+        z-20
+        w-full
+        overflow-hidden
+        bg-[#1D070D]
+        px-6
+        py-14
+        sm:px-12
+        sm:py-16
+        lg:px-20
+        lg:py-20
+      "
+    >
+      {/* Background Glow */}
+      <div
+        className="
+          pointer-events-none
+          absolute
+          -right-32
+          -top-32
+          h-80
+          w-80
+          rounded-full
+          bg-[#7A1B2F]/15
+          blur-[100px]
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          -bottom-40
+          left-1/3
+          h-80
+          w-80
+          rounded-full
+          bg-[#C6A15B]/5
+          blur-[100px]
+        "
+      />
+
+      {/* Main Footer Content */}
+      <div className="relative z-10 mx-auto max-w-7xl">
+        <div
+          className="
+            flex
+            flex-col
+            gap-12
+            lg:flex-row
+            lg:items-end
+            lg:justify-between
+          "
+        >
+          {/* Left Section */}
+          <div className="max-w-xl">
+            {/* Label */}
+            <div className="mb-4 flex items-center gap-3">
+              <span
+                className="
+                  h-2
+                  w-2
+                  rotate-45
+                  bg-[#C9A24D]
+                "
+              />
+
+              <span
+                className="
+                  text-[9px]
+                  font-medium
+                  uppercase
+                  tracking-[0.3em]
+                  text-[#C9A24D]
+                "
+              >
+                Get in Touch
+              </span>
+            </div>
+
+            {/* Title */}
+            <h2
+              className="
+                text-3xl
+                font-medium
+                tracking-[-0.03em]
+                text-[#F7EBD0]
+                sm:text-4xl
+                lg:text-5xl
+              "
+            >
+              Cultural Sub Council
+            </h2>
+
+            {/* Description */}
+            <p
+              className="
+                mt-4
+                max-w-md
+                text-sm
+                leading-7
+                text-[#D8C7AA]/55
+              "
+            >
+              Creating spaces for creativity, expression and collaboration
+              across the campus community.
+            </p>
+
+            {/* Email */}
+            <a
+              href="mailto:csc@mmmut.ac.in"
+              className="
+                group
+                mt-6
+                inline-flex
+                items-center
+                gap-2
+                text-[9px]
+                uppercase
+                tracking-[0.2em]
+                text-[#D9B86C]
+                transition-colors
+                duration-300
+                hover:text-[#F7EBD0]
+              "
+            >
+              <Mail size={14} strokeWidth={1.5} />
+
+              <span>csc@mmmut.ac.in</span>
+
+              <ArrowUpRight
+                size={12}
+                strokeWidth={1.5}
+                className="
+                  transition-transform
+                  duration-300
+                  group-hover:translate-x-1
+                  group-hover:-translate-y-1
+                "
+              />
+            </a>
+          </div>
+
+          {/* Right Section */}
+          <div
+            className="
+              flex
+              flex-col
+              gap-9
+              sm:flex-row
+              sm:items-start
+              sm:gap-16
+              lg:gap-20
+            "
+          >
+            {/* Explore */}
+            <div>
+              <p
+                className="
+                  mb-4
+                  text-[8px]
+                  uppercase
+                  tracking-[0.3em]
+                  text-[#C6A15B]/60
+                "
+              >
+                Explore
+              </p>
+
+              <div
+                className="
+                  flex
+                  flex-col
+                  gap-3
+                  text-[10px]
+                  uppercase
+                  tracking-[0.18em]
+                "
+              >
+                <Link
+                  to="/"
+                  className="
+                    text-[#D8C7AA]/65
+                    transition-colors
+                    duration-300
+                    hover:text-[#C6A15B]
+                  "
+                >
+                  Home
+                </Link>
+
+                <Link
+                  to="/team"
+                  className="
+                    text-[#D8C7AA]/65
+                    transition-colors
+                    duration-300
+                    hover:text-[#C6A15B]
+                  "
+                >
+                  Team
+                </Link>
+
+                <Link
+                  to="/events"
+                  className="
+                    text-[#D8C7AA]/65
+                    transition-colors
+                    duration-300
+                    hover:text-[#C6A15B]
+                  "
+                >
+                  Events
+                </Link>
+
+                <Link
+                  to="/gallery"
+                  className="
+                    text-[#D8C7AA]/65
+                    transition-colors
+                    duration-300
+                    hover:text-[#C6A15B]
+                  "
+                >
+                  Gallery
+                </Link>
+
+                <Link
+                  to="/clubs"
+                  className="
+                    text-[#D8C7AA]/65
+                    transition-colors
+                    duration-300
+                    hover:text-[#C6A15B]
+                  "
+                >
+                  Clubs
+                </Link>
+              </div>
+            </div>
+
+            {/* Social Media */}
+            <div>
+              <p
+                className="
+                  mb-4
+                  text-[8px]
+                  uppercase
+                  tracking-[0.3em]
+                  text-[#C6A15B]/60
+                "
+              >
+                Follow Us
+              </p>
+
+              <div className="flex items-center gap-2">
+                {socialLinks.map((social) => {
+                  const Icon = social.icon;
+
+                  return (
+                    <a
+                      key={social.name}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.name}
+                      title={social.name}
+                      className="
+                        group
+                        flex
+                        h-9
+                        w-9
+                        items-center
+                        justify-center
+                        rounded-full
+                        border
+                        border-[#C6A15B]/20
+                        bg-[#2B0A12]
+                        text-[#D8C7AA]/65
+                        transition-all
+                        duration-300
+                        hover:-translate-y-1
+                        hover:border-[#C6A15B]/60
+                        hover:bg-[#C6A15B]
+                        hover:text-[#1D070D]
+                      "
+                    >
+                      <Icon
+                        size={15}
+                        className="
+                          transition-transform
+                          duration-300
+                          group-hover:scale-110
+                        "
+                      />
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Divider */}
+        <div
+          className="
+            mt-12
+            border-t
+            border-[#C9A24D]/15
+            pt-6
+            sm:mt-14
+          "
+        >
+          <div
+            className="
+              flex
+              flex-col
+              gap-3
+              sm:flex-row
+              sm:items-center
+              sm:justify-between
+            "
+          >
+            {/* Copyright */}
+            <p
+              className="
+                text-[8px]
+                uppercase
+                tracking-[0.2em]
+                text-[#8F7663]
+              "
+            >
+              © {new Date().getFullYear()} Cultural Sub Council
+            </p>
+
+            {/* Tagline */}
+            <p
+              className="
+                text-[8px]
+                uppercase
+                tracking-[0.2em]
+                text-[#8F7663]/70
+              "
+            >
+              Create • Perform • Belong
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}

@@ -5,28 +5,28 @@ const facultyMessages = [
   {
     name: "Prof. Anupma Kaushik Sharma",
     designation: "Vice-chancellor, MMMUT",
-    image: "/faculty/b_k_pandey.jpg",
+    image: "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791016590/VC.jpg",
     message:
       "Culture is not just an expression of talent, but a reflection of values, creativity and the collective spirit of our community.",
   },
   {
     name: "Dr. B.K. Pandey",
     designation: "Chairman, Council of Student Activities",
-    image: "/faculty/b_k_pandey.jpg",
+    image: "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791016591/CSA.jpg",
     message:
       "Culture is not just an expression of talent, but a reflection of values, creativity and the collective spirit of our community.",
   },
   {
     name: "Dr. Awadhesh Kumar",
     designation: "Vice Chairman, Council of Student Activities",
-    image: "/faculty/awadhesh-kumar.jpg",
+    image: "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791016590/VCSA.jpg",
     message:
       "The cultural spirit of an institution is shaped by the enthusiasm and participation of its students. Continue to create, collaborate and contribute.",
   },
   {
     name: "Dr. Meenakshi Choudhary",
     designation: "Faculty In-Charge, Cultural Sub-Council",
-    image: "/faculty/meenakshi-choudhary.jpg",
+    image: "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791037649/WhatsApp_Image_2026-10-03_at_2.04.49_PM.jpg",
     message:
       "Every student carries a unique creative voice. The Cultural Sub Council provides a platform where that voice can be discovered, nurtured and celebrated.",
   },
@@ -147,14 +147,7 @@ export default function FacultyMessages() {
           </div>
         </div>
 
-        {/* =====================================================
-            FACULTY CARDS
-        ===================================================== */}
-
-        {/* =====================================================
-    FACULTY CARDS
-===================================================== */}
-
+      
 <div className="w-full">
   {/* VICE-CHANCELLOR — FULL WIDTH */}
   <div className="w-full">
@@ -220,14 +213,14 @@ function FacultyCard({ faculty, index, featured=false }) {
         border
         border-[#C6A15B]/15
         ${featured
-        ?"bg-black"
-        :"bg-white"}
+        ?"bg-[#4A1220]/65"
+        :"bg-[#4A1220]/65"}
         p-7
         transition-all
         duration-500
         hover:border-[#C6A15B]/45
         ${featured
-          ? "hover:bg-[#F7EBD0]"
+          ? "hover:bg-[#4A1220]/65"
           : "hover:bg-[#4A1220]/65"
         }
         sm:p-8
@@ -323,10 +316,9 @@ function FacultyCard({ faculty, index, featured=false }) {
               w-full
               rounded-full
               object-cover
-              grayscale
               transition-all
               duration-700
-              group-hover:grayscale-0
+              
             "
           />
 
@@ -419,20 +411,7 @@ function FacultyCard({ faculty, index, featured=false }) {
 
           {/* NUMBER */}
 
-          <span
-            className="
-              shrink-0
-              font-mono
-              text-[10px]
-              tracking-[0.2em]
-              text-[#C6A15B]/45
-              transition-colors
-              duration-500
-              group-hover:text-[#C6A15B]
-            "
-          >
-            0{index + 1}
-          </span>
+          
         </div>
       </div>
     </motion.article>
