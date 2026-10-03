@@ -1,8 +1,15 @@
 import React, { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
+
 /* =========================================================
-   EVENTS
+   EVENTS DATA
 ========================================================= */
 
 const events = [
@@ -12,6 +19,7 @@ const events = [
     subtitle: "A NEW BEGINNING",
     image:
       "https://res.cloudinary.com/yh0rqnnu/image/upload/f_auto,q_auto/WhatsApp_Image_2026-09-29_at_10.42.23_PM",
+    route: "/events",
   },
   {
     number: "02",
@@ -19,6 +27,7 @@ const events = [
     subtitle: "CULTURAL CELEBRATION",
     image:
       "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=2200&q=90",
+    route: "/events/heats-25",
   },
   {
     number: "03",
@@ -26,6 +35,7 @@ const events = [
     subtitle: "WELCOMING NEW VOICES",
     image:
       "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=2200&q=90",
+    route: "/events/orientation-26",
   },
   {
     number: "04",
@@ -33,6 +43,7 @@ const events = [
     subtitle: "ART MEETS ARCHITECTURE",
     image:
       "https://images.unsplash.com/photo-1561214115-f2f134cc4912?auto=format&fit=crop&w=2200&q=90",
+    route: "/events/pintura-de-pilares",
   },
 ];
 
@@ -48,14 +59,15 @@ function EventLayer({
   textY,
   zIndex,
   centerText = false,
-}) {
+  isLanding = false,
+})  {
   return (
     <motion.div
       className="
         absolute
         inset-0
         overflow-hidden
-        bg-black
+        bg-[#1D070D]
       "
       style={{
         y,
@@ -84,7 +96,7 @@ function EventLayer({
       />
 
       {/* =================================================
-          DARK OVERLAY
+          MAROON COLOR TINT
       ================================================= */}
 
       <div
@@ -92,12 +104,12 @@ function EventLayer({
           pointer-events-none
           absolute
           inset-0
-          bg-black/20
+          bg-[#2B0A12]/5
         "
       />
 
       {/* =================================================
-          GRADIENT
+          CINEMATIC GRADIENT
       ================================================= */}
 
       <div
@@ -106,30 +118,47 @@ function EventLayer({
           absolute
           inset-0
           bg-gradient-to-t
-          from-black/85
-          via-black/20
+          from-[#1D070D]
+          via-[#1D070D]/5
           to-transparent
         "
       />
 
       {/* =================================================
-          TEXT
+          SUBTLE TOP GRADIENT
+      ================================================= */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          inset-x-0
+          top-0
+          h-40
+          bg-gradient-to-b
+          from-[#1D070D]/50
+          to-transparent
+        "
+      />
+
+      {/* =================================================
+          CONTENT
       ================================================= */}
 
       <motion.div
         className={`
-          pointer-events-none
           absolute
           inset-0
           flex
-          px-6
-          sm:px-10
+          px-7
+          sm:px-12
           md:px-16
+          lg:px-20
 
           ${
             centerText
               ? "items-center justify-center text-center"
-              : "items-end justify-start pb-14 text-left sm:pb-20 md:pb-24"
+              : "items-end justify-start pb-20 text-left sm:pb-24 lg:pb-28"
           }
         `}
         style={{
@@ -137,50 +166,93 @@ function EventLayer({
           y: textY,
         }}
       >
-        <div className="text-white">
+        <div
+          className="
+            relative
+            z-10
+            w-full
+            max-w-[1500px]
+          "
+        >
+          {!centerText && (
+  <div
+    className="
+      mb-5
+      flex
+      items-center
+      gap-4
+    "
+  >
+    <span
+      className="
+        text-[8px]
+        font-medium
+        uppercase
+        tracking-[0.35em]
+        text-[#D9B86C]
+        sm:text-[9px]
+      "
+    >
+      Cultural Sub Council
+    </span>
 
-          {/* EVENT NUMBER */}
+    <span
+      className="
+        h-px
+        w-8
+        bg-[#C6A15B]/50
+        sm:w-10
+      "
+    />
 
-          <p
-            className="
-              mb-4
-              text-[10px]
-              font-medium
-              uppercase
-              tracking-[0.45em]
-              text-white/60
-              sm:text-xs
-            "
-          >
-            Event {event.number}
-          </p>
+    <span
+      className="
+        text-[8px]
+        uppercase
+        tracking-[0.3em]
+        text-[#F7EBD0]/50
+        sm:text-[9px]
+      "
+    >
+      Event {event.number}
+    </span>
+  </div>
+)}
 
-          {/* EVENT TITLE */}
+          {/* =================================================
+              TITLE
+          ================================================= */}
 
           <h2
-            className="
-              max-w-[1000px]
-              text-5xl
-              font-semibold
-              leading-[0.9]
-              tracking-[-0.06em]
-              sm:text-6xl
-              md:text-8xl
-              lg:text-9xl
-            "
-          >
-            {event.title}
-          </h2>
+  className={`
+    max-w-[1400px]
+    font-semibold
+    leading-[0.82]
+    tracking-[-0.07em]
+    text-[#F7EBD0]
 
-          {/* EVENT SUBTITLE */}
+    ${
+      isLanding
+        ? "text-[clamp(5rem,15vw,15rem)]"
+        : "text-[clamp(3.2rem,8vw,9rem)]"
+    }
+  `}
+>
+  {event.title}
+</h2>
+
+          {/* =================================================
+              SUBTITLE
+          ================================================= */}
 
           <p
             className="
               mt-5
-              text-[10px]
+              text-[8px]
               uppercase
-              tracking-[0.4em]
-              text-white/60
+              tracking-[0.38em]
+              text-[#F7EBD0]/60
+              sm:mt-6
               sm:text-xs
               md:text-sm
             "
@@ -188,193 +260,77 @@ function EventLayer({
             {event.subtitle}
           </p>
 
+          {/* =================================================
+              READ MORE
+              
+              Hidden for first screen.
+              Visible only for actual events.
+          ================================================= */}
+
+          {!centerText && (
+            <Link
+              to={event.route}
+              className="
+                pointer-events-auto
+                group
+                mt-7
+                inline-flex
+                items-center
+                gap-3
+                rounded-lg
+                bg-[#C6A15B]
+                px-5
+                py-2.5
+                text-[8px]
+                font-semibold
+                uppercase
+                tracking-[0.25em]
+                text-[#1D070D]
+                transition-all
+                duration-500
+                hover:bg-[#D9B86C]
+                hover:shadow-[0_8px_30px_rgba(198,161,91,0.25)]
+                sm:mt-8
+                sm:px-6
+                sm:py-3
+                sm:text-[9px]
+                md:text-[10px]
+              "
+            >
+              <span>Read More</span>
+
+              <span
+                className="
+                  flex
+                  h-6
+                  w-6
+                  items-center
+                  justify-center
+                  rounded-full
+                  bg-[#1D070D]
+                  text-[#D9B86C]
+                  transition-all
+                  duration-500
+                  group-hover:translate-x-1
+                  group-hover:bg-[#2B0A12]
+                "
+              >
+                <ArrowUpRight
+                  size={13}
+                  strokeWidth={1.8}
+                  className="
+                    transition-transform
+                    duration-500
+                    group-hover:translate-x-[1px]
+                    group-hover:-translate-y-[1px]
+                  "
+                />
+              </span>
+            </Link>
+          )}
         </div>
       </motion.div>
     </motion.div>
-  );
-}
-
-/* =========================================================
-   FOOTER
-========================================================= */
-
-function Footer() {
-  return (
-    <footer className="relative w-full bg-black text-white">
-
-      {/* TOP BORDER */}
-
-      <div className="mx-6 border-t border-white/10 sm:mx-10 md:mx-16" />
-
-      <div className="px-6 py-16 sm:px-10 md:px-16 md:py-20">
-
-        {/* =================================================
-            TOP FOOTER
-        ================================================= */}
-
-        <div className="grid gap-12 md:grid-cols-2">
-
-          {/* BRAND */}
-
-          <div>
-            <p
-              className="
-                text-[10px]
-                font-medium
-                uppercase
-                tracking-[0.4em]
-                text-white/40
-              "
-            >
-              Cultural Sub Council
-            </p>
-
-            <h2
-              className="
-                mt-6
-                max-w-3xl
-                text-4xl
-                font-semibold
-                leading-[0.95]
-                tracking-[-0.05em]
-                sm:text-5xl
-                md:text-7xl
-              "
-            >
-              Culture creates
-              <br />
-
-              <span className="text-white/40">
-                memories.
-              </span>
-            </h2>
-          </div>
-
-          {/* NAVIGATION */}
-
-          <div className="flex flex-col md:items-end">
-
-            <p
-              className="
-                mb-6
-                text-[10px]
-                uppercase
-                tracking-[0.35em]
-                text-white/40
-              "
-            >
-              Explore
-            </p>
-
-            <nav className="flex flex-col gap-3 md:items-end">
-
-              <a
-                href="/"
-                className="
-                  text-sm
-                  text-white/70
-                  transition-colors
-                  duration-300
-                  hover:text-white
-                "
-              >
-                Home
-              </a>
-
-              <a
-                href="/#institution"
-                className="
-                  text-sm
-                  text-white/70
-                  transition-colors
-                  duration-300
-                  hover:text-white
-                "
-              >
-                Institution
-              </a>
-
-              <a
-                href="/#gallery"
-                className="
-                  text-sm
-                  text-white/70
-                  transition-colors
-                  duration-300
-                  hover:text-white
-                "
-              >
-                Gallery
-              </a>
-
-              <a
-                href="/events"
-                className="
-                  text-sm
-                  text-white
-                  transition-colors
-                  duration-300
-                "
-              >
-                Events
-              </a>
-
-              <a
-                href="/#contact"
-                className="
-                  text-sm
-                  text-white/70
-                  transition-colors
-                  duration-300
-                  hover:text-white
-                "
-              >
-                Contact
-              </a>
-
-            </nav>
-          </div>
-        </div>
-
-        {/* MIDDLE LINE */}
-
-        <div className="my-16 border-t border-white/10 md:my-20" />
-
-        {/* =================================================
-            BOTTOM FOOTER
-        ================================================= */}
-
-        <div
-          className="
-            flex
-            flex-col
-            gap-6
-            text-[10px]
-            uppercase
-            tracking-[0.25em]
-            text-white/35
-            sm:flex-row
-            sm:items-center
-            sm:justify-between
-          "
-        >
-
-          <p>
-            © {new Date().getFullYear()} Cultural Sub Council
-          </p>
-
-          <p>
-            MMMUT · Gorakhpur
-          </p>
-
-          <p>
-            All Rights Reserved
-          </p>
-
-        </div>
-
-      </div>
-    </footer>
   );
 }
 
@@ -395,35 +351,41 @@ export default function Events() {
   });
 
   /* =======================================================
+     PROGRESS BAR
+  ======================================================= */
+
+  const progressWidth = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["0%", "100%"]
+  );
+
+  /* =======================================================
      IMAGE POSITIONS
   ======================================================= */
 
-  // IMAGE 1 — stays fixed
-
+  // EVENT 01 — stays fixed
   const image1Y = useTransform(
     scrollYProgress,
     [0, 1],
     ["0%", "0%"]
   );
 
-  // IMAGE 2
-
+  // EVENT 02
   const image2Y = useTransform(
     scrollYProgress,
     [0.16, 0.40],
     ["100%", "0%"]
   );
 
-  // IMAGE 3
-
+  // EVENT 03
   const image3Y = useTransform(
     scrollYProgress,
     [0.40, 0.64],
     ["100%", "0%"]
   );
 
-  // IMAGE 4
-
+  // EVENT 04
   const image4Y = useTransform(
     scrollYProgress,
     [0.64, 0.88],
@@ -431,14 +393,8 @@ export default function Events() {
   );
 
   /* =======================================================
-     FIRST IMAGE — ZOOM
+     IMAGE SCALE
   ======================================================= */
-
-  /*
-    ONLY FIRST IMAGE ZOOMS.
-
-    The text itself does NOT zoom.
-  */
 
   const image1Scale = useTransform(
     scrollYProgress,
@@ -450,50 +406,28 @@ export default function Events() {
      TEXT OPACITY
   ======================================================= */
 
-  /*
-    FIRST TEXT
-
-    IMPORTANT:
-
-    At scrollYProgress = 0
-    opacity = 1
-
-    So the text is visible immediately
-    when the page opens.
-  */
-
+  // FIRST SCREEN
   const text1Opacity = useTransform(
     scrollYProgress,
     [0, 0.08, 0.28],
     [1, 1, 0]
   );
 
-  /*
-    SECOND TEXT
-
-    Appears while IMAGE 2 is entering.
-  */
-
+  // SECOND EVENT
   const text2Opacity = useTransform(
     scrollYProgress,
     [0.27, 0.43],
     [0, 1]
   );
 
-  /*
-    THIRD TEXT
-  */
-
+  // THIRD EVENT
   const text3Opacity = useTransform(
     scrollYProgress,
     [0.51, 0.67],
     [0, 1]
   );
 
-  /*
-    FOURTH TEXT
-  */
-
+  // FOURTH EVENT
   const text4Opacity = useTransform(
     scrollYProgress,
     [0.75, 0.91],
@@ -504,47 +438,28 @@ export default function Events() {
      TEXT MOVEMENT
   ======================================================= */
 
-  /*
-    FIRST TEXT
-
-    It remains completely still initially.
-
-    Then, near the transition,
-    it moves upward and fades away.
-  */
-
+  // FIRST SCREEN
   const text1Y = useTransform(
     scrollYProgress,
     [0, 0.08, 0.28],
     ["0%", "0%", "-35%"]
   );
 
-  /*
-    SECOND TEXT
-
-    Comes slightly upward.
-  */
-
+  // SECOND EVENT
   const text2Y = useTransform(
     scrollYProgress,
     [0.27, 0.43],
     ["20%", "0%"]
   );
 
-  /*
-    THIRD TEXT
-  */
-
+  // THIRD EVENT
   const text3Y = useTransform(
     scrollYProgress,
     [0.51, 0.67],
     ["20%", "0%"]
   );
 
-  /*
-    FOURTH TEXT
-  */
-
+  // FOURTH EVENT
   const text4Y = useTransform(
     scrollYProgress,
     [0.75, 0.91],
@@ -556,8 +471,7 @@ export default function Events() {
   ======================================================= */
 
   return (
-    <div className="w-full bg-black">
-
+    <div className="w-full overflow-x-clip bg-[#1D070D]">
       {/* ===================================================
           EVENTS SCROLL SECTION
       =================================================== */}
@@ -568,12 +482,37 @@ export default function Events() {
           relative
           h-[500vh]
           w-full
-          bg-black
+          bg-[#1D070D]
         "
       >
-        {<Navbar Events />}
+        {/* =================================================
+            NAVBAR
+        ================================================= */}
 
-        {/* STICKY VIEWPORT */}
+        <Navbar/>
+
+        {/* =================================================
+            SCROLL PROGRESS
+        ================================================= */}
+
+        <motion.div
+          style={{
+            width: progressWidth,
+          }}
+          className="
+            absolute
+            left-0
+            top-0
+            z-[100]
+            h-[2px]
+            bg-[#C6A15B]
+            shadow-[0_0_14px_rgba(198,161,91,0.5)]
+          "
+        />
+
+        {/* =================================================
+            STICKY VIEWPORT
+        ================================================= */}
 
         <div
           className="
@@ -584,8 +523,9 @@ export default function Events() {
             overflow-hidden
           "
         >
-
-          {/* FULL SCREEN CONTAINER */}
+          {/* =================================================
+              FULL SCREEN CONTAINER
+          ================================================= */}
 
           <div
             className="
@@ -593,29 +533,34 @@ export default function Events() {
               h-screen
               w-screen
               overflow-hidden
-              bg-black
+              bg-[#1D070D]
             "
           >
-
-            {/* =============================================
-                EVENT 01
-                CENTER TEXT
-            ============================================= */}
+            {/* =================================================
+                EVENT 01 — LANDING SCREEN
+                
+                Only:
+                Cultural Sub Council
+                EVENTS
+                A NEW BEGINNING
+                
+                NO READ MORE BUTTON
+            ================================================= */}
 
             <EventLayer
-              event={events[0]}
-              y={image1Y}
-              imageScale={image1Scale}
-              textOpacity={text1Opacity}
-              textY={text1Y}
-              zIndex={10}
-              centerText={true}
-            />
+  event={events[0]}
+  y={image1Y}
+  imageScale={image1Scale}
+  textOpacity={text1Opacity}
+  textY={text1Y}
+  zIndex={10}
+  centerText={true}
+  isLanding={true}
+/>
 
-            {/* =============================================
+            {/* =================================================
                 EVENT 02
-                BOTTOM LEFT TEXT
-            ============================================= */}
+            ================================================= */}
 
             <EventLayer
               event={events[1]}
@@ -626,10 +571,9 @@ export default function Events() {
               zIndex={20}
             />
 
-            {/* =============================================
+            {/* =================================================
                 EVENT 03
-                BOTTOM LEFT TEXT
-            ============================================= */}
+            ================================================= */}
 
             <EventLayer
               event={events[2]}
@@ -640,10 +584,9 @@ export default function Events() {
               zIndex={30}
             />
 
-            {/* =============================================
+            {/* =================================================
                 EVENT 04
-                BOTTOM LEFT TEXT
-            ============================================= */}
+            ================================================= */}
 
             <EventLayer
               event={events[3]}
@@ -654,6 +597,90 @@ export default function Events() {
               zIndex={40}
             />
 
+            {/* =================================================
+                SIDE EVENT INDEX
+            ================================================= */}
+
+            <div
+              className="
+                pointer-events-none
+                absolute
+                right-6
+                top-1/2
+                z-[90]
+                hidden
+                -translate-y-1/2
+                flex-col
+                items-end
+                gap-4
+                lg:flex
+              "
+            >
+              {events.map((event) => (
+                <div
+                  key={event.number}
+                  className="
+                    flex
+                    items-center
+                    gap-3
+                    text-[8px]
+                    uppercase
+                    tracking-[0.2em]
+                    text-[#F7EBD0]/45
+                  "
+                >
+                  <span>{event.number}</span>
+
+                  <span
+                    className="
+                      h-px
+                      w-5
+                      bg-[#C6A15B]/30
+                    "
+                  />
+                </div>
+              ))}
+            </div>
+
+            
+
+            {/* =================================================
+                SCROLL LABEL
+            ================================================= */}
+
+            <div
+              className="
+                pointer-events-none
+                absolute
+                bottom-7
+                right-7
+                z-[90]
+                hidden
+                items-center
+                gap-3
+                sm:flex
+                lg:right-10
+              "
+            >
+              <span
+                className="
+                  text-[8px]
+                  uppercase
+                  tracking-[0.3em]
+                  text-[#F7EBD0]/40
+                "
+              >
+                Scroll to explore
+              </span>
+
+              <span
+                className="
+                  h-8
+                  w-px
+                  bg-[#C6A15B]/30
+                "
+              />
+            </div>
           </div>
         </div>
       </main>
@@ -670,7 +697,7 @@ export default function Events() {
           m-0
           w-full
           border-t
-          border-[#C9A24D]/20
+          border-[#C6A15B]/20
           bg-[#1D070D]
           px-6
           py-16
@@ -680,7 +707,6 @@ export default function Events() {
           lg:py-24
         "
       >
-
         <div
           className="
             mx-auto
@@ -694,26 +720,31 @@ export default function Events() {
             md:items-end
           "
         >
-
-          {/* Footer Brand */}
+          {/* =================================================
+              FOOTER BRAND
+          ================================================= */}
 
           <div>
-
             <div className="mb-3 flex items-center gap-3">
-
-              <span className="h-2 w-2 rotate-45 bg-[#C9A24D]" />
+              <span
+                className="
+                  h-2
+                  w-2
+                  rotate-45
+                  bg-[#C6A15B]
+                "
+              />
 
               <span
                 className="
                   text-xs
                   uppercase
                   tracking-[0.25em]
-                  text-[#C9A24D]
+                  text-[#C6A15B]
                 "
               >
                 Get in Touch
               </span>
-
             </div>
 
             <p
@@ -727,10 +758,11 @@ export default function Events() {
             >
               Cultural Sub Council
             </p>
-
           </div>
 
-          {/* Footer Links */}
+          {/* =================================================
+              FOOTER LINKS
+          ================================================= */}
 
           <div
             className="
@@ -745,9 +777,8 @@ export default function Events() {
               sm:gap-12
             "
           >
-
-            <a
-              href="/Clubs"
+            <Link
+              to="/clubs"
               className="
                 transition-colors
                 duration-300
@@ -755,41 +786,36 @@ export default function Events() {
               "
             >
               Clubs
-            </a>
+            </Link>
 
-            <a
-              href="#manifesto"
+            <Link
+              to="/#institution"
               className="
                 transition-colors
                 duration-300
-                hover:text-[#C9A24D]
+                hover:text-[#C6A15B]
               "
             >
               About
-            </a>
+            </Link>
 
-            <a
-              href="#contact"
+            <Link
+              to="/#contact"
               className="
                 transition-colors
                 duration-300
-                hover:text-[#C9A24D]
+                hover:text-[#C6A15B]
               "
             >
               Contact
-            </a>
+            </Link>
 
             <span className="text-[#8F7663]">
               © {new Date().getFullYear()} Cultural Sub Council
             </span>
-
           </div>
-
         </div>
-
       </footer>
-
-
     </div>
   );
 }

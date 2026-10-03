@@ -1,61 +1,49 @@
 import React from "react";
 import { motion } from "framer-motion";
-
-/* =========================================================
-   FACULTY MESSAGES
-========================================================= */
-
+import Navbar from "../../components/Navbar";
 const facultyMessages = [
   {
     name: "Faculty Name",
-    designation: "Faculty In-Charge, Music Club",
-    image: "/faculty/music-faculty.jpg",
+    designation: "Faculty In-Charge, Dance Club",
+    image: "/faculty/dance-faculty.jpg",
     message:
-      "Music has the power to bring people together beyond words. The Music Club provides students with a platform to discover their musical abilities, develop confidence and share their passion with the campus community.",
+      "Dance is more than movement. It is a language through which creativity, discipline and emotion come together. The Dance Club provides students with a space to discover their rhythm, build confidence and express themselves on every stage.",
   },
   {
     name: "Faculty Name",
     designation: "Faculty Coordinator",
-    image: "/faculty/music-coordinator.jpg",
+    image: "/faculty/dance-coordinator.jpg",
     message:
-      "Every voice has its own character and every instrument tells its own story. The Music Club encourages students to learn, experiment and perform while creating a vibrant musical culture across the campus.",
+      "Every performance begins with passion, practice and the courage to express. The Dance Club encourages students to explore different forms of movement while creating experiences that bring our campus community together.",
   },
 ];
-
-/* =========================================================
-   ACTIVITIES
-========================================================= */
 
 const activities = [
   {
     number: "01",
-    title: "Live Performances",
+    title: "Performances",
     description:
-      "From campus celebrations to major cultural events, the club creates memorable experiences through vocal and instrumental performances.",
+      "From campus celebrations to major cultural events, the club brings stories and emotions to life through movement.",
   },
   {
     number: "02",
-    title: "Vocals & Instruments",
+    title: "Choreography",
     description:
-      "Students explore singing and instrumental music while developing technique, musicality and confidence through regular practice.",
+      "Students explore choreography, formations and creative concepts to develop performances that leave an impression.",
   },
   {
     number: "03",
-    title: "Jam Sessions",
+    title: "Workshops",
     description:
-      "Collaborative sessions give musicians a space to experiment, improvise and create music together in an open creative environment.",
+      "Interactive sessions provide opportunities to learn, practice and explore different dance styles and techniques.",
   },
   {
     number: "04",
     title: "Competitions",
     description:
-      "The club provides opportunities for students to represent the institution in solo, group and instrumental music competitions.",
+      "The club provides a platform for dancers to represent the institution and participate in cultural competitions.",
   },
 ];
-
-/* =========================================================
-   ACHIEVEMENTS
-========================================================= */
 
 const achievements = [
   {
@@ -63,14 +51,14 @@ const achievements = [
     year: "20XX",
     title: "Achievement Title",
     description:
-      "Add a verified achievement, competition result or recognition of the Music Club here.",
+      "Add a verified achievement, competition result or recognition of the Dance Club here.",
   },
   {
     number: "02",
     year: "20XX",
     title: "Achievement Title",
     description:
-      "Add another verified milestone, award or major musical performance here.",
+      "Add another verified milestone, award or major performance here.",
   },
   {
     number: "03",
@@ -81,14 +69,10 @@ const achievements = [
   },
 ];
 
-/* =========================================================
-   MUSIC CLUB PAGE
-========================================================= */
-
-export default function Music() {
+export default function DanceClub() {
   return (
-    <main className="min-h-screen overflow-hidden bg-[#2B0A12] text-[#F7EBD0]">
-
+    <main className="min-h-screen mt-[15px] overflow-hidden bg-[#2B0A12] text-[#F7EBD0]">
+      <Navbar Home/>
       {/* =====================================================
           HERO
       ===================================================== */}
@@ -98,8 +82,8 @@ export default function Music() {
         {/* Background Image */}
 
         <img
-          src="/clubs/music-hero.jpg"
-          alt="Music Club"
+          src="/clubs/dance-hero.jpg"
+          alt="Dance Club"
           className="
             absolute
             inset-0
@@ -148,7 +132,7 @@ export default function Music() {
           "
         />
 
-        {/* Hero Content */}
+        {/* Content */}
 
         <div
           className="
@@ -191,7 +175,6 @@ export default function Music() {
               </span>
             </motion.div>
 
-
             {/* Title */}
 
             <motion.h1
@@ -209,14 +192,12 @@ export default function Music() {
                 text-[#F7EBD0]
               "
             >
-              MUSIC
+              DANCE
               <br />
-
               <span className="text-[#C6A15B]">
                 CLUB
               </span>
             </motion.h1>
-
 
             {/* Tagline */}
 
@@ -236,11 +217,10 @@ export default function Music() {
                 sm:text-xl
               "
             >
-              Where melodies become memories,
-              voices find their rhythm, and
-              every performance tells a story.
+              Where movement becomes expression,
+              rhythm becomes identity, and every
+              stage becomes a story.
             </motion.p>
-
 
             {/* Scroll */}
 
@@ -270,10 +250,8 @@ export default function Music() {
             </motion.div>
 
           </div>
-
         </div>
       </section>
-
 
       {/* =====================================================
           FACULTY MESSAGES
@@ -314,7 +292,6 @@ export default function Music() {
 
             </div>
 
-
             <h2
               className="
                 max-w-3xl
@@ -328,14 +305,12 @@ export default function Music() {
             >
               Guided by
               <br />
-
               <span className="text-[#C6A15B]">
                 experience.
               </span>
             </h2>
 
           </div>
-
 
           {/* Faculty Cards */}
 
@@ -391,7 +366,6 @@ export default function Music() {
                   "
                 />
 
-
                 <div className="flex flex-col gap-8 sm:flex-row">
 
                   {/* Faculty Image */}
@@ -408,7 +382,6 @@ export default function Music() {
                       p-1
                     "
                   >
-
                     <img
                       src={faculty.image}
                       alt={faculty.name}
@@ -423,9 +396,7 @@ export default function Music() {
                         group-hover:grayscale-0
                       "
                     />
-
                   </div>
-
 
                   {/* Message */}
 
@@ -443,7 +414,6 @@ export default function Music() {
                       "{faculty.message}"
                     </p>
 
-
                     <div className="mt-7">
 
                       <h3
@@ -457,7 +427,6 @@ export default function Music() {
                       >
                         {faculty.name}
                       </h3>
-
 
                       <p
                         className="
@@ -486,7 +455,6 @@ export default function Music() {
         </div>
 
       </section>
-
 
       {/* =====================================================
           ABOUT THE CLUB
@@ -523,7 +491,6 @@ export default function Music() {
                 01 / About
               </span>
 
-
               <div
                 className="
                   mt-8
@@ -534,7 +501,6 @@ export default function Music() {
               />
 
             </div>
-
 
             {/* Right */}
 
@@ -552,12 +518,10 @@ export default function Music() {
               >
                 More than
                 <br />
-
                 <span className="text-[#C6A15B]">
-                  music.
+                  movement.
                 </span>
               </h2>
-
 
               <p
                 className="
@@ -569,12 +533,11 @@ export default function Music() {
                   sm:text-xl
                 "
               >
-                The Music Club provides a platform for
-                students to explore vocals, instruments
-                and musical performance while developing
-                confidence, discipline and creative expression.
+                The Dance Club provides a platform for
+                students to explore movement, rhythm and
+                performance while developing confidence,
+                discipline and creative expression.
               </p>
-
 
               <p
                 className="
@@ -586,10 +549,10 @@ export default function Music() {
                   sm:text-xl
                 "
               >
-                From rehearsals and jam sessions to live
+                From rehearsals and choreography to
                 performances and cultural celebrations,
-                the club brings together students who share
-                a passion for music and the art of performance.
+                the club brings together students who
+                share a passion for dance and performance.
               </p>
 
             </div>
@@ -599,7 +562,6 @@ export default function Music() {
         </div>
 
       </section>
-
 
       {/* =====================================================
           WHAT WE DO
@@ -634,7 +596,6 @@ export default function Music() {
               02 / What We Do
             </span>
 
-
             <h2
               className="
                 mt-7
@@ -644,36 +605,22 @@ export default function Music() {
                 sm:text-7xl
               "
             >
-              Listen.
+              Create.
               <br />
-
               <span className="text-[#C6A15B]">
-                Create.
+                Perform.
               </span>
               <br />
-
-              Perform.
+              Inspire.
             </h2>
 
           </div>
 
-
           {/* Activities */}
 
-          <div
-            className="
-              grid
-              gap-px
-              overflow-hidden
-              rounded-3xl
-              border
-              border-[#C6A15B]/15
-              bg-[#C6A15B]/15
-              md:grid-cols-2
-            "
-          >
+          <div className="grid gap-px overflow-hidden rounded-3xl border border-[#C6A15B]/15 bg-[#C6A15B]/15 md:grid-cols-2">
 
-            {activities.map((activity) => (
+            {activities.map((activity, index) => (
 
               <motion.div
                 key={activity.number}
@@ -703,7 +650,6 @@ export default function Music() {
                   {activity.number}
                 </span>
 
-
                 <h3
                   className="
                     mt-20
@@ -717,7 +663,6 @@ export default function Music() {
                   {activity.title}
                 </h3>
 
-
                 <p
                   className="
                     mt-5
@@ -729,22 +674,7 @@ export default function Music() {
                   {activity.description}
                 </p>
 
-
-                <div
-                  className="
-                    absolute
-                    bottom-8
-                    right-8
-                    text-3xl
-                    text-[#C6A15B]/30
-                    transition-all
-                    duration-500
-                    group-hover:translate-x-2
-                    group-hover:text-[#C6A15B]
-                  "
-                >
-                  →
-                </div>
+                
 
               </motion.div>
 
@@ -755,7 +685,6 @@ export default function Music() {
         </div>
 
       </section>
-
 
       {/* =====================================================
           ACHIEVEMENTS
@@ -792,7 +721,6 @@ export default function Music() {
                 03 / Achievements
               </span>
 
-
               <h2
                 className="
                   mt-7
@@ -807,14 +735,12 @@ export default function Music() {
                 <br />
                 that
                 <br />
-
                 <span className="text-[#C6A15B]">
                   matter.
                 </span>
               </h2>
 
             </div>
-
 
             {/* Achievement List */}
 
@@ -863,18 +789,9 @@ export default function Music() {
                         {achievement.number}
                       </span>
 
-
                       <div className="flex-1">
 
-                        <div
-                          className="
-                            flex
-                            flex-wrap
-                            items-center
-                            justify-between
-                            gap-4
-                          "
-                        >
+                        <div className="flex flex-wrap items-center justify-between gap-4">
 
                           <h3
                             className="
@@ -887,7 +804,6 @@ export default function Music() {
                             {achievement.title}
                           </h3>
 
-
                           <span
                             className="
                               text-xs
@@ -899,7 +815,6 @@ export default function Music() {
                           </span>
 
                         </div>
-
 
                         <p
                           className="
@@ -921,7 +836,6 @@ export default function Music() {
                 )
               )}
 
-
               <div className="border-t border-[#C6A15B]/20" />
 
             </div>
@@ -931,7 +845,6 @@ export default function Music() {
         </div>
 
       </section>
-
 
       {/* =====================================================
           FINAL CTA
@@ -950,8 +863,6 @@ export default function Music() {
         "
       >
 
-        {/* Gold Glow */}
-
         <div
           className="
             pointer-events-none
@@ -968,7 +879,6 @@ export default function Music() {
           "
         />
 
-
         <div className="relative z-10">
 
           <span
@@ -981,7 +891,6 @@ export default function Music() {
           >
             Your Stage Awaits
           </span>
-
 
           <h2
             className="
@@ -998,12 +907,10 @@ export default function Music() {
           >
             Find your
             <br />
-
             <span className="text-[#C6A15B]">
-              sound.
+              rhythm.
             </span>
           </h2>
-
 
           <button
             className="
@@ -1022,7 +929,7 @@ export default function Music() {
               hover:text-[#2B0A12]
             "
           >
-            Join Music Club
+            Join Dance Club
           </button>
 
         </div>

@@ -1,49 +1,62 @@
 import React from "react";
 import { motion } from "framer-motion";
+import Navbar from "../../components/Navbar";
+
+/* =========================================================
+   FACULTY MESSAGES
+========================================================= */
 
 const facultyMessages = [
   {
     name: "Faculty Name",
-    designation: "Faculty In-Charge, Dance Club",
-    image: "/faculty/dance-faculty.jpg",
+    designation: "Faculty In-Charge, Dramatics Club",
+    image: "/faculty/dramatics-faculty.jpg",
     message:
-      "Dance is more than movement. It is a language through which creativity, discipline and emotion come together. The Dance Club provides students with a space to discover their rhythm, build confidence and express themselves on every stage.",
+      "Theatre is a powerful form of expression where stories, emotions and imagination come alive. The Dramatics Club gives students a platform to discover their voice, build confidence and communicate through the art of performance.",
   },
   {
     name: "Faculty Name",
     designation: "Faculty Coordinator",
-    image: "/faculty/dance-coordinator.jpg",
+    image: "/faculty/dramatics-coordinator.jpg",
     message:
-      "Every performance begins with passion, practice and the courage to express. The Dance Club encourages students to explore different forms of movement while creating experiences that bring our campus community together.",
+      "Every character has a story and every stage creates an opportunity to express it. The Dramatics Club encourages students to explore acting, storytelling and theatre while developing creativity, confidence and collaboration.",
   },
 ];
+
+/* =========================================================
+   ACTIVITIES
+========================================================= */
 
 const activities = [
   {
     number: "01",
     title: "Performances",
     description:
-      "From campus celebrations to major cultural events, the club brings stories and emotions to life through movement.",
+      "From stage productions and campus celebrations to major cultural events, the club brings stories and characters to life.",
   },
   {
     number: "02",
-    title: "Choreography",
+    title: "Acting",
     description:
-      "Students explore choreography, formations and creative concepts to develop performances that leave an impression.",
+      "Students explore character development, dialogue delivery, expressions and stage presence through practical performance.",
   },
   {
     number: "03",
     title: "Workshops",
     description:
-      "Interactive sessions provide opportunities to learn, practice and explore different dance styles and techniques.",
+      "Interactive sessions provide opportunities to learn theatre techniques, improvisation, voice modulation and performance skills.",
   },
   {
     number: "04",
     title: "Competitions",
     description:
-      "The club provides a platform for dancers to represent the institution and participate in cultural competitions.",
+      "The club provides a platform for students to represent the institution in theatre, street play and other dramatic competitions.",
   },
 ];
+
+/* =========================================================
+   ACHIEVEMENTS
+========================================================= */
 
 const achievements = [
   {
@@ -51,14 +64,14 @@ const achievements = [
     year: "20XX",
     title: "Achievement Title",
     description:
-      "Add a verified achievement, competition result or recognition of the Dance Club here.",
+      "Add a verified achievement, competition result or recognition of the Dramatics Club here.",
   },
   {
     number: "02",
     year: "20XX",
     title: "Achievement Title",
     description:
-      "Add another verified milestone, award or major performance here.",
+      "Add another verified milestone, award or major theatrical performance here.",
   },
   {
     number: "03",
@@ -69,10 +82,14 @@ const achievements = [
   },
 ];
 
-export default function DanceClub() {
-  return (
-    <main className="min-h-screen overflow-hidden bg-[#2B0A12] text-[#F7EBD0]">
+/* =========================================================
+   DRAMATICS CLUB PAGE
+========================================================= */
 
+export default function DramaticsClub() {
+  return (
+    <main className="min-h-screen mt-[15px] overflow-hidden bg-[#2B0A12] text-[#F7EBD0]">
+      <Navbar Home/>
       {/* =====================================================
           HERO
       ===================================================== */}
@@ -82,8 +99,8 @@ export default function DanceClub() {
         {/* Background Image */}
 
         <img
-          src="/clubs/dance-hero.jpg"
-          alt="Dance Club"
+          src="/clubs/dramatics-hero.jpg"
+          alt="Dramatics Club"
           className="
             absolute
             inset-0
@@ -192,8 +209,9 @@ export default function DanceClub() {
                 text-[#F7EBD0]
               "
             >
-              DANCE
+              DRAMATICS
               <br />
+
               <span className="text-[#C6A15B]">
                 CLUB
               </span>
@@ -217,9 +235,9 @@ export default function DanceClub() {
                 sm:text-xl
               "
             >
-              Where movement becomes expression,
-              rhythm becomes identity, and every
-              stage becomes a story.
+              Where stories find a voice,
+              characters come alive, and
+              every stage becomes a world.
             </motion.p>
 
             {/* Scroll */}
@@ -252,6 +270,7 @@ export default function DanceClub() {
           </div>
         </div>
       </section>
+
 
       {/* =====================================================
           FACULTY MESSAGES
@@ -305,12 +324,14 @@ export default function DanceClub() {
             >
               Guided by
               <br />
+
               <span className="text-[#C6A15B]">
                 experience.
               </span>
             </h2>
 
           </div>
+
 
           {/* Faculty Cards */}
 
@@ -398,6 +419,7 @@ export default function DanceClub() {
                     />
                   </div>
 
+
                   {/* Message */}
 
                   <div>
@@ -453,8 +475,8 @@ export default function DanceClub() {
           </div>
 
         </div>
-
       </section>
+
 
       {/* =====================================================
           ABOUT THE CLUB
@@ -502,6 +524,7 @@ export default function DanceClub() {
 
             </div>
 
+
             {/* Right */}
 
             <div>
@@ -518,10 +541,12 @@ export default function DanceClub() {
               >
                 More than
                 <br />
+
                 <span className="text-[#C6A15B]">
-                  movement.
+                  acting.
                 </span>
               </h2>
+
 
               <p
                 className="
@@ -533,11 +558,12 @@ export default function DanceClub() {
                   sm:text-xl
                 "
               >
-                The Dance Club provides a platform for
-                students to explore movement, rhythm and
-                performance while developing confidence,
-                discipline and creative expression.
+                The Dramatics Club provides a platform for
+                students to explore acting, theatre and
+                storytelling while developing confidence,
+                creativity and communication skills.
               </p>
+
 
               <p
                 className="
@@ -549,10 +575,11 @@ export default function DanceClub() {
                   sm:text-xl
                 "
               >
-                From rehearsals and choreography to
-                performances and cultural celebrations,
-                the club brings together students who
-                share a passion for dance and performance.
+                From rehearsals and character development
+                to stage productions and cultural
+                performances, the club brings together
+                students who share a passion for theatre
+                and the art of storytelling.
               </p>
 
             </div>
@@ -560,8 +587,8 @@ export default function DanceClub() {
           </div>
 
         </div>
-
       </section>
+
 
       {/* =====================================================
           WHAT WE DO
@@ -605,22 +632,36 @@ export default function DanceClub() {
                 sm:text-7xl
               "
             >
-              Create.
+              Imagine.
               <br />
+
               <span className="text-[#C6A15B]">
                 Perform.
               </span>
               <br />
+
               Inspire.
             </h2>
 
           </div>
 
+
           {/* Activities */}
 
-          <div className="grid gap-px overflow-hidden rounded-3xl border border-[#C6A15B]/15 bg-[#C6A15B]/15 md:grid-cols-2">
+          <div
+            className="
+              grid
+              gap-px
+              overflow-hidden
+              rounded-3xl
+              border
+              border-[#C6A15B]/15
+              bg-[#C6A15B]/15
+              md:grid-cols-2
+            "
+          >
 
-            {activities.map((activity, index) => (
+            {activities.map((activity) => (
 
               <motion.div
                 key={activity.number}
@@ -674,21 +715,7 @@ export default function DanceClub() {
                   {activity.description}
                 </p>
 
-                <div
-                  className="
-                    absolute
-                    bottom-8
-                    right-8
-                    text-3xl
-                    text-[#C6A15B]/30
-                    transition-all
-                    duration-500
-                    group-hover:translate-x-2
-                    group-hover:text-[#C6A15B]
-                  "
-                >
-                  →
-                </div>
+               
 
               </motion.div>
 
@@ -697,8 +724,8 @@ export default function DanceClub() {
           </div>
 
         </div>
-
       </section>
+
 
       {/* =====================================================
           ACHIEVEMENTS
@@ -749,12 +776,14 @@ export default function DanceClub() {
                 <br />
                 that
                 <br />
+
                 <span className="text-[#C6A15B]">
                   matter.
                 </span>
               </h2>
 
             </div>
+
 
             {/* Achievement List */}
 
@@ -805,7 +834,15 @@ export default function DanceClub() {
 
                       <div className="flex-1">
 
-                        <div className="flex flex-wrap items-center justify-between gap-4">
+                        <div
+                          className="
+                            flex
+                            flex-wrap
+                            items-center
+                            justify-between
+                            gap-4
+                          "
+                        >
 
                           <h3
                             className="
@@ -857,8 +894,8 @@ export default function DanceClub() {
           </div>
 
         </div>
-
       </section>
+
 
       {/* =====================================================
           FINAL CTA
@@ -876,6 +913,8 @@ export default function DanceClub() {
           lg:py-44
         "
       >
+
+        {/* Gold Glow */}
 
         <div
           className="
@@ -921,8 +960,9 @@ export default function DanceClub() {
           >
             Find your
             <br />
+
             <span className="text-[#C6A15B]">
-              rhythm.
+              story.
             </span>
           </h2>
 
@@ -943,7 +983,7 @@ export default function DanceClub() {
               hover:text-[#2B0A12]
             "
           >
-            Join Dance Club
+            Join Dramatics Club
           </button>
 
         </div>

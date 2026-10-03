@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 export default function Navbar({
   Gallery = false,
-  Events = false,
+  Home = false,
 }) {
   const shouldReduceMotion = useReducedMotion();
 
@@ -101,7 +101,7 @@ export default function Navbar({
 
         pointer-events-auto
 
-        ${Events ? "bg-transparent" : "bg-[#2B0A12]"}
+        ${Home? "bg-[#2B0A12]" :"bg-transparent "}
       `}
     >
 

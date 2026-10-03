@@ -1,4 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, {
+  useRef,
+  useState,
+} from "react";
 
 import {
   motion,
@@ -10,12 +13,16 @@ import {
 
 import StoryText from "./StoryText";
 
+/* =========================================================
+   DEFAULT STORIES
+========================================================= */
 
 const DEFAULT_STORIES = [
   {
     number: "01",
     title: "Culture",
-    description: "Where ideas become experiences.",
+    description:
+      "Where ideas become experiences.",
     image:
       "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80",
     alt: "Culture",
@@ -24,7 +31,8 @@ const DEFAULT_STORIES = [
   {
     number: "02",
     title: "Creativity",
-    description: "Giving imagination a place to breathe.",
+    description:
+      "Giving imagination a place to breathe.",
     image:
       "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=1200&q=80",
     alt: "Creativity",
@@ -71,20 +79,17 @@ const DEFAULT_STORIES = [
   },
 ];
 
-
 /* =========================================================
-   IMAGE STACK SETTINGS
+   DESKTOP IMAGE SETTINGS
 ========================================================= */
-
-/*
-  Card height in viewport units.
-
-  48vh gives enough space around the image while keeping
-  the active card clearly centered.
-*/
 
 const CARD_HEIGHT = 48;
 
+/* =========================================================
+   MOBILE IMAGE SETTINGS
+========================================================= */
+
+const MOBILE_CARD_HEIGHT = 38;
 
 /* =========================================================
    SCROLL STORY
@@ -96,68 +101,88 @@ export default function ScrollStory({
 }) {
   const sectionRef = useRef(null);
 
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] =
+    useState(0);
 
-  const reduceMotion = useReducedMotion();
+  const reduceMotion =
+    useReducedMotion();
 
-  const totalStories = stories.length;
+  const totalStories =
+    stories.length;
 
-
-  /* =========================================================
+  /* =======================================================
      SCROLL PROGRESS
-  ========================================================= */
+  ======================================================= */
 
-  const { scrollYProgress } = useScroll({
+  const {
+    scrollYProgress,
+  } = useScroll({
     target: sectionRef,
-
     offset: [
       "start start",
       "end end",
     ],
   });
 
-
-  /* =========================================================
-     TOTAL STACK MOVEMENT
-  ========================================================= */
+  /* =======================================================
+     DESKTOP STACK MOVEMENT
+  ======================================================= */
 
   const maxTranslate =
-    (totalStories - 1) * CARD_HEIGHT;
+    Math.max(0, (totalStories - 1) * CARD_HEIGHT);
 
+  const translateY =
+    useTransform(
+      scrollYProgress,
+      [0, 1],
+      [
+        "0vh",
+        `-${maxTranslate}vh`,
+      ]
+    );
 
-  /* =========================================================
-     IMAGE STACK Y POSITION
-  ========================================================= */
+  /* =======================================================
+     MOBILE STACK MOVEMENT
+  ======================================================= */
 
-  const translateY = useTransform(
-    scrollYProgress,
+  const mobileMaxTranslate =
+    Math.max(
+      0,
+      (totalStories - 1) *
+        MOBILE_CARD_HEIGHT
+    );
 
-    [0, 1],
+  /*
+    IMPORTANT:
+    useTransform must be called at the
+    top level of the component.
+  */
 
-    [
-      "0vh",
-      `-${maxTranslate}vh`,
-    ]
-  );
+  const mobileTranslateY =
+    useTransform(
+      scrollYProgress,
+      [0, 1],
+      [
+        "0vh",
+        `-${mobileMaxTranslate}vh`,
+      ]
+    );
 
-
-  /* =========================================================
+  /* =======================================================
      ACTIVE STORY
-  ========================================================= */
+  ======================================================= */
 
   useMotionValueEvent(
     scrollYProgress,
     "change",
     (latest) => {
-
       const index = Math.min(
         totalStories - 1,
-
         Math.max(
           0,
-
           Math.round(
-            latest * (totalStories - 1)
+            latest *
+              (totalStories - 1)
           )
         )
       );
@@ -170,30 +195,19 @@ export default function ScrollStory({
     }
   );
 
-
-  /* =========================================================
+  /* =======================================================
      CENTER SPACER
-  ========================================================= */
-
-  /*
-    Browser viewport = 100vh
-
-    Card = 48vh
-
-    Remaining space = 52vh
-
-    Half above + half below = 26vh
-  */
+  ======================================================= */
 
   const CENTER_SPACER =
     (100 - CARD_HEIGHT) / 2;
 
+  const MOBILE_CENTER_SPACER =
+    (100 - MOBILE_CARD_HEIGHT) / 2;
 
   return (
-
     <section
       ref={sectionRef}
-
       className={`
         relative
         h-[600vh]
@@ -202,7 +216,6 @@ export default function ScrollStory({
         ${className}
       `}
     >
-
       {/* =====================================================
           STICKY VIEWPORT
       ===================================================== */}
@@ -217,18 +230,23 @@ export default function ScrollStory({
         "
       >
 
+        {/* ===================================================
+            DESKTOP / TABLET LAYOUT
+        =================================================== */}
+
         <div
           className="
             mx-auto
-            grid
+            hidden
             h-full
             w-full
             max-w-7xl
-            grid-cols-1
-            gap-10
-            px-6
+            grid-cols-2
+            gap-8
+            px-8
             sm:px-12
-            lg:grid-cols-2
+            lg:grid
+            lg:gap-12
             lg:px-20
           "
         >
@@ -257,15 +275,20 @@ export default function ScrollStory({
             >
 
               <StoryText
-                story={stories[activeIndex]}
-                activeIndex={activeIndex}
-                total={totalStories}
+                story={
+                  stories[activeIndex]
+                }
+                activeIndex={
+                  activeIndex
+                }
+                total={
+                  totalStories
+                }
               />
 
             </div>
 
           </div>
-
 
           {/* =================================================
               RIGHT IMAGE AREA
@@ -281,10 +304,6 @@ export default function ScrollStory({
               justify-center
             "
           >
-
-            {/* =================================================
-                IMAGE VIEWPORT
-            ================================================= */}
 
             <div
               className="
@@ -315,7 +334,6 @@ export default function ScrollStory({
                 "
               />
 
-
               {/* =================================================
                   BOTTOM FADE
               ================================================= */}
@@ -335,7 +353,6 @@ export default function ScrollStory({
                 "
               />
 
-
               {/* =================================================
                   IMAGE STACK
               ================================================= */}
@@ -346,7 +363,6 @@ export default function ScrollStory({
                     ? "0vh"
                     : translateY,
                 }}
-
                 className="
                   flex
                   flex-col
@@ -355,35 +371,36 @@ export default function ScrollStory({
               >
 
                 {/* =================================================
-                    TOP CENTER SPACER
+                    TOP SPACER
                 ================================================= */}
 
                 <div
-                  className="
-                    shrink-0
-                  "
+                  className="shrink-0"
                   style={{
                     height:
                       `${CENTER_SPACER}vh`,
                   }}
                 />
 
-
                 {/* =================================================
                     STORIES
                 ================================================= */}
 
                 {stories.map(
-                  (story, index) => {
+                  (
+                    story,
+                    index
+                  ) => {
 
                     const active =
-                      index === activeIndex;
+                      index ===
+                      activeIndex;
 
                     return (
-
                       <div
-                        key={story.number}
-
+                        key={
+                          story.number
+                        }
                         className="
                           flex
                           shrink-0
@@ -391,29 +408,34 @@ export default function ScrollStory({
                           justify-center
                           px-2
                         "
-
                         style={{
                           height:
                             `${CARD_HEIGHT}vh`,
                         }}
                       >
 
+                        {/* =================================================
+                            IMAGE CARD
+                        ================================================= */}
+
                         <motion.div
                           animate={{
+                            /*
+                              IMPORTANT:
+                              Opacity is intentionally
+                              NOT animated.
+
+                              This prevents the image
+                              from fading when it enters
+                              the visible region.
+                            */
                             scale:
                               active
                                 ? 1
                                 : 0.88,
-
-                            opacity:
-                              active
-                                ? 1
-                                : 0.35,
                           }}
-
                           transition={{
                             duration: 0.45,
-
                             ease: [
                               0.22,
                               1,
@@ -421,7 +443,6 @@ export default function ScrollStory({
                               1,
                             ],
                           }}
-
                           className={`
                             relative
                             h-full
@@ -437,29 +458,26 @@ export default function ScrollStory({
                           `}
                         >
 
-                          {/* =================================================
-                              IMAGE
-                          ================================================= */}
-
                           <img
-                            src={story.image}
-                            alt={story.alt}
-
+                            src={
+                              story.image
+                            }
+                            alt={
+                              story.alt
+                            }
                             loading={
                               index < 2
                                 ? "eager"
                                 : "lazy"
                             }
-
                             decoding="async"
-
                             className="
+                              block
                               h-full
                               w-full
                               object-cover
                             "
                           />
-
 
                           {/* =================================================
                               MAROON OVERLAY
@@ -467,12 +485,12 @@ export default function ScrollStory({
 
                           <div
                             className="
+                              pointer-events-none
                               absolute
                               inset-0
                               bg-[#2B0A12]/20
                             "
                           />
-
 
                           {/* =================================================
                               BOTTOM GRADIENT
@@ -492,9 +510,8 @@ export default function ScrollStory({
                             "
                           />
 
-
                           {/* =================================================
-                              IMAGE LABEL
+                              LABEL
                           ================================================= */}
 
                           <div
@@ -512,7 +529,9 @@ export default function ScrollStory({
                                 text-[#D9B86C]
                               "
                             >
-                              {story.number}
+                              {
+                                story.number
+                              }
                             </span>
 
                             <h3
@@ -524,7 +543,9 @@ export default function ScrollStory({
                                 sm:text-xl
                               "
                             >
-                              {story.title}
+                              {
+                                story.title
+                              }
                             </h3>
 
                           </div>
@@ -532,24 +553,356 @@ export default function ScrollStory({
                         </motion.div>
 
                       </div>
-
                     );
                   }
                 )}
 
-
                 {/* =================================================
-                    BOTTOM CENTER SPACER
+                    BOTTOM SPACER
                 ================================================= */}
 
                 <div
-                  className="
-                    shrink-0
-                  "
-
+                  className="shrink-0"
                   style={{
                     height:
                       `${CENTER_SPACER}vh`,
+                  }}
+                />
+
+              </motion.div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* ===================================================
+            MOBILE LAYOUT
+        =================================================== */}
+
+        <div
+          className="
+            flex
+            h-full
+            w-full
+            flex-col
+            px-5
+            py-8
+            sm:px-8
+            lg:hidden
+          "
+        >
+
+          {/* =================================================
+              MOBILE TEXT
+          ================================================= */}
+
+          <div
+            className="
+              flex
+              min-h-[35vh]
+              w-full
+              items-center
+              justify-center
+            "
+          >
+
+            <div
+              className="
+                w-full
+                max-w-md
+              "
+            >
+
+              <StoryText
+                story={
+                  stories[activeIndex]
+                }
+                activeIndex={
+                  activeIndex
+                }
+                total={
+                  totalStories
+                }
+              />
+
+            </div>
+
+          </div>
+
+          {/* =================================================
+              MOBILE IMAGE
+          ================================================= */}
+
+          <div
+            className="
+              relative
+              flex
+              min-h-0
+              flex-1
+              w-full
+              items-center
+              justify-center
+            "
+          >
+
+            <div
+              className="
+                relative
+                h-[42vh]
+                w-full
+                max-w-[500px]
+                overflow-hidden
+                rounded-xl
+              "
+            >
+
+              {/* =================================================
+                  TOP FADE
+              ================================================= */}
+
+              <div
+                className="
+                  pointer-events-none
+                  absolute
+                  inset-x-0
+                  top-0
+                  z-30
+                  h-8
+                  bg-gradient-to-b
+                  from-[#2B0A12]
+                  via-[#2B0A12]/60
+                  to-transparent
+                "
+              />
+
+              {/* =================================================
+                  BOTTOM FADE
+              ================================================= */}
+
+              <div
+                className="
+                  pointer-events-none
+                  absolute
+                  inset-x-0
+                  bottom-0
+                  z-30
+                  h-8
+                  bg-gradient-to-t
+                  from-[#2B0A12]
+                  via-[#2B0A12]/60
+                  to-transparent
+                "
+              />
+
+              {/* =================================================
+                  MOBILE IMAGE STACK
+              ================================================= */}
+
+              <motion.div
+                style={{
+                  y: reduceMotion
+                    ? "0vh"
+                    : mobileTranslateY,
+                }}
+                className="
+                  flex
+                  flex-col
+                  will-change-transform
+                "
+              >
+
+                {/* =================================================
+                    TOP SPACER
+                ================================================= */}
+
+                <div
+                  className="shrink-0"
+                  style={{
+                    height:
+                      `${MOBILE_CENTER_SPACER}vh`,
+                  }}
+                />
+
+                {/* =================================================
+                    STORIES
+                ================================================= */}
+
+                {stories.map(
+                  (
+                    story,
+                    index
+                  ) => {
+
+                    const active =
+                      index ===
+                      activeIndex;
+
+                    return (
+                      <div
+                        key={
+                          story.number
+                        }
+                        className="
+                          flex
+                          shrink-0
+                          items-center
+                          justify-center
+                          px-0
+                        "
+                        style={{
+                          height:
+                            `${MOBILE_CARD_HEIGHT}vh`,
+                        }}
+                      >
+
+                        {/* =================================================
+                            MOBILE IMAGE CARD
+                        ================================================= */}
+
+                        <motion.div
+                          animate={{
+                            /*
+                              No opacity animation here.
+                              The image remains fully visible.
+                            */
+                            scale:
+                              active
+                                ? 1
+                                : 0.92,
+                          }}
+                          transition={{
+                            duration: 0.4,
+                            ease: [
+                              0.22,
+                              1,
+                              0.36,
+                              1,
+                            ],
+                          }}
+                          className={`
+                            relative
+                            h-full
+                            w-full
+                            overflow-hidden
+                            rounded-xl
+                            border
+                            ${
+                              active
+                                ? "border-[#C6A15B]/70"
+                                : "border-[#C6A15B]/15"
+                            }
+                          `}
+                        >
+
+                          <img
+                            src={
+                              story.image
+                            }
+                            alt={
+                              story.alt
+                            }
+                            loading={
+                              index === 0
+                                ? "eager"
+                                : "lazy"
+                            }
+                            decoding="async"
+                            className="
+                              block
+                              h-full
+                              w-full
+                              object-cover
+                            "
+                          />
+
+                          {/* =================================================
+                              MAROON OVERLAY
+                          ================================================= */}
+
+                          <div
+                            className="
+                              pointer-events-none
+                              absolute
+                              inset-0
+                              bg-[#2B0A12]/15
+                            "
+                          />
+
+                          {/* =================================================
+                              BOTTOM GRADIENT
+                          ================================================= */}
+
+                          <div
+                            className="
+                              pointer-events-none
+                              absolute
+                              inset-x-0
+                              bottom-0
+                              h-24
+                              bg-gradient-to-t
+                              from-[#2B0A12]/90
+                              via-[#2B0A12]/40
+                              to-transparent
+                            "
+                          />
+
+                          {/* =================================================
+                              LABEL
+                          ================================================= */}
+
+                          <div
+                            className="
+                              absolute
+                              bottom-4
+                              left-4
+                            "
+                          >
+
+                            <span
+                              className="
+                                text-[10px]
+                                tracking-[0.25em]
+                                text-[#D9B86C]
+                              "
+                            >
+                              {
+                                story.number
+                              }
+                            </span>
+
+                            <h3
+                              className="
+                                mt-1
+                                text-base
+                                font-medium
+                                text-[#F7EBD0]
+                              "
+                            >
+                              {
+                                story.title
+                              }
+                            </h3>
+
+                          </div>
+
+                        </motion.div>
+
+                      </div>
+                    );
+                  }
+                )}
+
+                {/* =================================================
+                    BOTTOM SPACER
+                ================================================= */}
+
+                <div
+                  className="shrink-0"
+                  style={{
+                    height:
+                      `${MOBILE_CENTER_SPACER}vh`,
                   }}
                 />
 

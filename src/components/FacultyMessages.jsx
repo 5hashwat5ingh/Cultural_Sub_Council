@@ -3,6 +3,13 @@ import { motion } from "framer-motion";
 
 const facultyMessages = [
   {
+    name: "Prof. Anupma Kaushik Sharma",
+    designation: "Vice-chancellor, MMMUT",
+    image: "/faculty/b_k_pandey.jpg",
+    message:
+      "Culture is not just an expression of talent, but a reflection of values, creativity and the collective spirit of our community.",
+  },
+  {
     name: "Dr. B.K. Pandey",
     designation: "Chairman, Council of Student Activities",
     image: "/faculty/b_k_pandey.jpg",
@@ -26,6 +33,8 @@ const facultyMessages = [
 ];
 
 export default function FacultyMessages() {
+  const viceChancellor = facultyMessages[0];
+  const otherFaculty = facultyMessages.slice(1);
   return (
     <section
       id="faculty-messages"
@@ -41,6 +50,8 @@ export default function FacultyMessages() {
         lg:py-32
       "
     >
+      
+        
       {/* =====================================================
           BACKGROUND GLOW
       ===================================================== */}
@@ -59,6 +70,7 @@ export default function FacultyMessages() {
           blur-3xl
         "
       />
+      
 
       {/* GOLD GLOW */}
       <div
@@ -139,22 +151,32 @@ export default function FacultyMessages() {
             FACULTY CARDS
         ===================================================== */}
 
-        <div
-          className="
-            grid
-            grid-cols-1
-            gap-5
-            md:grid-cols-3
-          "
-        >
-          {facultyMessages.map((faculty, index) => (
-            <FacultyCard
-              key={faculty.name}
-              faculty={faculty}
-              index={index}
-            />
-          ))}
-        </div>
+        {/* =====================================================
+    FACULTY CARDS
+===================================================== */}
+
+<div className="w-full">
+  {/* VICE-CHANCELLOR — FULL WIDTH */}
+  <div className="w-full">
+    <FacultyCard
+      faculty={viceChancellor}
+      index={0}
+      featured={true}
+    />
+  </div>
+
+  {/* OTHER FACULTY — 3 EQUAL COLUMNS */}
+  <div className="mt-5 grid w-full grid-cols-1 gap-5 md:grid-cols-3">
+    {otherFaculty.map((faculty, index) => (
+      <FacultyCard
+        key={faculty.name}
+        faculty={faculty}
+        index={index + 1}
+        featured={false}
+      />
+    ))}
+  </div>
+</div>
       </div>
     </section>
   );
@@ -164,7 +186,7 @@ export default function FacultyMessages() {
    FACULTY CARD
 ========================================================= */
 
-function FacultyCard({ faculty, index }) {
+function FacultyCard({ faculty, index, featured=false }) {
   return (
     <motion.article
       initial={{
@@ -187,7 +209,7 @@ function FacultyCard({ faculty, index }) {
       whileHover={{
         y: -6,
       }}
-      className="
+      className={`
         group
         relative
         flex
@@ -197,14 +219,19 @@ function FacultyCard({ faculty, index }) {
         rounded-[22px]
         border
         border-[#C6A15B]/15
-        bg-[#4A1220]/45
+        ${featured
+        ?"bg-black"
+        :"bg-white"}
         p-7
         transition-all
         duration-500
         hover:border-[#C6A15B]/45
-        hover:bg-[#4A1220]/65
+        ${featured
+          ? "hover:bg-[#F7EBD0]"
+          : "hover:bg-[#4A1220]/65"
+        }
         sm:p-8
-      "
+      `}
     >
       {/* =====================================================
           TOP GOLD ACCENT
@@ -360,7 +387,7 @@ function FacultyCard({ faculty, index }) {
 
         <div className="flex items-end justify-between gap-4">
           {/* NAME + DESIGNATION */}
-
+          
           <div className="min-w-0">
             <h3
               className="
@@ -409,5 +436,6 @@ function FacultyCard({ faculty, index }) {
         </div>
       </div>
     </motion.article>
+    
   );
 }

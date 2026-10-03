@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-
+import Navbar from "../../components/Navbar";
 /* =========================================================
    FACULTY MESSAGES
 ========================================================= */
@@ -87,8 +87,8 @@ const achievements = [
 
 export default function FineArts() {
   return (
-    <main className="min-h-screen overflow-hidden bg-[#2B0A12] text-[#F7EBD0]">
-
+    <main className="min-h-screen mt-[15px] overflow-hidden bg-[#2B0A12] text-[#F7EBD0]">
+      <Navbar Home/>
       {/* =====================================================
           HERO
       ===================================================== */}
@@ -730,21 +730,7 @@ export default function FineArts() {
                 </p>
 
 
-                <div
-                  className="
-                    absolute
-                    bottom-8
-                    right-8
-                    text-3xl
-                    text-[#C6A15B]/30
-                    transition-all
-                    duration-500
-                    group-hover:translate-x-2
-                    group-hover:text-[#C6A15B]
-                  "
-                >
-                  →
-                </div>
+                
 
               </motion.div>
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-
+import Navbar from "../../components/Navbar";
 /* =========================================================
    FACULTY MESSAGES
 ========================================================= */
@@ -8,17 +8,17 @@ import { motion } from "framer-motion";
 const facultyMessages = [
   {
     name: "Faculty Name",
-    designation: "Faculty In-Charge, Dramatics Club",
-    image: "/faculty/dramatics-faculty.jpg",
+    designation: "Faculty In-Charge, Music Club",
+    image: "/faculty/music-faculty.jpg",
     message:
-      "Theatre is a powerful form of expression where stories, emotions and imagination come alive. The Dramatics Club gives students a platform to discover their voice, build confidence and communicate through the art of performance.",
+      "Music has the power to bring people together beyond words. The Music Club provides students with a platform to discover their musical abilities, develop confidence and share their passion with the campus community.",
   },
   {
     name: "Faculty Name",
     designation: "Faculty Coordinator",
-    image: "/faculty/dramatics-coordinator.jpg",
+    image: "/faculty/music-coordinator.jpg",
     message:
-      "Every character has a story and every stage creates an opportunity to express it. The Dramatics Club encourages students to explore acting, storytelling and theatre while developing creativity, confidence and collaboration.",
+      "Every voice has its own character and every instrument tells its own story. The Music Club encourages students to learn, experiment and perform while creating a vibrant musical culture across the campus.",
   },
 ];
 
@@ -29,27 +29,27 @@ const facultyMessages = [
 const activities = [
   {
     number: "01",
-    title: "Performances",
+    title: "Live Performances",
     description:
-      "From stage productions and campus celebrations to major cultural events, the club brings stories and characters to life.",
+      "From campus celebrations to major cultural events, the club creates memorable experiences through vocal and instrumental performances.",
   },
   {
     number: "02",
-    title: "Acting",
+    title: "Vocals & Instruments",
     description:
-      "Students explore character development, dialogue delivery, expressions and stage presence through practical performance.",
+      "Students explore singing and instrumental music while developing technique, musicality and confidence through regular practice.",
   },
   {
     number: "03",
-    title: "Workshops",
+    title: "Jam Sessions",
     description:
-      "Interactive sessions provide opportunities to learn theatre techniques, improvisation, voice modulation and performance skills.",
+      "Collaborative sessions give musicians a space to experiment, improvise and create music together in an open creative environment.",
   },
   {
     number: "04",
     title: "Competitions",
     description:
-      "The club provides a platform for students to represent the institution in theatre, street play and other dramatic competitions.",
+      "The club provides opportunities for students to represent the institution in solo, group and instrumental music competitions.",
   },
 ];
 
@@ -63,14 +63,14 @@ const achievements = [
     year: "20XX",
     title: "Achievement Title",
     description:
-      "Add a verified achievement, competition result or recognition of the Dramatics Club here.",
+      "Add a verified achievement, competition result or recognition of the Music Club here.",
   },
   {
     number: "02",
     year: "20XX",
     title: "Achievement Title",
     description:
-      "Add another verified milestone, award or major theatrical performance here.",
+      "Add another verified milestone, award or major musical performance here.",
   },
   {
     number: "03",
@@ -82,13 +82,13 @@ const achievements = [
 ];
 
 /* =========================================================
-   DRAMATICS CLUB PAGE
+   MUSIC CLUB PAGE
 ========================================================= */
 
-export default function DramaticsClub() {
+export default function Music() {
   return (
-    <main className="min-h-screen overflow-hidden bg-[#2B0A12] text-[#F7EBD0]">
-
+    <main className="min-h-screen mt-[15px] overflow-hidden bg-[#2B0A12] text-[#F7EBD0]">
+      <Navbar Home/>
       {/* =====================================================
           HERO
       ===================================================== */}
@@ -98,8 +98,8 @@ export default function DramaticsClub() {
         {/* Background Image */}
 
         <img
-          src="/clubs/dramatics-hero.jpg"
-          alt="Dramatics Club"
+          src="/clubs/music-hero.jpg"
+          alt="Music Club"
           className="
             absolute
             inset-0
@@ -148,7 +148,7 @@ export default function DramaticsClub() {
           "
         />
 
-        {/* Content */}
+        {/* Hero Content */}
 
         <div
           className="
@@ -191,6 +191,7 @@ export default function DramaticsClub() {
               </span>
             </motion.div>
 
+
             {/* Title */}
 
             <motion.h1
@@ -208,13 +209,14 @@ export default function DramaticsClub() {
                 text-[#F7EBD0]
               "
             >
-              DRAMATICS
+              MUSIC
               <br />
 
               <span className="text-[#C6A15B]">
                 CLUB
               </span>
             </motion.h1>
+
 
             {/* Tagline */}
 
@@ -234,10 +236,11 @@ export default function DramaticsClub() {
                 sm:text-xl
               "
             >
-              Where stories find a voice,
-              characters come alive, and
-              every stage becomes a world.
+              Where melodies become memories,
+              voices find their rhythm, and
+              every performance tells a story.
             </motion.p>
+
 
             {/* Scroll */}
 
@@ -267,6 +270,7 @@ export default function DramaticsClub() {
             </motion.div>
 
           </div>
+
         </div>
       </section>
 
@@ -309,6 +313,7 @@ export default function DramaticsClub() {
               <span className="h-px w-16 bg-[#C6A15B]/40" />
 
             </div>
+
 
             <h2
               className="
@@ -386,6 +391,7 @@ export default function DramaticsClub() {
                   "
                 />
 
+
                 <div className="flex flex-col gap-8 sm:flex-row">
 
                   {/* Faculty Image */}
@@ -402,6 +408,7 @@ export default function DramaticsClub() {
                       p-1
                     "
                   >
+
                     <img
                       src={faculty.image}
                       alt={faculty.name}
@@ -416,6 +423,7 @@ export default function DramaticsClub() {
                         group-hover:grayscale-0
                       "
                     />
+
                   </div>
 
 
@@ -435,6 +443,7 @@ export default function DramaticsClub() {
                       "{faculty.message}"
                     </p>
 
+
                     <div className="mt-7">
 
                       <h3
@@ -448,6 +457,7 @@ export default function DramaticsClub() {
                       >
                         {faculty.name}
                       </h3>
+
 
                       <p
                         className="
@@ -474,6 +484,7 @@ export default function DramaticsClub() {
           </div>
 
         </div>
+
       </section>
 
 
@@ -512,6 +523,7 @@ export default function DramaticsClub() {
                 01 / About
               </span>
 
+
               <div
                 className="
                   mt-8
@@ -542,7 +554,7 @@ export default function DramaticsClub() {
                 <br />
 
                 <span className="text-[#C6A15B]">
-                  acting.
+                  music.
                 </span>
               </h2>
 
@@ -557,10 +569,10 @@ export default function DramaticsClub() {
                   sm:text-xl
                 "
               >
-                The Dramatics Club provides a platform for
-                students to explore acting, theatre and
-                storytelling while developing confidence,
-                creativity and communication skills.
+                The Music Club provides a platform for
+                students to explore vocals, instruments
+                and musical performance while developing
+                confidence, discipline and creative expression.
               </p>
 
 
@@ -574,11 +586,10 @@ export default function DramaticsClub() {
                   sm:text-xl
                 "
               >
-                From rehearsals and character development
-                to stage productions and cultural
-                performances, the club brings together
-                students who share a passion for theatre
-                and the art of storytelling.
+                From rehearsals and jam sessions to live
+                performances and cultural celebrations,
+                the club brings together students who share
+                a passion for music and the art of performance.
               </p>
 
             </div>
@@ -586,6 +597,7 @@ export default function DramaticsClub() {
           </div>
 
         </div>
+
       </section>
 
 
@@ -622,6 +634,7 @@ export default function DramaticsClub() {
               02 / What We Do
             </span>
 
+
             <h2
               className="
                 mt-7
@@ -631,15 +644,15 @@ export default function DramaticsClub() {
                 sm:text-7xl
               "
             >
-              Imagine.
+              Listen.
               <br />
 
               <span className="text-[#C6A15B]">
-                Perform.
+                Create.
               </span>
               <br />
 
-              Inspire.
+              Perform.
             </h2>
 
           </div>
@@ -690,6 +703,7 @@ export default function DramaticsClub() {
                   {activity.number}
                 </span>
 
+
                 <h3
                   className="
                     mt-20
@@ -703,6 +717,7 @@ export default function DramaticsClub() {
                   {activity.title}
                 </h3>
 
+
                 <p
                   className="
                     mt-5
@@ -714,21 +729,8 @@ export default function DramaticsClub() {
                   {activity.description}
                 </p>
 
-                <div
-                  className="
-                    absolute
-                    bottom-8
-                    right-8
-                    text-3xl
-                    text-[#C6A15B]/30
-                    transition-all
-                    duration-500
-                    group-hover:translate-x-2
-                    group-hover:text-[#C6A15B]
-                  "
-                >
-                  →
-                </div>
+
+               
 
               </motion.div>
 
@@ -737,6 +739,7 @@ export default function DramaticsClub() {
           </div>
 
         </div>
+
       </section>
 
 
@@ -774,6 +777,7 @@ export default function DramaticsClub() {
               >
                 03 / Achievements
               </span>
+
 
               <h2
                 className="
@@ -845,6 +849,7 @@ export default function DramaticsClub() {
                         {achievement.number}
                       </span>
 
+
                       <div className="flex-1">
 
                         <div
@@ -868,6 +873,7 @@ export default function DramaticsClub() {
                             {achievement.title}
                           </h3>
 
+
                           <span
                             className="
                               text-xs
@@ -879,6 +885,7 @@ export default function DramaticsClub() {
                           </span>
 
                         </div>
+
 
                         <p
                           className="
@@ -900,6 +907,7 @@ export default function DramaticsClub() {
                 )
               )}
 
+
               <div className="border-t border-[#C6A15B]/20" />
 
             </div>
@@ -907,6 +915,7 @@ export default function DramaticsClub() {
           </div>
 
         </div>
+
       </section>
 
 
@@ -945,6 +954,7 @@ export default function DramaticsClub() {
           "
         />
 
+
         <div className="relative z-10">
 
           <span
@@ -957,6 +967,7 @@ export default function DramaticsClub() {
           >
             Your Stage Awaits
           </span>
+
 
           <h2
             className="
@@ -975,9 +986,10 @@ export default function DramaticsClub() {
             <br />
 
             <span className="text-[#C6A15B]">
-              story.
+              sound.
             </span>
           </h2>
+
 
           <button
             className="
@@ -996,7 +1008,7 @@ export default function DramaticsClub() {
               hover:text-[#2B0A12]
             "
           >
-            Join Dramatics Club
+            Join Music Club
           </button>
 
         </div>

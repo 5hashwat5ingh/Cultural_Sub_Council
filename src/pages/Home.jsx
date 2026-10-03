@@ -40,7 +40,6 @@ export default function Home() {
         selection:text-[#081A33]
       "
     >
-
       {/* =====================================================
           GRAIN
       ===================================================== */}
@@ -57,7 +56,7 @@ export default function Home() {
       />
 
       {/* =====================================================
-          ROYAL BLUE AMBIENT GLOW
+          MAROON AMBIENT GLOW
       ===================================================== */}
 
       <motion.div
@@ -140,17 +139,37 @@ export default function Home() {
           relative
           z-20
           min-h-screen
+          overflow-hidden
           bg-[#2B0A12]
         "
       >
+        {/* =================================================
+            HERO GRADIENT OVERLAY
+        ================================================= */}
+
+        <div
+          className="
+            pointer-events-none
+            absolute
+            inset-0
+            z-0
+            bg-gradient-to-r
+            from-[#2B0A12]
+            via-[#2B0A12]/75
+            to-transparent
+          "
+          aria-hidden="true"
+        />
+
         <PageReveal />
 
-        <Navbar />
+        <Navbar Home />
 
         <main
           id="home"
           className="
             relative
+            z-10
             flex
             min-h-screen
             items-center
@@ -162,19 +181,13 @@ export default function Home() {
             xl:px-28
           "
         >
-
           {/* =================================================
               HERITAGE ARCHITECTURAL LINES
           ================================================= */}
 
-         
-
-          
           {/* =================================================
               TOP LEFT ORNAMENT
           ================================================= */}
-
-          
 
           {/* =================================================
               BOTTOM RIGHT ORNAMENT
@@ -196,6 +209,10 @@ export default function Home() {
             "
           />
 
+          {/* =================================================
+              HERO CONTENT
+          ================================================= */}
+
           <div
             className="
               mx-auto
@@ -206,7 +223,6 @@ export default function Home() {
               xl:ml-[6%]
             "
           >
-
             {/* =================================================
                 EYEBROW
             ================================================= */}
@@ -229,7 +245,6 @@ export default function Home() {
               className="mb-6 sm:mb-8"
             >
               <div className="flex items-center gap-2">
-
                 <span
                   className="
                     h-[0.5px]
@@ -251,7 +266,6 @@ export default function Home() {
                 >
                   CREATE • PERFORM • BELONG.
                 </span>
-
               </div>
             </motion.div>
 
@@ -260,7 +274,6 @@ export default function Home() {
             ================================================= */}
 
             <div className="mb-8 sm:mb-10">
-
               <TextReveal
                 text={"A Stage \nFor Every Expression"}
                 as="h1"
@@ -276,26 +289,18 @@ export default function Home() {
                 stagger={0.1}
                 ease={[0.22, 1, 0.36, 1]}
               />
-
             </div>
 
-            {/* =================================================
-                GOLD ACCENT
-            ================================================= */}
-
-            
             {/* =================================================
                 HERITAGE ORNAMENT
             ================================================= */}
 
             <div className="mb-7 flex items-center gap-2">
-
               <span className="h-px w-8 bg-[#C9A24D]/60" />
 
               <span className="h-1.5 w-1.5 rotate-45 bg-[#D9B86C]" />
 
               <span className="h-px w-12 bg-[#C9A24D]/25" />
-
             </div>
 
             {/* =================================================
@@ -332,7 +337,6 @@ export default function Home() {
               A collective of minds, talents, and stories shaping the
               cultural spirit of our campus.
             </motion.p>
-
           </div>
 
           {/* =================================================
@@ -373,11 +377,8 @@ export default function Home() {
             <span className="animate-bounce text-[16px] text-[#C9A24D]">
               ↓
             </span>
-
           </motion.div>
-
         </main>
-
       </div>
 
       {/* =====================================================
@@ -390,9 +391,7 @@ export default function Home() {
           relative
           m-0
           w-full
-          border-t
-          border-[#C9A24D]/10
-          bg-[#3A0D18]
+          bg-[#2B0A12]
           p-0
         "
       >
@@ -416,9 +415,7 @@ export default function Home() {
           relative
           m-0
           w-full
-          border-t
-          border-[#C9A24D]/10
-          bg-[#3A0D18]
+          bg-[#2B0A12]
           p-0
         "
       >
@@ -435,8 +432,6 @@ export default function Home() {
           relative
           m-0
           w-full
-          border-t
-          border-[#C9A24D]/10
           bg-[#2B0A12]
           p-0
         "
@@ -455,8 +450,6 @@ export default function Home() {
           z-20
           m-0
           w-full
-          border-t
-          border-[#C9A24D]/20
           bg-[#1D070D]
           px-6
           py-16
@@ -466,7 +459,6 @@ export default function Home() {
           lg:py-24
         "
       >
-
         <div
           className="
             mx-auto
@@ -480,13 +472,10 @@ export default function Home() {
             md:items-end
           "
         >
-
           {/* Footer Brand */}
 
           <div>
-
             <div className="mb-3 flex items-center gap-3">
-
               <span className="h-2 w-2 rotate-45 bg-[#C9A24D]" />
 
               <span
@@ -499,7 +488,6 @@ export default function Home() {
               >
                 Get in Touch
               </span>
-
             </div>
 
             <p
@@ -513,7 +501,6 @@ export default function Home() {
             >
               Cultural Sub Council
             </p>
-
           </div>
 
           {/* Footer Links */}
@@ -531,7 +518,6 @@ export default function Home() {
               sm:gap-12
             "
           >
-
             <a
               href="#work"
               className="
@@ -568,19 +554,15 @@ export default function Home() {
             <span className="text-[#8F7663]">
               © {new Date().getFullYear()} Cultural Sub Council
             </span>
-
           </div>
-
         </div>
-
       </footer>
 
       {/* =====================================================
           REPLAY
       ===================================================== */}
 
-      
-
+      <ReplayButton onReplay={handleReplay} />
     </div>
   );
 }

@@ -101,7 +101,7 @@ const itemVariants = {
 export default function ClubsPage() {
   return (
     <main className="min-h-screen overflow-hidden bg-[#2B0A12] text-[#F7EBD0]">
-<Navbar />
+<Navbar Home/>
       {/* =====================================================
           AMBIENT BACKGROUND
       ===================================================== */}
@@ -122,7 +122,7 @@ export default function ClubsPage() {
             blur-[150px]
           "
         />
-
+        
         {/* Gold glow */}
         <div
           className="

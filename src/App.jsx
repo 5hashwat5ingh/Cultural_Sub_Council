@@ -8,11 +8,15 @@ import ClubsPage from "./pages/Clubs";
 import Events from "./pages/Events";
 import Gallery from "./pages/Gallery";
 
-import Dance from "./components/Dance";
-import Dramatics from "./components/Dramatics";
-import Music from "./components/Music";
-import FineArts from "./components/FineArts";
-import Technical from "./components/Technical";
+import Dance from "./pages/clubs/Dance";
+import Dramatics from "./pages/clubs/Dramatics";
+import Music from "./pages/clubs/Music";
+import FineArts from "./pages/clubs/FineArts";
+import Technical from "./pages/clubs/Technical";
+
+import Heats25 from "./pages/events/Heats25";
+import Orientation26 from "./pages/events/Orientation26";
+import PinturaDePilares from "./pages/events/PinturaDePilares";
 
 export default function App() {
   return (
@@ -25,6 +29,17 @@ export default function App() {
         <Route path="/clubs" element={<ClubsPage />} />
 
         <Route path="/events" element={<Events />} />
+         {/* Events */}
+      <Route path="/events" element={<Events />} />
+      <Route path="/events/heats-25" element={<Heats25 />} />
+      <Route
+        path="/events/orientation-26"
+        element={<Orientation26 />}
+      />
+      <Route
+        path="/events/pintura-de-pilares"
+        element={<PinturaDePilares />}
+      />
 
         <Route path="/gallery" element={<Gallery />} />
 
