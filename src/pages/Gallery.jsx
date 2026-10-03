@@ -41,9 +41,44 @@ function CloseIcon() {
   );
 }
 
+
 /* =========================================================
    GALLERY PAGE
 ========================================================= */
+const shuffleArray = (array) => {
+  const shuffled = [...array];
+
+  // Fisher-Yates shuffle
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+
+    [shuffled[i], shuffled[j]] = [
+      shuffled[j],
+      shuffled[i],
+    ];
+  }
+
+  // Prevent consecutive videos
+  for (let i = 1; i < shuffled.length; i++) {
+    if (
+      shuffled[i].type === "video" &&
+      shuffled[i - 1].type === "video"
+    ) {
+      // Find a photo later in the array
+      for (let j = i + 1; j < shuffled.length; j++) {
+        if (shuffled[j].type === "photo") {
+          [shuffled[i], shuffled[j]] = [
+            shuffled[j],
+            shuffled[i],
+          ];
+          break;
+        }
+      }
+    }
+  }
+
+  return shuffled;
+};
 
 export default function Gallery() {
   const [activeCategory, setActiveCategory] =
@@ -51,18 +86,21 @@ export default function Gallery() {
 
   const [selectedItem, setSelectedItem] =
     useState(null);
+    const [shuffledItems] = useState(() =>
+  shuffleArray(galleryItems)
+);
 
   /* =======================================================
      FILTER
   ======================================================= */
 
   const filteredItems =
-    activeCategory === "All"
-      ? galleryItems
-      : galleryItems.filter(
-          (item) =>
-            item.category === activeCategory
-        );
+  activeCategory === "All"
+    ? shuffledItems
+    : shuffledItems.filter(
+        (item) =>
+          item.category === activeCategory
+      );
 
   /* =======================================================
      LOCK BODY SCROLL WHEN VIEWER IS OPEN
@@ -505,14 +543,16 @@ export default function Gallery() {
           <motion.div
             layout
             className="
-              columns-2
-              gap-1.5
-              sm:columns-3
-              sm:gap-2
-              lg:columns-4
-              lg:gap-3
+            grid
+            grid-cols-2
+            gap-3
+            sm:grid-cols-3
+            sm:gap-4
+            lg:grid-cols-4
+            lg:gap-5
             "
-          >
+            >
+          
 
             <AnimatePresence mode="popLayout">
 
