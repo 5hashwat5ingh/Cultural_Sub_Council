@@ -1,12 +1,18 @@
 import React from "react";
-import { Mail, ArrowUpRight } from "lucide-react";
+import { Mail, Phone, MapPin, ArrowUpRight } from "lucide-react";
+
 import {
   FaInstagram,
   FaLinkedinIn,
   FaYoutube,
   FaFacebookF,
 } from "react-icons/fa";
+
 import { Link } from "react-router-dom";
+
+/* =========================================================
+   SOCIAL LINKS
+========================================================= */
 
 const socialLinks = [
   {
@@ -31,6 +37,10 @@ const socialLinks = [
   },
 ];
 
+/* =========================================================
+   FOOTER
+========================================================= */
+
 export default function Footer() {
   return (
     <footer
@@ -49,7 +59,10 @@ export default function Footer() {
         lg:py-20
       "
     >
-      {/* Background Glow */}
+      {/* =====================================================
+          BACKGROUND GLOW
+      ===================================================== */}
+
       <div
         className="
           pointer-events-none
@@ -78,21 +91,27 @@ export default function Footer() {
         "
       />
 
-      {/* Main Footer Content */}
+      {/* =====================================================
+          MAIN FOOTER CONTENT
+      ===================================================== */}
+
       <div className="relative z-10 mx-auto max-w-7xl">
         <div
           className="
-            flex
-            flex-col
+            grid
+            grid-cols-1
             gap-12
-            lg:flex-row
-            lg:items-end
-            lg:justify-between
+            lg:grid-cols-[1fr_1.2fr_0.7fr]
+            lg:gap-14
           "
         >
-          {/* Left Section */}
+          {/* =================================================
+              LEFT — CULTURAL SUB COUNCIL + SECRETARY
+          ================================================= */}
+
           <div className="max-w-xl">
             {/* Label */}
+
             <div className="mb-4 flex items-center gap-3">
               <span
                 className="
@@ -117,20 +136,10 @@ export default function Footer() {
             </div>
 
             {/* Title */}
-            <h2
-              className="
-                text-3xl
-                font-medium
-                tracking-[-0.03em]
-                text-[#F7EBD0]
-                sm:text-4xl
-                lg:text-5xl
-              "
-            >
-              Cultural Sub Council
-            </h2>
 
+            
             {/* Description */}
+
             <p
               className="
                 mt-4
@@ -140,16 +149,147 @@ export default function Footer() {
                 text-[#D8C7AA]/55
               "
             >
-              Creating spaces for creativity, expression and collaboration
-              across the campus community.
+              Creating spaces for creativity,
+              expression and collaboration across
+              the campus community.
             </p>
 
-            {/* Email */}
+            {/* =================================================
+                SECRETARY DETAILS
+            ================================================= */}
+
+            <div
+              className="
+                mt-8
+                border-l
+                border-[#C6A15B]/40
+                pl-4
+              "
+            >
+              <p
+                className="
+                  text-[8px]
+                  font-medium
+                  uppercase
+                  tracking-[0.3em]
+                  text-[#C6A15B]/70
+                "
+              >
+                Secretary
+              </p>
+
+              <h3
+                className="
+                  mt-2
+                  text-base
+                  font-medium
+                  text-[#F7EBD0]
+                  sm:text-lg
+                "
+              >
+                Secretary Name
+              </h3>
+
+              <p
+                className="
+                  mt-1
+                  text-[10px]
+                  uppercase
+                  tracking-[0.15em]
+                  text-[#D8C7AA]/55
+                "
+              >
+                Cultural Sub Council
+              </p>
+
+              {/* Secretary Email */}
+
+              <a
+                href="mailto:secretary@mmmut.ac.in"
+                className="
+                  group
+                  mt-4
+                  flex
+                  items-center
+                  gap-2
+                  text-[9px]
+                  uppercase
+                  tracking-[0.15em]
+                  text-[#D9B86C]
+                  transition-colors
+                  duration-300
+                  hover:text-[#F7EBD0]
+                "
+              >
+                <Mail
+                  size={13}
+                  strokeWidth={1.5}
+                />
+
+                <span>
+                  secretary@mmmut.ac.in
+                </span>
+
+                <ArrowUpRight
+                  size={11}
+                  strokeWidth={1.5}
+                  className="
+                    transition-transform
+                    duration-300
+                    group-hover:translate-x-1
+                    group-hover:-translate-y-1
+                  "
+                />
+              </a>
+
+              {/* Secretary Phone */}
+
+              <a
+                href="tel:+919999999999"
+                className="
+                  group
+                  mt-3
+                  flex
+                  items-center
+                  gap-2
+                  text-[9px]
+                  uppercase
+                  tracking-[0.15em]
+                  text-[#D9B86C]
+                  transition-colors
+                  duration-300
+                  hover:text-[#F7EBD0]
+                "
+              >
+                <Phone
+                  size={13}
+                  strokeWidth={1.5}
+                />
+
+                <span>
+                  +91 99999 99999
+                </span>
+
+                <ArrowUpRight
+                  size={11}
+                  strokeWidth={1.5}
+                  className="
+                    transition-transform
+                    duration-300
+                    group-hover:translate-x-1
+                    group-hover:-translate-y-1
+                  "
+                />
+              </a>
+            </div>
+
+            {/* Main CSC Email */}
+
             <a
               href="mailto:csc@mmmut.ac.in"
               className="
                 group
-                mt-6
+                mt-7
                 inline-flex
                 items-center
                 gap-2
@@ -162,9 +302,14 @@ export default function Footer() {
                 hover:text-[#F7EBD0]
               "
             >
-              <Mail size={14} strokeWidth={1.5} />
+              <Mail
+                size={14}
+                strokeWidth={1.5}
+              />
 
-              <span>csc@mmmut.ac.in</span>
+              <span>
+                csc@mmmut.ac.in
+              </span>
 
               <ArrowUpRight
                 size={12}
@@ -179,7 +324,123 @@ export default function Footer() {
             </a>
           </div>
 
-          {/* Right Section */}
+          {/* =================================================
+              CENTER — LOCATION MAP
+          ================================================= */}
+
+          <div className="w-full">
+            {/* Map Heading */}
+
+            <div className="mb-4 flex items-center gap-3">
+              <MapPin
+                size={14}
+                strokeWidth={1.5}
+                className="text-[#C9A24D]"
+              />
+
+              <span
+                className="
+                  text-[8px]
+                  font-medium
+                  uppercase
+                  tracking-[0.3em]
+                  text-[#C6A15B]/70
+                "
+              >
+                Find Us
+              </span>
+            </div>
+
+            {/* =================================================
+                MAP
+            ================================================= */}
+
+            <div
+              className="
+                relative
+                h-[230px]
+                w-full
+                overflow-hidden
+                rounded-xl
+                border
+                border-[#C6A15B]/20
+                bg-[#2B0A12]
+                sm:h-[260px]
+              "
+            >
+              {/* Google Maps */}
+
+              <iframe
+                title="Cultural Sub Council Location"
+                src="https://www.google.com/maps?q=Madan%20Mohan%20Malaviya%20University%20of%20Technology%20Gorakhpur&output=embed"
+                className="
+                  h-full
+                  w-full
+                  border-0
+                  opacity-75
+                  grayscale
+                  transition-all
+                  duration-500
+                  hover:opacity-100
+                  hover:grayscale-0
+                "
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+
+              {/* Map Border */}
+
+              <div
+                className="
+                  pointer-events-none
+                  absolute
+                  inset-0
+                  rounded-xl
+                  ring-1
+                  ring-inset
+                  ring-[#C6A15B]/20
+                "
+              />
+            </div>
+
+            {/* Location */}
+
+            <div
+              className="
+                mt-4
+                flex
+                items-start
+                gap-2
+              "
+            >
+              <MapPin
+                size={13}
+                strokeWidth={1.5}
+                className="
+                  mt-0.5
+                  shrink-0
+                  text-[#C6A15B]
+                "
+              />
+
+              <p
+                className="
+                  text-[9px]
+                  leading-5
+                  text-[#D8C7AA]/55
+                "
+              >
+                Madan Mohan Malaviya University
+                of Technology, Gorakhpur,
+                Uttar Pradesh, India
+              </p>
+            </div>
+          </div>
+
+          {/* =================================================
+              RIGHT — EXPLORE + SOCIAL
+          ================================================= */}
+
           <div
             className="
               flex
@@ -187,11 +448,14 @@ export default function Footer() {
               gap-9
               sm:flex-row
               sm:items-start
-              sm:gap-16
-              lg:gap-20
+              lg:flex-col
+              lg:gap-10
             "
           >
-            {/* Explore */}
+            {/* =================================================
+                EXPLORE
+            ================================================= */}
+
             <div>
               <p
                 className="
@@ -277,7 +541,10 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* Social Media */}
+            {/* =================================================
+                SOCIAL MEDIA
+            ================================================= */}
+
             <div>
               <p
                 className="
@@ -292,54 +559,62 @@ export default function Footer() {
               </p>
 
               <div className="flex items-center gap-2">
-                {socialLinks.map((social) => {
-                  const Icon = social.icon;
+                {socialLinks.map(
+                  (social) => {
+                    const Icon =
+                      social.icon;
 
-                  return (
-                    <a
-                      key={social.name}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={social.name}
-                      title={social.name}
-                      className="
-                        group
-                        flex
-                        h-9
-                        w-9
-                        items-center
-                        justify-center
-                        rounded-full
-                        border
-                        border-[#C6A15B]/20
-                        bg-[#2B0A12]
-                        text-[#D8C7AA]/65
-                        transition-all
-                        duration-300
-                        hover:-translate-y-1
-                        hover:border-[#C6A15B]/60
-                        hover:bg-[#C6A15B]
-                        hover:text-[#1D070D]
-                      "
-                    >
-                      <Icon
-                        size={15}
+                    return (
+                      <a
+                        key={social.name}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={
+                          social.name
+                        }
+                        title={social.name}
                         className="
-                          transition-transform
+                          group
+                          flex
+                          h-9
+                          w-9
+                          items-center
+                          justify-center
+                          rounded-full
+                          border
+                          border-[#C6A15B]/20
+                          bg-[#2B0A12]
+                          text-[#D8C7AA]/65
+                          transition-all
                           duration-300
-                          group-hover:scale-110
+                          hover:-translate-y-1
+                          hover:border-[#C6A15B]/60
+                          hover:bg-[#C6A15B]
+                          hover:text-[#1D070D]
                         "
-                      />
-                    </a>
-                  );
-                })}
+                      >
+                        <Icon
+                          size={15}
+                          className="
+                            transition-transform
+                            duration-300
+                            group-hover:scale-110
+                          "
+                        />
+                      </a>
+                    );
+                  }
+                )}
               </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom Divider */}
+        {/* =====================================================
+            BOTTOM DIVIDER
+        ===================================================== */}
+
         <div
           className="
             mt-12
@@ -360,6 +635,7 @@ export default function Footer() {
             "
           >
             {/* Copyright */}
+
             <p
               className="
                 text-[8px]
@@ -368,10 +644,12 @@ export default function Footer() {
                 text-[#8F7663]
               "
             >
-              © {new Date().getFullYear()} Cultural Sub Council
+              © {new Date().getFullYear()} Cultural
+              Sub Council
             </p>
 
             {/* Tagline */}
+
             <p
               className="
                 text-[8px]

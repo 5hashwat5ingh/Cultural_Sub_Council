@@ -48,14 +48,14 @@ export default function StoryText({
                 font-mono
                 text-xs
                 tracking-[0.25em]
-                text-[#C9A227]
+                text-[#7A1B2F]
                 sm:text-sm
               "
             >
               {story.number}
             </span>
 
-            <span className="h-[1px] w-6 bg-[#C9A227]/40 sm:w-10" />
+            <span className="h-[1px] w-6 bg-[#7A1B2F]/40 sm:w-10" />
 
             <span
               className="
@@ -63,7 +63,7 @@ export default function StoryText({
                 font-medium
                 uppercase
                 tracking-[0.25em]
-                text-[#A99662]
+                text-[#6B5148]
                 sm:text-[11px]
               "
             >
@@ -84,7 +84,7 @@ export default function StoryText({
               uppercase
               leading-[1.04]
               tracking-tight
-              text-[#F5F0E6]
+              text-[#3A0D18]
               sm:text-5xl
               lg:text-6xl
             "
@@ -102,7 +102,7 @@ export default function StoryText({
               text-base
               font-normal
               leading-relaxed
-              text-[#A9ADC0]
+              text-[#5A4038]
               sm:text-lg
               lg:text-xl
             "
@@ -126,8 +126,8 @@ export default function StoryText({
                   ease-out
                   ${
                     idx === activeIndex
-                      ? "w-8 bg-[#C9A227]"
-                      : "w-2 bg-[#C9A227]/20"
+                      ? "w-8 bg-[#7A1B2F]"
+                      : "w-2 bg-[#7A1B2F]/20"
                   }
                 `}
               />

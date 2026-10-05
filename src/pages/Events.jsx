@@ -32,7 +32,7 @@ const events = [
   },
   {
     number: "03",
-    title: "ORIENTATION '26",
+    title: "PINTURA DE PILARES",
     subtitle: "WELCOMING NEW VOICES",
     image:
       "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=2200&q=90",
@@ -40,7 +40,7 @@ const events = [
   },
   {
     number: "04",
-    title: "PINTURA DE PILARES",
+    title: "ABHYUDAYA",
     subtitle: "ART MEETS ARCHITECTURE",
     image:
       "https://images.unsplash.com/photo-1561214115-f2f134cc4912?auto=format&fit=crop&w=2200&q=90",

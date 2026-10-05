@@ -1,24 +1,23 @@
 import React, { useMemo, useState } from "react";
+
 import { motion, AnimatePresence } from "framer-motion";
+
 import { ArrowUpRight } from "lucide-react";
+
 import { Link } from "react-router-dom";
+
 import Navbar from "../components/Navbar";
+
 import Footer from "../components/Footer";
+
 import {
   teamMembers,
   categories,
 } from "../data/teamData";
 
-const categoryAccent = {
-  Leadership: "border-[#C6A15B]",
-  Faculty: "border-[#D9B86C]",
-  Dance: "border-[#9D3B55]",
-  Dramatics: "border-[#7A1B2F]",
-  Music: "border-[#B98945]",
-  "Fine Arts": "border-[#C18A76]",
-  Technical: "border-[#806A4A]",
-  Photography: "border-[#A98C68]",
-};
+/* =========================================================
+   TEAM CARD
+========================================================= */
 
 function TeamCard({ member, index }) {
   return (
@@ -43,7 +42,10 @@ function TeamCard({ member, index }) {
       }}
       className="group"
     >
-      {/* OUTER CARD */}
+      {/* =====================================================
+          OUTER CARD
+      ===================================================== */}
+
       <div
         className="
           relative
@@ -51,12 +53,12 @@ function TeamCard({ member, index }) {
           overflow-hidden
           rounded-[12px]
           border
-          border-[#C6A15B]/25
+          border-[#C6A15B]/35
           bg-[#F7EBD0]
           transition-all
           duration-500
           group-hover:-translate-y-1
-          group-hover:border-[#C6A15B]/55
+          group-hover:border-[#C6A15B]/70
         "
       >
         {/* =================================================
@@ -93,8 +95,8 @@ function TeamCard({ member, index }) {
             z-20
             rounded-full
             border
-            border-[#C6A15B]/40
-            bg-[#1D070D]/75
+            border-[#C6A15B]/50
+            bg-[#DCD3A4]/90
             px-3
             py-1.5
             backdrop-blur-md
@@ -107,10 +109,10 @@ function TeamCard({ member, index }) {
           <span
             className="
               text-[7px]
-              font-medium
+              font-semibold
               uppercase
               tracking-[0.18em]
-              text-[#D9B86C]
+              text-[#7A1B2F]
               sm:text-[8px]
             "
           >
@@ -131,7 +133,7 @@ function TeamCard({ member, index }) {
             z-[1]
             h-24
             bg-gradient-to-t
-            from-[#1D070D]/20
+            from-[#3A0D18]/25
             to-transparent
           "
         />
@@ -149,7 +151,7 @@ function TeamCard({ member, index }) {
             z-10
             rounded-[9px]
             border
-            border-[#C6A15B]/20
+            border-[#C6A15B]/30
             bg-[#F7EBD0]/95
             px-3
             py-2.5
@@ -169,7 +171,7 @@ function TeamCard({ member, index }) {
               font-semibold
               leading-tight
               tracking-[-0.02em]
-              text-[#1D070D]
+              text-[#3A0D18]
               sm:text-sm
             "
           >
@@ -183,7 +185,7 @@ function TeamCard({ member, index }) {
               text-[8px]
               font-medium
               leading-tight
-              text-[#6D625B]
+              text-[#6B5148]
               sm:text-[9px]
             "
           >
@@ -194,37 +196,158 @@ function TeamCard({ member, index }) {
     </motion.div>
   );
 }
+
+/* =========================================================
+   YEAR SECTION
+========================================================= */
+
+function YearSection({
+  title,
+  members,
+  startIndex = 0,
+}) {
+  if (!members.length) return null;
+
+  return (
+    <div className="relative">
+      {/* =================================================
+          YEAR HEADING
+      ================================================= */}
+
+      <div className="mb-7 flex items-center gap-4 sm:mb-9">
+        <span
+          className="
+            h-px
+            flex-1
+            bg-gradient-to-r
+            from-transparent
+            to-[#C6A15B]/60
+          "
+        />
+
+        <h2
+          className="
+            shrink-0
+            text-center
+            text-[10px]
+            font-semibold
+            uppercase
+            tracking-[0.35em]
+            text-[#7A1B2F]
+            sm:text-xs
+          "
+        >
+          {title}
+        </h2>
+
+        <span
+          className="
+            h-px
+            flex-1
+            bg-gradient-to-l
+            from-transparent
+            to-[#C6A15B]/60
+          "
+        />
+      </div>
+
+      {/* =================================================
+          TEAM GRID
+      ================================================= */}
+
+      <motion.div
+        layout
+        className="
+          grid
+          grid-cols-2
+          gap-3
+          sm:grid-cols-2
+          lg:grid-cols-4
+          lg:gap-5
+        "
+      >
+        <AnimatePresence mode="popLayout">
+          {members.map((member, index) => (
+            <TeamCard
+              key={member.id}
+              member={member}
+              index={startIndex + index}
+            />
+          ))}
+        </AnimatePresence>
+      </motion.div>
+    </div>
+  );
+}
+
 /* =========================================================
    TEAM PAGE
 ========================================================= */
 
 export default function Team() {
-  const [activeCategory, setActiveCategory] = useState("View All");
+  const [activeCategory, setActiveCategory] =
+    useState("View All");
 
-const filteredMembers = useMemo(() => {
-  if (activeCategory === "View All") {
-    return teamMembers;
-  }
+  /* =======================================================
+     FILTER MEMBERS
+  ======================================================= */
 
-  return teamMembers.filter(
-    (member) => member.year === activeCategory
+  const filteredMembers = useMemo(() => {
+    if (activeCategory === "View All") {
+      return teamMembers;
+    }
+
+    return teamMembers.filter(
+      (member) =>
+        member.year === activeCategory
+    );
+  }, [activeCategory]);
+
+  /* =======================================================
+     GROUP MEMBERS BY YEAR
+  ======================================================= */
+
+  const finalYearMembers = useMemo(
+    () =>
+      filteredMembers.filter(
+        (member) =>
+          member.year === "Final Year"
+      ),
+    [filteredMembers]
   );
-}, [activeCategory]);
+
+  const preFinalYearMembers = useMemo(
+    () =>
+      filteredMembers.filter(
+        (member) =>
+          member.year === "Pre-Final Year"
+      ),
+    [filteredMembers]
+  );
+
+  const sophomoreMembers = useMemo(
+    () =>
+      filteredMembers.filter(
+        (member) =>
+          member.year === "Sophomore"
+      ),
+    [filteredMembers]
+  );
 
   return (
     <main
       className="
         min-h-screen
         overflow-x-clip
-        bg-[#2B0A12]
-        text-[#F7EBD0]
+        bg-[#DCD3A4]
+        text-[#3A0D18]
       "
     >
       {/* =====================================================
           NAVBAR
       ===================================================== */}
 
-      <Navbar Gallery/>
+      <Navbar Gallery />
 
       {/* =====================================================
           HEADER
@@ -244,7 +367,10 @@ const filteredMembers = useMemo(() => {
           lg:pt-40
         "
       >
-        {/* Ambient glow */}
+        {/* =================================================
+            AMBIENT MAROON GLOW
+        ================================================= */}
+
         <div
           className="
             pointer-events-none
@@ -255,12 +381,15 @@ const filteredMembers = useMemo(() => {
             w-[700px]
             -translate-x-1/2
             rounded-full
-            bg-[#7A1B2F]/20
+            bg-[#7A1B2F]/[0.07]
             blur-[130px]
           "
         />
 
-        {/* Gold glow */}
+        {/* =================================================
+            GOLD GLOW
+        ================================================= */}
+
         <div
           className="
             pointer-events-none
@@ -270,13 +399,16 @@ const filteredMembers = useMemo(() => {
             h-[350px]
             w-[350px]
             rounded-full
-            bg-[#C6A15B]/5
+            bg-[#C6A15B]/[0.08]
             blur-[100px]
           "
         />
 
         <div className="relative z-10 mx-auto max-w-[1500px]">
-          {/* Eyebrow */}
+          {/* =================================================
+              EYEBROW
+          ================================================= */}
+
           <motion.div
             initial={{
               opacity: 0,
@@ -289,26 +421,46 @@ const filteredMembers = useMemo(() => {
             transition={{
               duration: 0.7,
             }}
-            className="flex items-center justify-center gap-3"
+            className="
+              flex
+              items-center
+              justify-center
+              gap-3
+            "
           >
-            <span className="h-px w-8 bg-[#C6A15B]/70" />
+            <span
+              className="
+                h-px
+                w-8
+                bg-[#8B1E3F]/60
+              "
+            />
 
             <span
               className="
                 text-[9px]
-                font-medium
+                font-semibold
                 uppercase
                 tracking-[0.4em]
-                text-[#D9B86C]
+                text-[#7A1B2F]
               "
             >
               Cultural Sub Council
             </span>
 
-            <span className="h-px w-8 bg-[#C6A15B]/70" />
+            <span
+              className="
+                h-px
+                w-8
+                bg-[#8B1E3F]/60
+              "
+            />
           </motion.div>
 
-          {/* Main title */}
+          {/* =================================================
+              MAIN TITLE
+          ================================================= */}
+
           <motion.h1
             initial={{
               opacity: 0,
@@ -330,14 +482,19 @@ const filteredMembers = useMemo(() => {
               font-semibold
               leading-[0.82]
               tracking-[-0.07em]
-              text-[#F7EBD0]
+              text-[#3A0D18]
             "
           >
-            OUR
-            <span className="text-[#C6A15B]"> TEAM</span>
+            OUR{" "}
+            <span className="text-[#9A742F]">
+              TEAM
+            </span>
           </motion.h1>
 
-          {/* Description */}
+          {/* =================================================
+              DESCRIPTION
+          ================================================= */}
+
           <motion.p
             initial={{
               opacity: 0,
@@ -358,14 +515,15 @@ const filteredMembers = useMemo(() => {
               text-center
               text-sm
               leading-7
-              text-[#D8C7AA]/65
+              text-[#5A4038]
               sm:text-base
               sm:leading-8
             "
           >
-            Meet the people behind the Cultural Sub Council — creators,
-            performers, organizers and storytellers shaping the cultural
-            spirit of our campus.
+            Meet the people behind the Cultural
+            Sub Council — creators, performers,
+            organizers and storytellers shaping
+            the cultural spirit of our campus.
           </motion.p>
         </div>
       </section>
@@ -379,9 +537,10 @@ const filteredMembers = useMemo(() => {
           sticky
           top-0
           z-40
+          w-full
           border-y
-          border-[#C6A15B]/15
-          bg-[#2B0A12]/95
+          border-[#7A1B2F]/15
+          bg-[#DCD3A4]/95
           px-4
           py-3
           backdrop-blur-xl
@@ -402,13 +561,16 @@ const filteredMembers = useMemo(() => {
           "
         >
           {categories.map((category) => {
-            const active = activeCategory === category;
+            const active =
+              activeCategory === category;
 
             return (
               <button
                 key={category}
                 type="button"
-                onClick={() => setActiveCategory(category)}
+                onClick={() =>
+                  setActiveCategory(category)
+                }
                 className={`
                   shrink-0
                   rounded-full
@@ -416,7 +578,7 @@ const filteredMembers = useMemo(() => {
                   px-4
                   py-2
                   text-[8px]
-                  font-medium
+                  font-semibold
                   uppercase
                   tracking-[0.16em]
                   transition-all
@@ -427,8 +589,18 @@ const filteredMembers = useMemo(() => {
 
                   ${
                     active
-                      ? "border-[#C6A15B] bg-[#C6A15B] text-[#1D070D]"
-                      : "border-[#C6A15B]/20 bg-[#3A0D18] text-[#D8C7AA]/65 hover:border-[#C6A15B]/50 hover:text-[#F7EBD0]"
+                      ? `
+                        border-[#C6A15B]
+                        bg-[#C6A15B]
+                        text-[#3A0D18]
+                      `
+                      : `
+                        border-[#7A1B2F]/20
+                        bg-[#E8DFB0]
+                        text-[#6B5148]
+                        hover:border-[#C6A15B]/70
+                        hover:text-[#7A1B2F]
+                      `
                   }
                 `}
               >
@@ -454,7 +626,10 @@ const filteredMembers = useMemo(() => {
           lg:py-20
         "
       >
-        {/* Background atmosphere */}
+        {/* =================================================
+            BACKGROUND ATMOSPHERE
+        ================================================= */}
+
         <div
           className="
             pointer-events-none
@@ -464,7 +639,7 @@ const filteredMembers = useMemo(() => {
             h-[500px]
             w-[500px]
             rounded-full
-            bg-[#7A1B2F]/10
+            bg-[#7A1B2F]/[0.045]
             blur-[130px]
           "
         />
@@ -478,27 +653,46 @@ const filteredMembers = useMemo(() => {
             h-[500px]
             w-[500px]
             rounded-full
-            bg-[#C6A15B]/5
+            bg-[#C6A15B]/[0.06]
             blur-[130px]
           "
         />
 
         <div className="relative z-10 mx-auto max-w-[1500px]">
-          {/* Count */}
-          <div className="mb-8 flex items-center justify-between">
+          {/* =================================================
+              COUNT
+          ================================================= */}
+
+          <div
+            className="
+              mb-10
+              flex
+              items-center
+              justify-between
+            "
+          >
             <p
               className="
                 text-[8px]
                 uppercase
                 tracking-[0.3em]
-                text-[#D8C7AA]/45
+                text-[#6B5148]
               "
             >
               {filteredMembers.length}{" "}
-              {filteredMembers.length === 1 ? "Member" : "Members"}
+              {filteredMembers.length === 1
+                ? "Member"
+                : "Members"}
             </p>
 
-            <span className="h-px flex-1 bg-[#C6A15B]/10 mx-5" />
+            <span
+              className="
+                mx-5
+                h-px
+                flex-1
+                bg-[#7A1B2F]/10
+              "
+            />
 
             <p
               className="
@@ -506,7 +700,7 @@ const filteredMembers = useMemo(() => {
                 text-[8px]
                 uppercase
                 tracking-[0.3em]
-                text-[#D8C7AA]/45
+                text-[#6B5148]
                 sm:block
               "
             >
@@ -514,62 +708,181 @@ const filteredMembers = useMemo(() => {
             </p>
           </div>
 
-          {/* Grid */}
-          <div className="mx-auto max-w-[1250px]">
-  <motion.div
-    layout
-    className="
-      grid
-      grid-cols-2
-      gap-3
-      sm:grid-cols-2
-      lg:grid-cols-4
-      lg:gap-5
-    "
-  >
-    <AnimatePresence mode="popLayout">
-      {filteredMembers.map((member, index) => (
-        <TeamCard
-          key={member.id}
-          member={member}
-          index={index}
-        />
-      ))}
-    </AnimatePresence>
-  </motion.div>
-</div>
-          {/* Empty state */}
-          {filteredMembers.length === 0 && (
-            <div
-              className="
-                flex
-                min-h-[300px]
-                items-center
-                justify-center
-                text-center
-              "
-            >
-              <div>
-                <p className="text-lg text-[#F7EBD0]/70">
-                  No members found
-                </p>
+          {/* =================================================
+              YEAR GROUPS
+          ================================================= */}
 
-                <button
-                  type="button"
-                  onClick={() => setActiveCategory("View all")}
+          <div className="mx-auto max-w-[1250px]">
+            {/* =================================================
+                FINAL YEAR
+            ================================================= */}
+
+            <YearSection
+              title="Final Year"
+              members={finalYearMembers}
+              startIndex={0}
+            />
+
+            {/* =================================================
+                GOLDEN SEPARATOR
+            ================================================= */}
+
+            {finalYearMembers.length > 0 &&
+              preFinalYearMembers.length > 0 && (
+                <div
                   className="
-                    mt-4
-                    text-[9px]
-                    uppercase
-                    tracking-[0.25em]
-                    text-[#C6A15B]
+                    my-14
+                    flex
+                    items-center
+                    gap-5
+                    sm:my-16
                   "
                 >
-                  View all members
-                </button>
+                  <span
+                    className="
+                      h-px
+                      flex-1
+                      bg-gradient-to-r
+                      from-transparent
+                      to-[#C6A15B]/70
+                    "
+                  />
+
+                  <span
+                    className="
+                      h-1.5
+                      w-1.5
+                      rotate-45
+                      bg-[#C6A15B]
+                    "
+                  />
+
+                  <span
+                    className="
+                      h-px
+                      flex-1
+                      bg-gradient-to-l
+                      from-transparent
+                      to-[#C6A15B]/70
+                    "
+                  />
+                </div>
+              )}
+
+            {/* =================================================
+                PRE-FINAL YEAR
+            ================================================= */}
+
+            <YearSection
+              title="Pre-Final Year"
+              members={preFinalYearMembers}
+              startIndex={finalYearMembers.length}
+            />
+
+            {/* =================================================
+                GOLDEN SEPARATOR
+            ================================================= */}
+
+            {preFinalYearMembers.length > 0 &&
+              sophomoreMembers.length > 0 && (
+                <div
+                  className="
+                    my-14
+                    flex
+                    items-center
+                    gap-5
+                    sm:my-16
+                  "
+                >
+                  <span
+                    className="
+                      h-px
+                      flex-1
+                      bg-gradient-to-r
+                      from-transparent
+                      to-[#C6A15B]/70
+                    "
+                  />
+
+                  <span
+                    className="
+                      h-1.5
+                      w-1.5
+                      rotate-45
+                      bg-[#C6A15B]
+                    "
+                  />
+
+                  <span
+                    className="
+                      h-px
+                      flex-1
+                      bg-gradient-to-l
+                      from-transparent
+                      to-[#C6A15B]/70
+                    "
+                  />
+                </div>
+              )}
+
+            {/* =================================================
+                SOPHOMORE
+            ================================================= */}
+
+            <YearSection
+              title="Sophomore"
+              members={sophomoreMembers}
+              startIndex={
+                finalYearMembers.length +
+                preFinalYearMembers.length
+              }
+            />
+
+            {/* =================================================
+                EMPTY STATE
+            ================================================= */}
+
+            {filteredMembers.length === 0 && (
+              <div
+                className="
+                  flex
+                  min-h-[300px]
+                  items-center
+                  justify-center
+                  text-center
+                "
+              >
+                <div>
+                  <p
+                    className="
+                      text-lg
+                      text-[#3A0D18]/70
+                    "
+                  >
+                    No members found
+                  </p>
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setActiveCategory(
+                        "View All"
+                      )
+                    }
+                    className="
+                      mt-4
+                      text-[9px]
+                      uppercase
+                      tracking-[0.25em]
+                      text-[#7A1B2F]
+                    "
+                  >
+                    View all members
+                  </button>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </section>
 
@@ -582,8 +895,8 @@ const filteredMembers = useMemo(() => {
           relative
           overflow-hidden
           border-t
-          border-[#C6A15B]/15
-          bg-[#1D070D]
+          border-[#7A1B2F]/15
+          bg-[#E8DFB0]
           px-5
           py-28
           sm:px-10
@@ -591,91 +904,35 @@ const filteredMembers = useMemo(() => {
           lg:px-16
         "
       >
-        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[450px] w-[450px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#C6A15B]/10" />
+        {/* =================================================
+            DECORATIVE CIRCLE
+        ================================================= */}
 
-        <div className="relative z-10 mx-auto max-w-4xl text-center">
-          <p
-            className="
-              text-[9px]
-              uppercase
-              tracking-[0.4em]
-              text-[#C6A15B]
-            "
-          >
-            Create • Perform • Belong
-          </p>
+        <div
+          className="
+            pointer-events-none
+            absolute
+            left-1/2
+            top-1/2
+            h-[450px]
+            w-[450px]
+            -translate-x-1/2
+            -translate-y-1/2
+            rounded-full
+            border
+            border-[#C6A15B]/20
+          "
+        />
 
-          <h2
-            className="
-              mt-6
-              text-[clamp(3rem,7vw,7rem)]
-              font-medium
-              leading-[0.88]
-              tracking-[-0.06em]
-              text-[#F7EBD0]
-            "
-          >
-            Every role
-            <br />
-            <span className="text-[#C6A15B]">
-              shapes the story.
-            </span>
-          </h2>
+       
 
-          <p
-            className="
-              mx-auto
-              mt-8
-              max-w-xl
-              text-sm
-              leading-7
-              text-[#D8C7AA]/55
-            "
-          >
-            Together, we create the experiences, performances and memories
-            that define the cultural life of our campus.
-          </p>
-
-          <Link
-            to="/"
-            className="
-              group
-              mt-10
-              inline-flex
-              items-center
-              gap-3
-              rounded-lg
-              border
-              border-[#C6A15B]/40
-              px-6
-              py-3
-              text-[9px]
-              font-semibold
-              uppercase
-              tracking-[0.25em]
-              text-[#D9B86C]
-              transition-all
-              duration-500
-              hover:border-[#C6A15B]
-              hover:bg-[#C6A15B]
-              hover:text-[#1D070D]
-            "
-          >
-            Back to Home
-
-            <ArrowUpRight
-              size={13}
-              strokeWidth={1.5}
-              className="
-                transition-transform
-                duration-300
-                group-hover:translate-x-1
-                group-hover:-translate-y-1
-              "
-            />
-          </Link>
-        </div>
+       
       </section>
+
+      {/* =====================================================
+          FOOTER
+      ===================================================== */}
+
       <Footer />
     </main>
   );

@@ -16,12 +16,19 @@ export default function LineTextReveal({
 simple ideas, thoughtful design,
 and meaningful interactions that
 people remember.`,
+
   className = "",
+
   eyebrow = "PERSPECTIVE / CRAFT",
+
   duration = 1.9,
+
   stagger = 0.12,
+
   delay = 0.05,
+
   once = false,
+
   amount = 0.25,
 }) {
   const containerRef = useRef(null);
@@ -73,18 +80,23 @@ people remember.`,
         Math.abs(top - currentTop) > 2
       ) {
         if (currentLine.length) {
-          detectedLines.push(currentLine.join(" "));
+          detectedLines.push(
+            currentLine.join(" ")
+          );
         }
 
         currentLine = [];
       }
 
       currentLine.push(word.textContent);
+
       currentTop = top;
     });
 
     if (currentLine.length) {
-      detectedLines.push(currentLine.join(" "));
+      detectedLines.push(
+        currentLine.join(" ")
+      );
     }
 
     setLines(detectedLines);
@@ -113,7 +125,10 @@ people remember.`,
       }, 100);
     };
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener(
+      "resize",
+      handleResize
+    );
 
     let observer;
 
@@ -207,7 +222,7 @@ people remember.`,
         items-center
         justify-center
         overflow-hidden
-        bg-[#2B0A12]
+        bg-[#341915]
         px-6
         py-32
         sm:px-12
@@ -218,26 +233,45 @@ people remember.`,
       `}
     >
       {/* =====================================================
-          MAROON AMBIENT GLOW
+          LIGHT MAROON TINT — TOP LEFT
       ===================================================== */}
 
       <div
         className="
           pointer-events-none
           absolute
-          left-[-15%]
-          top-[15%]
-          h-[450px]
-          w-[450px]
+          left-[-20%]
+          top-[-10%]
+          h-[600px]
+          w-[600px]
           rounded-full
-          bg-[radial-gradient(circle,rgba(122,27,47,0.22)_0%,rgba(58,13,24,0)_70%)]
-          blur-3xl
+          bg-[#8B1E3F]/[0.07]
+          blur-[110px]
         "
         aria-hidden="true"
       />
 
       {/* =====================================================
-          GOLD AMBIENT GLOW
+          LIGHT MAROON TINT — RIGHT SIDE
+      ===================================================== */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          right-[-15%]
+          top-[20%]
+          h-[500px]
+          w-[500px]
+          rounded-full
+          bg-[#8B1E3F]/[0.045]
+          blur-[120px]
+        "
+        aria-hidden="true"
+      />
+
+      {/* =====================================================
+          SOFT GOLD GLOW
       ===================================================== */}
 
       <div
@@ -249,14 +283,27 @@ people remember.`,
           h-[400px]
           w-[400px]
           rounded-full
-          bg-[radial-gradient(circle,rgba(198,161,91,0.14)_0%,rgba(198,161,91,0)_70%)]
-          blur-3xl
+          bg-[#C6A15B]/[0.08]
+          blur-[110px]
         "
         aria-hidden="true"
       />
 
-      <div className="relative z-10 mx-auto w-full max-w-[1100px]">
+      
 
+      {/* =====================================================
+          CONTENT
+      ===================================================== */}
+
+      <div
+        className="
+          relative
+          z-10
+          mx-auto
+          w-full
+          max-w-[1100px]
+        "
+      >
         {/* =====================================================
             INVISIBLE LINE MEASUREMENT
         ===================================================== */}
@@ -280,7 +327,7 @@ people remember.`,
         >
           {words.map((word, index) => (
             <span
-              key={index}
+              key={`${word}-${index}`}
               className="
                 measure-word
                 inline-block
@@ -314,20 +361,30 @@ people remember.`,
                   }
             }
             transition={{
-              duration: shouldReduceMotion ? 0 : 1.7,
+              duration: shouldReduceMotion
+                ? 0
+                : 1.7,
               ease: [0.22, 1, 0.36, 1],
             }}
-            className="mb-8 sm:mb-12"
+            className="
+              mb-8
+              sm:mb-12
+            "
           >
-            <div className="flex items-center gap-4">
-
+            <div
+              className="
+                flex
+                items-center
+                gap-4
+              "
+            >
               <span
                 className="
                   text-[10px]
                   font-medium
                   uppercase
                   tracking-[0.28em]
-                  text-[#C6A15B]
+                  text-[#8B1E3F]
                   sm:text-xs
                 "
               >
@@ -338,11 +395,10 @@ people remember.`,
                 className="
                   h-px
                   w-10
-                  bg-[#C6A15B]/40
+                  bg-[#C6A15B]/50
                   sm:w-16
                 "
               />
-
             </div>
           </motion.div>
         )}
@@ -354,35 +410,41 @@ people remember.`,
         <motion.div
           variants={containerVariants}
           initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
+          animate={
+            isInView
+              ? "visible"
+              : "hidden"
+          }
           className="
             text-[clamp(2rem,4.2vw,4.75rem)]
             font-medium
             leading-[1.08]
             tracking-[-0.035em]
-            text-[#F7EBD0]
+            text-[#241018]
           "
         >
-          {visibleLines.map((line, index) => (
-            <div
-              key={`${index}-${line}`}
-              className="
-                overflow-hidden
-                py-[0.06em]
-              "
-            >
-              <motion.div
-                variants={lineVariants}
+          {visibleLines.map(
+            (line, index) => (
+              <div
+                key={`${index}-${line}`}
                 className="
-                  block
-                  transform-gpu
-                  will-change-transform
+                  overflow-hidden
+                  py-[0.06em]
                 "
               >
-                {line}
-              </motion.div>
-            </div>
-          ))}
+                <motion.div
+                  variants={lineVariants}
+                  className="
+                    block
+                    transform-gpu
+                    will-change-transform
+                  "
+                >
+                  {line}
+                </motion.div>
+              </div>
+            )
+          )}
         </motion.div>
 
         {/* =====================================================
@@ -406,18 +468,21 @@ people remember.`,
                 }
           }
           transition={{
-            duration: shouldReduceMotion ? 0 : 1,
-            delay: shouldReduceMotion ? 0 : 0.9,
+            duration: shouldReduceMotion
+              ? 0
+              : 1,
+            delay: shouldReduceMotion
+              ? 0
+              : 0.9,
             ease: [0.22, 1, 0.36, 1],
           }}
           className="
             mt-10
             h-[2px]
-            bg-[#C6A15B]
+            bg-[#DCD3A4]
             sm:mt-14
           "
         />
-
       </div>
     </section>
   );

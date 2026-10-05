@@ -20,9 +20,9 @@ import StoryText from "./StoryText";
 const DEFAULT_STORIES = [
   {
     number: "01",
-    title: "Culture",
+    title: "Thomso",
     description:
-      "Where ideas become experiences.",
+      "Rap second position",
     image:
       "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80",
     alt: "Culture",
@@ -30,9 +30,9 @@ const DEFAULT_STORIES = [
 
   {
     number: "02",
-    title: "Creativity",
+    title: "Kashiyatra",
     description:
-      "Giving imagination a place to breathe.",
+      "Band(2025) Fourth position",
     image:
       "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=1200&q=80",
     alt: "Creativity",
@@ -40,9 +40,9 @@ const DEFAULT_STORIES = [
 
   {
     number: "03",
-    title: "Expression",
+    title: "Thomso",
     description:
-      "Turning thoughts into something people can feel.",
+      "Second position in dress designing",
     image:
       "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
     alt: "Expression",
@@ -50,9 +50,9 @@ const DEFAULT_STORIES = [
 
   {
     number: "04",
-    title: "Collaboration",
+    title: "Thomso",
     description:
-      "Different perspectives creating something greater.",
+      "Second position in poem competition",
     image:
       "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
     alt: "Collaboration",
@@ -60,9 +60,9 @@ const DEFAULT_STORIES = [
 
   {
     number: "05",
-    title: "Experience",
+    title: "Kashiyatra",
     description:
-      "Creating moments worth remembering.",
+      "Second position in poem competition",
     image:
       "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1200&q=80",
     alt: "Experience",
@@ -70,9 +70,9 @@ const DEFAULT_STORIES = [
 
   {
     number: "06",
-    title: "Together",
+    title: "Kashiyatra",
     description:
-      "Building memories that stay with us.",
+      "2025 solo mono act",
     image:
       "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80",
     alt: "Together",
@@ -129,7 +129,11 @@ export default function ScrollStory({
   ======================================================= */
 
   const maxTranslate =
-    Math.max(0, (totalStories - 1) * CARD_HEIGHT);
+    Math.max(
+      0,
+      (totalStories - 1) *
+        CARD_HEIGHT
+    );
 
   const translateY =
     useTransform(
@@ -212,7 +216,7 @@ export default function ScrollStory({
         relative
         h-[600vh]
         w-full
-        bg-[#2B0A12]
+        bg-[#DCD3A4]
         ${className}
       `}
     >
@@ -319,39 +323,12 @@ export default function ScrollStory({
                   TOP FADE
               ================================================= */}
 
-              <div
-                className="
-                  pointer-events-none
-                  absolute
-                  inset-x-0
-                  top-0
-                  z-30
-                  h-28
-                  bg-gradient-to-b
-                  from-[#2B0A12]
-                  via-[#2B0A12]/70
-                  to-transparent
-                "
-              />
-
+             
               {/* =================================================
                   BOTTOM FADE
               ================================================= */}
 
-              <div
-                className="
-                  pointer-events-none
-                  absolute
-                  inset-x-0
-                  bottom-0
-                  z-30
-                  h-28
-                  bg-gradient-to-t
-                  from-[#2B0A12]
-                  via-[#2B0A12]/70
-                  to-transparent
-                "
-              />
+             
 
               {/* =================================================
                   IMAGE STACK
@@ -429,6 +406,7 @@ export default function ScrollStory({
                               from fading when it enters
                               the visible region.
                             */
+
                             scale:
                               active
                                 ? 1
@@ -526,7 +504,7 @@ export default function ScrollStory({
                               className="
                                 text-xs
                                 tracking-[0.3em]
-                                text-[#D9B86C]
+                                text-[#7A1B2F]
                               "
                             >
                               {
@@ -539,7 +517,7 @@ export default function ScrollStory({
                                 mt-1
                                 text-lg
                                 font-medium
-                                text-[#F7EBD0]
+                                text-[#3A0D18]
                                 sm:text-xl
                               "
                             >
@@ -662,39 +640,13 @@ export default function ScrollStory({
                   TOP FADE
               ================================================= */}
 
-              <div
-                className="
-                  pointer-events-none
-                  absolute
-                  inset-x-0
-                  top-0
-                  z-30
-                  h-8
-                  bg-gradient-to-b
-                  from-[#2B0A12]
-                  via-[#2B0A12]/60
-                  to-transparent
-                "
-              />
+             
 
               {/* =================================================
                   BOTTOM FADE
               ================================================= */}
 
-              <div
-                className="
-                  pointer-events-none
-                  absolute
-                  inset-x-0
-                  bottom-0
-                  z-30
-                  h-8
-                  bg-gradient-to-t
-                  from-[#2B0A12]
-                  via-[#2B0A12]/60
-                  to-transparent
-                "
-              />
+             
 
               {/* =================================================
                   MOBILE IMAGE STACK
@@ -767,6 +719,7 @@ export default function ScrollStory({
                               No opacity animation here.
                               The image remains fully visible.
                             */
+
                             scale:
                               active
                                 ? 1
@@ -864,7 +817,7 @@ export default function ScrollStory({
                               className="
                                 text-[10px]
                                 tracking-[0.25em]
-                                text-[#D9B86C]
+                                text-[#7A1B2F]
                               "
                             >
                               {
@@ -877,7 +830,7 @@ export default function ScrollStory({
                                 mt-1
                                 text-base
                                 font-medium
-                                text-[#F7EBD0]
+                                text-[#3A0D18]
                               "
                             >
                               {
@@ -915,7 +868,6 @@ export default function ScrollStory({
         </div>
 
       </div>
-
     </section>
   );
 }
