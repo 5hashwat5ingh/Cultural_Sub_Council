@@ -369,77 +369,202 @@ export default function Abhyudaya() {
         </div>
       </section>
 
-      {/* =====================================================
-          EVENT HIGHLIGHTS
-      ===================================================== */}
+     {/* =====================================================
+    CULTURAL FEST HIGHLIGHTS
+===================================================== */}
 
-      <section className="relative overflow-hidden bg-[#DCD3A4] px-6 py-20 sm:px-12 sm:py-24 lg:px-20 lg:py-28">
-        <div className="pointer-events-none absolute right-[-10%] top-[5%] h-[450px] w-[450px] rounded-full bg-[#C6A15B]/[0.10] blur-[120px]" />
+<section className="relative overflow-hidden bg-[#DCD3A4] px-6 py-20 sm:px-12 sm:py-24 lg:px-20 lg:py-28">
 
-        <div className="relative z-10 mx-auto max-w-[1500px]">
-          {/* Header */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={fadeUp}
-            className="mb-12"
-          >
-            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#7A1B2F]">
-              Event Highlights
-            </p>
+  <div className="pointer-events-none absolute right-[-10%] top-[5%] h-[450px] w-[450px] rounded-full bg-[#C6A15B]/[0.10] blur-[120px]" />
 
-            <div className="mt-5 flex flex-col justify-between gap-6 md:flex-row md:items-end">
-              <h2 className="max-w-4xl text-[clamp(2.7rem,5vw,5.5rem)] font-semibold leading-[0.9] tracking-[-0.06em] text-[#2B0A12]">
-                Designed for
-                <br />
-                <span className="text-[#7A1B2F]">bold memories.</span>
-              </h2>
+  <div className="relative z-10 mx-auto max-w-[1500px]">
 
-              <p className="max-w-sm text-sm leading-7 text-[#5A4A46]">
-                Five creative domains brought together through one cultural
-                celebration.
-              </p>
-            </div>
-          </motion.div>
+    {/* Header */}
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
+      variants={fadeUp}
+      className="mb-12"
+    >
+      <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#7A1B2F]">
+        CULTURAL FEST
+      </p>
 
-          {/* Cards */}
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
-            {highlights.map((item, index) => (
-              <motion.div
-                key={item.number}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-70px" }}
-                variants={fadeUp}
-                transition={{
-                  delay: index * 0.06,
-                }}
-                className="group relative min-h-[245px] overflow-hidden rounded-2xl border border-[#7A1B2F]/10 bg-[#F5EFD0]/75 p-6 transition-all duration-500 hover:-translate-y-1 hover:border-[#C6A15B]/60 hover:bg-[#F5EFD0]"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-[9px] font-semibold tracking-[0.25em] text-[#7A1B2F]/60">
-                    {item.number}
-                  </span>
+      <div className="mt-5 flex flex-col justify-between gap-6 md:flex-row md:items-end">
 
-                  <span className="h-px w-7 bg-[#C6A15B]/70 transition-all duration-500 group-hover:w-12" />
-                </div>
+        <h2 className="max-w-4xl text-[clamp(2.7rem,5vw,5.5rem)] font-semibold leading-[0.9] tracking-[-0.06em] text-[#2B0A12]">
+          Where talent
+          <br />
+          <span className="text-[#7A1B2F]">
+            takes the stage.
+          </span>
+        </h2>
 
-                <h3 className="mt-14 text-2xl font-semibold tracking-[-0.04em] text-[#2B0A12] sm:text-3xl">
-                  {item.title}
-                </h3>
+        <p className="max-w-sm text-sm leading-7 text-[#5A4A46]">
+          A celebration of creativity, talent and student expression,
+          bringing the university community together through culture.
+        </p>
 
-                <p className="mt-4 text-sm leading-7 text-[#5C514A]">
-                  {item.description}
-                </p>
+      </div>
+    </motion.div>
 
-                <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-[#C6A15B] transition-all duration-500 group-hover:w-full" />
-              </motion.div>
-            ))}
-          </div>
+
+    {/* Cultural Fest Cards */}
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
+
+      {/* Dance */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-70px" }}
+        variants={fadeUp}
+        transition={{ delay: 0 }}
+        className="group relative min-h-[245px] overflow-hidden rounded-2xl border border-[#7A1B2F]/10 bg-[#F5EFD0]/75 p-6 transition-all duration-500 hover:-translate-y-1 hover:border-[#C6A15B]/60 hover:bg-[#F5EFD0]"
+      >
+        <div className="flex">
+          <span className="text-[9px] font-semibold tracking-[0.25em] text-[#7A1B2F]/60">
+            01
+          </span>
+
+          <span className="h-px w-7 bg-[#C6A15B]/70 transition-all duration-500 group-hover:w-12" />
         </div>
-      </section>
 
+        <h3 className="mt-14 text-2xl font-semibold tracking-[-0.04em] text-[#2B0A12] sm:text-3xl">
+          Competitions
+        </h3>
+
+        <p className="mt-4 text-sm leading-7 text-[#5C514A]">
+          Rhythm, movement and energy brought alive through powerful
+          performances on stage.
+        </p>
+
+        <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-[#C6A15B] transition-all duration-500 group-hover:w-full" />
+      </motion.div>
+
+
+      {/* Dramatics */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-70px" }}
+        variants={fadeUp}
+        transition={{ delay: 0.06 }}
+        className="group relative min-h-[245px] overflow-hidden rounded-2xl border border-[#7A1B2F]/10 bg-[#F5EFD0]/75 p-6 transition-all duration-500 hover:-translate-y-1 hover:border-[#C6A15B]/60 hover:bg-[#F5EFD0]"
+      >
+        <div className="flex items-center justify-between">
+          <span className="text-[9px] font-semibold tracking-[0.25em] text-[#7A1B2F]/60">
+            02
+          </span>
+
+          <span className="h-px w-7 bg-[#C6A15B]/70 transition-all duration-500 group-hover:w-12" />
+        </div>
+
+        <h3 className="mt-14 text-2xl font-semibold tracking-[-0.04em] text-[#2B0A12] sm:text-3xl">
+          Cultural Nights
+        </h3>
+
+        <p className="mt-4 text-sm leading-7 text-[#5C514A]">
+          Stories, characters and emotions transformed into engaging
+          theatrical performances.
+        </p>
+
+        <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-[#C6A15B] transition-all duration-500 group-hover:w-full" />
+      </motion.div>
+
+
+      {/* Music */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-70px" }}
+        variants={fadeUp}
+        transition={{ delay: 0.12 }}
+        className="group relative min-h-[245px] overflow-hidden rounded-2xl border border-[#7A1B2F]/10 bg-[#F5EFD0]/75 p-6 transition-all duration-500 hover:-translate-y-1 hover:border-[#C6A15B]/60 hover:bg-[#F5EFD0]"
+      >
+        <div className="flex items-center justify-between">
+          <span className="text-[9px] font-semibold tracking-[0.25em] text-[#7A1B2F]/60">
+            03
+          </span>
+
+          <span className="h-px w-7 bg-[#C6A15B]/70 transition-all duration-500 group-hover:w-12" />
+        </div>
+
+        <h3 className="mt-14 text-2xl font-semibold tracking-[-0.04em] text-[#2B0A12] sm:text-3xl">
+          Extravagance Community
+        </h3>
+
+        <p className="mt-4 text-sm leading-7 text-[#5C514A]">
+          Vocal and instrumental performances celebrating the power
+          of music and live sound.
+        </p>
+
+        <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-[#C6A15B] transition-all duration-500 group-hover:w-full" />
+      </motion.div>
+
+
+      {/* Fine Arts */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-70px" }}
+        variants={fadeUp}
+        transition={{ delay: 0.18 }}
+        className="group relative min-h-[245px] overflow-hidden rounded-2xl border border-[#7A1B2F]/10 bg-[#F5EFD0]/75 p-6 transition-all duration-500 hover:-translate-y-1 hover:border-[#C6A15B]/60 hover:bg-[#F5EFD0]"
+      >
+        <div className="flex ">
+          <span className="text-[9px] font-semibold tracking-[0.25em] text-[#7A1B2F]/60">
+            04
+          </span>
+
+          <span className="h-px w-7 bg-[#C6A15B]/70 transition-all duration-500 group-hover:w-12" />
+        </div>
+
+        <h3 className="mt-14 text-2xl font-semibold tracking-[-0.04em] text-[#2B0A12] sm:text-3xl">
+          Professional devlopment
+        </h3>
+
+        <p className="mt-4 text-sm leading-7 text-[#5C514A]">
+          Drawing, painting and visual creativity turning imagination
+          into expressive artwork.
+        </p>
+
+        <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-[#C6A15B] transition-all duration-500 group-hover:w-full" />
+      </motion.div>
+
+
+      {/* Photography */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-70px" }}
+        variants={fadeUp}
+        transition={{ delay: 0.24 }}
+        className="group relative min-h-[245px] overflow-hidden rounded-2xl border border-[#7A1B2F]/10 bg-[#F5EFD0]/75 p-6 transition-all duration-500 hover:-translate-y-1 hover:border-[#C6A15B]/60 hover:bg-[#F5EFD0]"
+      >
+        <div className="flex items-center justify-between">
+          <span className="text-[9px] font-semibold tracking-[0.25em] text-[#7A1B2F]/60">
+            05
+          </span>
+
+          <span className="h-px w-7 bg-[#C6A15B]/70 transition-all duration-500 group-hover:w-12" />
+        </div>
+
+        <h3 className="mt-14 text-2xl font-semibold tracking-[-0.04em] text-[#2B0A12] sm:text-3xl">
+          Photography
+        </h3>
+
+        <p className="mt-4 text-sm leading-7 text-[#5C514A]">
+          Moments, perspectives and memories captured through the
+          lens of the campus community.
+        </p>
+
+        <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-[#C6A15B] transition-all duration-500 group-hover:w-full" />
+      </motion.div>
+
+    </div>
+  </div>
+</section>
      
 
       {/* =====================================================
