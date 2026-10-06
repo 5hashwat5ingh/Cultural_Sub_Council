@@ -166,13 +166,21 @@ export const teamMembers = [
     image:
       "https://i.ibb.co/nMkDFCwY/1000319017-Shashikant-Vishwakarma.jpg",
   },
+  {
+    id:38 ,
+    name: "Mahi Mall",
+    role: "FineArts Club Joint Head",
+    year: "Final Year",
+    image:
+      "https://i.ibb.co/hFCtvfCZ/Whats-App-Image-2026-10-06-at-01-43-20.jpg",
+  }
    
 
   /* =======================================================
      PRE-FINAL YEAR
   ======================================================= */
 
-  {
+  ,{
     id:19,
     name: "Nishant Kasana",
     role: "Joint Cultural Secretary",
@@ -321,14 +329,6 @@ id: 27,
     year: "Pre-Final Year",
     image:
       "https://i.ibb.co/ymBR81bV/Whats-App-Image-2026-10-06-at-01-54-08-1.jpg",
-  }
-  ,{
-    id:38 ,
-    name: "Mahi Mall",
-    role: "FineArts Club Joint Head",
-    year: "Pre-Final Year",
-    image:
-      "https://i.ibb.co/hFCtvfCZ/Whats-App-Image-2026-10-06-at-01-43-20.jpg",
   }
   ,{
     id:39 ,
