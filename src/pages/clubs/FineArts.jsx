@@ -280,36 +280,7 @@ export default function FineArts() {
               and art transforms the way we see.
             </motion.p>
 
-            {/* SCROLL */}
-
-            <motion.div
-              initial={{
-                opacity: 0,
-              }}
-              animate={{
-                opacity: 1,
-              }}
-              transition={{
-                delay: 1.2,
-                duration: 0.8,
-              }}
-              className="
-                mt-10
-                flex
-                items-center
-                gap-4
-                text-[9px]
-                uppercase
-                tracking-[0.3em]
-                text-[#F5EFD0]/75
-              "
-            >
-              <span>Scroll to explore</span>
-
-              <span className="text-lg text-[#C6A15B]">
-                ↓
-              </span>
-            </motion.div>
+           
           </div>
         </div>
       </section>
@@ -630,7 +601,7 @@ export default function FineArts() {
                 "
               >
                 <img
-                  src="/clubs/finearts-about.jpg"
+                  src="https://res.cloudinary.com/yh0rqnnu/image/upload/v1791300268/WhatsApp_Image_2026-10-06_at_8.53.17_PM.jpg"
                   alt="Fine Arts Club artwork"
                   className="
                     h-full

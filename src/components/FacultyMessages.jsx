@@ -1,6 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
 
+// =========================================================
+// FACULTY DATA
+// =========================================================
+
 const facultyMessages = [
   {
     name: "Prof. Anupma Kaushik Sharma",
@@ -10,6 +14,7 @@ const facultyMessages = [
     message:
       "Culture is not just an expression of talent, but a reflection of values, creativity and the collective spirit of our community.",
   },
+
   {
     name: "Dr. B.K. Pandey",
     designation: "Chairman, Council of Student Activities",
@@ -18,6 +23,7 @@ const facultyMessages = [
     message:
       "Culture is not just an expression of talent, but a reflection of values, creativity and the collective spirit of our community.",
   },
+
   {
     name: "Dr. Awadhesh Kumar",
     designation: "Vice Chairman, Council of Student Activities",
@@ -26,6 +32,7 @@ const facultyMessages = [
     message:
       "The cultural spirit of an institution is shaped by the enthusiasm and participation of its students. Continue to create, collaborate and contribute.",
   },
+
   {
     name: "Dr. Meenakshi Choudhary",
     designation: "Faculty In-Charge, Cultural Sub-Council",
@@ -35,6 +42,10 @@ const facultyMessages = [
       "Every student carries a unique creative voice. The Cultural Sub Council provides a platform where that voice can be discovered, nurtured and celebrated.",
   },
 ];
+
+// =========================================================
+// MAIN COMPONENT
+// =========================================================
 
 export default function FacultyMessages() {
   const viceChancellor = facultyMessages[0];
@@ -48,53 +59,80 @@ export default function FacultyMessages() {
         w-full
         overflow-hidden
         bg-[#DCD3A4]
-        px-6
-        py-24
-        sm:px-10
-        lg:px-16
-        lg:py-32
+        px-4
+        py-20
+
+        sm:px-6
+        sm:py-24
+
+        md:px-8
+        md:py-28
+
+        lg:px-12
+        lg:py-30
+
+        xl:px-16
+        xl:py-32
       "
     >
       {/* =====================================================
-          BACKGROUND — SOFT MAROON TINT
+          BACKGROUND — MAROON GLOW
       ===================================================== */}
 
       <div
         className="
           pointer-events-none
           absolute
-          left-[-12%]
+          left-[-18%]
           top-[-8%]
-          h-[520px]
-          w-[520px]
+          h-[320px]
+          w-[320px]
           rounded-full
           bg-[#7A1B2F]/[0.10]
-          blur-[120px]
+          blur-[90px]
+
+          sm:left-[-12%]
+          sm:h-[420px]
+          sm:w-[420px]
+          sm:blur-[110px]
+
+          xl:h-[520px]
+          xl:w-[520px]
+          xl:blur-[120px]
         "
         aria-hidden="true"
       />
 
       {/* =====================================================
-          SECONDARY MAROON TINT
+          SECONDARY MAROON GLOW
       ===================================================== */}
 
       <div
         className="
           pointer-events-none
           absolute
-          right-[-12%]
+          right-[-18%]
           top-[25%]
-          h-[460px]
-          w-[460px]
+          h-[300px]
+          w-[300px]
           rounded-full
           bg-[#8B1E3F]/[0.07]
-          blur-[120px]
+          blur-[90px]
+
+          sm:right-[-12%]
+          sm:h-[380px]
+          sm:w-[380px]
+          sm:blur-[110px]
+
+          xl:h-[460px]
+          xl:w-[460px]
+          xl:blur-[120px]
         "
         aria-hidden="true"
       />
 
       {/* =====================================================
-          SOFT GOLD GLOW
+          GOLD GLOW
       ===================================================== */}
 
       <div
@@ -102,12 +140,20 @@ export default function FacultyMessages() {
           pointer-events-none
           absolute
           bottom-[-15%]
-          right-[-5%]
-          h-[500px]
-          w-[500px]
+          right-[-10%]
+          h-[320px]
+          w-[320px]
           rounded-full
           bg-[#C6A15B]/[0.14]
-          blur-[120px]
+          blur-[90px]
+
+          sm:h-[400px]
+          sm:w-[400px]
+          sm:blur-[110px]
+
+          xl:h-[500px]
+          xl:w-[500px]
+          xl:blur-[120px]
         "
         aria-hidden="true"
       />
@@ -122,13 +168,21 @@ export default function FacultyMessages() {
           absolute
           left-1/2
           top-1/2
-          h-[600px]
-          w-[900px]
+          h-[400px]
+          w-[650px]
           -translate-x-1/2
           -translate-y-1/2
           rounded-full
           bg-[#F5EFD0]/[0.35]
-          blur-[130px]
+          blur-[100px]
+
+          sm:h-[500px]
+          sm:w-[750px]
+          sm:blur-[115px]
+
+          xl:h-[600px]
+          xl:w-[900px]
+          xl:blur-[130px]
         "
         aria-hidden="true"
       />
@@ -168,30 +222,36 @@ export default function FacultyMessages() {
             ease: [0.22, 1, 0.36, 1],
           }}
           className="
-            mb-12
-            flex
-            flex-col
-            lg:mb-16
+            mb-10
+
+            sm:mb-12
+
+            xl:mb-16
           "
         >
           {/* LABEL */}
 
           <div
             className="
-              mb-5
+              mb-4
               flex
               items-center
-              gap-4
+              gap-3
+
+              sm:mb-5
+              sm:gap-4
             "
           >
             <span
               className="
-                text-[10px]
+                text-[9px]
                 font-semibold
                 uppercase
-                tracking-[0.3em]
+                tracking-[0.25em]
                 text-[#7A1B2F]
-                sm:text-xs
+
+                sm:text-[10px]
+                sm:tracking-[0.3em]
               "
             >
               Faculty Messages
@@ -200,8 +260,10 @@ export default function FacultyMessages() {
             <span
               className="
                 h-px
-                w-12
+                w-8
                 bg-[#7A1B2F]/40
+
+                sm:w-12
               "
             />
           </div>
@@ -211,17 +273,22 @@ export default function FacultyMessages() {
           <h2
             className="
               max-w-[800px]
-              text-5xl
+              text-[clamp(2.8rem,8vw,4rem)]
               font-medium
               leading-[0.95]
               tracking-[-0.05em]
               text-[#241018]
+
               sm:text-6xl
-              lg:text-7xl
-          "
+
+              md:text-[4.5rem]
+
+              xl:text-7xl
+            "
           >
             Voices Behind
             <br />
+
             <span className="text-[#7A1B2F]">
               The Vision.
             </span>
@@ -256,17 +323,22 @@ export default function FacultyMessages() {
             group
             relative
             overflow-hidden
-            rounded-[24px]
+            rounded-[20px]
             border
             border-[#7A1B2F]/15
             bg-[#F2E9BD]/85
-            p-6
+            p-5
             transition-all
             duration-500
             hover:border-[#7A1B2F]/30
             hover:bg-[#F4EBC2]
-            sm:p-8
-            lg:p-10
+
+            sm:rounded-[24px]
+            sm:p-7
+
+            md:p-8
+
+            xl:p-10
           "
         >
           {/* TOP ACCENT */}
@@ -275,8 +347,8 @@ export default function FacultyMessages() {
             className="
               pointer-events-none
               absolute
-              left-8
-              right-8
+              left-6
+              right-6
               top-0
               h-[2px]
               bg-gradient-to-r
@@ -287,40 +359,49 @@ export default function FacultyMessages() {
               transition-opacity
               duration-500
               group-hover:opacity-100
-              lg:left-10
-              lg:right-10
+
+              sm:left-8
+              sm:right-8
+
+              xl:left-10
+              xl:right-10
             "
           />
 
-          {/* SOFT MAROON GLOW */}
+          {/* MAROON GLOW */}
 
           <div
             className="
               pointer-events-none
               absolute
-              -left-24
-              -top-24
-              h-64
-              w-64
+              -left-20
+              -top-20
+              h-48
+              w-48
               rounded-full
               bg-[#7A1B2F]/[0.07]
               blur-3xl
               transition-all
               duration-700
               group-hover:bg-[#7A1B2F]/[0.12]
+
+              sm:-left-24
+              sm:-top-24
+              sm:h-64
+              sm:w-64
             "
           />
 
-          {/* SOFT GOLD GLOW */}
+          {/* GOLD GLOW */}
 
           <div
             className="
               pointer-events-none
               absolute
-              -bottom-28
-              -right-28
-              h-64
-              w-64
+              -bottom-20
+              -right-20
+              h-48
+              w-48
               rounded-full
               bg-[#C6A15B]/[0.08]
               opacity-0
@@ -328,8 +409,17 @@ export default function FacultyMessages() {
               transition-opacity
               duration-700
               group-hover:opacity-100
+
+              sm:-bottom-28
+              sm:-right-28
+              sm:h-64
+              sm:w-64
             "
           />
+
+          {/* =================================================
+              FEATURED CONTENT
+          ================================================= */}
 
           <div
             className="
@@ -337,10 +427,16 @@ export default function FacultyMessages() {
               z-10
               grid
               items-center
-              gap-8
-              lg:grid-cols-[220px_1fr]
-              lg:gap-12
+              gap-7
+
+              md:grid-cols-[190px_1fr]
+              md:gap-8
+
+              lg:grid-cols-[210px_1fr]
+              lg:gap-10
+
               xl:grid-cols-[250px_1fr]
+              xl:gap-12
             "
           >
             {/* =================================================
@@ -351,8 +447,15 @@ export default function FacultyMessages() {
               className="
                 mx-auto
                 w-full
-                max-w-[220px]
-                lg:max-w-[250px]
+                max-w-[180px]
+
+                sm:max-w-[200px]
+
+                md:max-w-[190px]
+
+                lg:max-w-[210px]
+
+                xl:max-w-[250px]
               "
             >
               <div
@@ -360,11 +463,13 @@ export default function FacultyMessages() {
                   relative
                   aspect-[4/5]
                   overflow-hidden
-                  rounded-[18px]
+                  rounded-[16px]
                   border
                   border-[#7A1B2F]/20
                   bg-[#DCD3A4]
                   p-1
+
+                  sm:rounded-[18px]
                 "
               >
                 <img
@@ -373,24 +478,26 @@ export default function FacultyMessages() {
                   className="
                     h-full
                     w-full
-                    rounded-[14px]
+                    rounded-[12px]
                     object-cover
                     transition-transform
                     duration-700
                     group-hover:scale-[1.03]
+
+                    sm:rounded-[14px]
                   "
                 />
-
-                {/* IMAGE INNER BORDER */}
 
                 <div
                   className="
                     pointer-events-none
                     absolute
                     inset-2
-                    rounded-[13px]
+                    rounded-[11px]
                     border
                     border-[#C6A15B]/30
+
+                    sm:rounded-[13px]
                   "
                 />
               </div>
@@ -401,72 +508,83 @@ export default function FacultyMessages() {
             ================================================= */}
 
             <div className="min-w-0">
-              {/* LABEL */}
-
               <div
                 className="
-                  mb-5
+                  mb-4
                   flex
                   items-center
                   gap-3
+
+                  sm:mb-5
                 "
               >
                 <span
                   className="
                     h-px
-                    w-10
+                    w-8
                     bg-[#C6A15B]
+
+                    sm:w-10
                   "
                 />
 
                 <span
                   className="
-                    text-[9px]
+                    text-[8px]
                     font-semibold
                     uppercase
-                    tracking-[0.28em]
+                    tracking-[0.22em]
                     text-[#7A1B2F]
-                    sm:text-[10px]
+
+                    sm:text-[9px]
+                    sm:tracking-[0.28em]
+
+                    md:text-[10px]
                   "
                 >
                   Vice-Chancellor's Message
                 </span>
               </div>
 
-              {/* QUOTE */}
-
               <blockquote
                 className="
                   max-w-[900px]
                   font-serif
-                  text-[clamp(1.45rem,2.7vw,2.7rem)]
+                  text-[clamp(1.25rem,3vw,2.7rem)]
                   italic
-                  leading-[1.25]
+                  leading-[1.3]
                   tracking-[-0.02em]
                   text-[#241018]
+
+                  md:leading-[1.25]
                 "
               >
                 “{viceChancellor.message}”
               </blockquote>
 
-              {/* NAME */}
-
               <div
                 className="
-                  mt-8
+                  mt-6
                   border-t
                   border-[#7A1B2F]/15
-                  pt-5
+                  pt-4
+
+                  sm:mt-8
+                  sm:pt-5
                 "
               >
                 <h3
                   className="
-                    text-[11px]
+                    text-[10px]
                     font-semibold
                     uppercase
-                    tracking-[0.16em]
+                    tracking-[0.14em]
                     text-[#241018]
-                    sm:text-xs
+
+                    sm:text-[11px]
+                    sm:tracking-[0.16em]
+
+                    md:text-xs
                   "
                 >
                   {viceChancellor.name}
@@ -474,14 +592,17 @@ export default function FacultyMessages() {
 
                 <p
                   className="
-                    mt-2
-                    text-[9px]
+                    mt-1.5
+                    text-[8px]
                     font-semibold
                     uppercase
                     leading-4
-                    tracking-[0.18em]
+                    tracking-[0.15em]
                     text-[#7A1B2F]
+
+                    sm:mt-2
                     sm:text-[10px]
+                    sm:tracking-[0.18em]
                   "
                 >
                   {viceChancellor.designation}
@@ -497,12 +618,22 @@ export default function FacultyMessages() {
 
         <div
           className="
-            mt-6
+            mt-5
             grid
             w-full
             grid-cols-1
-            gap-5
-            md:grid-cols-3
+            gap-4
+
+            sm:mt-6
+            sm:gap-5
+
+            /* TABLET */
+            md:grid-cols-2
+            md:gap-5
+
+            /* PC */
+            xl:grid-cols-3
+            xl:gap-5
           "
         >
           {otherFaculty.map((faculty, index) => (
@@ -518,9 +649,9 @@ export default function FacultyMessages() {
   );
 }
 
-/* =========================================================
-   FACULTY CARD
-========================================================= */
+// =========================================================
+// FACULTY CARD
+// =========================================================
 
 function FacultyCard({ faculty, index }) {
   return (
@@ -549,19 +680,30 @@ function FacultyCard({ faculty, index }) {
         group
         relative
         flex
-        min-h-[280px]
+        min-h-[300px]
         flex-col
         overflow-hidden
-        rounded-[22px]
+        rounded-[20px]
         border
         border-[#7A1B2F]/15
         bg-[#E8DFB0]/80
-        p-6
+        p-5
         transition-all
         duration-500
         hover:border-[#7A1B2F]/30
         hover:bg-[#EEE5B8]
-        sm:p-7
+
+        sm:min-h-[310px]
+        sm:rounded-[22px]
+        sm:p-6
+
+        /* TABLET */
+        md:min-h-[330px]
+        md:p-7
+
+        /* PC */
+        xl:min-h-[280px]
+        xl:p-7
       "
     >
       {/* =====================================================
@@ -572,8 +714,8 @@ function FacultyCard({ faculty, index }) {
         className="
           pointer-events-none
           absolute
-          left-7
-          right-7
+          left-6
+          right-6
           top-0
           h-[2px]
           bg-gradient-to-r
@@ -584,42 +726,50 @@ function FacultyCard({ faculty, index }) {
           transition-opacity
           duration-500
           group-hover:opacity-100
+
+          sm:left-7
+          sm:right-7
         "
       />
 
       {/* =====================================================
-          HOVER MAROON GLOW
+          MAROON GLOW
       ===================================================== */}
 
       <div
         className="
           pointer-events-none
           absolute
-          -left-20
-          -top-20
-          h-48
-          w-48
+          -left-16
+          -top-16
+          h-40
+          w-40
           rounded-full
           bg-[#7A1B2F]/[0.07]
           blur-3xl
           transition-all
           duration-700
           group-hover:bg-[#7A1B2F]/[0.12]
+
+          sm:-left-20
+          sm:-top-20
+          sm:h-48
+          sm:w-48
         "
       />
 
       {/* =====================================================
-          HOVER GOLD GLOW
+          GOLD GLOW
       ===================================================== */}
 
       <div
         className="
           pointer-events-none
           absolute
-          -bottom-24
-          -right-24
-          h-48
-          w-48
+          -bottom-20
+          -right-20
+          h-40
+          w-40
           rounded-full
           bg-[#C6A15B]/[0.08]
           opacity-0
@@ -627,11 +777,23 @@ function FacultyCard({ faculty, index }) {
           transition-opacity
           duration-700
           group-hover:opacity-100
+
+          sm:-bottom-24
+          sm:-right-24
+          sm:h-48
+          sm:w-48
         "
       />
 
       {/* =====================================================
-          IMAGE + MESSAGE
+          CARD CONTENT
+
+          MOBILE + TABLET:
+          IMAGE
+          MESSAGE
+
+          PC (1280+):
+          IMAGE | MESSAGE
       ===================================================== */}
 
       <div
@@ -640,17 +802,24 @@ function FacultyCard({ faculty, index }) {
           z-10
           flex
           flex-1
-          items-start
-          gap-5
+          flex-col
+          items-center
+
+          /* PC ORIGINAL LAYOUT */
+          xl:flex-row
+          xl:items-start
+          xl:gap-5
         "
       >
-        {/* IMAGE */}
+        {/* ===================================================
+            IMAGE
+        =================================================== */}
 
         <div
           className="
             relative
-           h-[95px]
-w-[95px]
+            h-[82px]
+            w-[82px]
             shrink-0
             overflow-hidden
             rounded-full
@@ -662,8 +831,15 @@ w-[95px]
             duration-700
             group-hover:border-[#C6A15B]/80
             group-hover:scale-105
-          sm:h-[105px]
-sm:w-[105px]
+
+            sm:h-[90px]
+            sm:w-[90px]
+
+            md:h-[92px]
+            md:w-[92px]
+
+            xl:h-[95px]
+            xl:w-[95px]
           "
         >
           <img
@@ -680,8 +856,6 @@ sm:w-[105px]
             "
           />
 
-          {/* GOLD INNER RING */}
-
           <div
             className="
               pointer-events-none
@@ -694,18 +868,42 @@ sm:w-[105px]
           />
         </div>
 
-        {/* MESSAGE */}
+        {/* ===================================================
+            MESSAGE
+        =================================================== */}
 
-        <div className="min-w-0 flex-1">
+        <div
+          className="
+            mt-5
+            min-w-0
+            w-full
+            text-center
+
+            sm:mt-6
+
+            md:mt-5
+
+            /* PC ORIGINAL */
+            xl:mt-0
+            xl:flex-1
+            xl:text-left
+          "
+        >
           <p
             className="
               font-serif
-              text-[15px]
+              text-[14px]
               italic
-              leading-[1.5]
+              leading-[1.55]
               tracking-[-0.01em]
               text-[#4A3C35]
-              sm:text-[16px]
+
+              sm:text-[15px]
+
+              md:text-[15px]
+
+              xl:text-[15px]
+              xl:leading-[1.5]
             "
           >
             “{faculty.message}”
@@ -717,7 +915,19 @@ sm:w-[105px]
           BOTTOM INFORMATION
       ===================================================== */}
 
-      <div className="relative z-10 mt-6">
+      <div
+        className="
+          relative
+          z-10
+          mt-6
+
+          sm:mt-7
+
+          md:mt-7
+
+          xl:mt-6
+        "
+      >
         {/* DIVIDER */}
 
         <div
@@ -732,36 +942,42 @@ sm:w-[105px]
           "
         />
 
-        {/* NAME + DESIGNATION */}
+        {/* NAME */}
 
-        <div className="min-w-0">
-          <h3
-            className="
-              text-[11px]
-              font-semibold
-              uppercase
-              leading-4
-              tracking-[0.15em]
-              text-[#241018]
-            "
-          >
-            {faculty.name}
-          </h3>
+        <h3
+          className="
+            text-[10px]
+            font-semibold
+            uppercase
+            leading-4
+            tracking-[0.13em]
+            text-[#241018]
 
-          <p
-            className="
-              mt-2
-              text-[9px]
-              font-semibold
-              uppercase
-              leading-4
-              tracking-[0.16em]
-              text-[#7A1B2F]
-            "
-          >
-            {faculty.designation}
-          </p>
-        </div>
+            sm:text-[11px]
+            sm:tracking-[0.15em]
+          "
+        >
+          {faculty.name}
+        </h3>
+
+        {/* DESIGNATION */}
+
+        <p
+          className="
+            mt-1.5
+            text-[8px]
+            font-semibold
+            uppercase
+            leading-4
+            tracking-[0.13em]
+            text-[#7A1B2F]
+
+            sm:text-[9px]
+            sm:tracking-[0.16em]
+          "
+        >
+          {faculty.designation}
+        </p>
       </div>
     </motion.article>
   );

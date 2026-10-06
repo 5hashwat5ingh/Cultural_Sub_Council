@@ -285,34 +285,7 @@ export default function DramaticsClub() {
 
             {/* SCROLL */}
 
-            <motion.div
-              initial={{
-                opacity: 0,
-              }}
-              animate={{
-                opacity: 1,
-              }}
-              transition={{
-                delay: 1.2,
-                duration: 0.8,
-              }}
-              className="
-                mt-10
-                flex
-                items-center
-                gap-4
-                text-[9px]
-                uppercase
-                tracking-[0.3em]
-                text-[#F5EFD0]/75
-              "
-            >
-              <span>Scroll to explore</span>
-
-              <span className="text-lg text-[#C6A15B]">
-                ↓
-              </span>
-            </motion.div>
+            
           </div>
         </div>
       </section>
@@ -651,7 +624,7 @@ export default function DramaticsClub() {
                 "
               >
                 <img
-                  src="/clubs/dramatics-about.jpg"
+                  src="https://res.cloudinary.com/yh0rqnnu/image/upload/v1791301206/WhatsApp_Image_2026-10-06_at_9.06.45_PM.jpg"
                   alt="Dramatics Club performance"
                   className="
                     h-full

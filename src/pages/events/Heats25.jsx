@@ -119,7 +119,7 @@ const galleryImages = [
 export default function Heats25() {
   return (
     <main className="min-h-screen overflow-x-clip bg-[#DCD3A4] text-[#2B0A12]">
-      <Navbar />
+      <Navbar Gallery/>
 
       {/* =====================================================
           HERO
@@ -181,41 +181,19 @@ export default function Heats25() {
             </motion.h1>
 
             {/* Meta */}
-            <motion.div
-              variants={fadeUp}
-              className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-7"
-            >
-              <p className="text-xs uppercase tracking-[0.3em] text-[#D9B86C] sm:text-sm">
-                Cultural Celebration
-              </p>
-
-              <span className="hidden h-px w-10 bg-[#C6A15B]/50 sm:block" />
-
-              <p className="text-xs uppercase tracking-[0.25em] text-[#F7EBD0]/60">
-                December 27 — 28, 2025
-              </p>
-            </motion.div>
+           
 
             {/* Description */}
             <motion.p
               variants={fadeUp}
               className="mt-7 max-w-xl text-sm leading-7 text-[#F7EBD0]/70 sm:text-base sm:leading-8"
             >
-              A celebration of creativity, expression and the cultural spirit
-              of the student community — bringing together performances,
-              artists and voices on one stage.
+              Where fresh faces find their stage, hidden talents find their voice every beginning becomes a part of something bigger.
             </motion.p>
           </motion.div>
         </div>
 
-        {/* Scroll */}
-        <div className="absolute bottom-8 right-8 z-20 hidden items-center gap-3 lg:flex">
-          <span className="text-[8px] uppercase tracking-[0.35em] text-[#F7EBD0]/50">
-            Scroll to explore
-          </span>
-
-          <span className="h-10 w-px bg-[#C6A15B]/50" />
-        </div>
+       
       </section>
 
       {/* =====================================================
@@ -257,33 +235,16 @@ export default function Heats25() {
                 variants={fadeUp}
                 className="mt-8 max-w-3xl text-base leading-8 text-[#5A4A46] sm:text-lg sm:leading-9"
               >
-                HEATS '25 is a cultural platform created to bring students
-                together through performance, creativity and artistic
-                expression. It provides a space where students can discover
-                their talents, collaborate with one another and share their
-                work with the wider university community.
+                HEATS is the vibrant cultural initiation of MMMUT, where freshmen come together to showcase their talents across music, dance, dramatics, fine arts, photography, and more. It offers every newcomer an opportunity to step into the spotlight, explore their creative potential, and discover the art form that resonates with them.
+              </motion.p>
+              <motion.p
+                variants={fadeUp}
+                className="mt-3 max-w-3xl text-base leading-8 text-[#5A4A46] sm:text-lg sm:leading-9"
+              >
+                More than a showcase, HEATS marks the beginning of their cultural journey at MMMUT. Through their performances and participation, students find their creative communities and become an integral part of the university’s various cultural clubs, turning their first stage into the beginning of countless stories.
               </motion.p>
 
-              {/* Domains */}
-              <motion.div
-                variants={fadeUp}
-                className="mt-8 flex flex-wrap gap-2.5"
-              >
-                {[
-                  "Dance",
-                  "Dramatics",
-                  "Music",
-                  "Fine Arts",
-                  "Photography",
-                ].map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-[#7A1B2F]/20 bg-[#DCD3A4]/30 px-4 py-2 text-[9px] font-semibold uppercase tracking-[0.16em] text-[#3A0D18]"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </motion.div>
+             
             </motion.div>
 
             {/* RIGHT — STATS */}
@@ -298,7 +259,7 @@ export default function Heats25() {
                 ["2", "Days"],
                 ["5", "Domains"],
                 ["2025", "Edition"],
-                ["CULTURE", "At the heart"],
+                ["700+", "Footfalls"],
               ].map(([value, label], index) => (
                 <motion.div
                   key={label}
@@ -307,7 +268,7 @@ export default function Heats25() {
                 >
                   <span
                     className={`font-semibold tracking-[-0.05em] text-[#2B0A12] ${
-                      index === 3
+                      index === 4
                         ? "text-2xl sm:text-3xl"
                         : "text-4xl sm:text-5xl"
                     }`}

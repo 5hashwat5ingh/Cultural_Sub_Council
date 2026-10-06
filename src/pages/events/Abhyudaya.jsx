@@ -171,7 +171,7 @@ export default function Abhyudaya() {
         {/* Background */}
         <div className="absolute inset-0">
           <img
-            src="https://i.ibb.co/pvnc00py/IMG-1459.jpg"
+            src="https://res.cloudinary.com/yh0rqnnu/image/upload/v1791309133/Abhyudaya.jpg"
             alt="ABHYUDAYA '25"
             className="h-full w-full object-cover object-center"
           />

@@ -206,8 +206,11 @@ export default function ScrollStory({
   const CENTER_SPACER =
     (100 - CARD_HEIGHT) / 2;
 
-  const MOBILE_CENTER_SPACER =
-    (100 - MOBILE_CARD_HEIGHT) / 2;
+  const MOBILE_VIEWPORT_HEIGHT = 42;
+
+const MOBILE_CENTER_SPACER =
+  (MOBILE_VIEWPORT_HEIGHT -
+    MOBILE_CARD_HEIGHT) / 2;
 
   return (
     <section
@@ -628,7 +631,7 @@ export default function ScrollStory({
             <div
               className="
                 relative
-                h-[42vh]
+                h-[42vh] sm:h-[45vh] md:h-[47vh]
                 w-full
                 max-w-[500px]
                 overflow-hidden

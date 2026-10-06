@@ -67,20 +67,20 @@ const clubs = [
 ];
 
 // =========================================================
-// ANIMATION
+// ANIMATIONS
 // =========================================================
 
 const fadeUp = {
   hidden: {
     opacity: 0,
-    y: 40,
+    y: 25,
   },
 
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.8,
+      duration: 0.7,
       ease: [0.22, 1, 0.36, 1],
     },
   },
@@ -91,7 +91,7 @@ const stagger = {
 
   visible: {
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.08,
     },
   },
 };
@@ -101,9 +101,11 @@ const stagger = {
 // =========================================================
 
 export default function ClubsPage() {
-  return (
-    <main className="min-h-screen overflow-x-clip bg-[#DCD3A4] text-[#2B0A12]">
+  const heroImage =
+    "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791232371/Untitled_design_4.png";
 
+  return (
+    <main className="min-h-screen overflow-x-hidden bg-[#DCD3A4] text-[#2B0A12]">
       {/* =====================================================
           NAVBAR
       ===================================================== */}
@@ -112,98 +114,188 @@ export default function ClubsPage() {
 
       {/* =====================================================
           HERO
+          
+          IMPORTANT:
+          Height is now determined by the actual image.
+          This prevents cropping and removes vacant space.
       ===================================================== */}
 
-      <section className="relative min-h-screen overflow-hidden">
-
-        {/* Hero Image */}
-
-        <div className="absolute inset-0">
-
-          <img
-            src="https://res.cloudinary.com/yh0rqnnu/image/upload/v1791232371/Untitled_design_4.png"
-            alt="Cultural Sub Council"
-            className="
-              h-full
-              w-full
-              object-cover
-              object-center
-            "
-          />
-
-          {/* Soft image overlay */}
-
-          <div className="absolute inset-0 bg-[#2B0A12]/25" />
-
-        </div>
-
-        {/* Hero Content */}
-
-        <div className="
+      <section
+        className="
           relative
-          z-10
-          flex
-          min-h-screen
-          items-end
-          px-5
-          pb-20
-          sm:px-10
-          sm:pb-24
-          lg:px-16
-          lg:pb-28
-        ">
+          w-full
+          overflow-hidden
+          bg-[#2B0A12]
+        "
+      >
+        {/* =================================================
+            FULL ORIGINAL IMAGE
 
+            h-auto + w-full means the complete image is
+            displayed using its natural aspect ratio.
+        ================================================= */}
+
+        <img
+          src={heroImage}
+          alt="Cultural Sub Council"
+          className="
+            block
+            h-auto
+            w-full
+            object-contain
+          "
+        />
+
+        {/* =================================================
+            DARK CINEMATIC OVERLAY
+        ================================================= */}
+
+        <div
+          className="
+            pointer-events-none
+            absolute
+            inset-0
+            bg-[#2B0A12]/20
+          "
+        />
+
+        {/* =================================================
+            TOP GRADIENT
+        ================================================= */}
+
+        <div
+          className="
+            pointer-events-none
+            absolute
+            inset-x-0
+            top-0
+            h-24
+            bg-gradient-to-b
+            from-[#1D070D]/65
+            to-transparent
+            sm:h-32
+            md:h-40
+          "
+        />
+
+        {/* =================================================
+            BOTTOM GRADIENT
+        ================================================= */}
+
+        <div
+          className="
+            pointer-events-none
+            absolute
+            inset-x-0
+            bottom-0
+            h-28
+            bg-gradient-to-t
+            from-[#1D070D]/65
+            via-[#1D070D]/20
+            to-transparent
+            sm:h-36
+            md:h-44
+          "
+        />
+
+        {/* =================================================
+            HERO CONTENT
+        ================================================= */}
+
+        <div
+          className="
+            absolute
+            inset-0
+            z-10
+            flex
+            items-center
+            justify-center
+            px-5
+            sm:px-8
+            md:px-10
+            lg:px-12
+            xl:px-16
+          "
+        >
           <motion.div
             initial="hidden"
             animate="visible"
             variants={stagger}
-            className="w-full max-w-[1500px]"
+            className="
+              w-full
+              max-w-[1250px]
+              text-center
+            "
           >
-
-            {/* Eyebrow */}
+            {/* =================================================
+                EYEBROW
+            ================================================= */}
 
             <motion.div
               variants={fadeUp}
-              className="mb-7 flex items-center gap-4"
+              className="
+                mb-3
+                flex
+                items-center
+                justify-center
+                gap-3
+                sm:mb-5
+                sm:gap-4
+              "
             >
               <span
                 className="
-                  text-[9px]
+                  h-px
+                  w-5
+                  bg-[#D9B86C]/80
+                  sm:w-9
+                  md:w-12
+                "
+              />
+
+              <span
+                className="
+                  text-[6px]
+                  font-semibold
                   uppercase
-                  tracking-[0.35em]
-                  text-[#F7EBD0]
-                  sm:text-[10px]
+                  tracking-[0.28em]
+                  text-[#F7EBD0]/90
+                  sm:text-[8px]
+                  sm:tracking-[0.38em]
+                  md:text-[9px]
                 "
               >
                 Cultural Sub Council
               </span>
 
-              <span className="h-px w-10 bg-[#D9B86C]" />
-
               <span
                 className="
-                  text-[9px]
-                  uppercase
-                  tracking-[0.3em]
-                  text-[#F7EBD0]/70
-                  sm:text-[10px]
+                  h-px
+                  w-5
+                  bg-[#D9B86C]/80
+                  sm:w-9
+                  md:w-12
                 "
-              >
-                Clubs
-              </span>
+              />
             </motion.div>
 
-            {/* Heading */}
+            {/* =================================================
+                MAIN HEADING
+            ================================================= */}
 
             <motion.h1
               variants={fadeUp}
               className="
-                max-w-[1200px]
-                text-[clamp(4rem,11vw,11rem)]
+                mx-auto
+                max-w-[1050px]
+                text-[clamp(3rem,13vw,8.5rem)]
                 font-semibold
-                leading-[0.78]
-                tracking-[-0.07em]
+                leading-[0.8]
+                tracking-[-0.075em]
                 text-[#F7EBD0]
+                drop-shadow-[0_8px_30px_rgba(29,7,13,0.7)]
+                sm:text-[clamp(3.8rem,10vw,8.5rem)]
+                md:text-[clamp(4.5rem,8.5vw,9rem)]
               "
             >
               Where
@@ -214,25 +306,9 @@ export default function ClubsPage() {
               </span>
             </motion.h1>
 
-            {/* Description */}
-
-            <motion.p
-              variants={fadeUp}
-              className="
-                mt-8
-                max-w-2xl
-                text-sm
-                leading-7
-                text-[#F7EBD0]/80
-                sm:text-base
-                sm:leading-8
-              "
-            >
-              Different passions, one stage, countless stories.
-Meet the clubs that shape the cultural heartbeat of MMMUT.
-            </motion.p>
-
-            {/* Gold line */}
+            {/* =================================================
+                GOLD LINE
+            ================================================= */}
 
             <motion.div
               initial={{
@@ -240,21 +316,103 @@ Meet the clubs that shape the cultural heartbeat of MMMUT.
                 opacity: 0,
               }}
               animate={{
-                width: 80,
+                width: 60,
                 opacity: 1,
               }}
               transition={{
-                duration: 1,
-                delay: 0.6,
+                duration: 0.9,
+                delay: 0.5,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="mt-12 h-px bg-[#D9B86C]"
+              className="
+                mx-auto
+                mt-4
+                h-px
+                bg-[#D9B86C]
+                sm:mt-6
+                md:mt-7
+              "
             />
 
-          </motion.div>
+            {/* =================================================
+                SUBTITLE
+            ================================================= */}
 
+            <motion.p
+              variants={fadeUp}
+              className="
+                mx-auto
+                mt-3
+                max-w-[420px]
+                text-[6px]
+                uppercase
+                leading-4
+                tracking-[0.18em]
+                text-[#F7EBD0]/65
+                sm:mt-5
+                sm:text-[8px]
+                sm:leading-5
+                sm:tracking-[0.25em]
+                md:text-[9px]
+              "
+            >
+              Five creative communities · One cultural identity
+            </motion.p>
+          </motion.div>
         </div>
 
+        {/* =================================================
+            SCROLL INDICATOR
+        ================================================= */}
+
+        <div
+          className="
+            absolute
+            bottom-3
+            left-1/2
+            z-20
+            -translate-x-1/2
+            sm:bottom-5
+            md:bottom-6
+          "
+        >
+          <motion.div
+            animate={{
+              y: [0, 4, 0],
+              opacity: [0.4, 1, 0.4],
+            }}
+            transition={{
+              duration: 1.8,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="flex flex-col items-center gap-1.5"
+          >
+            <span
+              className="
+                text-[5px]
+                uppercase
+                tracking-[0.3em]
+                text-[#F7EBD0]/60
+                sm:text-[6px]
+              "
+            >
+              Scroll
+            </span>
+
+            <span
+              className="
+                block
+                h-5
+                w-px
+                bg-gradient-to-b
+                from-[#D9B86C]
+                to-transparent
+                sm:h-6
+              "
+            />
+          </motion.div>
+        </div>
       </section>
 
       {/* =====================================================
@@ -267,27 +425,32 @@ Meet the clubs that shape the cultural heartbeat of MMMUT.
           overflow-hidden
           bg-[#DCD3A4]
           px-5
-          py-24
-          sm:px-10
-          sm:py-28
-          lg:px-16
-          lg:py-32
+          py-12
+          sm:px-8
+          sm:py-16
+          md:px-10
+          md:py-18
+          lg:px-12
+          xl:px-16
+          xl:py-20
         "
       >
-
-        {/* Ambient glows */}
+        {/* Ambient glow */}
 
         <div
           className="
             pointer-events-none
             absolute
-            left-[-12%]
-            top-[-8%]
-            h-[520px]
-            w-[520px]
+            left-[-15%]
+            top-[-20%]
+            h-[280px]
+            w-[280px]
             rounded-full
             bg-[#7A1B2F]/10
-            blur-[120px]
+            blur-[90px]
+            sm:h-[380px]
+            sm:w-[380px]
+            sm:blur-[110px]
           "
         />
 
@@ -295,61 +458,51 @@ Meet the clubs that shape the cultural heartbeat of MMMUT.
           className="
             pointer-events-none
             absolute
-            right-[-12%]
-            top-[20%]
-            h-[460px]
-            w-[460px]
+            bottom-[-20%]
+            right-[-10%]
+            h-[320px]
+            w-[320px]
             rounded-full
-            bg-[#8B1E3F]/7
-            blur-[120px]
+            bg-[#C6A15B]/10
+            blur-[100px]
+            sm:h-[420px]
+            sm:w-[420px]
+            sm:blur-[120px]
           "
         />
 
-        <div
-          className="
-            pointer-events-none
-            absolute
-            bottom-[-15%]
-            right-[-5%]
-            h-[500px]
-            w-[500px]
-            rounded-full
-            bg-[#C6A15B]/14
-            blur-[120px]
-          "
-        />
-
-        <div className="relative mx-auto max-w-[1500px]">
-
+        <div className="relative mx-auto max-w-[1450px]">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{
               once: true,
-              margin: "-100px",
+              amount: 0.2,
             }}
             variants={stagger}
             className="
               grid
-              gap-12
+              items-end
+              gap-7
+              md:gap-9
               lg:grid-cols-[1.15fr_0.85fr]
-              lg:gap-24
-              lg:items-end
+              lg:gap-14
+              xl:gap-20
             "
           >
-
             {/* Left */}
 
             <div>
-
               <motion.p
                 variants={fadeUp}
                 className="
-                  text-[10px]
+                  text-[8px]
                   font-semibold
                   uppercase
-                  tracking-[0.4em]
+                  tracking-[0.32em]
                   text-[#7A1B2F]
+                  sm:text-[9px]
+                  sm:tracking-[0.4em]
                 "
               >
                 Our Creative Communities
@@ -358,13 +511,15 @@ Meet the clubs that shape the cultural heartbeat of MMMUT.
               <motion.h2
                 variants={fadeUp}
                 className="
-                  mt-6
-                  max-w-5xl
-                  text-[clamp(3rem,6vw,7rem)]
+                  mt-3
+                  max-w-4xl
+                  text-[clamp(2.6rem,8vw,6rem)]
                   font-semibold
-                  leading-[0.88]
-                  tracking-[-0.06em]
+                  leading-[0.87]
+                  tracking-[-0.065em]
                   text-[#2B0A12]
+                  sm:mt-4
+                  md:text-[clamp(3rem,6vw,5.8rem)]
                 "
               >
                 Five spaces.
@@ -374,23 +529,23 @@ Meet the clubs that shape the cultural heartbeat of MMMUT.
                   One expression.
                 </span>
               </motion.h2>
-
             </div>
 
             {/* Right */}
 
             <motion.div
               variants={fadeUp}
-              className="max-w-xl lg:pb-2"
+              className="max-w-xl lg:pb-1"
             >
-
               <p
                 className="
-                  text-base
-                  leading-8
+                  text-[12px]
+                  leading-5
                   text-[#4D413A]
-                  sm:text-lg
-                  sm:leading-9
+                  sm:text-sm
+                  sm:leading-7
+                  md:text-base
+                  md:leading-8
                 "
               >
                 Every club is a space to discover talent,
@@ -400,14 +555,19 @@ Meet the clubs that shape the cultural heartbeat of MMMUT.
                 there is a place for every expression.
               </p>
 
-              <div className="mt-8 h-px w-16 bg-[#C6A15B]" />
-
+              <div
+                className="
+                  mt-4
+                  h-px
+                  w-14
+                  bg-[#C6A15B]
+                  sm:mt-5
+                  sm:w-16
+                "
+              />
             </motion.div>
-
           </motion.div>
-
         </div>
-
       </section>
 
       {/* =====================================================
@@ -420,63 +580,57 @@ Meet the clubs that shape the cultural heartbeat of MMMUT.
           overflow-hidden
           bg-[#DCD3A4]
           px-5
-          pb-28
-          sm:px-10
-          sm:pb-36
-          lg:px-16
+          pb-14
+          sm:px-8
+          sm:pb-18
+          md:px-10
+          md:pb-20
+          lg:px-12
+          xl:px-16
+          xl:pb-24
         "
       >
-
-        <div className="mx-auto max-w-[1500px]">
-
-          {/* Section heading */}
+        <div className="mx-auto max-w-[1450px]">
+          {/* Heading */}
 
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{
               once: true,
-              margin: "-100px",
+              amount: 0.2,
             }}
             variants={stagger}
-            className="mb-12"
+            className="mb-6 sm:mb-8 md:mb-9"
           >
-
-            <motion.div
+            <motion.p
               variants={fadeUp}
-              className="flex items-center gap-4"
+              className="
+                text-[8px]
+                font-semibold
+                uppercase
+                tracking-[0.35em]
+                text-[#7A1B2F]
+                sm:text-[9px]
+              "
             >
-
-              <span
-                className="
-                  text-[10px]
-                  font-semibold
-                  uppercase
-                  tracking-[0.35em]
-                  text-[#7A1B2F]
-                "
-              >
-                Explore
-              </span>
-
-              <span className="h-px w-12 bg-[#C6A15B]" />
-
-            </motion.div>
+              Explore The Clubs
+            </motion.p>
 
             <motion.h2
               variants={fadeUp}
               className="
-                mt-5
-                text-[clamp(3rem,5.5vw,6rem)]
+                mt-3
+                text-[clamp(2.7rem,8vw,5.5rem)]
                 font-semibold
                 leading-[0.88]
-                tracking-[-0.06em]
+                tracking-[-0.065em]
                 text-[#2B0A12]
+                sm:mt-4
               "
             >
               Find your stage.
             </motion.h2>
-
           </motion.div>
 
           {/* Club list */}
@@ -487,49 +641,40 @@ Meet the clubs that shape the cultural heartbeat of MMMUT.
             whileInView="visible"
             viewport={{
               once: true,
-              amount: 0.05,
+              amount: 0.03,
             }}
-            className="
-              border-t
-              border-[#7A1B2F]/20
-            "
+            className="border-t border-[#7A1B2F]/20"
           >
-
-            {clubs.map((club, index) => (
-
+            {clubs.map((club) => (
               <motion.div
                 key={club.name}
                 variants={fadeUp}
-                className="
-                  group
-                  border-b
-                  border-[#7A1B2F]/20
-                "
+                className="group border-b border-[#7A1B2F]/20"
               >
-
                 <Link
                   to={club.path}
                   aria-label={`Explore ${club.name}`}
                   className="
-                    relative
                     grid
-                    gap-7
-                    py-8
-                    sm:py-10
-                    lg:grid-cols-[60px_320px_1fr_55px]
+                    gap-4
+                    py-5
+                    sm:gap-6
+                    sm:py-7
+                    md:py-8
+                    lg:grid-cols-[230px_1fr_45px]
                     lg:items-center
-                    lg:gap-10
-                    lg:py-8
+                    lg:gap-7
+                    xl:grid-cols-[55px_300px_1fr_48px]
+                    xl:gap-8
+                    xl:py-6
                   "
                 >
-
                   {/* Number */}
 
-                  <div className="hidden lg:block">
-
+                  <div className="hidden xl:block">
                     <span
                       className="
-                        text-[10px]
+                        text-[9px]
                         tracking-[0.2em]
                         text-[#7A1B2F]/50
                         transition-colors
@@ -539,7 +684,6 @@ Meet the clubs that shape the cultural heartbeat of MMMUT.
                     >
                       {club.number}
                     </span>
-
                   </div>
 
                   {/* Image */}
@@ -547,14 +691,16 @@ Meet the clubs that shape the cultural heartbeat of MMMUT.
                   <div
                     className="
                       relative
-                      h-[220px]
+                      h-[165px]
                       w-full
                       overflow-hidden
-                      sm:h-[280px]
-                      lg:h-[190px]
+                      rounded-[5px]
+                      sm:h-[210px]
+                      md:h-[230px]
+                      lg:h-[180px]
+                      xl:h-[175px]
                     "
                   >
-
                     <img
                       src={club.image}
                       alt={club.name}
@@ -570,21 +716,17 @@ Meet the clubs that shape the cultural heartbeat of MMMUT.
                       "
                     />
 
-                    {/* Soft image overlay */}
-
                     <div
                       className="
                         pointer-events-none
                         absolute
                         inset-0
-                        bg-[#2B0A12]/10
-                        transition-opacity
-                        duration-700
-                        group-hover:opacity-0
+                        bg-gradient-to-t
+                        from-[#2B0A12]/25
+                        via-transparent
+                        to-transparent
                       "
                     />
-
-                    {/* Gold corner */}
 
                     <div
                       className="
@@ -592,56 +734,53 @@ Meet the clubs that shape the cultural heartbeat of MMMUT.
                         absolute
                         bottom-3
                         left-3
-                        h-7
-                        w-7
+                        h-6
+                        w-6
                         border-b
                         border-l
                         border-[#D9B86C]
                         transition-all
                         duration-500
-                        group-hover:h-10
-                        group-hover:w-10
+                        group-hover:h-9
+                        group-hover:w-9
                       "
                     />
-
                   </div>
 
                   {/* Content */}
 
                   <div className="min-w-0">
-
                     <div className="flex items-center gap-3">
-
                       <span
                         className="
-                          text-[9px]
+                          text-[7px]
                           uppercase
-                          tracking-[0.25em]
-                          text-[#7A1B2F]/65
-                          transition-colors
-                          duration-500
-                          group-hover:text-[#7A1B2F]
+                          tracking-[0.2em]
+                          text-[#7A1B2F]/70
+                          sm:text-[8px]
+                          sm:tracking-[0.25em]
                         "
                       >
                         {club.category}
                       </span>
 
-                      <span className="h-px w-8 bg-[#C6A15B]/50" />
-
+                      <span className="h-px w-5 bg-[#C6A15B]/60 sm:w-7" />
                     </div>
 
                     <h3
                       className="
-                        mt-3
-                        text-[clamp(2rem,4vw,4rem)]
+                        mt-2
+                        text-[clamp(1.75rem,7vw,3.7rem)]
                         font-semibold
-                        leading-[0.95]
-                        tracking-[-0.05em]
+                        leading-[0.92]
+                        tracking-[-0.055em]
                         text-[#2B0A12]
                         transition-all
                         duration-500
-                        group-hover:translate-x-2
+                        group-hover:translate-x-1
                         group-hover:text-[#7A1B2F]
+                        sm:mt-3
+                        md:text-[clamp(2rem,5vw,3.7rem)]
                       "
                     >
                       {club.name}
@@ -649,17 +788,19 @@ Meet the clubs that shape the cultural heartbeat of MMMUT.
 
                     <p
                       className="
-                        mt-4
+                        mt-2
                         max-w-2xl
-                        text-sm
-                        leading-7
+                        text-[11px]
+                        leading-5
                         text-[#5C514A]
-                        sm:text-base
+                        sm:mt-3
+                        sm:text-[13px]
+                        sm:leading-6
+                        md:text-sm
                       "
                     >
                       {club.description}
                     </p>
-
                   </div>
 
                   {/* Arrow */}
@@ -667,23 +808,28 @@ Meet the clubs that shape the cultural heartbeat of MMMUT.
                   <div
                     className="
                       flex
-                      h-12
-                      w-12
+                      h-9
+                      w-9
                       items-center
                       justify-center
+                      self-end
                       rounded-full
                       border
                       border-[#7A1B2F]/25
-                      text-xl
+                      text-base
                       text-[#7A1B2F]
                       transition-all
                       duration-500
                       group-hover:border-[#C6A15B]
                       group-hover:bg-[#C6A15B]
                       group-hover:text-[#2B0A12]
+                      sm:h-10
+                      sm:w-10
+                      md:h-11
+                      md:w-11
+                      lg:self-center
                     "
                   >
-
                     <span
                       className="
                         inline-block
@@ -694,19 +840,12 @@ Meet the clubs that shape the cultural heartbeat of MMMUT.
                     >
                       ↗
                     </span>
-
                   </div>
-
                 </Link>
-
               </motion.div>
-
             ))}
-
           </motion.div>
-
         </div>
-
       </section>
 
       {/* =====================================================
@@ -719,14 +858,17 @@ Meet the clubs that shape the cultural heartbeat of MMMUT.
           overflow-hidden
           bg-[#2B0A12]
           px-5
-          py-28
-          sm:px-10
-          sm:py-36
-          lg:px-16
+          py-14
+          sm:px-8
+          sm:py-18
+          md:px-10
+          md:py-20
+          lg:px-12
+          xl:px-16
+          xl:py-24
         "
       >
-
-        {/* Ambient gold glow */}
+        {/* Glow */}
 
         <div
           className="
@@ -734,13 +876,16 @@ Meet the clubs that shape the cultural heartbeat of MMMUT.
             absolute
             left-1/2
             top-1/2
-            h-[500px]
-            w-[500px]
+            h-[300px]
+            w-[300px]
             -translate-x-1/2
             -translate-y-1/2
             rounded-full
             bg-[#C6A15B]/7
-            blur-[140px]
+            blur-[100px]
+            sm:h-[400px]
+            sm:w-[400px]
+            sm:blur-[120px]
           "
         />
 
@@ -749,23 +894,25 @@ Meet the clubs that shape the cultural heartbeat of MMMUT.
           whileInView="visible"
           viewport={{
             once: true,
+            amount: 0.2,
           }}
           variants={fadeUp}
           className="
             relative
             z-10
             mx-auto
-            max-w-[1200px]
+            max-w-[1000px]
             text-center
           "
         >
-
           <p
             className="
-              text-[9px]
+              text-[7px]
               uppercase
-              tracking-[0.45em]
+              tracking-[0.4em]
               text-[#C6A15B]
+              sm:text-[8px]
+              sm:tracking-[0.45em]
             "
           >
             Cultural Sub Council
@@ -773,12 +920,14 @@ Meet the clubs that shape the cultural heartbeat of MMMUT.
 
           <h2
             className="
-              mt-7
-              text-[clamp(3.5rem,8vw,8rem)]
+              mt-4
+              text-[clamp(3rem,13vw,7rem)]
               font-medium
               leading-[0.82]
-              tracking-[-0.07em]
+              tracking-[-0.075em]
               text-[#F7EBD0]
+              sm:mt-5
+              sm:text-[clamp(3.5rem,10vw,7rem)]
             "
           >
             Find your
@@ -792,13 +941,14 @@ Meet the clubs that shape the cultural heartbeat of MMMUT.
           <p
             className="
               mx-auto
-              mt-8
-              max-w-xl
-              text-sm
-              leading-7
+              mt-5
+              max-w-lg
+              text-[11px]
+              leading-5
               text-[#D8C7AA]/65
-              sm:text-base
-              sm:leading-8
+              sm:mt-6
+              sm:text-sm
+              sm:leading-6
             "
           >
             Discover a community where your creativity,
@@ -810,25 +960,29 @@ Meet the clubs that shape the cultural heartbeat of MMMUT.
             to="/"
             className="
               group
-              mt-10
+              mt-6
               inline-flex
               items-center
               gap-3
               rounded-full
               border
               border-[#C6A15B]/50
-              px-6
-              py-3
-              text-[9px]
+              px-5
+              py-2.5
+              text-[7px]
               font-semibold
               uppercase
-              tracking-[0.25em]
+              tracking-[0.22em]
               text-[#D9B86C]
               transition-all
               duration-500
               hover:border-[#D9B86C]
               hover:bg-[#C6A15B]
               hover:text-[#1D070D]
+              sm:mt-7
+              sm:px-6
+              sm:py-3
+              sm:text-[8px]
             "
           >
             Back to Home
@@ -843,9 +997,7 @@ Meet the clubs that shape the cultural heartbeat of MMMUT.
               ↗
             </span>
           </Link>
-
         </motion.div>
-
       </section>
 
       {/* =====================================================
@@ -853,7 +1005,6 @@ Meet the clubs that shape the cultural heartbeat of MMMUT.
       ===================================================== */}
 
       <Footer />
-
     </main>
   );
 }

@@ -12,8 +12,7 @@ import {
 } from "framer-motion";
 
 export default function LineTextReveal({
-  text = `A vibrant hub of creativity and talent, the Cultural Sub Council of Madan Mohan Malaviya University of Technology, Gorakhpur brings the campus alive through music, dance, theatre, and performance. From HEATS to the flagship fest Abhyudaya, it provides a platform for students to express, create, and inspire.
-`,
+  text = `A vibrant hub of creativity and talent, the Cultural Sub Council of Madan Mohan Malaviya University of Technology, Gorakhpur brings the campus alive through music, dance, theatre, and performance. From HEATS to the flagship fest Abhyudaya, it provides a platform for students to express, create, and inspire.`,
 
   className = "",
 
@@ -87,6 +86,7 @@ export default function LineTextReveal({
       }
 
       currentLine.push(word.textContent);
+
       currentTop = top;
     });
 
@@ -214,21 +214,31 @@ export default function LineTextReveal({
       className={`
         relative
         flex
-        min-h-[75vh]
         w-full
         items-center
         justify-center
         overflow-hidden
         bg-[#DCD3A4]
-        px-6
-        py-24
-        sm:px-12
-        sm:py-32
+
+        /* MOBILE */
+        min-h-0
+        px-5
+        py-14
+
+        /* TABLET */
+        sm:min-h-[65vh]
+        sm:px-10
+        sm:py-24
+
+        /* DESKTOP */
+        lg:min-h-[75vh]
         lg:px-20
         lg:py-40
+
         ${className}
       `}
     >
+
       {/* =====================================================
           BACKGROUND — SOFT MAROON TINT
       ===================================================== */}
@@ -274,9 +284,9 @@ export default function LineTextReveal({
       <div
         className="
           pointer-events-none
-          absolute
           bottom-[-15%]
           right-[-5%]
+          absolute
           h-[500px]
           w-[500px]
           rounded-full
@@ -320,22 +330,34 @@ export default function LineTextReveal({
           max-w-[1350px]
         "
       >
+
         <div
           className="
             grid
             items-center
-            gap-12
+
+            /* MOBILE — ONE COLUMN */
+            grid-cols-1
+            gap-0
+
+            /* TABLET */
+            sm:gap-8
+
+            /* DESKTOP — TEXT + IMAGE */
             lg:grid-cols-[1fr_360px]
             lg:gap-16
+
             xl:grid-cols-[1fr_430px]
             xl:gap-20
           "
         >
+
           {/* =================================================
               LEFT — TEXT CONTENT
           ================================================= */}
 
           <div className="min-w-0">
+
             {/* =================================================
                 INVISIBLE LINE MEASUREMENT
             ================================================= */}
@@ -351,6 +373,7 @@ export default function LineTextReveal({
                 w-full
                 select-none
                 opacity-0
+
                 text-[clamp(1.15rem,2.4vw,2.5rem)]
                 font-medium
                 leading-[1.15]
@@ -399,25 +422,32 @@ export default function LineTextReveal({
                   ease: [0.22, 1, 0.36, 1],
                 }}
                 className="
-                  mb-7
-                  sm:mb-9
+                  mb-6
+
+                  sm:mb-8
+
+                  lg:mb-9
                 "
               >
                 <div
                   className="
                     flex
                     items-center
-                    gap-4
+                    gap-3
+
+                    sm:gap-4
                   "
                 >
                   <span
                     className="
-                      text-[10px]
+                      text-[9px]
                       font-medium
                       uppercase
-                      tracking-[0.28em]
+                      tracking-[0.25em]
                       text-[#8B1E3F]
+
                       sm:text-xs
+                      sm:tracking-[0.28em]
                     "
                   >
                     {eyebrow}
@@ -426,8 +456,9 @@ export default function LineTextReveal({
                   <span
                     className="
                       h-px
-                      w-10
+                      w-8
                       bg-[#C6A15B]/50
+
                       sm:w-16
                     "
                   />
@@ -448,11 +479,13 @@ export default function LineTextReveal({
                   : "hidden"
               }
               className="
-                text-[clamp(1.15rem,2.4vw,2.5rem)]
+                text-[clamp(1.25rem,2.4vw,2.5rem)]
                 font-medium
                 leading-[1.15]
                 tracking-[-0.025em]
                 text-[#241018]
+
+                sm:text-[clamp(1.35rem,2.4vw,2.5rem)]
               "
             >
               {visibleLines.map(
@@ -491,7 +524,7 @@ export default function LineTextReveal({
               animate={
                 isInView
                   ? {
-                      width: "72px",
+                      width: "60px",
                       opacity: 1,
                     }
                   : {
@@ -509,16 +542,25 @@ export default function LineTextReveal({
                 ease: [0.22, 1, 0.36, 1],
               }}
               className="
-                mt-8
+                mt-6
                 h-[2px]
                 bg-[#C6A15B]
-                sm:mt-10
+
+                sm:mt-8
+
+                lg:mt-10
               "
             />
           </div>
 
           {/* =================================================
               RIGHT — IMAGE
+
+              IMPORTANT:
+              HIDDEN COMPLETELY ON MOBILE AND TABLET.
+
+              The `hidden lg:block` means the image does
+              not occupy ANY space below desktop.
           ================================================= */}
 
           <motion.div
@@ -540,10 +582,13 @@ export default function LineTextReveal({
               ease: [0.22, 1, 0.36, 1],
             }}
             className="
+              hidden
+              lg:block
               relative
               mx-auto
               w-full
               max-w-[360px]
+
               lg:max-w-none
             "
           >
@@ -557,7 +602,7 @@ export default function LineTextReveal({
                 border-[#7A1B2F]/15
                 bg-[#F5EFD0]
                 p-1
-                             "
+              "
             >
               <img
                 src="https://res.cloudinary.com/yh0rqnnu/image/upload/v1791236689/WhatsApp_Image_2026-10-06_at_2.17.46_AM.jpg"
@@ -630,6 +675,7 @@ export default function LineTextReveal({
               "
             />
           </motion.div>
+
         </div>
       </div>
     </section>

@@ -190,19 +190,6 @@ export default function Technical() {
               and every creation tells a story.
             </motion.p>
 
-            {/* Scroll */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{
-                delay: 1.2,
-                duration: 0.8,
-              }}
-              className="mt-12 flex items-center gap-4 text-[10px] uppercase tracking-[0.3em] text-[#D8C7AA]"
-            >
-              <span>Scroll to explore</span>
-              <span className="text-lg text-[#C6A15B]">↓</span>
-            </motion.div>
           </div>
         </div>
       </section>
@@ -314,7 +301,7 @@ export default function Technical() {
               <div className="relative aspect-[4/5] overflow-hidden border border-[#7A1B2F]/10">
 
                 <img
-                  src="/clubs/technical-photography-about.jpg"
+                  src="https://res.cloudinary.com/yh0rqnnu/image/upload/v1791301208/WhatsApp_Image_2026-10-06_at_9.06.43_PM.jpg"
                   alt="Technical & Photography Club"
                   className="h-full w-full object-cover transition-transform duration-1000 hover:scale-105"
                 />

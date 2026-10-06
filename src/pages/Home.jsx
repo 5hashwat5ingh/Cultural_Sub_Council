@@ -536,7 +536,6 @@ export default function Home() {
     <div
       className="
         relative
-        mt-[-40px]
         min-h-screen
         w-full
         overflow-x-clip
@@ -634,6 +633,7 @@ export default function Home() {
       min-h-screen
       w-full
       select-none
+      overflow-hidden
       object-cover
       object-center
     "
@@ -908,82 +908,6 @@ For Every Expression`}
                 and stories shaping the cultural
                 spirit of our campus.
               </motion.p>
-
-             
-
-              {/* ==============================================
-                  EXPLORE EVENTS
-              ============================================== */}
-
-             <motion.div
-  initial={
-    shouldReduceMotion
-      ? {
-          opacity: 1,
-          y: 0,
-        }
-      : {
-          opacity: 0,
-          y: 15,
-        }
-  }
-  animate={{
-    opacity: 1,
-    y: 0,
-  }}
-  transition={{
-    duration: shouldReduceMotion ? 0 : 0.7,
-    delay: shouldReduceMotion ? 0 : 1.6,
-    ease: [0.22, 1, 0.36, 1],
-  }}
-  className="
-    mt-9
-    sm:mt-11
-  "
->
-  <a
-    href="/events"
-    className="
-      group
-      inline-flex
-      items-center
-      justify-center
-      gap-3
-      rounded-full
-      border
-      border-[#C6A15B]/50
-      bg-transparent
-      px-5
-      py-3
-      text-xs
-      uppercase
-      tracking-[0.2em]
-      text-[#F7EBD0]
-      transition-all
-      duration-300
-      hover:border-[#D9B86C]
-      hover:bg-[#C6A15B]
-      hover:text-[#2B0A12]
-      sm:px-6
-      sm:py-3.5
-    "
-  >
-    <span>
-      Explore Events
-    </span>
-
-    <span
-      className="
-        text-base
-        transition-transform
-        duration-300
-        group-hover:translate-x-1
-      "
-    >
-      →
-    </span>
-  </a>
-</motion.div>
             </div>
           </div>
 
