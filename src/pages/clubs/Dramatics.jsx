@@ -9,16 +9,18 @@ import Footer from "../../components/Footer";
 
 const facultyMessages = [
   {
-    name: "Faculty Name",
+    name: "Vijay Shanker Chaudhary",
+    designation: "Assistant Proffesor, ECED",
     designation: "Faculty In-Charge, Dramatics Club",
-    image: "/faculty/dramatics-faculty.jpg",
+    image: "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791273684/Drama_Club_1.jpg",
     message:
       "Theatre is a powerful form of expression where stories, emotions and imagination come alive. The Dramatics Club gives students a platform to discover their voice, build confidence and communicate through the art of performance.",
   },
   {
-    name: "Faculty Name",
+    name: "Dr. Anu Raj",
+    designation: "Assistant proffesor",
     designation: "Faculty Coordinator",
-    image: "/faculty/dramatics-coordinator.jpg",
+    image: "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791273766/Drama_club_2.jpg",
     message:
       "Every character has a story and every stage creates an opportunity to express it. The Dramatics Club encourages students to explore acting, storytelling and theatre while developing creativity, confidence and collaboration.",
   },

@@ -9,16 +9,44 @@ import Footer from "../../components/Footer";
 
 const facultyMessages = [
   {
-    name: "Faculty Name",
-    designation: "Faculty In-Charge, Technical & Photography Club",
-    image: "/faculty/technical-photography-faculty.jpg",
+    name: "Dr.Ramendra Pandey",
+    designation: "Faculty In-Charge, Technical & Designing Club",
+    image: "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791274310/TAD_1.jpg",
     message:
       "Technology and visual storytelling offer students powerful ways to observe, create and communicate. The Technical & Photography Club provides a platform where creativity, technology and visual expression come together to capture ideas and experiences.",
   },
   {
-    name: "Faculty Name",
-    designation: "Faculty Coordinator",
-    image: "/faculty/technical-photography-coordinator.jpg",
+    name: "Dr.Abhishek Paswan",
+    designation: "Faculty In-Charge, Technical & Designing Club",
+    image: "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791274369/TAD_2.jpg",
+    message:
+      "A photograph can preserve a moment, while technology can transform an idea into an experience. The club encourages students to explore photography, design and digital creativity while developing skills that can be shared across the cultural life of the campus.",
+  },
+  {
+    name: "Dr.Dinesh Kumar Kothari",
+    designation: "Faculty In-Charge, Technical & Designing Club",
+    image: "#",
+    message:
+      "A photograph can preserve a moment, while technology can transform an idea into an experience. The club encourages students to explore photography, design and digital creativity while developing skills that can be shared across the cultural life of the campus.",
+  },
+  {
+    name: "Dr.Shantanu Shahi",
+    designation: "Faculty In-Charge, Photography Club",
+    image: "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791275391/Photo_club_1.jpg",
+    message:
+      "A photograph can preserve a moment, while technology can transform an idea into an experience. The club encourages students to explore photography, design and digital creativity while developing skills that can be shared across the cultural life of the campus.",
+  },
+  {
+    name: "Dr.Swet Ketu",
+    designation: "Faculty In-Charge, Photography Club",
+    image: "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791275397/photo_club_2.jpg",
+    message:
+      "A photograph can preserve a moment, while technology can transform an idea into an experience. The club encourages students to explore photography, design and digital creativity while developing skills that can be shared across the cultural life of the campus.",
+  },
+  {
+    name: "Dr.Alok Kumar Shukla",
+    designation: "Faculty In-Charge, Photography Club",
+    image: "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791275403/photo_club_3.jpg",
     message:
       "A photograph can preserve a moment, while technology can transform an idea into an experience. The club encourages students to explore photography, design and digital creativity while developing skills that can be shared across the cultural life of the campus.",
   },
@@ -212,62 +240,57 @@ export default function Technical() {
           </div>
 
           {/* Faculty cards */}
-          <div className="grid gap-5 lg:grid-cols-2">
-            {facultyMessages.map((faculty, index) => (
-              <motion.article
-                key={index}
-                initial={{
-                  opacity: 0,
-                  y: 30,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                viewport={{
-                  once: true,
-                  amount: 0.2,
-                }}
-                transition={{
-                  duration: 0.8,
-                  delay: index * 0.15,
-                }}
-                className="group relative overflow-hidden rounded-3xl border border-[#7A1B2F]/10 bg-[#F5EFD0]/70 p-6 sm:p-8"
-              >
-                <div className="absolute left-8 right-8 top-0 h-px bg-gradient-to-r from-transparent via-[#C6A15B] to-transparent opacity-70" />
+          {/* Faculty cards */}
+<div className="grid gap-5 md:grid-cols-3">
+  {facultyMessages.map((faculty, index) => (
+    <motion.article
+      key={index}
+      initial={{ opacity: 0, y: 25 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{
+        duration: 0.7,
+        delay: index * 0.1,
+      }}
+      className="group relative overflow-hidden rounded-2xl border border-[#7A1B2F]/10 bg-[#F5EFD0]/75 p-5 sm:p-6"
+    >
+      {/* Gold accent */}
+      <div className="absolute left-0 top-0 h-1 w-full bg-[#C6A15B] scale-x-0 origin-left transition-transform duration-500 group-hover:scale-x-100" />
 
-                <div className="flex flex-col gap-6 sm:flex-row">
+      <div className="flex items-center gap-4">
+        {/* Faculty image */}
+        <div className="h-[68px] w-[68px] shrink-0 overflow-hidden rounded-full border border-[#C6A15B]/50 p-1">
+          <img
+            src={faculty.image}
+            alt={faculty.name}
+            className="h-full w-full rounded-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0"
+          />
+        </div>
 
-                  {/* Faculty image */}
-                  <div className="h-[95px] w-[95px] shrink-0 overflow-hidden rounded-full border border-[#C6A15B]/50 p-1 sm:h-[105px] sm:w-[105px]">
-                    <img
-                      src={faculty.image}
-                      alt={faculty.name}
-                      className="h-full w-full rounded-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0"
-                    />
-                  </div>
+        {/* Name + designation */}
+        <div className="min-w-0">
+          <h3 className="text-sm font-semibold leading-tight text-[#2B0A12]">
+            {faculty.name}
+          </h3>
 
-                  {/* Message */}
-                  <div>
-                    <p className="font-serif text-base italic leading-relaxed text-[#5A3940] sm:text-lg">
-                      "{faculty.message}"
-                    </p>
+          <p className="mt-1 text-[9px] uppercase tracking-[0.14em] text-[#7A1B2F]">
+            {faculty.designation}
+          </p>
+        </div>
+      </div>
 
-                    <div className="mt-6">
-                      <h3 className="text-sm font-semibold uppercase tracking-[0.15em] text-[#2B0A12]">
-                        {faculty.name}
-                      </h3>
+      {/* Short message */}
+      <p className="mt-5 border-t border-[#7A1B2F]/10 pt-4 font-serif text-sm italic leading-[1.6] text-[#5A3940]">
+        "{faculty.message}"
+      </p>
 
-                      <p className="mt-2 text-[10px] uppercase tracking-[0.18em] text-[#7A1B2F]">
-                        {faculty.designation}
-                      </p>
-                    </div>
-                  </div>
-
-                </div>
-              </motion.article>
-            ))}
-          </div>
+      {/* Quote mark */}
+      <span className="absolute bottom-3 right-5 font-serif text-5xl leading-none text-[#C6A15B]/20">
+        ”
+      </span>
+    </motion.article>
+  ))}
+</div>
         </div>
       </section>
 

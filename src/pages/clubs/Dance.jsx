@@ -9,14 +9,16 @@ import Footer from "../../components/Footer";
 
 const facultyMessages = [
   {
-    name: "Faculty Name",
+    name: "Dr.Anjali Singh",
+    designation: "Assistant Proffesor MSD",
     designation: "Faculty In-Charge, Dance Club",
-    image: "/faculty/dance-faculty.jpg",
+    image: "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791273490/Dance_Club_1.jpg",
     message:
       "Dance is more than movement. It is a language through which creativity, discipline and emotion come together. The Dance Club provides students with a space to discover their rhythm, build confidence and express themselves on every stage.",
   },
   {
-    name: "Faculty Name",
+    name: "Dr.Neha Mishra",
+    designation: "Assistant Professor",
     designation: "Faculty Coordinator",
     image: "/faculty/dance-coordinator.jpg",
     message:
