@@ -1,12 +1,5 @@
-import React, {
-  useEffect,
-  useState,
-} from "react";
-
-import {
-  AnimatePresence,
-  motion,
-} from "framer-motion";
+import React, { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -49,9 +42,7 @@ const shuffleArray = (array) => {
   const shuffled = [...array];
 
   for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(
-      Math.random() * (i + 1)
-    );
+    const j = Math.floor(Math.random() * (i + 1));
 
     [shuffled[i], shuffled[j]] = [
       shuffled[j],
@@ -68,11 +59,7 @@ const shuffleArray = (array) => {
       shuffled[i].type === "video" &&
       shuffled[i - 1].type === "video"
     ) {
-      for (
-        let j = i + 1;
-        j < shuffled.length;
-        j++
-      ) {
+      for (let j = i + 1; j < shuffled.length; j++) {
         if (shuffled[j].type === "photo") {
           [shuffled[i], shuffled[j]] = [
             shuffled[j],
@@ -89,13 +76,13 @@ const shuffleArray = (array) => {
 };
 
 /* =========================================================
-   ARTISTIC SHAPE
+   HERO DECORATIVE SHAPES
 ========================================================= */
 
 function DecorativeShapes() {
   return (
     <>
-      {/* Large maroon circle */}
+      {/* Maroon circle */}
       <div
         className="
           pointer-events-none
@@ -228,9 +215,9 @@ export default function Gallery() {
     };
   }, []);
 
-  /* =========================================================
+  /* =======================================================
      RENDER
-  ========================================================= */
+  ======================================================= */
 
   return (
     <main
@@ -273,7 +260,7 @@ export default function Gallery() {
       >
 
         {/* =================================================
-            BACKGROUND
+            HERO BACKGROUND
         ================================================= */}
 
         <div
@@ -287,7 +274,6 @@ export default function Gallery() {
         >
           <DecorativeShapes />
 
-          {/* Soft light */}
           <div
             className="
               absolute
@@ -305,7 +291,7 @@ export default function Gallery() {
         </div>
 
         {/* =================================================
-            TOP SMALL LABEL
+            TOP LABEL
         ================================================= */}
 
         <div
@@ -321,13 +307,7 @@ export default function Gallery() {
             lg:top-16
           "
         >
-          <div
-            className="
-              flex
-              items-center
-              gap-3
-            "
-          >
+          <div className="flex items-center gap-3">
             <span
               className="
                 text-[9px]
@@ -357,7 +337,6 @@ export default function Gallery() {
             items-center
           "
         >
-
           <div
             className="
               grid
@@ -455,7 +434,7 @@ export default function Gallery() {
             </div>
 
             {/* =================================================
-                RIGHT EDITORIAL BLOCK
+                RIGHT — VERTICAL VIDEO
             ================================================= */}
 
             <motion.div
@@ -477,68 +456,75 @@ export default function Gallery() {
                 relative
                 mx-auto
                 w-full
-                max-w-[520px]
+                max-w-[400px]
               "
             >
 
-              {/* Big geometric red shape */}
-
-              {/* Gold geometric shape */}
+              {/* Gold decorative circle */}
               <div
                 className="
+                  pointer-events-none
                   absolute
                   -bottom-10
-                  -left-8
+                  -left-10
                   h-[180px]
                   w-[180px]
                   rounded-full
                   border-[45px]
-                  border-[#C6A15B]/40
+                  border-[#C6A15B]/30
                 "
               />
 
-              {/* Main visual frame */}
+              {/* Decorative square */}
+              <div
+                className="
+                  pointer-events-none
+                  absolute
+                  -right-8
+                  -top-8
+                  h-[130px]
+                  w-[130px]
+                  rotate-[10deg]
+                  border
+                  border-[#7A1B2F]/10
+                "
+              />
+
+              {/* =================================================
+                  VERTICAL VIDEO
+              ================================================= */}
+
               <div
                 className="
                   relative
                   z-10
-                  aspect-[4/5]
+                  mx-auto
+                  aspect-[9/16]
+                  w-full
+                  max-h-[76vh]
                   overflow-hidden
+                  border
+                  border-[#F7EBD0]/50
+                  bg-[#2B0A12]
                   shadow-[20px_25px_0_rgba(58,13,24,0.12)]
                 "
               >
+                <video
+                  src="/gallery-hero.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                  className="
+                    absolute
+                    inset-0
+                    h-full
+                    w-full
+                    object-cover
+                  "
+                />
 
-                {filteredItems[0] && (
-                  <>
-                    {filteredItems[0].type ===
-                      "photo" ? (
-                      <LazyImage
-                        src={
-                          filteredItems[0].image
-                        }
-                        alt={
-                          filteredItems[0].title
-                        }
-                        className="
-                          h-full
-                          w-full
-                          object-cover
-                        "
-                      />
-                    ) : (
-                      <GalleryVideo
-                        src={
-                          filteredItems[0].video
-                        }
-                        title={
-                          filteredItems[0].title
-                        }
-                      />
-                    )}
-                  </>
-                )}
-
-                {/* Editorial frame */}
                 <div
                   className="
                     pointer-events-none
@@ -548,17 +534,13 @@ export default function Gallery() {
                     border-[#F7EBD0]/30
                   "
                 />
-
-                {/* Label */}
-
-                {/* Bottom text */}
-
               </div>
 
             </motion.div>
 
           </div>
         </div>
+
       </section>
 
       {/* =====================================================
@@ -591,67 +573,62 @@ export default function Gallery() {
             py-4
 
             sm:px-10
-
             lg:px-20
 
             [&::-webkit-scrollbar]:hidden
           "
         >
-          {galleryCategories.map(
-            (category) => {
-              const isActive =
-                activeCategory === category;
+          {galleryCategories.map((category) => {
+            const isActive =
+              activeCategory === category;
 
-              return (
-                <button
-                  key={category}
-                  type="button"
-                  onClick={() =>
-                    setActiveCategory(
-                      category
-                    )
+            return (
+              <button
+                key={category}
+                type="button"
+                onClick={() =>
+                  setActiveCategory(category)
+                }
+                className={`
+                  whitespace-nowrap
+                  rounded-full
+                  border
+                  px-5
+                  py-2.5
+                  text-[9px]
+                  uppercase
+                  tracking-[0.2em]
+                  transition-all
+                  duration-300
+
+                  ${
+                    isActive
+                      ? `
+                        border-[#7A1B2F]
+                        bg-[#7A1B2F]
+                        text-[#F7EBD0]
+                      `
+                      : `
+                        border-[#7A1B2F]/25
+                        bg-transparent
+                        text-[#3A0D18]/70
+
+                        hover:border-[#7A1B2F]
+                        hover:bg-[#7A1B2F]/10
+                        hover:text-[#7A1B2F]
+                      `
                   }
-                  className={`
-                    whitespace-nowrap
-                    rounded-full
-                    border
-                    px-5
-                    py-2.5
-                    text-[9px]
-                    uppercase
-                    tracking-[0.2em]
-                    transition-all
-                    duration-300
-
-                    ${
-                      isActive
-                        ? `
-                          border-[#7A1B2F]
-                          bg-[#7A1B2F]
-                          text-[#F7EBD0]
-                        `
-                        : `
-                          border-[#7A1B2F]/25
-                          bg-transparent
-                          text-[#3A0D18]/70
-
-                          hover:border-[#7A1B2F]
-                          hover:bg-[#7A1B2F]/10
-                          hover:text-[#7A1B2F]
-                        `
-                    }
-                  `}
-                >
-                  {category}
-                </button>
-              );
-            }
-          )}
+                `}
+              >
+                {category}
+              </button>
+            );
+          })}
         </div>
       </section>
 
       {/* =====================================================
-          EDITORIAL PINTEREST / COLLAGE GALLERY
+          MASONRY GALLERY — 5 COLUMNS
       ===================================================== */}
 
       <section
@@ -666,14 +643,15 @@ export default function Gallery() {
           sm:px-6
           sm:py-16
 
-          lg:px-12
-          lg:py-24
+          lg:px-10
+          lg:py-20
+
+          xl:px-12
+          xl:py-24
         "
       >
 
-        {/* =================================================
-            BACKGROUND SHAPES
-        ================================================= */}
+        {/* Background decoration */}
 
         <div
           className="
@@ -716,7 +694,7 @@ export default function Gallery() {
         />
 
         {/* =================================================
-            GALLERY CONTAINER
+            GALLERY
         ================================================= */}
 
         <div
@@ -724,330 +702,131 @@ export default function Gallery() {
             relative
             z-10
             mx-auto
-            max-w-[1500px]
+            max-w-[1800px]
           "
         >
-
-          {/* Section heading */}
-
-          <div
-            className="
-              mb-12
-              flex
-              flex-col
-              justify-between
-              gap-5
-
-              sm:mb-16
-              sm:flex-row
-              sm:items-end
-            "
-          >
-            <div>
-            </div>
-          </div>
-
-          {/* =================================================
-              MASONRY
-          ================================================= */}
 
           <motion.div
             layout
             className="
-              columns-1
-              gap-5
+              columns-2
+              gap-3
 
-              sm:columns-2
-              sm:gap-5
+              sm:columns-3
+              sm:gap-4
 
-              lg:columns-3
-              lg:gap-6
+              md:columns-4
+              md:gap-4
+
+              lg:columns-5
+              lg:gap-5
             "
           >
+
             <AnimatePresence mode="popLayout">
 
               {filteredItems.map(
-                (item, index) => {
+                (item, index) => (
+                  <motion.button
+                    key={item.id}
+                    layout
+                    type="button"
+                    onClick={() =>
+                      setSelectedItem(item)
+                    }
+                    initial={{
+                      opacity: 0,
+                      y: 30,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                    }}
+                    exit={{
+                      opacity: 0,
+                      scale: 0.96,
+                    }}
+                    transition={{
+                      duration: 0.5,
+                      delay: Math.min(
+                        index * 0.025,
+                        0.3
+                      ),
+                      ease: [
+                        0.22,
+                        1,
+                        0.36,
+                        1,
+                      ],
+                    }}
+                    className="
+                      group
+                      relative
+                      mb-3
+                      block
+                      w-full
+                      break-inside-avoid
+                      overflow-hidden
+                      bg-transparent
+                      p-0
 
-                  return (
-                    <motion.button
-                      key={item.id}
-                      layout
-                      type="button"
-                      onClick={() =>
-                        setSelectedItem(item)
-                      }
-                      initial={{
-                        opacity: 0,
-                        y: 35,
-                      }}
-                      animate={{
-                        opacity: 1,
-                        y: 0,
-                      }}
-                      exit={{
-                        opacity: 0,
-                        scale: 0.96,
-                      }}
-                      transition={{
-                        duration: 0.5,
-                        delay: Math.min(
-                          index * 0.025,
-                          0.3
-                        ),
-                        ease: [
-                          0.22,
-                          1,
-                          0.36,
-                          1,
-                        ],
-                      }}
-                      className="
-                        group
-                        relative
-                        mb-5
-                        block
-                        w-full
+                      sm:mb-4
+                      lg:mb-5
+                    "
+                  >
 
-                        break-inside-avoid
+                    {/* =================================================
+                        PHOTO
+                    ================================================= */}
 
-                        overflow-hidden
-
-                        sm:mb-5
-
-                        lg:mb-6
-                      "
-                    >
-
-                      {/* =================================================
-                          MEDIA
-                      ================================================= */}
-
-                      <div
+                    {item.type === "photo" && (
+                      <LazyImage
+                        src={item.image}
+                        alt={item.title}
                         className="
-                          relative
+                          block
+                          h-auto
                           w-full
-                        "
-                      >
+                          object-cover
 
-                        {/* PHOTO */}
-
-                        {item.type ===
-                          "photo" && (
-                          <LazyImage
-                            src={item.image}
-                            alt={item.title}
-                            className="
-                              block
-                              h-auto
-                              w-full
-                              object-cover
-
-                              transition-transform
-                              duration-1000
-                              ease-[0.22,1,0.36,1]
-
-                              group-hover:scale-105
-                            "
-                          />
-                        )}
-
-                        {/* VIDEO */}
-
-                        {item.type ===
-                          "video" && (
-                          <div
-                            className="
-                              w-full
-                            "
-                          >
-                            <GalleryVideo
-                              src={item.video}
-                              title={item.title}
-                            />
-                          </div>
-                        )}
-
-                      </div>
-
-                      {/* =================================================
-                          EDITORIAL COLOR FRAME
-                      ================================================= */}
-
-                      <div
-                        className="
-                          pointer-events-none
-                          absolute
-                          inset-0
-
-                          bg-gradient-to-t
-                          from-[#1D070D]/70
-                          via-transparent
-                          to-transparent
-
-                          opacity-70
-
-                          transition-opacity
+                          transition-transform
                           duration-700
+                          ease-[0.22,1,0.36,1]
 
-                          group-hover:opacity-40
+                          group-hover:scale-[1.02]
                         "
                       />
+                    )}
 
-                      {/* =================================================
-                          OUTER FRAME
-                      ================================================= */}
+                    {/* =================================================
+                        VIDEO
+                    ================================================= */}
 
-                      <div
-                        className="
-                          pointer-events-none
-                          absolute
-                          inset-4
-
-                          border
-                          border-[#F7EBD0]/25
-
-                          transition-all
-                          duration-700
-
-                          group-hover:inset-6
-                          group-hover:border-[#D9B86C]/70
-                        "
+                    {item.type === "video" && (
+                      <GalleryVideo
+                        src={item.video}
+                        title={item.title}
                       />
+                    )}
 
-                      {/* =================================================
-                          TOP LABEL
-                      ================================================= */}
-
-                      <div
-                        className="
-                          absolute
-                          left-6
-                          top-6
-                          z-10
-
-                          flex
-                          items-center
-                          gap-3
-                        "
-                      >
-                        <span
-                          className="
-                            h-px
-                            w-7
-                            bg-[#D9B86C]
-                          "
-                        />
-
-                        <span
-                          className="
-                            text-[8px]
-                            uppercase
-                            tracking-[0.25em]
-                            text-[#F7EBD0]
-                          "
-                        >
-                          {item.category}
-                        </span>
-                      </div>
-
-                      {/* =================================================
-                          NUMBER
-                      ================================================= */}
-
-                      <div
-                        className="
-                          absolute
-                          right-6
-                          top-6
-                          z-10
-
-                          text-[9px]
-                          tracking-[0.2em]
-                          text-[#F7EBD0]/70
-                        "
-                      >
-                        {String(
-                          index + 1
-                        ).padStart(2, "0")}
-                      </div>
-
-                      {/* =================================================
-                          BOTTOM CONTENT
-                      ================================================= */}
-
-                      <div
-                        className="
-                          absolute
-                          inset-x-0
-                          bottom-0
-                          z-10
-
-                          p-6
-                          pt-20
-
-                          text-left
-                        "
-                      >
-
-                        <div
-                          className="
-                            translate-y-3
-
-                            transition-transform
-                            duration-700
-
-                            group-hover:translate-y-0
-                          "
-                        >
-
-                        </div>
-
-                      </div>
-
-                      {/* =================================================
-                          CORNER DESIGN
-                      ================================================= */}
-
-                      <div
-                        className="
-                          pointer-events-none
-                          absolute
-                          bottom-4
-                          right-4
-                          h-7
-                          w-7
-
-                          border-b
-                          border-r
-                          border-[#D9B86C]/70
-
-                          transition-all
-                          duration-500
-
-                          group-hover:h-10
-                          group-hover:w-10
-                        "
-                      />
-
-                    </motion.button>
-                  );
-                }
+                  </motion.button>
+                )
               )}
 
             </AnimatePresence>
+
           </motion.div>
 
         </div>
-      </section>
 
-     
+      </section>
 
       {/* =====================================================
           FULLSCREEN VIEWER
       ===================================================== */}
 
       <AnimatePresence>
+
         {selectedItem && (
           <motion.div
             initial={{
@@ -1082,7 +861,7 @@ export default function Gallery() {
           >
 
             {/* =================================================
-                CLOSE
+                CLOSE BUTTON
             ================================================= */}
 
             <button
@@ -1124,7 +903,7 @@ export default function Gallery() {
             </button>
 
             {/* =================================================
-                MEDIA
+                FULLSCREEN MEDIA
             ================================================= */}
 
             <motion.div
@@ -1199,9 +978,7 @@ export default function Gallery() {
                 />
               )}
 
-              {/* =================================================
-                  VIEWER INFO
-              ================================================= */}
+              {/* VIEWER INFORMATION */}
 
               <div
                 className="
@@ -1266,8 +1043,10 @@ export default function Gallery() {
               </div>
 
             </motion.div>
+
           </motion.div>
         )}
+
       </AnimatePresence>
 
       {/* =====================================================
