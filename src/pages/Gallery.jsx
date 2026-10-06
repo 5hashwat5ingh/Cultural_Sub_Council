@@ -510,7 +510,7 @@ export default function Gallery() {
                 "
               >
                 <video
-                  src="/gallery-hero.mp4"
+                  src="https://res.cloudinary.com/yh0rqnnu/video/upload/v1790929104/video-01.mp4"
                   autoPlay
                   muted
                   loop
