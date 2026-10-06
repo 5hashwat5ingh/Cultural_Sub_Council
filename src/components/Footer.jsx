@@ -17,22 +17,22 @@ import { Link } from "react-router-dom";
 const socialLinks = [
   {
     name: "Instagram",
-    href: "https://www.instagram.com/",
+    href: "https://www.instagram.com/csc_mmmut?stkn=MTBvb3NiNzh3OHZmeA==",
     icon: FaInstagram,
   },
   {
     name: "LinkedIn",
-    href: "https://www.linkedin.com/",
+    href: "https://www.linkedin.com/in/csc-mmmut?utm_source=share_via&utm_content=profile&utm_medium=member_android",
     icon: FaLinkedinIn,
   },
   {
     name: "YouTube",
-    href: "https://www.youtube.com/",
+    href: "https://youtube.com/@culturalsynodmmmut?si=alsnfZtmL9Qw_fl1",
     icon: FaYoutube,
   },
   {
     name: "Facebook",
-    href: "https://www.facebook.com/",
+    href: "https://www.facebook.com/csc.mmmut/",
     icon: FaFacebookF,
   },
 ];
@@ -52,11 +52,11 @@ export default function Footer() {
         overflow-hidden
         bg-[#1D070D]
         px-6
-        py-14
-        sm:px-12
-        sm:py-16
-        lg:px-20
-        lg:py-20
+        py-6
+        sm:px-10
+        sm:py-7
+        lg:px-16
+        lg:py-8
       "
     >
       {/* =====================================================
@@ -68,8 +68,8 @@ export default function Footer() {
           pointer-events-none
           absolute
           -right-32
-          -top-32
-          h-80
+          -top-22
+          h-60
           w-80
           rounded-full
           bg-[#7A1B2F]/15
@@ -83,7 +83,7 @@ export default function Footer() {
           absolute
           -bottom-40
           left-1/3
-          h-80
+          h-60
           w-80
           rounded-full
           bg-[#C6A15B]/5
@@ -100,9 +100,9 @@ export default function Footer() {
           className="
             grid
             grid-cols-1
-            gap-12
+            gap-6
             lg:grid-cols-[1fr_1.2fr_0.7fr]
-            lg:gap-14
+            lg:gap-8
           "
         >
           {/* =================================================
@@ -110,9 +110,9 @@ export default function Footer() {
           ================================================= */}
 
           <div className="max-w-xl">
-            {/* Label */}
+            {/* LABEL */}
 
-            <div className="mb-4 flex items-center gap-3">
+            <div className="mb-3 flex items-center gap-3">
               <span
                 className="
                   h-2
@@ -135,32 +135,13 @@ export default function Footer() {
               </span>
             </div>
 
-            {/* Title */}
-
-            
-            {/* Description */}
-
-            <p
-              className="
-                mt-4
-                max-w-md
-                text-sm
-                leading-7
-                text-[#D8C7AA]/55
-              "
-            >
-              Creating spaces for creativity,
-              expression and collaboration across
-              the campus community.
-            </p>
-
             {/* =================================================
                 SECRETARY DETAILS
             ================================================= */}
 
             <div
               className="
-                mt-8
+                mt-5
                 border-l
                 border-[#C6A15B]/40
                 pl-4
@@ -180,14 +161,14 @@ export default function Footer() {
 
               <h3
                 className="
-                  mt-2
+                  mt-1
                   text-base
                   font-medium
                   text-[#F7EBD0]
                   sm:text-lg
                 "
               >
-                Secretary Name
+                Vaibhav Singh
               </h3>
 
               <p
@@ -202,53 +183,14 @@ export default function Footer() {
                 Cultural Sub Council
               </p>
 
-              {/* Secretary Email */}
+
+              {/* SECRETARY PHONE */}
 
               <a
-                href="mailto:secretary@mmmut.ac.in"
+                href="tel:+916306562892"
                 className="
                   group
-                  mt-4
-                  flex
-                  items-center
-                  gap-2
-                  text-[9px]
-                  uppercase
-                  tracking-[0.15em]
-                  text-[#D9B86C]
-                  transition-colors
-                  duration-300
-                  hover:text-[#F7EBD0]
-                "
-              >
-                <Mail
-                  size={13}
-                  strokeWidth={1.5}
-                />
-
-                <span>
-                  secretary@mmmut.ac.in
-                </span>
-
-                <ArrowUpRight
-                  size={11}
-                  strokeWidth={1.5}
-                  className="
-                    transition-transform
-                    duration-300
-                    group-hover:translate-x-1
-                    group-hover:-translate-y-1
-                  "
-                />
-              </a>
-
-              {/* Secretary Phone */}
-
-              <a
-                href="tel:+919999999999"
-                className="
-                  group
-                  mt-3
+                  mt-2
                   flex
                   items-center
                   gap-2
@@ -267,7 +209,7 @@ export default function Footer() {
                 />
 
                 <span>
-                  +91 99999 99999
+                  +91 63065 62892
                 </span>
 
                 <ArrowUpRight
@@ -283,13 +225,13 @@ export default function Footer() {
               </a>
             </div>
 
-            {/* Main CSC Email */}
+            {/* MAIN CSC EMAIL */}
 
             <a
               href="mailto:csc@mmmut.ac.in"
               className="
                 group
-                mt-7
+                mt-4
                 inline-flex
                 items-center
                 gap-2
@@ -329,9 +271,9 @@ export default function Footer() {
           ================================================= */}
 
           <div className="w-full">
-            {/* Map Heading */}
+            {/* MAP HEADING */}
 
-            <div className="mb-4 flex items-center gap-3">
+            <div className="mb-2 flex items-center gap-3">
               <MapPin
                 size={14}
                 strokeWidth={1.5}
@@ -351,25 +293,21 @@ export default function Footer() {
               </span>
             </div>
 
-            {/* =================================================
-                MAP
-            ================================================= */}
+            {/* MAP */}
 
             <div
               className="
                 relative
-                h-[230px]
+                h-[145px]
                 w-full
                 overflow-hidden
                 rounded-xl
                 border
                 border-[#C6A15B]/20
                 bg-[#2B0A12]
-                sm:h-[260px]
+                sm:h-[160px]
               "
             >
-              {/* Google Maps */}
-
               <iframe
                 title="Cultural Sub Council Location"
                 src="https://www.google.com/maps?q=Madan%20Mohan%20Malaviya%20University%20of%20Technology%20Gorakhpur&output=embed"
@@ -388,7 +326,7 @@ export default function Footer() {
                 referrerPolicy="no-referrer-when-downgrade"
               />
 
-              {/* Map Border */}
+              {/* MAP BORDER */}
 
               <div
                 className="
@@ -403,11 +341,11 @@ export default function Footer() {
               />
             </div>
 
-            {/* Location */}
+            {/* LOCATION */}
 
             <div
               className="
-                mt-4
+                mt-2
                 flex
                 items-start
                 gap-2
@@ -426,7 +364,7 @@ export default function Footer() {
               <p
                 className="
                   text-[9px]
-                  leading-5
+                  leading-4
                   text-[#D8C7AA]/55
                 "
               >
@@ -445,11 +383,11 @@ export default function Footer() {
             className="
               flex
               flex-col
-              gap-9
+              gap-5
               sm:flex-row
               sm:items-start
               lg:flex-col
-              lg:gap-10
+              lg:gap-6
             "
           >
             {/* =================================================
@@ -459,7 +397,7 @@ export default function Footer() {
             <div>
               <p
                 className="
-                  mb-4
+                  mb-2
                   text-[8px]
                   uppercase
                   tracking-[0.3em]
@@ -473,7 +411,7 @@ export default function Footer() {
                 className="
                   flex
                   flex-col
-                  gap-3
+                  gap-1.5
                   text-[10px]
                   uppercase
                   tracking-[0.18em]
@@ -548,7 +486,7 @@ export default function Footer() {
             <div>
               <p
                 className="
-                  mb-4
+                  mb-2
                   text-[8px]
                   uppercase
                   tracking-[0.3em]
@@ -559,53 +497,48 @@ export default function Footer() {
               </p>
 
               <div className="flex items-center gap-2">
-                {socialLinks.map(
-                  (social) => {
-                    const Icon =
-                      social.icon;
+                {socialLinks.map((social) => {
+                  const Icon = social.icon;
 
-                    return (
-                      <a
-                        key={social.name}
-                        href={social.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={
-                          social.name
-                        }
-                        title={social.name}
+                  return (
+                    <a
+                      key={social.name}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.name}
+                      title={social.name}
+                      className="
+                        group
+                        flex
+                        h-8
+                        w-8
+                        items-center
+                        justify-center
+                        rounded-full
+                        border
+                        border-[#C6A15B]/20
+                        bg-[#2B0A12]
+                        text-[#D8C7AA]/65
+                        transition-all
+                        duration-300
+                        hover:-translate-y-1
+                        hover:border-[#C6A15B]/60
+                        hover:bg-[#C6A15B]
+                        hover:text-[#1D070D]
+                      "
+                    >
+                      <Icon
+                        size={14}
                         className="
-                          group
-                          flex
-                          h-9
-                          w-9
-                          items-center
-                          justify-center
-                          rounded-full
-                          border
-                          border-[#C6A15B]/20
-                          bg-[#2B0A12]
-                          text-[#D8C7AA]/65
-                          transition-all
+                          transition-transform
                           duration-300
-                          hover:-translate-y-1
-                          hover:border-[#C6A15B]/60
-                          hover:bg-[#C6A15B]
-                          hover:text-[#1D070D]
+                          group-hover:scale-110
                         "
-                      >
-                        <Icon
-                          size={15}
-                          className="
-                            transition-transform
-                            duration-300
-                            group-hover:scale-110
-                          "
-                        />
-                      </a>
-                    );
-                  }
-                )}
+                      />
+                    </a>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -617,24 +550,24 @@ export default function Footer() {
 
         <div
           className="
-            mt-12
+            mt-6
             border-t
             border-[#C9A24D]/15
-            pt-6
-            sm:mt-14
+            pt-3
+            sm:mt-7
           "
         >
           <div
             className="
               flex
               flex-col
-              gap-3
+              gap-1
               sm:flex-row
               sm:items-center
               sm:justify-between
             "
           >
-            {/* Copyright */}
+            {/* COPYRIGHT */}
 
             <p
               className="
@@ -644,11 +577,10 @@ export default function Footer() {
                 text-[#8F7663]
               "
             >
-              © {new Date().getFullYear()} Cultural
-              Sub Council
+              © {new Date().getFullYear()} Cultural Sub Council
             </p>
 
-            {/* Tagline */}
+            {/* TAGLINE */}
 
             <p
               className="

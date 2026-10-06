@@ -49,7 +49,7 @@ export default function GalleryVideo({ src, title }) {
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 overflow-hidden bg-[#1D070D]"
+      className="relative w-full overflow-hidden bg-[#1D070D]"
     >
       {isNearViewport && !hasError && (
         <video
@@ -63,17 +63,18 @@ export default function GalleryVideo({ src, title }) {
           onLoadedData={() => setIsReady(true)}
           onError={() => setHasError(true)}
           className={`
-            absolute inset-0
-            h-full w-full
+            block
+            h-auto
+            w-full
             object-cover
-            transition-opacity duration-500
+            transition-opacity
+            duration-500
             ${isReady ? "opacity-100" : "opacity-0"}
           `}
           aria-label={title}
         />
       )}
 
-      {/* Loading */}
       {isNearViewport && !isReady && !hasError && (
         <div className="absolute inset-0 flex items-center justify-center bg-[#1D070D]">
           <div
@@ -89,9 +90,8 @@ export default function GalleryVideo({ src, title }) {
         </div>
       )}
 
-      {/* Error */}
       {hasError && (
-        <div className="absolute inset-0 flex items-center justify-center bg-[#3A0D18] px-5 text-center">
+        <div className="flex min-h-[200px] items-center justify-center bg-[#3A0D18] px-5 text-center">
           <span className="text-[9px] uppercase tracking-[0.2em] text-[#8F7663]">
             Video unavailable
           </span>

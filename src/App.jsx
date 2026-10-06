@@ -16,8 +16,8 @@ import FineArts from "./pages/clubs/FineArts";
 import Technical from "./pages/clubs/Technical";
 
 import Heats25 from "./pages/events/Heats25";
-import Orientation26 from "./pages/events/Orientation26";
-import PinturaDePilares from "./pages/events/PinturaDePilares";
+import Abhyudaya from "./pages/events/Abhyudaya";
+import Pintura from "./pages/events/PinturaDePilares";
 
 export default function App() {
   return (
@@ -35,12 +35,12 @@ export default function App() {
       <Route path="/events" element={<Events />} />
       <Route path="/events/heats-25" element={<Heats25 />} />
       <Route
-        path="/events/orientation-26"
-        element={<Orientation26 />}
+        path="/events/Abhyudaya"
+        element={<Abhyudaya/>}
       />
       <Route
-        path="/events/pintura-de-pilares"
-        element={<PinturaDePilares />}
+        path="/events/pintura"
+        element={<Pintura />}
       />
 
         <Route path="/gallery" element={<Gallery />} />

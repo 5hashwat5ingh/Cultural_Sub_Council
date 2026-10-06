@@ -131,7 +131,7 @@ const galleryImages = [
   },
 ];
 
-export default function Heats25() {
+export default function Abhyudaya() {
   return (
     <main className="min-h-screen overflow-x-clip bg-[#2B0A12] text-[#F7EBD0]">
       <Navbar />
@@ -144,15 +144,13 @@ export default function Heats25() {
         <div className="absolute inset-0">
           <img
             src="https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=2200&q=90"
-            alt="HEATS '25"
+            alt="ABHYUDAYA '25"
             className="h-full w-full object-cover"
           />
 
-          <div className="absolute inset-0 bg-[#1D070D]/65" />
+        
 
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1D070D] via-[#2B0A12]/45 to-[#2B0A12]/20" />
-
-          <div className="absolute inset-0 bg-gradient-to-r from-[#1D070D]/70 via-transparent to-[#1D070D]/30" />
+          
         </div>
 
         <div className="relative z-10 flex min-h-screen items-end px-5 pb-14 sm:px-10 sm:pb-20 lg:px-16 lg:pb-24">
@@ -188,7 +186,7 @@ export default function Heats25() {
                 text-[#F7EBD0]
               "
             >
-              HEATS
+              ABHYUDAYA
               <span className="text-[#C6A15B]">'25</span>
             </motion.h1>
 
@@ -236,7 +234,7 @@ export default function Heats25() {
       </section>
 
       {/* =========================================================
-          ABOUT HEATS
+          ABOUT ABHYUDAYA
           Inspired by the uploaded reference
       ========================================================= */}
 
@@ -260,7 +258,7 @@ export default function Heats25() {
                   text-[#A6531E]
                 "
               >
-                About HEATS
+                About ABHYUDAYA
               </motion.p>
 
               <motion.h2
@@ -291,7 +289,7 @@ export default function Heats25() {
                   sm:leading-9
                 "
               >
-                HEATS '25 is a cultural platform created to bring students
+                ABHYUDAYA '25 is a cultural platform created to bring students
                 together through performance, creativity and artistic
                 expression. It provides a space where students can discover
                 their talents, collaborate with one another and share their
@@ -518,127 +516,7 @@ export default function Heats25() {
         </div>
       </section>
 
-      {/* =========================================================
-          WINNERS
-      ========================================================= */}
-
-      <section className="relative overflow-hidden bg-[#1D070D] px-5 py-28 sm:px-10 sm:py-36 lg:px-16">
-        <div className="pointer-events-none absolute right-[-150px] top-[10%] h-[500px] w-[500px] rounded-full bg-[#7A1B2F]/20 blur-[130px]" />
-
-        <div className="relative z-10 mx-auto max-w-[1500px]">
-          {/* Header */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={fadeUp}
-            className="max-w-3xl"
-          >
-            <p className="text-[10px] uppercase tracking-[0.4em] text-[#C6A15B]">
-              The Winners
-            </p>
-
-            <h2
-              className="
-                mt-5
-                text-[clamp(3rem,6vw,6.5rem)]
-                font-medium
-                leading-[0.88]
-                tracking-[-0.06em]
-                text-[#F7EBD0]
-              "
-            >
-              Celebrating
-              <br />
-              <span className="text-[#C6A15B]">excellence.</span>
-            </h2>
-
-            <p className="mt-7 max-w-2xl text-sm leading-7 text-[#D8C7AA]/60 sm:text-base sm:leading-8">
-              The students and teams who stood out through their creativity,
-              dedication and performances during HEATS '25.
-            </p>
-          </motion.div>
-
-          {/* Winners list */}
-          <div className="mt-20">
-            {winners.map((winner, index) => (
-              <motion.div
-                key={winner.category}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-70px" }}
-                variants={fadeUp}
-                className="
-                  border-t
-                  border-[#C6A15B]/20
-                  py-8
-                  sm:py-10
-                "
-              >
-                <div className="grid gap-8 lg:grid-cols-[0.65fr_1.35fr] lg:items-center">
-                  {/* Category */}
-                  <div className="flex items-center gap-4">
-                    <span className="text-[9px] tracking-[0.25em] text-[#C6A15B]/50">
-                      0{index + 1}
-                    </span>
-
-                    <h3 className="text-2xl font-medium tracking-[-0.03em] text-[#F7EBD0] sm:text-3xl">
-                      {winner.category}
-                    </h3>
-                  </div>
-
-                  {/* Positions */}
-                  <div className="grid gap-3 sm:grid-cols-3">
-                    {/* Winner */}
-                    <div className="border border-[#C6A15B]/30 bg-[#3A0D18]/45 p-5">
-                      <div className="flex items-center gap-2">
-                        <Trophy
-                          size={14}
-                          strokeWidth={1.5}
-                          className="text-[#C6A15B]"
-                        />
-
-                        <span className="text-[8px] uppercase tracking-[0.25em] text-[#C6A15B]">
-                          Winner
-                        </span>
-                      </div>
-
-                      <p className="mt-4 text-sm font-medium text-[#F7EBD0]">
-                        {winner.first}
-                      </p>
-                    </div>
-
-                    {/* Runner-up */}
-                    <div className="border border-[#C6A15B]/15 bg-[#3A0D18]/25 p-5">
-                      <span className="text-[8px] uppercase tracking-[0.25em] text-[#D8C7AA]/50">
-                        Runner-up
-                      </span>
-
-                      <p className="mt-4 text-sm font-medium text-[#F7EBD0]/80">
-                        {winner.second}
-                      </p>
-                    </div>
-
-                    {/* Second Runner-up */}
-                    <div className="border border-[#C6A15B]/15 bg-[#3A0D18]/25 p-5">
-                      <span className="text-[8px] uppercase tracking-[0.25em] text-[#D8C7AA]/50">
-                        Second Runner-up
-                      </span>
-
-                      <p className="mt-4 text-sm font-medium text-[#F7EBD0]/80">
-                        {winner.third}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-
-            <div className="border-t border-[#C6A15B]/20" />
-          </div>
-        </div>
-      </section>
-
+      
       {/* =========================================================
           GALLERY
       ========================================================= */}
@@ -658,7 +536,7 @@ export default function Heats25() {
               </p>
 
               <h2 className="mt-4 text-[clamp(3rem,6vw,6rem)] font-medium leading-[0.9] tracking-[-0.06em] text-[#F7EBD0]">
-                HEATS
+                ABHYUDAYA
                 <span className="text-[#C6A15B]"> '25</span>
               </h2>
             </div>
@@ -733,7 +611,7 @@ export default function Heats25() {
           className="relative z-10 mx-auto w-full max-w-[1100px] text-center"
         >
           <p className="text-[9px] uppercase tracking-[0.45em] text-[#C6A15B]">
-            HEATS '25
+            ABHYUDAYA '25
           </p>
 
           <h2
@@ -755,7 +633,7 @@ export default function Heats25() {
 
           <p className="mx-auto mt-10 max-w-xl text-sm leading-7 text-[#D8C7AA]/55 sm:text-base sm:leading-8">
             Every performance, every artwork and every voice became part of
-            the HEATS '25 story.
+            the ABHYUDAYA '25 story.
           </p>
 
           <Link

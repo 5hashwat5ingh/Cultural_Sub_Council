@@ -12,14 +12,12 @@ import {
 } from "framer-motion";
 
 export default function LineTextReveal({
-  text = `Great experiences begin with
-simple ideas, thoughtful design,
-and meaningful interactions that
-people remember.`,
+  text = `A vibrant hub of creativity and talent, the Cultural Sub Council of Madan Mohan Malaviya University of Technology, Gorakhpur brings the campus alive through music, dance, theatre, and performance. From HEATS to the flagship fest Abhyudaya, it provides a platform for students to express, create, and inspire.
+`,
 
   className = "",
 
-  eyebrow = "PERSPECTIVE / CRAFT",
+  eyebrow = "About / CSC",
 
   duration = 1.9,
 
@@ -89,7 +87,6 @@ people remember.`,
       }
 
       currentLine.push(word.textContent);
-
       currentTop = top;
     });
 
@@ -222,49 +219,49 @@ people remember.`,
         items-center
         justify-center
         overflow-hidden
-        bg-[#341915]
+        bg-[#DCD3A4]
         px-6
-        py-32
+        py-24
         sm:px-12
-        sm:py-40
+        sm:py-32
         lg:px-20
-        lg:py-52
+        lg:py-40
         ${className}
       `}
     >
       {/* =====================================================
-          LIGHT MAROON TINT — TOP LEFT
+          BACKGROUND — SOFT MAROON TINT
       ===================================================== */}
 
       <div
         className="
           pointer-events-none
           absolute
-          left-[-20%]
-          top-[-10%]
-          h-[600px]
-          w-[600px]
+          left-[-12%]
+          top-[-8%]
+          h-[520px]
+          w-[520px]
           rounded-full
-          bg-[#8B1E3F]/[0.07]
-          blur-[110px]
+          bg-[#7A1B2F]/[0.10]
+          blur-[120px]
         "
         aria-hidden="true"
       />
 
       {/* =====================================================
-          LIGHT MAROON TINT — RIGHT SIDE
+          SECONDARY MAROON TINT
       ===================================================== */}
 
       <div
         className="
           pointer-events-none
           absolute
-          right-[-15%]
-          top-[20%]
-          h-[500px]
-          w-[500px]
+          right-[-12%]
+          top-[25%]
+          h-[460px]
+          w-[460px]
           rounded-full
-          bg-[#8B1E3F]/[0.045]
+          bg-[#8B1E3F]/[0.07]
           blur-[120px]
         "
         aria-hidden="true"
@@ -279,20 +276,39 @@ people remember.`,
           pointer-events-none
           absolute
           bottom-[-15%]
-          right-[-10%]
-          h-[400px]
-          w-[400px]
+          right-[-5%]
+          h-[500px]
+          w-[500px]
           rounded-full
-          bg-[#C6A15B]/[0.08]
-          blur-[110px]
+          bg-[#C6A15B]/[0.14]
+          blur-[120px]
         "
         aria-hidden="true"
       />
 
-      
+      {/* =====================================================
+          SOFT LIGHT CENTER
+      ===================================================== */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          left-1/2
+          top-1/2
+          h-[600px]
+          w-[900px]
+          -translate-x-1/2
+          -translate-y-1/2
+          rounded-full
+          bg-[#F5EFD0]/[0.35]
+          blur-[130px]
+        "
+        aria-hidden="true"
+      />
 
       {/* =====================================================
-          CONTENT
+          MAIN CONTENT
       ===================================================== */}
 
       <div
@@ -301,188 +317,320 @@ people remember.`,
           z-10
           mx-auto
           w-full
-          max-w-[1100px]
+          max-w-[1350px]
         "
       >
-        {/* =====================================================
-            INVISIBLE LINE MEASUREMENT
-        ===================================================== */}
-
         <div
-          ref={measureRef}
-          aria-hidden="true"
           className="
-            pointer-events-none
-            absolute
-            left-0
-            top-0
-            w-full
-            select-none
-            opacity-0
-            text-[clamp(2rem,4.2vw,4.75rem)]
-            font-medium
-            leading-[1.08]
-            tracking-[-0.035em]
+            grid
+            items-center
+            gap-12
+            lg:grid-cols-[1fr_360px]
+            lg:gap-16
+            xl:grid-cols-[1fr_430px]
+            xl:gap-20
           "
         >
-          {words.map((word, index) => (
-            <span
-              key={`${word}-${index}`}
+          {/* =================================================
+              LEFT — TEXT CONTENT
+          ================================================= */}
+
+          <div className="min-w-0">
+            {/* =================================================
+                INVISIBLE LINE MEASUREMENT
+            ================================================= */}
+
+            <div
+              ref={measureRef}
+              aria-hidden="true"
               className="
-                measure-word
-                inline-block
-                mr-[0.27em]
+                pointer-events-none
+                absolute
+                left-0
+                top-0
+                w-full
+                select-none
+                opacity-0
+                text-[clamp(1.15rem,2.4vw,2.5rem)]
+                font-medium
+                leading-[1.15]
+                tracking-[-0.025em]
               "
             >
-              {word}
-            </span>
-          ))}
-        </div>
+              {words.map((word, index) => (
+                <span
+                  key={`${word}-${index}`}
+                  className="
+                    measure-word
+                    inline-block
+                    mr-[0.27em]
+                  "
+                >
+                  {word}
+                </span>
+              ))}
+            </div>
 
-        {/* =====================================================
-            EYEBROW
-        ===================================================== */}
+            {/* =================================================
+                EYEBROW
+            ================================================= */}
 
-        {eyebrow && (
+            {eyebrow && (
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  y: 15,
+                }}
+                animate={
+                  isInView
+                    ? {
+                        opacity: 1,
+                        y: 0,
+                      }
+                    : {
+                        opacity: 0,
+                        y: 15,
+                      }
+                }
+                transition={{
+                  duration: shouldReduceMotion
+                    ? 0
+                    : 1.7,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="
+                  mb-7
+                  sm:mb-9
+                "
+              >
+                <div
+                  className="
+                    flex
+                    items-center
+                    gap-4
+                  "
+                >
+                  <span
+                    className="
+                      text-[10px]
+                      font-medium
+                      uppercase
+                      tracking-[0.28em]
+                      text-[#8B1E3F]
+                      sm:text-xs
+                    "
+                  >
+                    {eyebrow}
+                  </span>
+
+                  <span
+                    className="
+                      h-px
+                      w-10
+                      bg-[#C6A15B]/50
+                      sm:w-16
+                    "
+                  />
+                </div>
+              </motion.div>
+            )}
+
+            {/* =================================================
+                TEXT REVEAL
+            ================================================= */}
+
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate={
+                isInView
+                  ? "visible"
+                  : "hidden"
+              }
+              className="
+                text-[clamp(1.15rem,2.4vw,2.5rem)]
+                font-medium
+                leading-[1.15]
+                tracking-[-0.025em]
+                text-[#241018]
+              "
+            >
+              {visibleLines.map(
+                (line, index) => (
+                  <div
+                    key={`${index}-${line}`}
+                    className="
+                      overflow-hidden
+                      py-[0.04em]
+                    "
+                  >
+                    <motion.div
+                      variants={lineVariants}
+                      className="
+                        block
+                        transform-gpu
+                        will-change-transform
+                      "
+                    >
+                      {line}
+                    </motion.div>
+                  </div>
+                )
+              )}
+            </motion.div>
+
+            {/* =================================================
+                GOLD DECORATIVE LINE
+            ================================================= */}
+
+            <motion.div
+              initial={{
+                width: 0,
+                opacity: 0,
+              }}
+              animate={
+                isInView
+                  ? {
+                      width: "72px",
+                      opacity: 1,
+                    }
+                  : {
+                      width: 0,
+                      opacity: 0,
+                    }
+              }
+              transition={{
+                duration: shouldReduceMotion
+                  ? 0
+                  : 1,
+                delay: shouldReduceMotion
+                  ? 0
+                  : 0.9,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="
+                mt-8
+                h-[2px]
+                bg-[#C6A15B]
+                sm:mt-10
+              "
+            />
+          </div>
+
+          {/* =================================================
+              RIGHT — IMAGE
+          ================================================= */}
+
           <motion.div
             initial={{
               opacity: 0,
-              y: 15,
+              x: 50,
             }}
-            animate={
-              isInView
-                ? {
-                    opacity: 1,
-                    y: 0,
-                  }
-                : {
-                    opacity: 0,
-                    y: 15,
-                  }
-            }
+            whileInView={{
+              opacity: 1,
+              x: 0,
+            }}
+            viewport={{
+              once: true,
+              amount: 0.2,
+            }}
             transition={{
-              duration: shouldReduceMotion
-                ? 0
-                : 1.7,
+              duration: 1,
+              delay: 0.15,
               ease: [0.22, 1, 0.36, 1],
             }}
             className="
-              mb-8
-              sm:mb-12
+              relative
+              mx-auto
+              w-full
+              max-w-[360px]
+              lg:max-w-none
             "
           >
             <div
               className="
-                flex
-                items-center
-                gap-4
-              "
+                relative
+                aspect-[4/5]
+                overflow-hidden
+                rounded-[24px]
+                border
+                border-[#7A1B2F]/15
+                bg-[#F5EFD0]
+                p-1
+                             "
             >
-              <span
+              <img
+                src="https://res.cloudinary.com/yh0rqnnu/image/upload/v1791236689/WhatsApp_Image_2026-10-06_at_2.17.46_AM.jpg"
+                alt="Cultural Sub Council"
                 className="
-                  text-[10px]
-                  font-medium
-                  uppercase
-                  tracking-[0.28em]
-                  text-[#8B1E3F]
-                  sm:text-xs
+                  h-full
+                  w-full
+                  rounded-[20px]
+                  object-cover
+                  transition-transform
+                  duration-1000
+                  hover:scale-[1.03]
                 "
-              >
-                {eyebrow}
-              </span>
+              />
 
-              <span
+              {/* INNER GOLD FRAME */}
+
+              <div
                 className="
-                  h-px
-                  w-10
-                  bg-[#C6A15B]/50
-                  sm:w-16
+                  pointer-events-none
+                  absolute
+                  inset-2
+                  rounded-[19px]
+                  border
+                  border-[#C6A15B]/30
+                "
+              />
+
+              {/* SOFT IMAGE OVERLAY */}
+
+              <div
+                className="
+                  pointer-events-none
+                  absolute
+                  inset-0
+                  rounded-[24px]
+                  bg-gradient-to-t
+                  from-[#2B0A12]/20
+                  via-transparent
+                  to-transparent
                 "
               />
             </div>
+
+            {/* SMALL DECORATIVE LINE */}
+
+            <div
+              className="
+                absolute
+                -bottom-4
+                -left-4
+                h-16
+                w-16
+                border-b
+                border-l
+                border-[#7A1B2F]/30
+              "
+            />
+
+            <div
+              className="
+                absolute
+                -right-4
+                -top-4
+                h-16
+                w-16
+                border-r
+                border-t
+                border-[#C6A15B]/50
+              "
+            />
           </motion.div>
-        )}
-
-        {/* =====================================================
-            TEXT REVEAL
-        ===================================================== */}
-
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={
-            isInView
-              ? "visible"
-              : "hidden"
-          }
-          className="
-            text-[clamp(2rem,4.2vw,4.75rem)]
-            font-medium
-            leading-[1.08]
-            tracking-[-0.035em]
-            text-[#241018]
-          "
-        >
-          {visibleLines.map(
-            (line, index) => (
-              <div
-                key={`${index}-${line}`}
-                className="
-                  overflow-hidden
-                  py-[0.06em]
-                "
-              >
-                <motion.div
-                  variants={lineVariants}
-                  className="
-                    block
-                    transform-gpu
-                    will-change-transform
-                  "
-                >
-                  {line}
-                </motion.div>
-              </div>
-            )
-          )}
-        </motion.div>
-
-        {/* =====================================================
-            GOLD DECORATIVE LINE
-        ===================================================== */}
-
-        <motion.div
-          initial={{
-            width: 0,
-            opacity: 0,
-          }}
-          animate={
-            isInView
-              ? {
-                  width: "72px",
-                  opacity: 1,
-                }
-              : {
-                  width: 0,
-                  opacity: 0,
-                }
-          }
-          transition={{
-            duration: shouldReduceMotion
-              ? 0
-              : 1,
-            delay: shouldReduceMotion
-              ? 0
-              : 0.9,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-          className="
-            mt-10
-            h-[2px]
-            bg-[#DCD3A4]
-            sm:mt-14
-          "
-        />
+        </div>
       </div>
     </section>
   );

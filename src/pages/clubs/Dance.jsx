@@ -1,6 +1,12 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
+
+/* =========================================================
+   FACULTY MESSAGES
+========================================================= */
+
 const facultyMessages = [
   {
     name: "Faculty Name",
@@ -17,6 +23,10 @@ const facultyMessages = [
       "Every performance begins with passion, practice and the courage to express. The Dance Club encourages students to explore different forms of movement while creating experiences that bring our campus community together.",
   },
 ];
+
+/* =========================================================
+   ACTIVITIES
+========================================================= */
 
 const activities = [
   {
@@ -45,6 +55,10 @@ const activities = [
   },
 ];
 
+/* =========================================================
+   ACHIEVEMENTS
+========================================================= */
+
 const achievements = [
   {
     number: "01",
@@ -69,20 +83,26 @@ const achievements = [
   },
 ];
 
+/* =========================================================
+   DANCE CLUB PAGE
+========================================================= */
+
 export default function DanceClub() {
   return (
-    <main className="min-h-screen mt-[15px] overflow-hidden bg-[#2B0A12] text-[#F7EBD0]">
-      <Navbar Home/>
+    <main className="min-h-screen overflow-hidden bg-[#DCD3A4] text-[#241018]">
+      <Navbar Home />
+
       {/* =====================================================
           HERO
       ===================================================== */}
 
       <section className="relative min-h-screen overflow-hidden">
-
-        {/* Background Image */}
+        {/* =================================================
+            HERO BACKGROUND IMAGE
+        ================================================= */}
 
         <img
-          src="/clubs/dance-hero.jpg"
+          src="https://res.cloudinary.com/yh0rqnnu/image/upload/v1791236623/WhatsApp_Image_2026-10-06_at_2.17.13_AM.jpg"
           alt="Dance Club"
           className="
             absolute
@@ -90,33 +110,57 @@ export default function DanceClub() {
             h-full
             w-full
             object-cover
+            object-center
           "
         />
 
-        {/* Maroon Overlay */}
+        {/* =================================================
+            SOFT OVERLAY
+        ================================================= */}
 
         <div
           className="
             absolute
             inset-0
-            bg-[#2B0A12]/75
+            bg-[#2B0A12]/35
           "
         />
 
-        {/* Cinematic Gradient */}
+        {/* =================================================
+            LEFT CINEMATIC OVERLAY
+        ================================================= */}
 
         <div
           className="
             absolute
             inset-0
             bg-gradient-to-r
-            from-[#2B0A12]
-            via-[#2B0A12]/75
+            from-[#1D070D]/75
+            via-[#2B0A12]/35
             to-transparent
           "
         />
 
-        {/* Gold Glow */}
+        {/* =================================================
+            BOTTOM SOFT FADE
+        ================================================= */}
+
+        <div
+          className="
+            absolute
+            inset-x-0
+            bottom-0
+            h-5
+            bg-gradient-to-t
+            from-[#DCD3A4]
+            via-[#DCD3A4]/20
+            to-transparent
+          "
+        />
+
+        {/* =================================================
+            GOLD GLOW
+        ================================================= */}
 
         <div
           className="
@@ -132,7 +176,9 @@ export default function DanceClub() {
           "
         />
 
-        {/* Content */}
+        {/* =================================================
+            HERO CONTENT
+        ================================================= */}
 
         <div
           className="
@@ -141,7 +187,7 @@ export default function DanceClub() {
             mx-auto
             flex
             min-h-screen
-            max-w-7xl
+            max-w-[1500px]
             items-end
             px-6
             pb-20
@@ -150,39 +196,48 @@ export default function DanceClub() {
             lg:pb-28
           "
         >
-
           <div className="max-w-5xl">
-
-            {/* Eyebrow */}
+            {/* EYEBROW */}
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="mb-6 flex items-center gap-4"
+              initial={{
+                opacity: 0,
+                y: 20,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.8,
+              }}
+              className="
+                mb-6
+                flex
+                items-center
+                gap-4
+              "
             >
               <span className="h-px w-12 bg-[#C6A15B]" />
 
-              <span
-                className="
-                  text-xs
-                  uppercase
-                  tracking-[0.3em]
-                  text-[#D9B86C]
-                "
-              >
-                Cultural Sub-Council / Clubs
-              </span>
+             
             </motion.div>
 
-            {/* Title */}
+            {/* TITLE */}
 
             <motion.h1
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{
+                opacity: 0,
+                y: 40,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
               transition={{
                 duration: 1,
                 delay: 0.15,
+                ease: [0.22, 1, 0.36, 1],
               }}
               className="
                 text-[clamp(4rem,11vw,10rem)]
@@ -199,47 +254,56 @@ export default function DanceClub() {
               </span>
             </motion.h1>
 
-            {/* Tagline */}
+            {/* TAGLINE */}
 
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{
+                opacity: 0,
+                y: 20,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
               transition={{
                 duration: 0.8,
                 delay: 0.5,
               }}
               className="
-                mt-8
+                mt-7
                 max-w-xl
-                text-lg
-                leading-relaxed
-                text-[#D8C7AA]
-                sm:text-xl
+                text-base
+                leading-7
+                text-[#F5EFD0]/85
+                sm:text-lg
               "
             >
-              Where movement becomes expression,
-              rhythm becomes identity, and every
-              stage becomes a story.
+              Where rhythm takes shape, movement finds
+              meaning and stories unfold without words.
             </motion.p>
 
-            {/* Scroll */}
+            {/* SCROLL */}
 
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              initial={{
+                opacity: 0,
+              }}
+              animate={{
+                opacity: 1,
+              }}
               transition={{
                 delay: 1.2,
                 duration: 0.8,
               }}
               className="
-                mt-12
+                mt-10
                 flex
                 items-center
                 gap-4
-                text-[10px]
+                text-[9px]
                 uppercase
                 tracking-[0.3em]
-                text-[#D8C7AA]
+                text-[#F5EFD0]/75
               "
             >
               <span>Scroll to explore</span>
@@ -248,7 +312,6 @@ export default function DanceClub() {
                 ↓
               </span>
             </motion.div>
-
           </div>
         </div>
       </section>
@@ -260,64 +323,88 @@ export default function DanceClub() {
       <section
         className="
           relative
-          bg-[#3A0D18]
+          overflow-hidden
+          bg-[#DCD3A4]
           px-6
-          py-24
+          py-20
           sm:px-12
           lg:px-20
-          lg:py-32
+          lg:py-28
         "
       >
+        {/* BACKGROUND GLOWS */}
 
-        <div className="mx-auto max-w-7xl">
+        <div
+          className="
+            pointer-events-none
+            absolute
+            left-[-12%]
+            top-[-10%]
+            h-[420px]
+            w-[420px]
+            rounded-full
+            bg-[#7A1B2F]/[0.08]
+            blur-[110px]
+          "
+        />
 
-          {/* Section Header */}
+        <div
+          className="
+            pointer-events-none
+            absolute
+            bottom-[-15%]
+            right-[-8%]
+            h-[420px]
+            w-[420px]
+            rounded-full
+            bg-[#C6A15B]/[0.10]
+            blur-[110px]
+          "
+        />
 
-          <div className="mb-16">
+        <div className="relative z-10 mx-auto max-w-[1400px]">
+          {/* HEADER */}
 
-            <div className="mb-5 flex items-center gap-4">
-
+          <div className="mb-12">
+            <div className="mb-4 flex items-center gap-4">
               <span
                 className="
-                  text-xs
+                  text-[10px]
+                  font-semibold
                   uppercase
-                  tracking-[0.28em]
-                  text-[#C6A15B]
+                  tracking-[0.3em]
+                  text-[#7A1B2F]
                 "
               >
-                A Word From Our Faculty
+                Faculty Messages
               </span>
 
-              <span className="h-px w-16 bg-[#C6A15B]/40" />
-
+              <span className="h-px w-12 bg-[#7A1B2F]/35" />
             </div>
 
             <h2
               className="
-                max-w-3xl
                 text-5xl
                 font-medium
                 leading-[0.95]
                 tracking-[-0.05em]
+                text-[#241018]
                 sm:text-6xl
-                lg:text-8xl
+                lg:text-7xl
               "
             >
               Guided by
               <br />
-              <span className="text-[#C6A15B]">
+              <span className="text-[#7A1B2F]">
                 experience.
               </span>
             </h2>
-
           </div>
 
-          {/* Faculty Cards */}
+          {/* FACULTY */}
 
-          <div className="grid gap-6 lg:grid-cols-2">
-
+          <div className="grid gap-5 lg:grid-cols-2">
             {facultyMessages.map((faculty, index) => (
-
               <motion.article
                 key={index}
                 initial={{
@@ -333,53 +420,62 @@ export default function DanceClub() {
                   amount: 0.2,
                 }}
                 transition={{
-                  duration: 0.8,
-                  delay: index * 0.15,
+                  duration: 0.75,
+                  delay: index * 0.12,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                whileHover={{
+                  y: -4,
                 }}
                 className="
                   group
                   relative
                   overflow-hidden
-                  rounded-3xl
+                  rounded-[22px]
                   border
-                  border-[#C6A15B]/15
-                  bg-[#2B0A12]/60
-                  p-7
-                  sm:p-10
+                  border-[#7A1B2F]/15
+                  bg-[#E8DFB0]/80
+                  p-6
+                  transition-all
+                  duration-500
+                  hover:border-[#7A1B2F]/30
+                  hover:bg-[#EEE5B8]
+                  sm:p-7
                 "
               >
-
-                {/* Gold Top Line */}
+                {/* TOP LINE */}
 
                 <div
                   className="
                     absolute
-                    left-8
-                    right-8
+                    left-7
+                    right-7
                     top-0
-                    h-px
+                    h-[2px]
                     bg-gradient-to-r
                     from-transparent
-                    via-[#C6A15B]
+                    via-[#7A1B2F]/60
                     to-transparent
-                    opacity-60
                   "
                 />
 
-                <div className="flex flex-col gap-8 sm:flex-row">
-
-                  {/* Faculty Image */}
+                <div className="flex gap-5">
+                  {/* IMAGE */}
 
                   <div
                     className="
-                      h-28
-                      w-28
+                      relative
+                      h-[88px]
+                      w-[88px]
                       shrink-0
                       overflow-hidden
                       rounded-full
                       border
-                      border-[#C6A15B]/40
+                      border-[#7A1B2F]/25
+                      bg-[#DCD3A4]
                       p-1
+                      sm:h-[100px]
+                      sm:w-[100px]
                     "
                   >
                     <img
@@ -390,70 +486,70 @@ export default function DanceClub() {
                         w-full
                         rounded-full
                         object-cover
-                        grayscale
-                        transition-all
+                        transition-transform
                         duration-700
-                        group-hover:grayscale-0
+                        group-hover:scale-105
                       "
                     />
                   </div>
 
-                  {/* Message */}
+                  {/* MESSAGE */}
 
-                  <div>
-
+                  <div className="min-w-0">
                     <p
                       className="
                         font-serif
-                        text-lg
+                        text-[15px]
                         italic
-                        leading-relaxed
-                        text-[#D8C7AA]
+                        leading-[1.5]
+                        text-[#4A3C35]
+                        sm:text-[16px]
                       "
                     >
-                      "{faculty.message}"
+                      “{faculty.message}”
                     </p>
-
-                    <div className="mt-7">
-
-                      <h3
-                        className="
-                          text-sm
-                          font-semibold
-                          uppercase
-                          tracking-[0.15em]
-                          text-[#F7EBD0]
-                        "
-                      >
-                        {faculty.name}
-                      </h3>
-
-                      <p
-                        className="
-                          mt-2
-                          text-[10px]
-                          uppercase
-                          tracking-[0.18em]
-                          text-[#D9B86C]
-                        "
-                      >
-                        {faculty.designation}
-                      </p>
-
-                    </div>
-
                   </div>
-
                 </div>
 
+                {/* INFO */}
+
+                <div
+                  className="
+                    mt-6
+                    border-t
+                    border-[#7A1B2F]/15
+                    pt-4
+                  "
+                >
+                  <h3
+                    className="
+                      text-[11px]
+                      font-semibold
+                      uppercase
+                      tracking-[0.15em]
+                      text-[#241018]
+                    "
+                  >
+                    {faculty.name}
+                  </h3>
+
+                  <p
+                    className="
+                      mt-2
+                      text-[9px]
+                      font-semibold
+                      uppercase
+                      tracking-[0.17em]
+                      text-[#7A1B2F]
+                    "
+                  >
+                    {faculty.designation}
+                  </p>
+                </div>
               </motion.article>
-
             ))}
-
           </div>
-
         </div>
-
       </section>
 
       {/* =====================================================
@@ -463,104 +559,268 @@ export default function DanceClub() {
       <section
         className="
           relative
-          bg-[#2B0A12]
+          overflow-hidden
+          bg-[#F5EFD0]
           px-6
-          py-28
+          py-20
           sm:px-12
           lg:px-20
-          lg:py-40
+          lg:py-28
         "
       >
+        {/* SOFT GLOWS */}
 
-        <div className="mx-auto max-w-7xl">
+        <div
+          className="
+            pointer-events-none
+            absolute
+            left-[-10%]
+            top-[15%]
+            h-[450px]
+            w-[450px]
+            rounded-full
+            bg-[#7A1B2F]/[0.07]
+            blur-[120px]
+          "
+        />
 
-          <div className="grid gap-16 lg:grid-cols-[0.8fr_1.2fr]">
+        <div
+          className="
+            pointer-events-none
+            absolute
+            bottom-[-20%]
+            right-[-10%]
+            h-[450px]
+            w-[450px]
+            rounded-full
+            bg-[#C6A15B]/[0.10]
+            blur-[120px]
+          "
+        />
 
-            {/* Left */}
+        <div className="relative z-10 mx-auto max-w-[1400px]">
+          <div
+            className="
+              grid
+              items-center
+              gap-12
+              lg:grid-cols-[0.9fr_1.1fr]
+              lg:gap-16
+              xl:gap-20
+            "
+          >
+            {/* LEFT IMAGE */}
 
-            <div>
-
-              <span
+            <motion.div
+              initial={{
+                opacity: 0,
+                x: -40,
+              }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+              }}
+              viewport={{
+                once: true,
+                amount: 0.2,
+              }}
+              transition={{
+                duration: 0.9,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="
+                relative
+                mx-auto
+                w-full
+                max-w-[520px]
+              "
+            >
+              <div
                 className="
-                  text-xs
-                  uppercase
-                  tracking-[0.3em]
-                  text-[#C6A15B]
+                  relative
+                  aspect-[4/5]
+                  overflow-hidden
+                  rounded-[26px]
+                  border
+                  border-[#7A1B2F]/15
+                  bg-[#DCD3A4]
+                  p-1
                 "
               >
-                01 / About
-              </span>
+                <img
+                  src="/clubs/dance-about.jpg"
+                  alt="Dance Club performance"
+                  className="
+                    h-full
+                    w-full
+                    rounded-[22px]
+                    object-cover
+                    transition-transform
+                    duration-1000
+                    hover:scale-[1.03]
+                  "
+                />
+
+                <div
+                  className="
+                    pointer-events-none
+                    absolute
+                    inset-2
+                    rounded-[21px]
+                    border
+                    border-[#C6A15B]/35
+                  "
+                />
+              </div>
 
               <div
                 className="
-                  mt-8
-                  h-px
+                  absolute
+                  -bottom-4
+                  -left-4
+                  h-20
                   w-20
-                  bg-[#C6A15B]
+                  border-b
+                  border-l
+                  border-[#7A1B2F]/35
                 "
               />
 
-            </div>
+              <div
+                className="
+                  absolute
+                  -right-4
+                  -top-4
+                  h-20
+                  w-20
+                  border-r
+                  border-t
+                  border-[#C6A15B]/50
+                "
+              />
+            </motion.div>
 
-            {/* Right */}
+            {/* RIGHT CONTENT */}
 
-            <div>
+            <motion.div
+              initial={{
+                opacity: 0,
+                x: 40,
+              }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+              }}
+              viewport={{
+                once: true,
+                amount: 0.2,
+              }}
+              transition={{
+                duration: 0.9,
+                delay: 0.1,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            >
+              <div className="mb-5 flex items-center gap-4">
+                <span
+                  className="
+                    text-[10px]
+                    font-semibold
+                    uppercase
+                    tracking-[0.3em]
+                    text-[#7A1B2F]
+                  "
+                >
+                  01 / About
+                </span>
+
+                <span className="h-px w-14 bg-[#C6A15B]/60" />
+              </div>
 
               <h2
                 className="
-                  text-4xl
+                  text-5xl
                   font-medium
-                  leading-[1]
-                  tracking-[-0.04em]
+                  leading-[0.95]
+                  tracking-[-0.05em]
+                  text-[#241018]
                   sm:text-6xl
                   lg:text-7xl
                 "
               >
                 More than
                 <br />
-                <span className="text-[#C6A15B]">
+                <span className="text-[#7A1B2F]">
                   movement.
                 </span>
               </h2>
 
               <p
                 className="
-                  mt-10
-                  max-w-3xl
-                  text-lg
-                  leading-[1.8]
-                  text-[#D8C7AA]
-                  sm:text-xl
+                  mt-8
+                  max-w-2xl
+                  text-[15px]
+                  leading-7
+                  text-[#4A3C35]
+                  sm:text-base
                 "
               >
-                The Dance Club provides a platform for
-                students to explore movement, rhythm and
-                performance while developing confidence,
-                discipline and creative expression.
+                Driven by rhythm, expression, and an
+                unwavering passion for movement, the
+                Dance Club provides a space where dancers
+                discover their individuality and transform
+                choreography into captivating experiences.
+                It embraces diverse styles while fostering
+                discipline, collaboration, confidence, and
+                artistic growth.
               </p>
 
               <p
                 className="
-                  mt-6
-                  max-w-3xl
-                  text-lg
-                  leading-[1.8]
-                  text-[#D8C7AA]
-                  sm:text-xl
+                  mt-5
+                  max-w-2xl
+                  text-[15px]
+                  leading-7
+                  text-[#4A3C35]
+                  sm:text-base
+                "
+              >
+                From energetic stage performances and
+                competitive showcases to major cultural
+                celebrations like HEATS and Abhyudaya,
+                the club brings stories to life through
+                movement. It is where every beat inspires,
+                every gesture speaks, and every performance
+                leaves a lasting impression.
+              </p>
+
+              <p
+                className="
+                  mt-5
+                  max-w-2xl
+                  text-[15px]
+                  leading-7
+                  text-[#4A3C35]
+                  sm:text-base
                 "
               >
                 From rehearsals and choreography to
                 performances and cultural celebrations,
-                the club brings together students who
-                share a passion for dance and performance.
+                the club brings together students who share
+                a passion for dance and performance.
               </p>
 
-            </div>
-
+              <div
+                className="
+                  mt-8
+                  h-[2px]
+                  w-16
+                  bg-[#C6A15B]
+                "
+              />
+            </motion.div>
           </div>
-
         </div>
-
       </section>
 
       {/* =====================================================
@@ -570,81 +830,103 @@ export default function DanceClub() {
       <section
         className="
           relative
-          bg-[#3A0D18]
+          overflow-hidden
+          bg-[#DCD3A4]
           px-6
-          py-28
+          py-20
           sm:px-12
           lg:px-20
-          lg:py-40
+          lg:py-28
         "
       >
+        <div className="relative z-10 mx-auto max-w-[1400px]">
+          <div className="mb-12">
+            <div className="mb-4 flex items-center gap-4">
+              <span
+                className="
+                  text-[10px]
+                  font-semibold
+                  uppercase
+                  tracking-[0.3em]
+                  text-[#7A1B2F]
+                "
+              >
+                02 / What We Do
+              </span>
 
-        <div className="mx-auto max-w-7xl">
-
-          {/* Header */}
-
-          <div className="mb-20">
-
-            <span
-              className="
-                text-xs
-                uppercase
-                tracking-[0.3em]
-                text-[#C6A15B]
-              "
-            >
-              02 / What We Do
-            </span>
+              <span className="h-px w-14 bg-[#7A1B2F]/35" />
+            </div>
 
             <h2
               className="
-                mt-7
                 text-5xl
                 font-medium
+                leading-[0.9]
                 tracking-[-0.05em]
-                sm:text-7xl
+                text-[#241018]
+                sm:text-6xl
+                lg:text-7xl
               "
             >
               Create.
               <br />
-              <span className="text-[#C6A15B]">
+              <span className="text-[#7A1B2F]">
                 Perform.
               </span>
               <br />
               Inspire.
             </h2>
-
           </div>
 
-          {/* Activities */}
-
-          <div className="grid gap-px overflow-hidden rounded-3xl border border-[#C6A15B]/15 bg-[#C6A15B]/15 md:grid-cols-2">
-
+          <div
+            className="
+              grid
+              overflow-hidden
+              rounded-[24px]
+              border
+              border-[#7A1B2F]/15
+              bg-[#7A1B2F]/15
+              md:grid-cols-2
+            "
+          >
             {activities.map((activity, index) => (
-
               <motion.div
                 key={activity.number}
+                initial={{
+                  opacity: 0,
+                  y: 25,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                viewport={{
+                  once: true,
+                  amount: 0.15,
+                }}
+                transition={{
+                  duration: 0.65,
+                  delay: index * 0.08,
+                }}
                 whileHover={{
-                  backgroundColor:
-                    "rgba(43,10,18,0.8)",
+                  backgroundColor: "#F5EFD0",
                 }}
                 className="
                   group
                   relative
-                  min-h-[300px]
-                  bg-[#2B0A12]/80
-                  p-8
+                  min-h-[260px]
+                  bg-[#E8DFB0]
+                  p-7
                   transition-colors
                   duration-500
-                  sm:p-12
+                  sm:p-9
                 "
               >
-
                 <span
                   className="
-                    text-xs
+                    text-[10px]
                     tracking-[0.25em]
-                    text-[#C6A15B]
+                    text-[#7A1B2F]
                   "
                 >
                   {activity.number}
@@ -652,11 +934,11 @@ export default function DanceClub() {
 
                 <h3
                   className="
-                    mt-20
+                    mt-16
                     text-3xl
                     font-medium
-                    tracking-tight
-                    text-[#F7EBD0]
+                    tracking-[-0.04em]
+                    text-[#241018]
                     sm:text-4xl
                   "
                 >
@@ -665,25 +947,36 @@ export default function DanceClub() {
 
                 <p
                   className="
-                    mt-5
+                    mt-4
                     max-w-md
-                    leading-relaxed
-                    text-[#D8C7AA]
+                    text-[14px]
+                    leading-6
+                    text-[#5A4A42]
                   "
                 >
                   {activity.description}
                 </p>
 
-                
-
+                <div
+                  className="
+                    absolute
+                    bottom-6
+                    right-6
+                    h-6
+                    w-6
+                    border-b
+                    border-r
+                    border-[#C6A15B]/60
+                    transition-all
+                    duration-500
+                    group-hover:h-9
+                    group-hover:w-9
+                  "
+                />
               </motion.div>
-
             ))}
-
           </div>
-
         </div>
-
       </section>
 
       {/* =====================================================
@@ -693,62 +986,65 @@ export default function DanceClub() {
       <section
         className="
           relative
-          bg-[#2B0A12]
+          overflow-hidden
+          bg-[#F5EFD0]
           px-6
-          py-28
+          py-20
           sm:px-12
           lg:px-20
-          lg:py-40
+          lg:py-28
         "
       >
-
-        <div className="mx-auto max-w-7xl">
-
-          <div className="grid gap-16 lg:grid-cols-[0.8fr_1.2fr]">
-
-            {/* Heading */}
-
+        <div className="relative z-10 mx-auto max-w-[1400px]">
+          <div
+            className="
+              grid
+              gap-12
+              lg:grid-cols-[0.75fr_1.25fr]
+              lg:gap-20
+            "
+          >
             <div>
+              <div className="mb-4 flex items-center gap-4">
+                <span
+                  className="
+                    text-[10px]
+                    font-semibold
+                    uppercase
+                    tracking-[0.3em]
+                    text-[#7A1B2F]
+                  "
+                >
+                  03 / Achievements
+                </span>
 
-              <span
-                className="
-                  text-xs
-                  uppercase
-                  tracking-[0.3em]
-                  text-[#C6A15B]
-                "
-              >
-                03 / Achievements
-              </span>
+                <span className="h-px w-12 bg-[#C6A15B]/60" />
+              </div>
 
               <h2
                 className="
-                  mt-7
                   text-5xl
                   font-medium
-                  leading-[0.95]
+                  leading-[0.92]
                   tracking-[-0.05em]
-                  sm:text-7xl
+                  text-[#241018]
+                  sm:text-6xl
+                  lg:text-7xl
                 "
               >
                 Moments
                 <br />
                 that
                 <br />
-                <span className="text-[#C6A15B]">
+                <span className="text-[#7A1B2F]">
                   matter.
                 </span>
               </h2>
-
             </div>
 
-            {/* Achievement List */}
-
             <div>
-
               {achievements.map(
                 (achievement, index) => (
-
                   <motion.div
                     key={achievement.number}
                     initial={{
@@ -770,34 +1066,39 @@ export default function DanceClub() {
                     className="
                       group
                       border-t
-                      border-[#C6A15B]/20
-                      py-8
-                      sm:py-10
+                      border-[#7A1B2F]/15
+                      py-7
+                      sm:py-8
                     "
                   >
-
-                    <div className="flex gap-8">
-
+                    <div className="flex gap-6">
                       <span
                         className="
                           pt-1
-                          text-xs
+                          text-[10px]
                           tracking-[0.2em]
-                          text-[#C6A15B]
+                          text-[#7A1B2F]
                         "
                       >
                         {achievement.number}
                       </span>
 
                       <div className="flex-1">
-
-                        <div className="flex flex-wrap items-center justify-between gap-4">
-
+                        <div
+                          className="
+                            flex
+                            flex-wrap
+                            items-center
+                            justify-between
+                            gap-3
+                          "
+                        >
                           <h3
                             className="
                               text-2xl
                               font-medium
-                              text-[#F7EBD0]
+                              tracking-[-0.03em]
+                              text-[#241018]
                               sm:text-3xl
                             "
                           >
@@ -806,136 +1107,44 @@ export default function DanceClub() {
 
                           <span
                             className="
-                              text-xs
+                              text-[10px]
                               tracking-[0.2em]
-                              text-[#D9B86C]
+                              text-[#7A1B2F]
                             "
                           >
                             {achievement.year}
                           </span>
-
                         </div>
 
                         <p
                           className="
-                            mt-4
+                            mt-3
                             max-w-xl
-                            leading-relaxed
-                            text-[#D8C7AA]
+                            text-[14px]
+                            leading-6
+                            text-[#5A4A42]
                           "
                         >
                           {achievement.description}
                         </p>
-
                       </div>
-
                     </div>
-
                   </motion.div>
-
                 )
               )}
 
-              <div className="border-t border-[#C6A15B]/20" />
-
+              <div className="border-t border-[#7A1B2F]/15" />
             </div>
-
           </div>
-
         </div>
-
       </section>
 
+      
       {/* =====================================================
-          FINAL CTA
+          FOOTER
       ===================================================== */}
 
-      <section
-        className="
-          relative
-          overflow-hidden
-          bg-[#1D070D]
-          px-6
-          py-32
-          text-center
-          sm:px-12
-          lg:py-44
-        "
-      >
-
-        <div
-          className="
-            pointer-events-none
-            absolute
-            left-1/2
-            top-1/2
-            h-[500px]
-            w-[500px]
-            -translate-x-1/2
-            -translate-y-1/2
-            rounded-full
-            bg-[#C6A15B]/5
-            blur-[120px]
-          "
-        />
-
-        <div className="relative z-10">
-
-          <span
-            className="
-              text-xs
-              uppercase
-              tracking-[0.3em]
-              text-[#C6A15B]
-            "
-          >
-            Your Stage Awaits
-          </span>
-
-          <h2
-            className="
-              mx-auto
-              mt-8
-              max-w-5xl
-              text-5xl
-              font-medium
-              leading-[0.9]
-              tracking-[-0.05em]
-              sm:text-7xl
-              lg:text-9xl
-            "
-          >
-            Find your
-            <br />
-            <span className="text-[#C6A15B]">
-              rhythm.
-            </span>
-          </h2>
-
-          <button
-            className="
-              mt-12
-              border
-              border-[#C6A15B]
-              px-8
-              py-4
-              text-xs
-              uppercase
-              tracking-[0.25em]
-              text-[#C6A15B]
-              transition-all
-              duration-300
-              hover:bg-[#C6A15B]
-              hover:text-[#2B0A12]
-            "
-          >
-            Join Dance Club
-          </button>
-
-        </div>
-
-      </section>
-
+      <Footer />
     </main>
   );
 }

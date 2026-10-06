@@ -27,7 +27,7 @@ const events = [
     title: "HEATS '25",
     subtitle: "CULTURAL CELEBRATION",
     image:
-      "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=2200&q=90",
+      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791238377/WhatsApp_Image_2026-10-06_at_3.39.05_AM.png",
     route: "/events/heats-25",
   },
   {
@@ -35,16 +35,16 @@ const events = [
     title: "PINTURA DE PILARES",
     subtitle: "WELCOMING NEW VOICES",
     image:
-      "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=2200&q=90",
-    route: "/events/orientation-26",
+      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791240149/Untitled_design_6.png",
+    route: "/events/Pintura",
   },
   {
     number: "04",
     title: "ABHYUDAYA",
     subtitle: "ART MEETS ARCHITECTURE",
     image:
-      "https://images.unsplash.com/photo-1561214115-f2f134cc4912?auto=format&fit=crop&w=2200&q=90",
-    route: "/events/pintura-de-pilares",
+      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791238734/WhatsApp_Image_2026-10-06_at_3.33.19_AM.png",
+    route: "/events/Abhyudaya",
   },
 ];
 

@@ -530,18 +530,21 @@ export default function Home() {
   ========================================================== */
 
   const paragraphText =
-    "Great experiences begin with simple ideas, thoughtful design, and meaningful interactions that people remember.";
+    "A vibrant hub of creativity and talent, the Cultural Sub Council of Madan Mohan Malaviya University of Technology, Gorakhpur brings the campus alive through music, dance, theatre, and performance. From HEATS to the flagship fest Abhyudaya, it provides a platform for students to express, create, and inspire.";
 
   return (
     <div
       className="
         relative
+        mt-[-40px]
         min-h-screen
         w-full
         overflow-x-clip
         bg-[#2D0E05]
         font-sans
-        text-[#F8F1DF]
+       text-[12px]
+    text-[#2B0A12]
+        
         selection:bg-[#C9A24D]
         selection:text-[#1D070D]
       "
@@ -585,54 +588,57 @@ export default function Home() {
             FESTIVAL IMAGE
         ==================================================== */}
 
-        <motion.div
-          className="
-            absolute
-            inset-[-2%]
-            z-0
-            overflow-hidden
-          "
-          animate={
-            shouldReduceMotion
-              ? {
-                  scale: 1,
-                }
-              : {
-                  scale: [
-                    1,
-                    1.018,
-                    1,
-                  ],
-                }
-          }
-          transition={{
-            duration: 18,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          style={{
-            x: shouldReduceMotion
-              ? 0
-              : smoothX,
-            y: shouldReduceMotion
-              ? 0
-              : smoothY,
-          }}
-        >
-          <img
-            src={HERO_IMAGE}
-            alt="Cultural festival performance"
-            className="
-              h-full
-              min-h-screen
-              w-full
-              select-none
-              object-cover
-              object-center
-            "
-            draggable="false"
-          />
-        </motion.div>
+       <motion.div
+  className="
+    absolute
+    inset-[-2%]
+    z-0
+    overflow-hidden
+  "
+  animate={
+    shouldReduceMotion
+      ? {
+          scale: 1,
+        }
+      : {
+          scale: [
+            1,
+            1.018,
+            1,
+          ],
+        }
+  }
+  transition={{
+    duration: 18,
+    repeat: Infinity,
+    ease: "easeInOut",
+  }}
+  style={{
+    x: shouldReduceMotion
+      ? 0
+      : smoothX,
+    y: shouldReduceMotion
+      ? 0
+      : smoothY,
+  }}
+>
+  <video
+    src="https://res.cloudinary.com/yh0rqnnu/video/upload/v1791223934/savefromins.com__The_spark_is_lit._The_stage_is_calling._Abhyudaya_is_ready_to_unfold.____The_calm_before_the_storm_begins_now._A_spark_of_art_culture_and_creativity_is_about_to_ignite_something_unforge.mp4"
+    autoPlay
+    muted
+    loop
+    playsInline
+    preload="auto"
+    className="
+      h-full
+      min-h-screen
+      w-full
+      select-none
+      object-cover
+      object-center
+    "
+  />
+</motion.div>
 
         {/* ====================================================
             VERY SUBTLE IMAGE DEPTH
@@ -888,10 +894,10 @@ For Every Expression`}
                 }}
                 className="
                   max-w-[510px]
-                  text-sm
+                  text-xs
                   leading-7
                   text-[#FFF4DF]
-                  mt-[-30px]
+                  mt-[60px]
                   drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]
                   sm:text-base
                   sm:leading-8
@@ -1064,7 +1070,7 @@ For Every Expression`}
         >
           <LineTextReveal
             text={paragraphText}
-            eyebrow="PERSPECTIVE / CRAFT"
+            eyebrow="About / CSC"
             duration={0.85}
             stagger={0.12}
             delay={0.3}
