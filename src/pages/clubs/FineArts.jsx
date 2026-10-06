@@ -9,16 +9,16 @@ import Footer from "../../components/Footer";
 
 const facultyMessages = [
   {
-    name: "Faculty Name",
+    name: "Dr.Sumit Kumar",
     designation: "Faculty In-Charge, Fine Arts Club",
-    image: "/faculty/finearts-faculty.jpg",
+    image: "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791293471/FAC_1.jpg",
     message:
       "Art gives imagination a form and ideas a language of their own. The Fine Arts Club provides students with a space to explore creativity, develop artistic skills and express their perspectives through visual art.",
   },
   {
-    name: "Faculty Name",
-    designation: "Faculty Coordinator",
-    image: "/faculty/finearts-coordinator.jpg",
+    name: "Dr.Shalabh Kumar Mishra",
+    designation: "Faculty In-Charge, Fine Arts Club",
+    image: "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791293470/FAC_2.jpg",
     message:
       "Every artwork begins with an idea, a feeling or a simple observation. The Fine Arts Club encourages students to experiment, create and discover their own artistic voice while contributing to the cultural life of the campus.",
   },

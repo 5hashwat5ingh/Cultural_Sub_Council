@@ -446,11 +446,7 @@ export default function Pintura() {
       </p>
     </div>
   </motion.div>
-
-
-  {/* 05 — Transformation */}
   
-
 </div>
      
 
