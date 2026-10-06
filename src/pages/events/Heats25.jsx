@@ -43,37 +43,37 @@ const stagger = {
 const highlights = [
   {
     number: "01",
-    title: "Dance",
+    title: "Exploration",
     description:
-      "Energetic performances bringing rhythm, movement and expression to the stage.",
+      "A vibrant space for freshmen to discover their passions, talents and creative potential.",
   },
 
   {
     number: "02",
-    title: "Dramatics",
+    title: "Expression",
     description:
-      "Stories, characters and emotions brought alive through theatrical performances.",
+      "Transforming individuality and imagination into captivating forms of artistic expression.",
   },
 
   {
     number: "03",
-    title: "Music",
+    title: "Showcase",
     description:
-      "Vocal and instrumental performances celebrating the power of music.",
+      "A platform to step forward, take the spotlight and let your talent speak for itself.",
   },
 
   {
     number: "04",
-    title: "Fine Arts",
+    title: "Collaboration",
     description:
-      "Creative expression through drawing, painting and visual artistic forms.",
+      "Creating connections, fostering camaraderie and bringing diverse talents together.",
   },
 
   {
     number: "05",
-    title: "Photography",
+    title: " Belonging",
     description:
-      "Moments, perspectives and stories captured through the lens.",
+      "The beginning of new journeys, new friendships and becoming part of the cultural community.",
   },
 ];
 

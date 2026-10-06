@@ -43,37 +43,37 @@ const stagger = {
 const highlights = [
   {
     number: "01",
-    title: "Dance",
+    title: "Imagination",
     description:
-      "Energetic performances bringing rhythm, movement and expression to the stage.",
+      "Giving form to thoughts and feelings through colour, composition and visual storytelling."
   },
 
   {
     number: "02",
-    title: "Dramatics",
+    title: "Colourscape",
     description:
-      "Stories, characters and emotions brought alive through theatrical performances.",
+      "Transforming plain pillars into vibrant canvases that command attention.",
   },
 
   {
     number: "03",
-    title: "Music",
+    title: "Storytelling",
     description:
-      "Vocal and instrumental performances celebrating the power of music.",
+      "Turning personal experiences and emotions into artworks that speak without words.",
   },
 
   {
     number: "04",
-    title: "Fine Arts",
+    title: "Transformation",
     description:
-      "Creative expression through drawing, painting and visual artistic forms.",
+      "Reimagining everyday spaces and giving them a distinctive artistic identity.",
   },
 
   {
     number: "05",
-    title: "Photography",
+    title: "Legacy",
     description:
-      "Moments, perspectives and stories captured through the lens.",
+      "Leaving behind a colourful imprint that preserves moments, memories and stories on campus.",
   },
 ];
 
@@ -332,131 +332,194 @@ export default function Pintura() {
       {/* =====================================================
           EVENT HIGHLIGHTS
       ===================================================== */}
+ <section className="relative overflow-hidden bg-[#DCD3A4] px-6 py-20 sm:px-12 sm:py-24 lg:px-20 lg:py-28">
 
+        <div className="pointer-events-none absolute right-[-10%] top-[5%] h-[450px] w-[450px] rounded-full bg-[#C6A15B]/[0.10] blur-[120px]" />
+
+        <div className="relative z-10 mx-auto max-w-[1500px]">
+
+          {/* Header */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeUp}
+            className="mb-12"
+          >
+            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#7A1B2F]">
+              CULTURAL FEST
+            </p>
+
+            <div className="mt-5 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+
+              <h2 className="max-w-4xl text-[clamp(2.7rem,5vw,5.5rem)] font-semibold leading-[0.9] tracking-[-0.06em] text-[#2B0A12]">
+                Where talent
+                <br />
+                <span className="text-[#7A1B2F]">
+                  takes the stage.
+                </span>
+              </h2>
+
+              <p className="max-w-sm text-sm leading-7 text-[#5A4A46]">
+                A celebration of creativity, talent and student expression,
+                bringing the university community together through culture.
+              </p>
+
+            </div>
+          </motion.div>
+
+
+          {/* Cultural Fest Cards */}
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
+
+            {/* Imagination */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-70px" }}
+              variants={fadeUp}
+              transition={{ delay: 0 }}
+              className="group relative min-h-[245px] overflow-hidden rounded-2xl border border-[#7A1B2F]/10 bg-[#F5EFD0]/75 p-6 transition-all duration-500 hover:-translate-y-1 hover:border-[#C6A15B]/60 hover:bg-[#F5EFD0]"
+            >
+              <div className="flex">
+                <span className="text-[9px] font-semibold tracking-[0.25em] text-[#7A1B2F]/60">
+                  01
+                </span>
+
+                <span className="h-px w-7 bg-[#C6A15B]/70 transition-all duration-500 group-hover:w-12" />
+              </div>
+
+              <h3 className="mt-14 text-2xl font-semibold tracking-[-0.04em] text-[#2B0A12] sm:text-3xl">
+                Imagination
+              </h3>
+
+              <p className="mt-4 text-sm leading-7 text-[#5C514A]">
+                Giving form to thoughts and feelings through colour, composition and visual storytelling.
+              </p>
+
+              <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-[#C6A15B] transition-all duration-500 group-hover:w-full" />
+            </motion.div>
+
+
+            {/* Colourscape */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-70px" }}
+              variants={fadeUp}
+              transition={{ delay: 0.06 }}
+              className="group relative min-h-[245px] overflow-hidden rounded-2xl border border-[#7A1B2F]/10 bg-[#F5EFD0]/75 p-6 transition-all duration-500 hover:-translate-y-1 hover:border-[#C6A15B]/60 hover:bg-[#F5EFD0]"
+            >
+              <div className="flex items-center justify-between">
+                <span className="text-[9px] font-semibold tracking-[0.25em] text-[#7A1B2F]/60">
+                  02
+                </span>
+
+                <span className="h-px w-7 bg-[#C6A15B]/70 transition-all duration-500 group-hover:w-12" />
+              </div>
+
+              <h3 className="mt-14 text-2xl font-semibold tracking-[-0.04em] text-[#2B0A12] sm:text-3xl">
+                Colourscape
+              </h3>
+
+              <p className="mt-4 text-sm leading-7 text-[#5C514A]">
+                Transforming plain pillars into vibrant canvases that command attention.
+              </p>
+
+              <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-[#C6A15B] transition-all duration-500 group-hover:w-full" />
+            </motion.div>
+
+
+            {/* Storytelling */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-70px" }}
+              variants={fadeUp}
+              transition={{ delay: 0.12 }}
+              className="group relative min-h-[245px] overflow-hidden rounded-2xl border border-[#7A1B2F]/10 bg-[#F5EFD0]/75 p-6 transition-all duration-500 hover:-translate-y-1 hover:border-[#C6A15B]/60 hover:bg-[#F5EFD0]"
+            >
+              <div className="flex items-center justify-between">
+                <span className="text-[9px] font-semibold tracking-[0.25em] text-[#7A1B2F]/60">
+                  03
+                </span>
+
+                <span className="h-px w-7 bg-[#C6A15B]/70 transition-all duration-500 group-hover:w-12" />
+              </div>
+
+              <h3 className="mt-14 text-2xl font-semibold tracking-[-0.04em] text-[#2B0A12] sm:text-3xl">
+                Storytelling
+              </h3>
+
+              <p className="mt-4 text-sm leading-7 text-[#5C514A]">
+                Turning personal experiences and emotions into artworks that speak without words.
+              </p>
+
+              <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-[#C6A15B] transition-all duration-500 group-hover:w-full" />
+            </motion.div>
+
+
+            {/* Transformation */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-70px" }}
+              variants={fadeUp}
+              transition={{ delay: 0.18 }}
+              className="group relative min-h-[245px] overflow-hidden rounded-2xl border border-[#7A1B2F]/10 bg-[#F5EFD0]/75 p-6 transition-all duration-500 hover:-translate-y-1 hover:border-[#C6A15B]/60 hover:bg-[#F5EFD0]"
+            >
+              <div className="flex ">
+                <span className="text-[9px] font-semibold tracking-[0.25em] text-[#7A1B2F]/60">
+                  04
+                </span>
+
+                <span className="h-px w-7 bg-[#C6A15B]/70 transition-all duration-500 group-hover:w-12" />
+              </div>
+
+              <h3 className="mt-14 text-2xl font-semibold tracking-[-0.04em] text-[#2B0A12] sm:text-3xl">
+                Transformation
+              </h3>
+
+              <p className="mt-4 text-sm leading-7 text-[#5C514A]">
+                Reimagining everyday spaces and giving them a distinctive artistic identity.
+              </p>
+
+              <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-[#C6A15B] transition-all duration-500 group-hover:w-full" />
+            </motion.div>
+
+
+            {/* Legacy */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-70px" }}
+              variants={fadeUp}
+              transition={{ delay: 0.24 }}
+              className="group relative min-h-[245px] overflow-hidden rounded-2xl border border-[#7A1B2F]/10 bg-[#F5EFD0]/75 p-6 transition-all duration-500 hover:-translate-y-1 hover:border-[#C6A15B]/60 hover:bg-[#F5EFD0]"
+            >
+              <div className="flex items-center justify-between">
+                <span className="text-[9px] font-semibold tracking-[0.25em] text-[#7A1B2F]/60">
+                  05
+                </span>
+
+                <span className="h-px w-7 bg-[#C6A15B]/70 transition-all duration-500 group-hover:w-12" />
+              </div>
+
+              <h3 className="mt-14 text-2xl font-semibold tracking-[-0.04em] text-[#2B0A12] sm:text-3xl">
+                Legacy
+              </h3>
+
+              <p className="mt-4 text-sm leading-7 text-[#5C514A]">
+                Leaving behind a colourful imprint that preserves moments, memories and stories on campus.
+              </p>
+
+              <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-[#C6A15B] transition-all duration-500 group-hover:w-full" />
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
       
-<div className="mt-6 grid gap-4 sm:grid-cols-4 lg:grid-cols-4">
-
-  {/* 01 — Themes */}
-  <motion.div
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, amount: 0.2 }}
-    transition={{ duration: 0.6 }}
-    className="group flex min-h-[330px] flex-col rounded-[22px] bg-[#F5EFD0] p-8 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(43,10,18,0.08)]"
-  >
-    <div className="flex items-center justify-between">
-      <span className="text-[11px] tracking-[0.3em] text-[#A05A6C]">
-        01
-      </span>
-
-      <span className="h-px w-10 bg-[#C6A15B]" />
-    </div>
-
-    <div className="mt-auto">
-      <h3 className="min-h-[48px] text-[30px] font-medium leading-[1.05] tracking-[-0.04em] text-[#2B0A12]">
-        Themes
-      </h3>
-
-      <p className="mt-6 text-[15px] leading-7 text-[#6B5750]">
-        Ideas and stories transformed into meaningful visual concepts across
-        every painted pillar.
-      </p>
-    </div>
-  </motion.div>
-
-
-  {/* 02 — Colours */}
-  <motion.div
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, amount: 0.2 }}
-    transition={{ duration: 0.6, delay: 0.08 }}
-    className="group flex min-h-[330px] flex-col rounded-[22px] bg-[#F5EFD0] p-8 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(43,10,18,0.08)]"
-  >
-    <div className="flex items-center justify-between">
-      <span className="text-[11px] tracking-[0.3em] text-[#A05A6C]">
-        02
-      </span>
-
-      <span className="h-px w-10 bg-[#C6A15B]" />
-    </div>
-
-    <div className="mt-auto">
-      <h3 className="min-h-[48px] text-[30px] font-medium leading-[1.05] tracking-[-0.04em] text-[#2B0A12]">
-        Colours
-      </h3>
-
-      <p className="mt-6 text-[15px] leading-7 text-[#6B5750]">
-        Bold palettes, expressive strokes and colour combinations bringing
-        each composition to life.
-      </p>
-    </div>
-  </motion.div>
-
-
-  {/* 03 — Creativity */}
-  <motion.div
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, amount: 0.2 }}
-    transition={{ duration: 0.6, delay: 0.16 }}
-    className="group flex min-h-[330px] flex-col rounded-[22px] bg-[#F5EFD0] p-8 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(43,10,18,0.08)]"
-  >
-    <div className="flex items-center justify-between">
-      <span className="text-[11px] tracking-[0.3em] text-[#A05A6C]">
-        03
-      </span>
-
-      <span className="h-px w-10 bg-[#C6A15B]" />
-    </div>
-
-    <div className="mt-auto">
-      <h3 className="min-h-[48px] text-[30px] font-medium leading-[1.05] tracking-[-0.04em] text-[#2B0A12]">
-        Creativity
-      </h3>
-
-      <p className="mt-6 text-[15px] leading-7 text-[#6B5750]">
-        Original ideas and artistic imagination turning ordinary spaces into
-        distinctive visual stories.
-      </p>
-    </div>
-  </motion.div>
-
-
-  {/* 04 — Expression */}
-  <motion.div
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, amount: 0.2 }}
-    transition={{ duration: 0.6, delay: 0.24 }}
-    className="group flex min-h-[330px] flex-col rounded-[22px] bg-[#F5EFD0] p-8 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(43,10,18,0.08)]"
-  >
-    <div className="flex items-center justify-between">
-      <span className="text-[11px] tracking-[0.3em] text-[#A05A6C]">
-        04
-      </span>
-
-      <span className="h-px w-10 bg-[#C6A15B]" />
-    </div>
-
-    <div className="mt-auto">
-      <h3 className="min-h-[48px] text-[30px] font-medium leading-[1.05] tracking-[-0.04em] text-[#2B0A12]">
-        Expression
-      </h3>
-
-      <p className="mt-6 text-[15px] leading-7 text-[#6B5750]">
-        Paintings that communicate emotions, identities, ideas and stories
-        through visual language.
-      </p>
-    </div>
-  </motion.div>
-
-
-  {/* 05 — Transformation */}
-  
-
-</div>
-     
 
       {/* =====================================================
           GALLERY
