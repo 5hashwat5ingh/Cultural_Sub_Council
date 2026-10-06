@@ -84,27 +84,31 @@ const highlights = [
 
 const galleryImages = [
   {
-    src: "https://i.ibb.co/Vpgx91sd/2A6A5819.jpg",
+    src: "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791279613/20260111_161151.jpg",
     alt: "Cultural event performance",
   },
 
   {
-    src: "https://i.ibb.co/ksD32vL1/2A6A5904.jpg",
+    src: "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791279135/20260111_150322.jpg",
     alt: "Festival crowd",
   },
 
   {
-    src: "https://i.ibb.co/BHPPzP8B/2A6A6746.jpg",
+    src: "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791279088/20260111_143822.jpg",
     alt: "Live performance",
   },
 
   {
-    src: "https://i.ibb.co/Ps06hmHw/IMG-0605.jpg",
+    src: "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791279051/20260111_144416.jpg",
     alt: "Cultural celebration",
   },
 
   {
-    src: "https://i.ibb.co/pvnc00py/IMG-1459.jpg",
+    src: "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791278986/20260111_150256.jpg",
+    alt: "Stage performance",
+  },
+  {
+    src: "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791278927/20260111_160931.jpg",
     alt: "Stage performance",
   },
 ];

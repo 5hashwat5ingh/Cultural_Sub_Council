@@ -83,27 +83,31 @@ const highlights = [
 
 const galleryImages = [
   {
-    src: "https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=1400&q=85",
+    src: " https://res.cloudinary.com/ttlzk1ac/image/upload/v1791281467/3.jpg",
     alt: "Cultural event performance",
   },
 
   {
-    src: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=1000&q=85",
+    src: "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791281933/6.jpg",
     alt: "Festival crowd",
   },
 
   {
-    src: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1000&q=85",
+    src: "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791281467/4.jpg",
     alt: "Live performance",
   },
 
   {
-    src: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1000&q=85",
+    src: "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791281467/1.jpg",
     alt: "Cultural celebration",
   },
 
   {
-    src: "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&w=1000&q=85",
+    src: "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791281467/2.jpg",
+    alt: "Stage performance",
+  },
+  {
+    src: "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791281467/5.jpg",
     alt: "Stage performance",
   },
 ];
