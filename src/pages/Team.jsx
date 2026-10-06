@@ -83,42 +83,7 @@ function TeamCard({ member, index }) {
           "
         />
 
-        {/* =================================================
-            YEAR LABEL
-        ================================================= */}
-
-        <div
-          className="
-            absolute
-            left-3
-            top-3
-            z-20
-            rounded-full
-            border
-            border-[#C6A15B]/50
-            bg-[#DCD3A4]/90
-            px-3
-            py-1.5
-            backdrop-blur-md
-            sm:left-3.5
-            sm:top-3.5
-            sm:px-3.5
-            sm:py-1.5
-          "
-        >
-          <span
-            className="
-              text-[7px]
-              font-semibold
-              uppercase
-              tracking-[0.18em]
-              text-[#7A1B2F]
-              sm:text-[8px]
-            "
-          >
-            {member.year}
-          </span>
-        </div>
+        
 
         {/* =================================================
             SUBTLE BOTTOM FADE

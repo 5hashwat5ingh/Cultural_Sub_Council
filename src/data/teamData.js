@@ -17,7 +17,7 @@ export const teamMembers = [
     role: "Cultural Secretary",
     year: "Final Year",
     image:
-      "https://res.cloudinary.com/yh0rqnnu/image/upload/f_auto,q_auto/WhatsApp_Image_2026-09-29_at_10.42.23_PM",
+      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791290714/vaibhav_sir.jpg",
   },
 
   {
@@ -42,7 +42,7 @@ export const teamMembers = [
     role: "Event Planning Head",
     year: "Final Year",
     image:
-      "https://res.cloudinary.com/yh0rqnnu/image/upload/f_auto,q_auto/WhatsApp_Image_2026-09-29_at_10.42.23_PM",
+      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791287359/snehil_sir_updated.jpg",
   },
 
   {
@@ -51,7 +51,7 @@ export const teamMembers = [
     role: "Soical Media Head",
     year: "Final Year",
     image:
-      "https://res.cloudinary.com/yh0rqnnu/image/upload/f_auto,q_auto/WhatsApp_Image_2026-09-29_at_10.42.23_PM",
+      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791286845/utkarsh.jpg",
   },
   {
     id: 6,
@@ -59,7 +59,7 @@ export const teamMembers = [
     role: " Music Club Head",
     year: "Final Year",
     image:
-      "https://res.cloudinary.com/yh0rqnnu/image/upload/f_auto,q_auto/WhatsApp_Image_2026-09-29_at_10.42.23_PM",
+      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791287226/anurag_sir_updated.jpg",
   },
 {
     id: 7,
@@ -67,7 +67,7 @@ export const teamMembers = [
     role: " Music Club Head",
     year: "Final Year",
     image:
-      "https://res.cloudinary.com/yh0rqnnu/image/upload/f_auto,q_auto/WhatsApp_Image_2026-09-29_at_10.42.23_PM",
+      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791291549/anshika_maam.jpg",
   },
   {
     id: 8,
@@ -75,7 +75,7 @@ export const teamMembers = [
     role: " Music Club Joint Head",
     year: "Final Year",
     image:
-      "https://res.cloudinary.com/yh0rqnnu/image/upload/f_auto,q_auto/WhatsApp_Image_2026-09-29_at_10.42.23_PM",
+      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791292435/vishu_sir.jpg",
   },
   {
     id: 9,
@@ -83,7 +83,7 @@ export const teamMembers = [
     role: " Music Club Head",
     year: "Final Year",
     image:
-      "https://res.cloudinary.com/yh0rqnnu/image/upload/f_auto,q_auto/WhatsApp_Image_2026-09-29_at_10.42.23_PM",
+      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791286844/shristi.jpg",
   },
   {
     id: 10,
@@ -91,7 +91,7 @@ export const teamMembers = [
     role: " Technical Club Head",
     year: "Final Year",
     image:
-      "https://res.cloudinary.com/yh0rqnnu/image/upload/f_auto,q_auto/WhatsApp_Image_2026-09-29_at_10.42.23_PM",
+      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791286845/vishal.jpg",
   },
   {
     id: 11,
@@ -99,7 +99,7 @@ export const teamMembers = [
     role: " Technical Club Head",
     year: "Final Year",
     image:
-      "https://res.cloudinary.com/yh0rqnnu/image/upload/f_auto,q_auto/WhatsApp_Image_2026-09-29_at_10.42.23_PM",
+      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791286844/abhishek_nigam.jpg",
   },
   {
     id: 12,
@@ -107,7 +107,7 @@ export const teamMembers = [
     role: " Technical Club Head",
     year: "Final Year",
     image:
-      "https://res.cloudinary.com/yh0rqnnu/image/upload/f_auto,q_auto/WhatsApp_Image_2026-09-29_at_10.42.23_PM",
+      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791290432/aviral_omar_updated.jpg",
   },
   {
     id: 13,
@@ -115,7 +115,7 @@ export const teamMembers = [
     role: "FineArts Club Head",
     year: "Final Year",
     image:
-      "https://res.cloudinary.com/yh0rqnnu/image/upload/f_auto,q_auto/WhatsApp_Image_2026-09-29_at_10.42.23_PM",
+      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791286845/shreyansh_sengar.jpg",
   },
 {
     id: 14,
@@ -123,7 +123,7 @@ export const teamMembers = [
     role: "FineArts Club Head",
     year: "Final Year",
     image:
-      "https://res.cloudinary.com/yh0rqnnu/image/upload/f_auto,q_auto/WhatsApp_Image_2026-09-29_at_10.42.23_PM",
+      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791287351/anju_mani_maam_updated.jpg",
   },
   {
     id: 15,
@@ -139,7 +139,7 @@ export const teamMembers = [
     role: "Dramatics Club Head",
     year: "Final Year",
     image:
-      "https://res.cloudinary.com/yh0rqnnu/image/upload/f_auto,q_auto/WhatsApp_Image_2026-09-29_at_10.42.23_PM",
+      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791286844/ajay.jpg",
   },
   {
     id: 17,
@@ -147,7 +147,7 @@ export const teamMembers = [
     role: "Dramatics Club Joint Head",
     year: "Final Year",
     image:
-      "https://res.cloudinary.com/yh0rqnnu/image/upload/f_auto,q_auto/WhatsApp_Image_2026-09-29_at_10.42.23_PM",
+      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791291791/muskan_maam.jpg",
   },
 
   {
@@ -156,7 +156,7 @@ export const teamMembers = [
     role: "Photography Club Head",
     year: "Final Year",
     image:
-      "https://res.cloudinary.com/yh0rqnnu/image/upload/f_auto,q_auto/WhatsApp_Image_2026-09-29_at_10.42.23_PM",
+      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791289783/sudhanshu.jpg",
   },
   {
     id: 18,
@@ -166,13 +166,21 @@ export const teamMembers = [
     image:
       "https://i.ibb.co/nMkDFCwY/1000319017-Shashikant-Vishwakarma.jpg",
   },
+  {
+    id:38 ,
+    name: "Mahi Mall",
+    role: "FineArts Club Joint Head",
+    year: "Final Year",
+    image:
+      "https://i.ibb.co/hFCtvfCZ/Whats-App-Image-2026-10-06-at-01-43-20.jpg",
+  }
    
 
   /* =======================================================
      PRE-FINAL YEAR
   ======================================================= */
 
-  {
+  ,{
     id:19,
     name: "Nishant Kasana",
     role: "Joint Cultural Secretary",
@@ -187,7 +195,7 @@ export const teamMembers = [
     role: "Joint Cultural Secretary",
     year: "Pre-Final Year",
     image:
-      "https://i.ibb.co/35dsjfq8/IMG-20260915-WA0108-Meenakashi-Sharma.jpg",
+      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791291035/IMG-20261006-WA0081.jpg",
   },
 
   {
@@ -214,7 +222,7 @@ export const teamMembers = [
     role: "Event Coordinator",
     year: "Pre-Final Year",
     image:
-      "https://i.ibb.co/PzYW5h1Q/1000088929-11zon-Yash-Gauba.jpg",
+      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791291367/yash.jpg",
   },
 {
     id:24,
@@ -270,7 +278,7 @@ id: 27,
     role: "Music Club Executive",
     year: "Pre-Final Year",
     image:
-      "https://res.cloudinary.com/yh0rqnnu/image/upload/f_auto,q_auto/WhatsApp_Image_2026-09-29_at_10.42.23_PM",
+      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791292283/akshansh.jpg",
   }
   ,{
     id:31 ,
@@ -278,7 +286,7 @@ id: 27,
     role: "Music Club Executive",
     year: "Pre-Final Year",
     image:
-      "https://res.cloudinary.com/yh0rqnnu/image/upload/f_auto,q_auto/WhatsApp_Image_2026-09-29_at_10.42.23_PM",
+      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791290173/naman.jpg",
   },
 
   {
@@ -287,7 +295,7 @@ id: 27,
     role: "Dance Club Joint Head",
     year: "Pre-Final Year",
     image:
-      "https://res.cloudinary.com/yh0rqnnu/image/upload/f_auto,q_auto/WhatsApp_Image_2026-09-29_at_10.42.23_PM",
+      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791290487/alok.jpg",
   },
 
   {
@@ -296,7 +304,7 @@ id: 27,
     role: "Dance Club Joint Head",
     year: "Pre-Final Year",
     image:
-      "https://i.ibb.co/zWPvbDvN/Whats-App-Image-2026-10-06-at-01-40-53.jpg",
+      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791291966/riya.jpg",
   }
   ,{
     id:35 ,
@@ -304,7 +312,7 @@ id: 27,
     role: "Dance Club Executive",
     year: "Pre-Final Year",
     image:
-      "https://i.ibb.co/XrpRf94Q/1000181773-30kb-Namrata-Singh.jpg",
+      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791292594/namrata.jpg",
   },
   {
     id:36 ,
@@ -321,14 +329,6 @@ id: 27,
     year: "Pre-Final Year",
     image:
       "https://i.ibb.co/ymBR81bV/Whats-App-Image-2026-10-06-at-01-54-08-1.jpg",
-  }
-  ,{
-    id:38 ,
-    name: "Mahi Mall",
-    role: "FineArts Club Joint Head",
-    year: "Pre-Final Year",
-    image:
-      "https://i.ibb.co/hFCtvfCZ/Whats-App-Image-2026-10-06-at-01-43-20.jpg",
   }
   ,{
     id:39 ,
@@ -376,7 +376,7 @@ id: 27,
     role: "Dramatics Club Executive",
     year: "Pre-Final Year",
     image:
-      "https://res.cloudinary.com/yh0rqnnu/image/upload/f_auto,q_auto/WhatsApp_Image_2026-09-29_at_10.42.23_PM",
+      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791293050/ujala.jpg",
   }
   ,{
     id:45 ,
@@ -384,7 +384,7 @@ id: 27,
     role: "Dramatics Club Executive",
     year: "Pre-Final Year",
     image:
-      "https://res.cloudinary.com/yh0rqnnu/image/upload/f_auto,q_auto/WhatsApp_Image_2026-09-29_at_10.42.23_PM",
+      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791292893/anshi.jpg",
   }
   ,{
     id:46 ,
@@ -408,7 +408,7 @@ id: 27,
     role: "Photography Club Joint Head",
     year: "Pre-Final Year",
     image:
-      "https://res.cloudinary.com/yh0rqnnu/image/upload/f_auto,q_auto/WhatsApp_Image_2026-09-29_at_10.42.23_PM",
+      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791289782/chandransh.jpg",
   }
   ,{
     id:49 ,
