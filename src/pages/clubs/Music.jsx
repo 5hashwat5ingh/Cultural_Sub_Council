@@ -93,7 +93,7 @@ const achievements = [
 export default function Music() {
   return (
     <main className="min-h-screen overflow-hidden bg-[#DCD3A4] text-[#241018]">
-      <Navbar Home />
+      <Navbar Gallery />
 
       {/* =====================================================
           HERO
@@ -170,93 +170,7 @@ export default function Music() {
         </div>
       </section>
 
-      {/* =====================================================
-          FACULTY MESSAGES
-      ===================================================== */}
-
-      <section className="relative overflow-hidden bg-[#DCD3A4] px-6 py-20 sm:px-12 lg:px-20 lg:py-28">
-
-        {/* Ambient glow */}
-        <div className="pointer-events-none absolute left-[-12%] top-[-8%] h-[520px] w-[520px] rounded-full bg-[#7A1B2F]/[0.10] blur-[120px]" />
-
-        <div className="pointer-events-none absolute right-[-12%] top-[25%] h-[460px] w-[460px] rounded-full bg-[#8B1E3F]/[0.07] blur-[120px]" />
-
-        <div className="pointer-events-none absolute bottom-[-15%] right-[-5%] h-[500px] w-[500px] rounded-full bg-[#C6A15B]/[0.14] blur-[120px]" />
-
-        <div className="relative z-10 mx-auto max-w-[1500px]">
-
-          {/* Header */}
-          <div className="mb-12">
-            <div className="mb-5 flex items-center gap-4">
-              <span className="text-xs uppercase tracking-[0.28em] text-[#7A1B2F]">
-                A Word From Our Faculty
-              </span>
-
-              <span className="h-px w-16 bg-[#7A1B2F]/30" />
-            </div>
-
-            <h2 className="max-w-3xl text-4xl font-medium leading-[0.95] tracking-[-0.05em] text-[#2B0A12] sm:text-5xl lg:text-7xl">
-              Guided by
-              <br />
-              <span className="text-[#7A1B2F]">experience.</span>
-            </h2>
-          </div>
-
-          {/* Faculty cards */}
-          {/* Faculty cards */}
-<div className="grid gap-5 md:grid-cols-3">
-  {facultyMessages.map((faculty, index) => (
-    <motion.article
-      key={index}
-      initial={{ opacity: 0, y: 25 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{
-        duration: 0.7,
-        delay: index * 0.1,
-      }}
-      className="group relative overflow-hidden rounded-2xl border border-[#7A1B2F]/10 bg-[#F5EFD0]/75 p-5 sm:p-6"
-    >
-      {/* Gold accent */}
-      <div className="absolute left-0 top-0 h-1 w-full bg-[#C6A15B] scale-x-0 origin-left transition-transform duration-500 group-hover:scale-x-100" />
-
-      <div className="flex items-center gap-4">
-        {/* Faculty image */}
-        <div className="h-[68px] w-[68px] shrink-0 overflow-hidden rounded-full border border-[#C6A15B]/50 p-1">
-          <img
-            src={faculty.image}
-            alt={faculty.name}
-            className="h-full w-full rounded-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0"
-          />
-        </div>
-
-        {/* Name + designation */}
-        <div className="min-w-0">
-          <h3 className="text-sm font-semibold leading-tight text-[#2B0A12]">
-            {faculty.name}
-          </h3>
-
-          <p className="mt-1 text-[9px] uppercase tracking-[0.14em] text-[#7A1B2F]">
-            {faculty.designation}
-          </p>
-        </div>
-      </div>
-
-      {/* Short message */}
-      <p className="mt-5 border-t border-[#7A1B2F]/10 pt-4 font-serif text-sm italic leading-[1.6] text-[#5A3940]">
-        "{faculty.message}"
-      </p>
-
-      {/* Quote mark */}
-      <span className="absolute bottom-3 right-5 font-serif text-5xl leading-none text-[#C6A15B]/20">
-        ”
-      </span>
-    </motion.article>
-  ))}
-</div>
-        </div>
-      </section>
-
+      
       {/* =====================================================
           ABOUT THE CLUB
       ===================================================== */}
@@ -476,6 +390,92 @@ export default function Music() {
             </div>
 
           </div>
+        </div>
+      </section>
+      {/* =====================================================
+          FACULTY MESSAGES
+      ===================================================== */}
+
+      <section className="relative overflow-hidden bg-[#DCD3A4] px-6 py-20 sm:px-12 lg:px-20 lg:py-28">
+
+        {/* Ambient glow */}
+        <div className="pointer-events-none absolute left-[-12%] top-[-8%] h-[520px] w-[520px] rounded-full bg-[#7A1B2F]/[0.10] blur-[120px]" />
+
+        <div className="pointer-events-none absolute right-[-12%] top-[25%] h-[460px] w-[460px] rounded-full bg-[#8B1E3F]/[0.07] blur-[120px]" />
+
+        <div className="pointer-events-none absolute bottom-[-15%] right-[-5%] h-[500px] w-[500px] rounded-full bg-[#C6A15B]/[0.14] blur-[120px]" />
+
+        <div className="relative z-10 mx-auto max-w-[1500px]">
+
+          {/* Header */}
+          <div className="mb-12">
+            <div className="mb-5 flex items-center gap-4">
+              <span className="text-xs uppercase tracking-[0.28em] text-[#7A1B2F]">
+                A Word From Our Faculty
+              </span>
+
+              <span className="h-px w-16 bg-[#7A1B2F]/30" />
+            </div>
+
+            <h2 className="max-w-3xl text-4xl font-medium leading-[0.95] tracking-[-0.05em] text-[#2B0A12] sm:text-5xl lg:text-7xl">
+              Guided by
+              <br />
+              <span className="text-[#7A1B2F]">experience.</span>
+            </h2>
+          </div>
+
+          {/* Faculty cards */}
+          {/* Faculty cards */}
+<div className="grid gap-5 md:grid-cols-3">
+  {facultyMessages.map((faculty, index) => (
+    <motion.article
+      key={index}
+      initial={{ opacity: 0, y: 25 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{
+        duration: 0.7,
+        delay: index * 0.1,
+      }}
+      className="group relative overflow-hidden rounded-2xl border border-[#7A1B2F]/10 bg-[#F5EFD0]/75 p-5 sm:p-6"
+    >
+      {/* Gold accent */}
+      <div className="absolute left-0 top-0 h-1 w-full bg-[#C6A15B] scale-x-0 origin-left transition-transform duration-500 group-hover:scale-x-100" />
+
+      <div className="flex items-center gap-4">
+        {/* Faculty image */}
+        <div className="h-[68px] w-[68px] shrink-0 overflow-hidden rounded-full border border-[#C6A15B]/50 p-1">
+          <img
+            src={faculty.image}
+            alt={faculty.name}
+            className="h-full w-full rounded-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0"
+          />
+        </div>
+
+        {/* Name + designation */}
+        <div className="min-w-0">
+          <h3 className="text-sm font-semibold leading-tight text-[#2B0A12]">
+            {faculty.name}
+          </h3>
+
+          <p className="mt-1 text-[9px] uppercase tracking-[0.14em] text-[#7A1B2F]">
+            {faculty.designation}
+          </p>
+        </div>
+      </div>
+
+      {/* Short message */}
+      <p className="mt-5 border-t border-[#7A1B2F]/10 pt-4 font-serif text-sm italic leading-[1.6] text-[#5A3940]">
+        "{faculty.message}"
+      </p>
+
+      {/* Quote mark */}
+      <span className="absolute bottom-3 right-5 font-serif text-5xl leading-none text-[#C6A15B]/20">
+        ”
+      </span>
+    </motion.article>
+  ))}
+</div>
         </div>
       </section>
 

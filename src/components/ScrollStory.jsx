@@ -24,7 +24,7 @@ const DEFAULT_STORIES = [
     description:
       "Rap second position",
     image:
-      "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80",
+      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791320105/Screenshot_2025-11-09-19-01-41-423_com.miui.mediaviewer.jpg.jpg",
     alt: "Culture",
   },
 
@@ -44,7 +44,7 @@ const DEFAULT_STORIES = [
     description:
       "Second position in dress designing",
     image:
-      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
+      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791320185/WhatsApp_Image_2026-10-07_at_2.10.06_AM.jpg",
     alt: "Expression",
   },
 

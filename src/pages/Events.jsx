@@ -68,7 +68,7 @@ function EventLayer({
         absolute
         inset-0
         overflow-hidden
-        bg-[#1D070D]
+        
       "
       style={{
         y,
@@ -100,30 +100,13 @@ function EventLayer({
           MAROON COLOR TINT
       ================================================= */}
 
-      <div
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          bg-[#2B0A12]/5
-        "
-      />
+     
 
       {/* =================================================
           CINEMATIC GRADIENT
       ================================================= */}
 
-      <div
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          bg-gradient-to-t
-          from-[#1D070D]
-          via-[#1D070D]/5
-          to-transparent
-        "
-      />
+      
 
       {/* =================================================
           SUBTLE TOP GRADIENT
@@ -184,39 +167,8 @@ function EventLayer({
       gap-4
     "
   >
-    <span
-      className="
-        text-[8px]
-        font-medium
-        uppercase
-        tracking-[0.35em]
-        text-[#D9B86C]
-        sm:text-[9px]
-      "
-    >
-      Cultural Sub Council
-    </span>
+   
 
-    <span
-      className="
-        h-px
-        w-8
-        bg-[#C6A15B]/50
-        sm:w-10
-      "
-    />
-
-    <span
-      className="
-        text-[8px]
-        uppercase
-        tracking-[0.3em]
-        text-[#F7EBD0]/50
-        sm:text-[9px]
-      "
-    >
-      Event {event.number}
-    </span>
   </div>
 )}
 
@@ -496,20 +448,7 @@ export default function Events() {
             SCROLL PROGRESS
         ================================================= */}
 
-        <motion.div
-          style={{
-            width: progressWidth,
-          }}
-          className="
-            absolute
-            left-0
-            top-0
-            z-[100]
-            h-[2px]
-            bg-[#C6A15B]
-            shadow-[0_0_14px_rgba(198,161,91,0.5)]
-          "
-        />
+       
 
         {/* =================================================
             STICKY VIEWPORT
@@ -602,86 +541,14 @@ export default function Events() {
                 SIDE EVENT INDEX
             ================================================= */}
 
-            <div
-              className="
-                pointer-events-none
-                absolute
-                right-6
-                top-1/2
-                z-[90]
-                hidden
-                -translate-y-1/2
-                flex-col
-                items-end
-                gap-4
-                lg:flex
-              "
-            >
-              {events.map((event) => (
-                <div
-                  key={event.number}
-                  className="
-                    flex
-                    items-center
-                    gap-3
-                    text-[8px]
-                    uppercase
-                    tracking-[0.2em]
-                    text-[#F7EBD0]/45
-                  "
-                >
-                  <span>{event.number}</span>
-
-                  <span
-                    className="
-                      h-px
-                      w-5
-                      bg-[#C6A15B]/30
-                    "
-                  />
-                </div>
-              ))}
-            </div>
-
+           
             
 
             {/* =================================================
                 SCROLL LABEL
             ================================================= */}
 
-            <div
-              className="
-                pointer-events-none
-                absolute
-                bottom-7
-                right-7
-                z-[90]
-                hidden
-                items-center
-                gap-3
-                sm:flex
-                lg:right-10
-              "
-            >
-              <span
-                className="
-                  text-[8px]
-                  uppercase
-                  tracking-[0.3em]
-                  text-[#F7EBD0]/40
-                "
-              >
-                Scroll to explore
-              </span>
-
-              <span
-                className="
-                  h-8
-                  w-px
-                  bg-[#C6A15B]/30
-                "
-              />
-            </div>
+            
           </div>
           
         </div>

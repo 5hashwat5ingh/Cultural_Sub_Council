@@ -85,13 +85,13 @@ export default function Navbar({
         w-full
 
         px-5
-        py-5
+        py-1
 
         sm:px-8
-        sm:py-6
+        sm:py-7
 
         lg:px-16
-        lg:py-7
+        lg:py-4
 
         flex
         items-center
@@ -100,7 +100,7 @@ export default function Navbar({
         pointer-events-auto
 
         bg-transparent
-        backdrop-blur-[2px]
+        backdrop-blur-[1px]
       `}
     >
       {/* =====================================================
@@ -299,7 +299,7 @@ export default function Navbar({
                 font-medium
                 uppercase
                 tracking-[0.2em]
-                text-[#EDEDED]
+                text-[##C6A15B]
                 transition-all
                 duration-500
                 hover:-translate-y-0.5
@@ -313,7 +313,7 @@ export default function Navbar({
                   absolute
                   inset-0
                   -translate-x-full
-                  bg-[#EDEDED]
+                  bg-[#C6A15B]
                   transition-transform
                   duration-500
                   ease-[cubic-bezier(0.22,1,0.36,1)]

@@ -92,7 +92,7 @@ const achievements = [
 export default function DramaticsClub() {
   return (
     <main className="min-h-screen overflow-hidden bg-[#DCD3A4] text-[#241018]">
-      <Navbar Home />
+      <Navbar Gallery />
 
       {/* =====================================================
           HERO
@@ -290,241 +290,7 @@ export default function DramaticsClub() {
         </div>
       </section>
 
-      {/* =====================================================
-          FACULTY MESSAGES
-      ===================================================== */}
-
-      <section
-        className="
-          relative
-          overflow-hidden
-          bg-[#DCD3A4]
-          px-6
-          py-20
-          sm:px-12
-          lg:px-20
-          lg:py-28
-        "
-      >
-        {/* BACKGROUND GLOWS */}
-
-        <div
-          className="
-            pointer-events-none
-            absolute
-            left-[-12%]
-            top-[-10%]
-            h-[420px]
-            w-[420px]
-            rounded-full
-            bg-[#7A1B2F]/[0.08]
-            blur-[110px]
-          "
-        />
-
-        <div
-          className="
-            pointer-events-none
-            absolute
-            bottom-[-15%]
-            right-[-8%]
-            h-[420px]
-            w-[420px]
-            rounded-full
-            bg-[#C6A15B]/[0.10]
-            blur-[110px]
-          "
-        />
-
-        <div className="relative z-10 mx-auto max-w-[1400px]">
-          {/* HEADER */}
-
-          <div className="mb-12">
-            <div className="mb-4 flex items-center gap-4">
-              <span
-                className="
-                  text-[10px]
-                  font-semibold
-                  uppercase
-                  tracking-[0.3em]
-                  text-[#7A1B2F]
-                "
-              >
-                Faculty Messages
-              </span>
-
-              <span className="h-px w-12 bg-[#7A1B2F]/35" />
-            </div>
-
-            <h2
-              className="
-                text-5xl
-                font-medium
-                leading-[0.95]
-                tracking-[-0.05em]
-                text-[#241018]
-                sm:text-6xl
-                lg:text-7xl
-              "
-            >
-              Guided by
-              <br />
-              <span className="text-[#7A1B2F]">
-                experience.
-              </span>
-            </h2>
-          </div>
-
-          {/* FACULTY CARDS */}
-
-          <div className="grid gap-5 lg:grid-cols-2">
-            {facultyMessages.map((faculty, index) => (
-              <motion.article
-                key={index}
-                initial={{
-                  opacity: 0,
-                  y: 30,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                viewport={{
-                  once: true,
-                  amount: 0.2,
-                }}
-                transition={{
-                  duration: 0.75,
-                  delay: index * 0.12,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                whileHover={{
-                  y: -4,
-                }}
-                className="
-                  group
-                  relative
-                  overflow-hidden
-                  rounded-[22px]
-                  border
-                  border-[#7A1B2F]/15
-                  bg-[#E8DFB0]/80
-                  p-6
-                  transition-all
-                  duration-500
-                  hover:border-[#7A1B2F]/30
-                  hover:bg-[#EEE5B8]
-                  sm:p-7
-                "
-              >
-                {/* TOP LINE */}
-
-                <div
-                  className="
-                    absolute
-                    left-7
-                    right-7
-                    top-0
-                    h-[2px]
-                    bg-gradient-to-r
-                    from-transparent
-                    via-[#7A1B2F]/60
-                    to-transparent
-                  "
-                />
-
-                <div className="flex gap-5">
-                  {/* IMAGE */}
-
-                  <div
-                    className="
-                      relative
-                      h-[88px]
-                      w-[88px]
-                      shrink-0
-                      overflow-hidden
-                      rounded-full
-                      border
-                      border-[#7A1B2F]/25
-                      bg-[#DCD3A4]
-                      p-1
-                      sm:h-[100px]
-                      sm:w-[100px]
-                    "
-                  >
-                    <img
-                      src={faculty.image}
-                      alt={faculty.name}
-                      className="
-                        h-full
-                        w-full
-                        rounded-full
-                        object-cover
-                        transition-transform
-                        duration-700
-                        group-hover:scale-105
-                      "
-                    />
-                  </div>
-
-                  {/* MESSAGE */}
-
-                  <div className="min-w-0">
-                    <p
-                      className="
-                        font-serif
-                        text-[15px]
-                        italic
-                        leading-[1.5]
-                        text-[#4A3C35]
-                        sm:text-[16px]
-                      "
-                    >
-                      “{faculty.message}”
-                    </p>
-                  </div>
-                </div>
-
-                {/* INFO */}
-
-                <div
-                  className="
-                    mt-6
-                    border-t
-                    border-[#7A1B2F]/15
-                    pt-4
-                  "
-                >
-                  <h3
-                    className="
-                      text-[11px]
-                      font-semibold
-                      uppercase
-                      tracking-[0.15em]
-                      text-[#241018]
-                    "
-                  >
-                    {faculty.name}
-                  </h3>
-
-                  <p
-                    className="
-                      mt-2
-                      text-[9px]
-                      font-semibold
-                      uppercase
-                      tracking-[0.17em]
-                      text-[#7A1B2F]
-                    "
-                  >
-                    {faculty.designation}
-                  </p>
-                </div>
-              </motion.article>
-            ))}
-          </div>
-        </div>
-      </section>
+      
 
       {/* =====================================================
           ABOUT THE CLUB
@@ -1148,6 +914,241 @@ export default function DramaticsClub() {
 
               <div className="border-t border-[#7A1B2F]/15" />
             </div>
+          </div>
+        </div>
+      </section>
+      {/* =====================================================
+          FACULTY MESSAGES
+      ===================================================== */}
+
+      <section
+        className="
+          relative
+          overflow-hidden
+          bg-[#DCD3A4]
+          px-6
+          py-20
+          sm:px-12
+          lg:px-20
+          lg:py-28
+        "
+      >
+        {/* BACKGROUND GLOWS */}
+
+        <div
+          className="
+            pointer-events-none
+            absolute
+            left-[-12%]
+            top-[-10%]
+            h-[420px]
+            w-[420px]
+            rounded-full
+            bg-[#7A1B2F]/[0.08]
+            blur-[110px]
+          "
+        />
+
+        <div
+          className="
+            pointer-events-none
+            absolute
+            bottom-[-15%]
+            right-[-8%]
+            h-[420px]
+            w-[420px]
+            rounded-full
+            bg-[#C6A15B]/[0.10]
+            blur-[110px]
+          "
+        />
+
+        <div className="relative z-10 mx-auto max-w-[1400px]">
+          {/* HEADER */}
+
+          <div className="mb-12">
+            <div className="mb-4 flex items-center gap-4">
+              <span
+                className="
+                  text-[10px]
+                  font-semibold
+                  uppercase
+                  tracking-[0.3em]
+                  text-[#7A1B2F]
+                "
+              >
+                Faculty Messages
+              </span>
+
+              <span className="h-px w-12 bg-[#7A1B2F]/35" />
+            </div>
+
+            <h2
+              className="
+                text-5xl
+                font-medium
+                leading-[0.95]
+                tracking-[-0.05em]
+                text-[#241018]
+                sm:text-6xl
+                lg:text-7xl
+              "
+            >
+              Guided by
+              <br />
+              <span className="text-[#7A1B2F]">
+                experience.
+              </span>
+            </h2>
+          </div>
+
+          {/* FACULTY CARDS */}
+
+          <div className="grid gap-5 lg:grid-cols-2">
+            {facultyMessages.map((faculty, index) => (
+              <motion.article
+                key={index}
+                initial={{
+                  opacity: 0,
+                  y: 30,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                viewport={{
+                  once: true,
+                  amount: 0.2,
+                }}
+                transition={{
+                  duration: 0.75,
+                  delay: index * 0.12,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                whileHover={{
+                  y: -4,
+                }}
+                className="
+                  group
+                  relative
+                  overflow-hidden
+                  rounded-[22px]
+                  border
+                  border-[#7A1B2F]/15
+                  bg-[#E8DFB0]/80
+                  p-6
+                  transition-all
+                  duration-500
+                  hover:border-[#7A1B2F]/30
+                  hover:bg-[#EEE5B8]
+                  sm:p-7
+                "
+              >
+                {/* TOP LINE */}
+
+                <div
+                  className="
+                    absolute
+                    left-7
+                    right-7
+                    top-0
+                    h-[2px]
+                    bg-gradient-to-r
+                    from-transparent
+                    via-[#7A1B2F]/60
+                    to-transparent
+                  "
+                />
+
+                <div className="flex gap-5">
+                  {/* IMAGE */}
+
+                  <div
+                    className="
+                      relative
+                      h-[88px]
+                      w-[88px]
+                      shrink-0
+                      overflow-hidden
+                      rounded-full
+                      border
+                      border-[#7A1B2F]/25
+                      bg-[#DCD3A4]
+                      p-1
+                      sm:h-[100px]
+                      sm:w-[100px]
+                    "
+                  >
+                    <img
+                      src={faculty.image}
+                      alt={faculty.name}
+                      className="
+                        h-full
+                        w-full
+                        rounded-full
+                        object-cover
+                        transition-transform
+                        duration-700
+                        group-hover:scale-105
+                      "
+                    />
+                  </div>
+
+                  {/* MESSAGE */}
+
+                  <div className="min-w-0">
+                    <p
+                      className="
+                        font-serif
+                        text-[15px]
+                        italic
+                        leading-[1.5]
+                        text-[#4A3C35]
+                        sm:text-[16px]
+                      "
+                    >
+                      “{faculty.message}”
+                    </p>
+                  </div>
+                </div>
+
+                {/* INFO */}
+
+                <div
+                  className="
+                    mt-6
+                    border-t
+                    border-[#7A1B2F]/15
+                    pt-4
+                  "
+                >
+                  <h3
+                    className="
+                      text-[11px]
+                      font-semibold
+                      uppercase
+                      tracking-[0.15em]
+                      text-[#241018]
+                    "
+                  >
+                    {faculty.name}
+                  </h3>
+
+                  <p
+                    className="
+                      mt-2
+                      text-[9px]
+                      font-semibold
+                      uppercase
+                      tracking-[0.17em]
+                      text-[#7A1B2F]
+                    "
+                  >
+                    {faculty.designation}
+                  </p>
+                </div>
+              </motion.article>
+            ))}
           </div>
         </div>
       </section>

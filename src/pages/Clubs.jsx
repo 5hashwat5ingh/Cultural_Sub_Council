@@ -139,6 +139,7 @@ export default function ClubsPage() {
           src={heroImage}
           alt="Cultural Sub Council"
           className="
+          mt-[39px]
             block
             h-auto
             w-full
@@ -211,6 +212,7 @@ export default function ClubsPage() {
             items-center
             justify-center
             px-5
+            py-5
             sm:px-8
             md:px-10
             lg:px-12
@@ -338,26 +340,7 @@ export default function ClubsPage() {
                 SUBTITLE
             ================================================= */}
 
-            <motion.p
-              variants={fadeUp}
-              className="
-                mx-auto
-                mt-3
-                max-w-[420px]
-                text-[6px]
-                uppercase
-                leading-4
-                tracking-[0.18em]
-                text-[#F7EBD0]/65
-                sm:mt-5
-                sm:text-[8px]
-                sm:leading-5
-                sm:tracking-[0.25em]
-                md:text-[9px]
-              "
-            >
-              Five creative communities · One cultural identity
-            </motion.p>
+           
           </motion.div>
         </div>
 
@@ -365,211 +348,14 @@ export default function ClubsPage() {
             SCROLL INDICATOR
         ================================================= */}
 
-        <div
-          className="
-            absolute
-            bottom-3
-            left-1/2
-            z-20
-            -translate-x-1/2
-            sm:bottom-5
-            md:bottom-6
-          "
-        >
-          <motion.div
-            animate={{
-              y: [0, 4, 0],
-              opacity: [0.4, 1, 0.4],
-            }}
-            transition={{
-              duration: 1.8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="flex flex-col items-center gap-1.5"
-          >
-            <span
-              className="
-                text-[5px]
-                uppercase
-                tracking-[0.3em]
-                text-[#F7EBD0]/60
-                sm:text-[6px]
-              "
-            >
-              Scroll
-            </span>
-
-            <span
-              className="
-                block
-                h-5
-                w-px
-                bg-gradient-to-b
-                from-[#D9B86C]
-                to-transparent
-                sm:h-6
-              "
-            />
-          </motion.div>
-        </div>
+       
       </section>
 
       {/* =====================================================
           INTRODUCTION
       ===================================================== */}
 
-      <section
-        className="
-          relative
-          overflow-hidden
-          bg-[#DCD3A4]
-          px-5
-          py-12
-          sm:px-8
-          sm:py-16
-          md:px-10
-          md:py-18
-          lg:px-12
-          xl:px-16
-          xl:py-20
-        "
-      >
-        {/* Ambient glow */}
-
-        <div
-          className="
-            pointer-events-none
-            absolute
-            left-[-15%]
-            top-[-20%]
-            h-[280px]
-            w-[280px]
-            rounded-full
-            bg-[#7A1B2F]/10
-            blur-[90px]
-            sm:h-[380px]
-            sm:w-[380px]
-            sm:blur-[110px]
-          "
-        />
-
-        <div
-          className="
-            pointer-events-none
-            absolute
-            bottom-[-20%]
-            right-[-10%]
-            h-[320px]
-            w-[320px]
-            rounded-full
-            bg-[#C6A15B]/10
-            blur-[100px]
-            sm:h-[420px]
-            sm:w-[420px]
-            sm:blur-[120px]
-          "
-        />
-
-        <div className="relative mx-auto max-w-[1450px]">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{
-              once: true,
-              amount: 0.2,
-            }}
-            variants={stagger}
-            className="
-              grid
-              items-end
-              gap-7
-              md:gap-9
-              lg:grid-cols-[1.15fr_0.85fr]
-              lg:gap-14
-              xl:gap-20
-            "
-          >
-            {/* Left */}
-
-            <div>
-              <motion.p
-                variants={fadeUp}
-                className="
-                  text-[8px]
-                  font-semibold
-                  uppercase
-                  tracking-[0.32em]
-                  text-[#7A1B2F]
-                  sm:text-[9px]
-                  sm:tracking-[0.4em]
-                "
-              >
-                Our Creative Communities
-              </motion.p>
-
-              <motion.h2
-                variants={fadeUp}
-                className="
-                  mt-3
-                  max-w-4xl
-                  text-[clamp(2.6rem,8vw,6rem)]
-                  font-semibold
-                  leading-[0.87]
-                  tracking-[-0.065em]
-                  text-[#2B0A12]
-                  sm:mt-4
-                  md:text-[clamp(3rem,6vw,5.8rem)]
-                "
-              >
-                Five spaces.
-                <br />
-
-                <span className="text-[#7A1B2F]">
-                  One expression.
-                </span>
-              </motion.h2>
-            </div>
-
-            {/* Right */}
-
-            <motion.div
-              variants={fadeUp}
-              className="max-w-xl lg:pb-1"
-            >
-              <p
-                className="
-                  text-[12px]
-                  leading-5
-                  text-[#4D413A]
-                  sm:text-sm
-                  sm:leading-7
-                  md:text-base
-                  md:leading-8
-                "
-              >
-                Every club is a space to discover talent,
-                experiment with ideas and create something
-                meaningful. From performance and music to
-                visual arts, photography and technology,
-                there is a place for every expression.
-              </p>
-
-              <div
-                className="
-                  mt-4
-                  h-px
-                  w-14
-                  bg-[#C6A15B]
-                  sm:mt-5
-                  sm:w-16
-                "
-              />
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
+      
       {/* =====================================================
           CLUB LIST
       ===================================================== */}
@@ -579,6 +365,7 @@ export default function ClubsPage() {
           relative
           overflow-hidden
           bg-[#DCD3A4]
+          mt-[90px]
           px-5
           pb-14
           sm:px-8
@@ -852,153 +639,7 @@ export default function ClubsPage() {
           CLOSING
       ===================================================== */}
 
-      <section
-        className="
-          relative
-          overflow-hidden
-          bg-[#2B0A12]
-          px-5
-          py-14
-          sm:px-8
-          sm:py-18
-          md:px-10
-          md:py-20
-          lg:px-12
-          xl:px-16
-          xl:py-24
-        "
-      >
-        {/* Glow */}
-
-        <div
-          className="
-            pointer-events-none
-            absolute
-            left-1/2
-            top-1/2
-            h-[300px]
-            w-[300px]
-            -translate-x-1/2
-            -translate-y-1/2
-            rounded-full
-            bg-[#C6A15B]/7
-            blur-[100px]
-            sm:h-[400px]
-            sm:w-[400px]
-            sm:blur-[120px]
-          "
-        />
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{
-            once: true,
-            amount: 0.2,
-          }}
-          variants={fadeUp}
-          className="
-            relative
-            z-10
-            mx-auto
-            max-w-[1000px]
-            text-center
-          "
-        >
-          <p
-            className="
-              text-[7px]
-              uppercase
-              tracking-[0.4em]
-              text-[#C6A15B]
-              sm:text-[8px]
-              sm:tracking-[0.45em]
-            "
-          >
-            Cultural Sub Council
-          </p>
-
-          <h2
-            className="
-              mt-4
-              text-[clamp(3rem,13vw,7rem)]
-              font-medium
-              leading-[0.82]
-              tracking-[-0.075em]
-              text-[#F7EBD0]
-              sm:mt-5
-              sm:text-[clamp(3.5rem,10vw,7rem)]
-            "
-          >
-            Find your
-            <br />
-
-            <span className="text-[#C6A15B]">
-              expression.
-            </span>
-          </h2>
-
-          <p
-            className="
-              mx-auto
-              mt-5
-              max-w-lg
-              text-[11px]
-              leading-5
-              text-[#D8C7AA]/65
-              sm:mt-6
-              sm:text-sm
-              sm:leading-6
-            "
-          >
-            Discover a community where your creativity,
-            passion and ideas can become part of something
-            bigger.
-          </p>
-
-          <Link
-            to="/"
-            className="
-              group
-              mt-6
-              inline-flex
-              items-center
-              gap-3
-              rounded-full
-              border
-              border-[#C6A15B]/50
-              px-5
-              py-2.5
-              text-[7px]
-              font-semibold
-              uppercase
-              tracking-[0.22em]
-              text-[#D9B86C]
-              transition-all
-              duration-500
-              hover:border-[#D9B86C]
-              hover:bg-[#C6A15B]
-              hover:text-[#1D070D]
-              sm:mt-7
-              sm:px-6
-              sm:py-3
-              sm:text-[8px]
-            "
-          >
-            Back to Home
-
-            <span
-              className="
-                transition-transform
-                duration-300
-                group-hover:translate-x-1
-              "
-            >
-              ↗
-            </span>
-          </Link>
-        </motion.div>
-      </section>
+      
 
       {/* =====================================================
           FOOTER

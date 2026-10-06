@@ -156,20 +156,6 @@ export default function Heats25() {
             className="mx-auto w-full max-w-[1600px]"
           >
             {/* Eyebrow */}
-            <motion.div
-              variants={fadeUp}
-              className="mb-6 flex items-center gap-4"
-            >
-              <span className="text-[9px] uppercase tracking-[0.35em] text-[#D9B86C] sm:text-[10px]">
-                Cultural Sub Council
-              </span>
-
-              <span className="h-px w-10 bg-[#C6A15B]/70" />
-
-              <span className="text-[9px] uppercase tracking-[0.3em] text-[#F7EBD0]/60 sm:text-[10px]">
-                Event 02
-              </span>
-            </motion.div>
 
             {/* Title */}
             <motion.h1

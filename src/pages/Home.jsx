@@ -749,7 +749,7 @@ export default function Home() {
             z-40
           "
         >
-          <Navbar />
+          <Navbar Gallery/>
         </div>
 
         {/* ====================================================
