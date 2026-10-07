@@ -61,16 +61,12 @@ export default function FacultyMessages() {
         bg-[#DCD3A4]
         px-4
         py-20
-
         sm:px-6
         sm:py-24
-
         md:px-8
         md:py-28
-
         lg:px-12
         lg:py-30
-
         xl:px-16
         xl:py-32
       "
@@ -223,9 +219,7 @@ export default function FacultyMessages() {
           }}
           className="
             mb-10
-
             sm:mb-12
-
             xl:mb-16
           "
         >
@@ -237,7 +231,6 @@ export default function FacultyMessages() {
               flex
               items-center
               gap-3
-
               sm:mb-5
               sm:gap-4
             "
@@ -249,7 +242,6 @@ export default function FacultyMessages() {
                 uppercase
                 tracking-[0.25em]
                 text-[#7A1B2F]
-
                 sm:text-[10px]
                 sm:tracking-[0.3em]
               "
@@ -262,7 +254,6 @@ export default function FacultyMessages() {
                 h-px
                 w-8
                 bg-[#7A1B2F]/40
-
                 sm:w-12
               "
             />
@@ -278,17 +269,13 @@ export default function FacultyMessages() {
               leading-[0.95]
               tracking-[-0.05em]
               text-[#241018]
-
               sm:text-6xl
-
               md:text-[4.5rem]
-
               xl:text-7xl
             "
           >
             Voices Behind
             <br />
-
             <span className="text-[#7A1B2F]">
               The Vision.
             </span>
@@ -332,12 +319,9 @@ export default function FacultyMessages() {
             duration-500
             hover:border-[#7A1B2F]/30
             hover:bg-[#F4EBC2]
-
             sm:rounded-[24px]
             sm:p-7
-
             md:p-8
-
             xl:p-10
           "
         >
@@ -359,10 +343,8 @@ export default function FacultyMessages() {
               transition-opacity
               duration-500
               group-hover:opacity-100
-
               sm:left-8
               sm:right-8
-
               xl:left-10
               xl:right-10
             "
@@ -384,7 +366,6 @@ export default function FacultyMessages() {
               transition-all
               duration-700
               group-hover:bg-[#7A1B2F]/[0.12]
-
               sm:-left-24
               sm:-top-24
               sm:h-64
@@ -409,7 +390,6 @@ export default function FacultyMessages() {
               transition-opacity
               duration-700
               group-hover:opacity-100
-
               sm:-bottom-28
               sm:-right-28
               sm:h-64
@@ -417,9 +397,7 @@ export default function FacultyMessages() {
             "
           />
 
-          {/* =================================================
-              FEATURED CONTENT
-          ================================================= */}
+          {/* FEATURED CONTENT */}
 
           <div
             className="
@@ -428,33 +406,24 @@ export default function FacultyMessages() {
               grid
               items-center
               gap-7
-
               md:grid-cols-[190px_1fr]
               md:gap-8
-
               lg:grid-cols-[210px_1fr]
               lg:gap-10
-
               xl:grid-cols-[250px_1fr]
               xl:gap-12
             "
           >
-            {/* =================================================
-                VC IMAGE
-            ================================================= */}
+            {/* VC IMAGE */}
 
             <div
               className="
                 mx-auto
                 w-full
                 max-w-[180px]
-
                 sm:max-w-[200px]
-
                 md:max-w-[190px]
-
                 lg:max-w-[210px]
-
                 xl:max-w-[250px]
               "
             >
@@ -468,7 +437,6 @@ export default function FacultyMessages() {
                   border-[#7A1B2F]/20
                   bg-[#DCD3A4]
                   p-1
-
                   sm:rounded-[18px]
                 "
               >
@@ -483,7 +451,6 @@ export default function FacultyMessages() {
                     transition-transform
                     duration-700
                     group-hover:scale-[1.03]
-
                     sm:rounded-[14px]
                   "
                 />
@@ -496,16 +463,13 @@ export default function FacultyMessages() {
                     rounded-[11px]
                     border
                     border-[#C6A15B]/30
-
                     sm:rounded-[13px]
                   "
                 />
               </div>
             </div>
 
-            {/* =================================================
-                VC MESSAGE
-            ================================================= */}
+            {/* VC MESSAGE */}
 
             <div className="min-w-0">
               <div
@@ -514,7 +478,6 @@ export default function FacultyMessages() {
                   flex
                   items-center
                   gap-3
-
                   sm:mb-5
                 "
               >
@@ -523,7 +486,6 @@ export default function FacultyMessages() {
                     h-px
                     w-8
                     bg-[#C6A15B]
-
                     sm:w-10
                   "
                 />
@@ -535,10 +497,8 @@ export default function FacultyMessages() {
                     uppercase
                     tracking-[0.22em]
                     text-[#7A1B2F]
-
                     sm:text-[9px]
                     sm:tracking-[0.28em]
-
                     md:text-[10px]
                   "
                 >
@@ -555,7 +515,6 @@ export default function FacultyMessages() {
                   leading-[1.3]
                   tracking-[-0.02em]
                   text-[#241018]
-
                   md:leading-[1.25]
                 "
               >
@@ -568,7 +527,6 @@ export default function FacultyMessages() {
                   border-t
                   border-[#7A1B2F]/15
                   pt-4
-
                   sm:mt-8
                   sm:pt-5
                 "
@@ -580,10 +538,8 @@ export default function FacultyMessages() {
                     uppercase
                     tracking-[0.14em]
                     text-[#241018]
-
                     sm:text-[11px]
                     sm:tracking-[0.16em]
-
                     md:text-xs
                   "
                 >
@@ -599,7 +555,6 @@ export default function FacultyMessages() {
                     leading-4
                     tracking-[0.15em]
                     text-[#7A1B2F]
-
                     sm:mt-2
                     sm:text-[10px]
                     sm:tracking-[0.18em]
@@ -614,6 +569,10 @@ export default function FacultyMessages() {
 
         {/* =====================================================
             OTHER FACULTY
+
+            MOBILE  : 1 COLUMN
+            TABLET  : 3 COLUMNS
+            DESKTOP : 3 COLUMNS
         ===================================================== */}
 
         <div
@@ -625,15 +584,14 @@ export default function FacultyMessages() {
             gap-4
 
             sm:mt-6
-            sm:gap-5
+            sm:grid-cols-3
+            sm:gap-4
 
-            /* TABLET */
-            md:grid-cols-2
             md:gap-5
 
-            /* PC */
-            xl:grid-cols-3
-            xl:gap-5
+            lg:gap-6
+
+            xl:gap-6
           "
         >
           {otherFaculty.map((faculty, index) => (
@@ -693,15 +651,16 @@ function FacultyCard({ faculty, index }) {
         hover:border-[#7A1B2F]/30
         hover:bg-[#EEE5B8]
 
-        sm:min-h-[310px]
-        sm:rounded-[22px]
-        sm:p-6
+        sm:min-h-[300px]
+        sm:rounded-[20px]
+        sm:p-5
 
-        /* TABLET */
-        md:min-h-[330px]
-        md:p-7
+        md:min-h-[310px]
+        md:p-5
 
-        /* PC */
+        lg:min-h-[300px]
+        lg:p-6
+
         xl:min-h-[280px]
         xl:p-7
       "
@@ -726,9 +685,10 @@ function FacultyCard({ faculty, index }) {
           transition-opacity
           duration-500
           group-hover:opacity-100
-
-          sm:left-7
-          sm:right-7
+          sm:left-6
+          sm:right-6
+          lg:left-7
+          lg:right-7
         "
       />
 
@@ -751,10 +711,15 @@ function FacultyCard({ faculty, index }) {
           duration-700
           group-hover:bg-[#7A1B2F]/[0.12]
 
-          sm:-left-20
-          sm:-top-20
-          sm:h-48
-          sm:w-48
+          sm:-left-18
+          sm:-top-18
+          sm:h-44
+          sm:w-44
+
+          lg:-left-20
+          lg:-top-20
+          lg:h-48
+          lg:w-48
         "
       />
 
@@ -778,22 +743,20 @@ function FacultyCard({ faculty, index }) {
           duration-700
           group-hover:opacity-100
 
-          sm:-bottom-24
-          sm:-right-24
-          sm:h-48
-          sm:w-48
+          sm:-bottom-22
+          sm:-right-22
+          sm:h-44
+          sm:w-44
+
+          lg:-bottom-24
+          lg:-right-24
+          lg:h-48
+          lg:w-48
         "
       />
 
       {/* =====================================================
           CARD CONTENT
-
-          MOBILE + TABLET:
-          IMAGE
-          MESSAGE
-
-          PC (1280+):
-          IMAGE | MESSAGE
       ===================================================== */}
 
       <div
@@ -804,11 +767,6 @@ function FacultyCard({ faculty, index }) {
           flex-1
           flex-col
           items-center
-
-          /* PC ORIGINAL LAYOUT */
-          xl:flex-row
-          xl:items-start
-          xl:gap-5
         "
       >
         {/* ===================================================
@@ -818,8 +776,8 @@ function FacultyCard({ faculty, index }) {
         <div
           className="
             relative
-            h-[82px]
-            w-[82px]
+            h-[78px]
+            w-[78px]
             shrink-0
             overflow-hidden
             rounded-full
@@ -832,11 +790,14 @@ function FacultyCard({ faculty, index }) {
             group-hover:border-[#C6A15B]/80
             group-hover:scale-105
 
-            sm:h-[90px]
-            sm:w-[90px]
+            sm:h-[82px]
+            sm:w-[82px]
 
-            md:h-[92px]
-            md:w-[92px]
+            md:h-[84px]
+            md:w-[84px]
+
+            lg:h-[90px]
+            lg:w-[90px]
 
             xl:h-[95px]
             xl:w-[95px]
@@ -879,28 +840,27 @@ function FacultyCard({ faculty, index }) {
             w-full
             text-center
 
-            sm:mt-6
+            sm:mt-5
 
             md:mt-5
 
-            /* PC ORIGINAL */
-            xl:mt-0
-            xl:flex-1
-            xl:text-left
+            lg:mt-6
           "
         >
           <p
             className="
               font-serif
-              text-[14px]
+              text-[13px]
               italic
-              leading-[1.55]
+              leading-[1.5]
               tracking-[-0.01em]
               text-[#4A3C35]
 
-              sm:text-[15px]
+              sm:text-[13px]
 
-              md:text-[15px]
+              md:text-[13px]
+
+              lg:text-[14px]
 
               xl:text-[15px]
               xl:leading-[1.5]
@@ -919,13 +879,13 @@ function FacultyCard({ faculty, index }) {
         className="
           relative
           z-10
-          mt-6
+          mt-5
 
-          sm:mt-7
+          sm:mt-5
 
-          md:mt-7
+          md:mt-5
 
-          xl:mt-6
+          lg:mt-6
         "
       >
         {/* DIVIDER */}
@@ -946,15 +906,23 @@ function FacultyCard({ faculty, index }) {
 
         <h3
           className="
-            text-[10px]
+            text-[9px]
             font-semibold
             uppercase
             leading-4
-            tracking-[0.13em]
+            tracking-[0.11em]
             text-[#241018]
 
-            sm:text-[11px]
-            sm:tracking-[0.15em]
+            sm:text-[9px]
+            sm:tracking-[0.11em]
+
+            md:text-[9px]
+
+            lg:text-[10px]
+            lg:tracking-[0.13em]
+
+            xl:text-[11px]
+            xl:tracking-[0.15em]
           "
         >
           {faculty.name}
@@ -965,15 +933,22 @@ function FacultyCard({ faculty, index }) {
         <p
           className="
             mt-1.5
-            text-[8px]
+            text-[7px]
             font-semibold
             uppercase
             leading-4
-            tracking-[0.13em]
+            tracking-[0.11em]
             text-[#7A1B2F]
 
-            sm:text-[9px]
-            sm:tracking-[0.16em]
+            sm:text-[7px]
+
+            md:text-[7px]
+
+            lg:text-[8px]
+            lg:tracking-[0.13em]
+
+            xl:text-[9px]
+            xl:tracking-[0.16em]
           "
         >
           {faculty.designation}
