@@ -39,36 +39,30 @@ export default function StoryText({
           className="flex flex-col"
         >
           {/* =================================================
-              INDEX / CHAPTER
+              SECTION HEADING
           ================================================= */}
 
-          <div className="mb-6 flex items-center gap-3 sm:mb-8">
+          <div className="mb-5 flex items-center gap-3">
             <span
               className="
-                font-mono
-                text-xs
-                tracking-[0.25em]
-                text-[#7A1B2F]
-                sm:text-sm
+                h-px
+                w-10
+                bg-[#7A1B2F]
+                sm:w-14
               "
-            >
-              {story.number}
-            </span>
-
-            <span className="h-[1px] w-6 bg-[#7A1B2F]/40 sm:w-10" />
+            />
 
             <span
               className="
                 text-[10px]
                 font-medium
                 uppercase
-                tracking-[0.25em]
-                text-[#6B5148]
-                sm:text-[11px]
+                tracking-[0.28em]
+                text-[#7A1B2F]
+                sm:text-xs
               "
             >
-              CHAPTER {story.number} OF{" "}
-              {String(total).padStart(2, "0")}
+              Our Achievements
             </span>
           </div>
 

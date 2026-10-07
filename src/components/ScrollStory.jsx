@@ -22,7 +22,7 @@ const DEFAULT_STORIES = [
     number: "01",
     title: "Thomso",
     description:
-      "Rap second position",
+      "Rap competition: Rachit singh secured second position",
     image:
       "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791320105/Screenshot_2025-11-09-19-01-41-423_com.miui.mediaviewer.jpg.jpg",
     alt: "Culture",
@@ -30,11 +30,11 @@ const DEFAULT_STORIES = [
 
   {
     number: "02",
-    title: "Kashiyatra",
+    title: "ITM Gorakhpur",
     description:
-      "Band(2025) Fourth position",
+      "Tem Anahat: secured 1st position, Battle of Bands, Parampara",
     image:
-      "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=1200&q=80",
+      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791345113/WhatsApp_Image_2026-10-07_at_9.15.26_AM.jpg",
     alt: "Creativity",
   },
 
@@ -52,9 +52,9 @@ const DEFAULT_STORIES = [
     number: "04",
     title: "Thomso",
     description:
-      "Second position in poem competition",
+      "Nukkad Natak: Team Shunya finalist competing with 25 teams who participated",
     image:
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
+      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791345594/WhatsApp_Image_2026-10-07_at_9.29.21_AM.jpg",
     alt: "Collaboration",
   },
 
@@ -62,19 +62,19 @@ const DEFAULT_STORIES = [
     number: "05",
     title: "Kashiyatra",
     description:
-      "Second position in poem competition",
-    image:
-      "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1200&q=80",
+      "Gargi yadav secured 3rd position in Asmita(Monoact)",
+       image:
+      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791348685/WhatsApp_Image_2026-10-07_at_10.17.25_AM.jpg",
     alt: "Experience",
   },
 
   {
     number: "06",
-    title: "Kashiyatra",
+    title: "Mood Indigo",
     description:
-      "2025 solo mono act",
+      "Finalist in Group Dance",
     image:
-      "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80",
+      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791345213/WhatsApp_Image_2026-10-07_at_12.33.55_AM.jpg",
     alt: "Together",
   },
 ];
@@ -249,7 +249,7 @@ const MOBILE_CENTER_SPACER =
             w-full
             max-w-7xl
             grid-cols-2
-            gap-8
+            gap-4
             px-8
             sm:px-12
             lg:grid
@@ -477,19 +477,7 @@ const MOBILE_CENTER_SPACER =
                               BOTTOM GRADIENT
                           ================================================= */}
 
-                          <div
-                            className="
-                              pointer-events-none
-                              absolute
-                              inset-x-0
-                              bottom-0
-                              h-40
-                              bg-gradient-to-t
-                              from-[#2B0A12]/90
-                              via-[#2B0A12]/40
-                              to-transparent
-                            "
-                          />
+                         
 
                           {/* =================================================
                               LABEL

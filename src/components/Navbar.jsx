@@ -282,7 +282,7 @@ export default function Navbar({
 
           <li>
             <Link
-              to="/#contact"
+              to="/contact"
               className="
                 group
                 relative
@@ -299,7 +299,7 @@ export default function Navbar({
                 font-medium
                 uppercase
                 tracking-[0.2em]
-                text-[##C6A15B]
+                text-[#C6A15B]
                 transition-all
                 duration-500
                 hover:-translate-y-0.5

@@ -11,7 +11,7 @@ const facultyMessages = [
   {
     name: "Dr.Manish Gupta",
     designation: "Faculty In-Charge, Music Club",
-    image: "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791273852/Music_club_1.jpg",
+    image: "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791350922/WhatsApp_Image_2026-10-07_at_10.51.00_AM.jpg",
     message:
       "Music has the power to bring people together beyond words. The Music Club provides students with a platform to discover their musical abilities, develop confidence and share their passion with the campus community.",
   },
@@ -24,7 +24,7 @@ const facultyMessages = [
   },
   {
     name: "Dr.Ugrasen",
-    designation: "Faculty Coordinator",
+    designation: "Faculty In-Charge, Music Club",
     image: "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791273967/Music_club_2.jpg",
     message:
       "Every voice has its own character and every instrument tells its own story. The Music Club encourages students to learn, experiment and perform while creating a vibrant musical culture across the campus.",
@@ -69,24 +69,24 @@ const activities = [
 const achievements = [
   {
     number: "01",
-    year: "20XX",
-    title: "Achievement Title",
+    year: "2025",
+    title: "Kashiyatra",
     description:
-      "Add a verified achievement, competition result or recognition of the Music Club here.",
+      "Rachit singh: Secured 2nd position in rap competition.",
   },
   {
     number: "02",
-    year: "20XX",
-    title: "Achievement Title",
+    year: "2025",
+    title: "Kashiyatra",
     description:
-      "Add another verified milestone, award or major musical performance here.",
+      "We secured 4th position in Band battle.",
   },
   {
     number: "03",
-    year: "20XX",
-    title: "Achievement Title",
+    year: "2026",
+    title: "ITM Gorakhpur",
     description:
-      "Highlight another important accomplishment of the club.",
+      "Team Anahat: Secured 1st position in Battle of Band in Parampara.",
   },
 ];
 

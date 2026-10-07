@@ -62,27 +62,36 @@ const activities = [
 ========================================================= */
 
 const achievements = [
-  {
+   {
     number: "01",
-    year: "20XX",
-    title: "Achievement Title",
+    year: "2024",
+    title: "Mood Indigo",
     description:
-      "Add a verified achievement, competition result or recognition of the Dramatics Club here.",
+      "Kushagra dixit, Ravikant Tripathi, Shehraz Siddiqui, Nitin Gupta: secured 2nd position in Jester Feista(Improv Comedy)",
   },
-  {
+   {
     number: "02",
-    year: "20XX",
-    title: "Achievement Title",
+    year: "2026",
+    title: "Kashiyatra",
     description:
-      "Add another verified milestone, award or major theatrical performance here.",
+      "Team Shunya: Finalist in Nukkad Natak among 25 teams .",
   },
   {
     number: "03",
-    year: "20XX",
-    title: "Achievement Title",
+    year: "2026",
+    title: "Kashiyatra",
     description:
-      "Highlight another important accomplishment of the club.",
+      "Ravikant Mani Tripathi: acquired 4th position among 50+ participants in Monologue.",
   },
+  {
+    number: "04",
+    year: "2026",
+    title: "Thomso",
+    description:
+      "Kushagra Dixit: secured 2nd position in Big Ideas.",
+  },
+
+ 
 ];
 
 /* =========================================================

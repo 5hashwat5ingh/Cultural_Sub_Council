@@ -20,7 +20,7 @@ const facultyMessages = [
     name: "Dr.Neha Mishra",
     designation: "Assistant Professor",
     designation: "Faculty Coordinator",
-    image: "/faculty/dance-coordinator.jpg",
+    image: "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791349519/Dance_club_2.jpg",
     message:
       "Every performance begins with passion, practice and the courage to express. The Dance Club encourages students to explore different forms of movement while creating experiences that bring our campus community together.",
   },
@@ -64,24 +64,31 @@ const activities = [
 const achievements = [
   {
     number: "01",
-    year: "20XX",
-    title: "Achievement Title",
+    year: "2026",
+    title: "Kashiyatra",
     description:
-      "Add a verified achievement, competition result or recognition of the Dance Club here.",
+      "Gone to finals in Group Dance",
   },
   {
     number: "02",
-    year: "20XX",
-    title: "Achievement Title",
+    year: "2026",
+    title: "Kashiyatra",
     description:
-      "Add another verified milestone, award or major performance here.",
+      "Meenal Khatter: secured 2nd position in solo classical",
   },
   {
     number: "03",
-    year: "20XX",
-    title: "Achievement Title",
+    year: "2026",
+    title: "Kashiyatra",
     description:
-      "Highlight another important accomplishment of the club.",
+      "Anshika Tripathi: secured 2nd position in solo western.",
+  },
+   {
+    number: "04",
+    year: "2026",
+    title: "Kashiyatra",
+    description:
+      "Gautam Kansal:got in elimination round in Improv.",
   },
 ];
 

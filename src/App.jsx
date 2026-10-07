@@ -8,6 +8,7 @@ import ClubsPage from "./pages/Clubs";
 import Events from "./pages/Events";
 import Gallery from "./pages/Gallery";
 import Team from "./pages/Team";
+import Contact from "./pages/Contact";
 
 import Dance from "./pages/clubs/Dance";
 import Dramatics from "./pages/clubs/Dramatics";
@@ -25,25 +26,48 @@ export default function App() {
       <ScrollToTop />
 
       <Routes>
-        <Route path="/" element={<Home />} />
 
-        <Route path="/clubs" element={<ClubsPage />} />
+        {/* =====================================================
+            HOME
+        ===================================================== */}
 
-        <Route path="/events" element={<Events />} />
-        <Route path="/team" element={<Team />} />
-         {/* Events */}
-      <Route path="/events" element={<Events />} />
-      <Route path="/events/heats-25" element={<Heats25 />} />
-      <Route
-        path="/events/Abhyudaya"
-        element={<Abhyudaya/>}
-      />
-      <Route
-        path="/events/pintura"
-        element={<Pintura />}
-      />
+        <Route
+          path="/"
+          element={<Home />}
+        />
 
-        <Route path="/gallery" element={<Gallery />} />
+        {/* =====================================================
+            MAIN PAGES
+        ===================================================== */}
+
+        <Route
+          path="/clubs"
+          element={<ClubsPage />}
+        />
+
+        <Route
+          path="/events"
+          element={<Events />}
+        />
+
+        <Route
+          path="/team"
+          element={<Team />}
+        />
+
+        <Route
+          path="/gallery"
+          element={<Gallery />}
+        />
+
+        <Route
+          path="/contact"
+          element={<Contact />}
+        />
+
+        {/* =====================================================
+            CLUB PAGES
+        ===================================================== */}
 
         <Route
           path="/clubs/dance"
@@ -69,6 +93,26 @@ export default function App() {
           path="/clubs/technical-design"
           element={<Technical />}
         />
+
+        {/* =====================================================
+            EVENT PAGES
+        ===================================================== */}
+
+        <Route
+          path="/events/heats-25"
+          element={<Heats25 />}
+        />
+
+        <Route
+          path="/events/Abhyudaya"
+          element={<Abhyudaya />}
+        />
+
+        <Route
+          path="/events/pintura"
+          element={<Pintura />}
+        />
+
       </Routes>
     </>
   );
