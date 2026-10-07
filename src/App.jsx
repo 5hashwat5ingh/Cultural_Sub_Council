@@ -1,7 +1,15 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
+// ============================================================
+// GLOBAL COMPONENTS
+// ============================================================
+
 import ScrollToTop from "./components/ScrollToTop";
+
+// ============================================================
+// MAIN PAGES
+// ============================================================
 
 import Home from "./pages/Home";
 import ClubsPage from "./pages/Clubs";
@@ -10,35 +18,58 @@ import Gallery from "./pages/Gallery";
 import Team from "./pages/Team";
 import Contact from "./pages/Contact";
 
-import Dance from "./pages/clubs/Dance";
-import Dramatics from "./pages/clubs/Dramatics";
-import Music from "./pages/clubs/Music";
-import FineArts from "./pages/clubs/FineArts";
-import Technical from "./pages/clubs/Technical";
+// ============================================================
+// CLUB PAGE
+// ============================================================
+
+import ClubPage from "./pages/clubs/ClubPage";
+
+// ============================================================
+// CLUB DATA
+// ============================================================
+
+import { clubsData } from "./data/clubsData";
+
+// ============================================================
+// EVENT PAGES
+// ============================================================
 
 import Heats25 from "./pages/events/Heats25";
 import Abhyudaya from "./pages/events/Abhyudaya";
 import Pintura from "./pages/events/PinturaDePilares";
 
+// ============================================================
+// APP
+// ============================================================
+
 export default function App() {
   return (
     <>
+      {/* =====================================================
+          SCROLL TO TOP
+      ===================================================== */}
+
       <ScrollToTop />
+
+      {/* =====================================================
+          ROUTES
+      ===================================================== */}
 
       <Routes>
 
-        {/* =====================================================
+        {/* ===================================================
             HOME
-        ===================================================== */}
+        =================================================== */}
 
         <Route
           path="/"
           element={<Home />}
         />
 
-        {/* =====================================================
+
+        {/* ===================================================
             MAIN PAGES
-        ===================================================== */}
+        =================================================== */}
 
         <Route
           path="/clubs"
@@ -65,38 +96,52 @@ export default function App() {
           element={<Contact />}
         />
 
-        {/* =====================================================
+
+        {/* ===================================================
             CLUB PAGES
-        ===================================================== */}
+            All clubs now use the same reusable ClubPage
+            component and receive their content from clubsData.
+        =================================================== */}
 
         <Route
           path="/clubs/dance"
-          element={<Dance />}
-        />
-
-        <Route
-          path="/clubs/music"
-          element={<Music />}
+          element={
+            <ClubPage club={clubsData.dance} />
+          }
         />
 
         <Route
           path="/clubs/dramatics"
-          element={<Dramatics />}
+          element={
+            <ClubPage club={clubsData.dramatics} />
+          }
+        />
+
+        <Route
+          path="/clubs/music"
+          element={
+            <ClubPage club={clubsData.music} />
+          }
         />
 
         <Route
           path="/clubs/fine-arts"
-          element={<FineArts />}
+          element={
+            <ClubPage club={clubsData.fineArts} />
+          }
         />
 
         <Route
           path="/clubs/technical-design"
-          element={<Technical />}
+          element={
+            <ClubPage club={clubsData.technical} />
+          }
         />
 
-        {/* =====================================================
+
+        {/* ===================================================
             EVENT PAGES
-        ===================================================== */}
+        =================================================== */}
 
         <Route
           path="/events/heats-25"

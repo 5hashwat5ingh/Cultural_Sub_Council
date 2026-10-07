@@ -588,7 +588,7 @@ export default function Navbar({
                 {/* CONTACT */}
 
                 <Link
-                  to="/#contact"
+                  to="/contact"
                   onClick={closeMenu}
                   className="
                     mt-5
