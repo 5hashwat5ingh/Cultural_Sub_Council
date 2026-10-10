@@ -104,9 +104,7 @@ function ClubRow({ club, index }) {
 
             
 
-            <span className="absolute bottom-5 right-5 flex h-11 w-11 items-center justify-center rounded-full border border-[#F7EBD0]/70 text-xl text-[#F7EBD0] transition-all duration-300 group-hover:border-[#D9B86C] group-hover:bg-[#D9B86C] group-hover:text-[#2B0A12] sm:bottom-7 sm:right-7">
-              ↗
-            </span>
+          
           </div>
         </Link>
 
@@ -276,11 +274,7 @@ export default function ClubsPage() {
         id="explore-clubs"
         className="mx-auto max-w-[1500px] scroll-mt-8 px-6 pb-20 pt-10 sm:px-10 sm:pt-16 lg:px-20 lg:pb-28"
       >
-        
-
-       
-
-        <div>
+                       <div>
           {clubs.map((club, index) => (
             <ClubRow key={club.number} club={club} index={index} />
           ))}
