@@ -101,12 +101,12 @@ export default function Contact() {
     {
       name: "YouTube",
       icon: FaYoutube,
-      href: "#",
+      href: "https://youtube.com/@culturalsynodmmmut?si=alsnfZtmL9Qw_fl1",
     },
     {
       name: "Facebook",
       icon: FaFacebookF,
-      href: "#",
+      href: "https://www.facebook.com/csc.mmmut/",
     },
   ];
 
@@ -215,21 +215,26 @@ export default function Contact() {
                 className="mt-10 space-y-6"
               >
                 {/* Email */}
-                <div className="flex items-start gap-4">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#2B0A12] text-[#D9B86C]">
-                    <FaEnvelope />
-                  </div>
+                
+<a
+  href="mailto:csc@mmmut.ac.in"
+  className="group flex items-start gap-4 cursor-pointer"
+>
+  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#2B0A12] text-[#D9B86C] transition-colors duration-300 group-hover:bg-[#D9B86C] group-hover:text-[#2B0A12]">
+    <FaEnvelope />
+  </div>
 
-                  <div>
-                    <p className="text-xs font-bold uppercase tracking-widest text-[#9B783A]">
-                      Email
-                    </p>
+  <div>
+    <p className="text-xs font-bold uppercase tracking-widest text-[#9B783A]">
+      Email
+    </p>
 
-                    <p className="mt-2 break-all text-sm text-[#2B0A12] sm:text-base">
-                      Get in touch through our official email.
-                    </p>
-                  </div>
-                </div>
+    <p className="mt-2 break-all text-sm text-[#2B0A12] transition-colors duration-300 group-hover:text-[#9B783A] sm:text-base">
+      Get in touch through our official email.
+    </p>
+  </div>
+</a>
+
 
                 {/* Location */}
                 <div className="flex items-start gap-4">
@@ -243,7 +248,7 @@ export default function Contact() {
                     </p>
 
                     <p className="mt-2 text-sm leading-6 text-[#2B0A12] sm:text-base">
-                      Your campus, your community, your creative space.
+                      Madan Mohan Malaviya University of Technology, Gorakhpur, Uttar Pradesh, India
                     </p>
                   </div>
                 </div>

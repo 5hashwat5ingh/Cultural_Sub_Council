@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import {
   AnimatePresence,
@@ -23,7 +22,8 @@ const heroSlides = [
     alt: "Fine arts club",
   },
   {
-    image: "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791571548/Atal_Bhawan_Illuminated_at_Night1.png",
+    image:
+      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791571548/Atal_Bhawan_Illuminated_at_Night1.png",
     alt: "Atal Bhawan",
   },
   {
@@ -49,20 +49,58 @@ const heroSlides = [
 
 function HeroSlider() {
   const [current, setCurrent] = useState(0);
+  const [typedText, setTypedText] = useState("");
+
   const shouldReduceMotion = useReducedMotion();
+  const heroText = "Where Culture Comes Alive";
 
   // Automatically advance the slider every 4 seconds.
   useEffect(() => {
+    if (shouldReduceMotion) return;
+
     const timer = window.setInterval(() => {
       setCurrent((previous) => (previous + 1) % heroSlides.length);
     }, 4000);
 
     return () => window.clearInterval(timer);
-  }, []);
+  }, [shouldReduceMotion]);
 
+  // Typing effect for the hero heading.
+  useEffect(() => {
+    if (shouldReduceMotion) {
+      setTypedText(heroText);
+      return;
+    }
+
+    setTypedText("");
+
+    let index = 0;
+
+    const typingTimer = window.setInterval(() => {
+      index += 1;
+      setTypedText(heroText.slice(0, index));
+
+      if (index >= heroText.length) {
+        window.clearInterval(typingTimer);
+      }
+    }, 85);
+
+    return () => window.clearInterval(typingTimer);
+  }, [shouldReduceMotion]);
+
+  // Navigate to a particular slide.
   const showSlide = (index) => {
     setCurrent((index + heroSlides.length) % heroSlides.length);
   };
+
+  // Split the typed heading into two visually styled lines.
+  const firstPart = "Where Culture";
+  const firstLine = typedText.slice(0, firstPart.length);
+
+  const secondLine =
+    typedText.length > firstPart.length
+      ? typedText.slice(firstPart.length + 1)
+      : "";
 
   return (
     <section
@@ -121,7 +159,7 @@ function HeroSlider() {
       </AnimatePresence>
 
       {/* =====================================================
-          SUBTLE OVERLAY
+          BLACK OVERLAY
       ===================================================== */}
 
       <div
@@ -129,7 +167,12 @@ function HeroSlider() {
           pointer-events-none
           absolute
           inset-0
-          bg-black/10
+          z-10
+          bg-gradient-to-b
+          from-black/50
+          via-black/30
+          to-black/40
+          
         "
         aria-hidden="true"
       />
@@ -144,6 +187,7 @@ function HeroSlider() {
           absolute
           inset-x-0
           bottom-0
+          z-10
           h-32
           bg-gradient-to-t
           from-[#1D070D]/30
@@ -153,16 +197,166 @@ function HeroSlider() {
       />
 
       {/* =====================================================
-          SLIDE INDICATORS
+          CENTERED EDITORIAL HERO TEXT
       ===================================================== */}
 
-     
+      <div className="absolute inset-0 z-20 flex items-center justify-center px-4 py-20 sm:px-8">
+        <div className="mx-auto w-full max-w-6xl text-center">
+          {/* Eyebrow text */}
 
-      {/* =====================================================
-          SLIDE COUNTER
-      ===================================================== */}
+          <motion.p
+            initial={{
+              opacity: 0,
+              y: shouldReduceMotion ? 0 : 12,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: shouldReduceMotion ? 0 : 0.7,
+            }}
+            className="
+              mb-5
+              text-[10px]
+              font-bold
+              uppercase
+              tracking-[0.3em]
+              text-[#E6C777]
+              drop-shadow-md
+              sm:mb-7
+              sm:text-sm
+              sm:tracking-[0.45em]
+            "
+          >
+            Culture <span className="mx-1">·</span>
+            Creativity <span className="mx-1">·</span>
+            Community
+          </motion.p>
 
-      
+          {/* Main heading with typing effect */}
+
+          <h1
+            aria-label={heroText}
+            className="
+              mx-auto
+              min-h-[2.05em]
+              max-w-5xl
+              font-serif
+              font-black
+              leading-[0.98]
+              tracking-[-0.045em]
+              drop-shadow-[0_5px_24px_rgba(0,0,0,0.65)]
+            "
+          >
+            <span
+              className="
+                block
+                text-4xl
+                text-white
+                sm:text-6xl
+                md:text-7xl
+                lg:text-8xl
+                xl:text-9xl
+              "
+            >
+              {firstLine}
+            </span>
+
+            <span
+              className="
+                mt-2
+                block
+                text-4xl
+                font-bold
+                italic
+                text-[#D9B86C]
+                sm:mt-3
+                sm:text-6xl
+                md:text-7xl
+                lg:text-8xl
+                xl:text-9xl
+              "
+            >
+              {secondLine}
+
+              {!shouldReduceMotion && (
+                <motion.span
+                  aria-hidden="true"
+                  animate={{ opacity: [1, 0, 1] }}
+                  transition={{
+                    duration: 0.8,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                  className="
+                    ml-1
+                    inline-block
+                    font-normal
+                    not-italic
+                    text-[#F7EBD0]
+                  "
+                >
+                  |
+                </motion.span>
+              )}
+            </span>
+          </h1>
+
+          {/* Decorative gold divider */}
+
+          
+          {/* Supporting text */}
+
+          <motion.p
+            initial={{
+              opacity: 0,
+              y: shouldReduceMotion ? 0 : 15,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: shouldReduceMotion ? 0 : 0.8,
+              delay: shouldReduceMotion ? 0 : 0.4,
+            }}
+            className="
+              mx-auto
+              mt-5
+              max-w-2xl
+              text-sm
+              leading-7
+              text-white/90
+              drop-shadow-md
+              sm:mt-6
+              sm:text-lg
+              sm:leading-8
+            "
+          >
+            Celebrating{" "}
+            <span className="font-semibold text-[#E6C777]">
+              creativity
+            </span>
+            ,{" "}
+            <span className="font-semibold text-[#E6C777]">
+              talent
+            </span>
+            , and the spirit of togetherness.
+          </motion.p>
+
+          {/* =====================================================
+              SLIDE INDICATORS
+          ===================================================== */}
+
+          
+          {/* =====================================================
+              SLIDE COUNTER
+          ===================================================== */}
+
+          
+        </div>
+      </div>
     </section>
   );
 }
@@ -214,6 +408,7 @@ export default function Home() {
         "
       >
         {/* Maroon atmospheric glow */}
+
         <div
           className="
             pointer-events-none
@@ -232,6 +427,7 @@ export default function Home() {
         />
 
         {/* Warm gold glow */}
+
         <div
           className="
             pointer-events-none
@@ -274,6 +470,7 @@ export default function Home() {
         "
       >
         {/* Right maroon glow */}
+
         <div
           className="
             pointer-events-none
@@ -290,6 +487,7 @@ export default function Home() {
         />
 
         {/* Left gold glow */}
+
         <div
           className="
             pointer-events-none

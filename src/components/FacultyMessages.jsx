@@ -10,7 +10,7 @@ const facultyMessages = [
     name: "Prof. Anupma Kaushik Sharma",
     designation: "Vice-chancellor, MMMUT",
     image:
-      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791016590/VC.jpg",
+      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791629908/Professional_Portrait_of_Indian_Woman_at_Desk.png",
     message:
       "Culture is not just an expression of talent, but a reflection of values, creativity and the collective spirit of our community.",
   },

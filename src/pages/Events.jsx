@@ -15,7 +15,7 @@ const events = [
     title: "EVENTS",
     subtitle: "WHERE CULTURE COMES ALIVE",
     image:
-      "https://res.cloudinary.com/yh0rqnnu/image/upload/f_auto,q_auto/WhatsApp_Image_2026-09-29_at_10.42.23_PM",
+      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791631697/Cinematic_Sea_of_Smartphone_Lights.png",
     route: "/events",
   },
   {
@@ -73,14 +73,11 @@ function EventCard({ event, index }) {
           className="absolute inset-0 h-full w-full object-cover"
         />
 
-        {/* LEFT-TO-RIGHT GRADIENT */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1D070D]/80 via-[#1D070D]/30 to-transparent" />
-
+       
         {/* TOP GRADIENT */}
         <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#1D070D]/60 to-transparent" />
 
-        {/* BOTTOM GRADIENT */}
-        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#1D070D]/65 to-transparent" />
+       
       </div>
 
       {/* FIRST SLIDE — CENTERED INTRODUCTION */}
@@ -107,17 +104,7 @@ function EventCard({ event, index }) {
         <div className="absolute inset-0 flex items-end px-6 pb-24 sm:px-12 sm:pb-28 md:px-16 lg:px-20 lg:pb-28">
           <div className="relative z-10 w-full max-w-[1500px]">
             {/* EVENT NUMBER */}
-            <div className="mb-5 flex items-center gap-4">
-              <span className="text-[10px] font-semibold tracking-[0.3em] text-[#C6A15B] sm:text-xs">
-                {event.number}
-              </span>
-
-              <div className="h-px w-10 bg-[#C6A15B]/60 sm:w-16" />
-
-              <span className="text-[8px] uppercase tracking-[0.3em] text-[#F7EBD0]/70 sm:text-[10px]">
-                Cultural Sub Council
-              </span>
-            </div>
+           
 
             {/* EVENT TITLE */}
             <h2 className="max-w-[1200px] text-[clamp(2.8rem,8vw,8rem)] font-semibold leading-[0.85] tracking-[-0.07em] text-[#F7EBD0]">
@@ -125,9 +112,11 @@ function EventCard({ event, index }) {
             </h2>
 
             {/* EVENT SUBTITLE */}
-            <p className="mt-5 text-[9px] font-medium uppercase tracking-[0.3em] text-[#C6A15B] sm:mt-6 sm:text-xs md:text-sm">
-              {event.subtitle}
-            </p>
+            
+<p className="mt-5 inline-block w-fit bg-white px-3 py-1.5 text-[9px] font-medium uppercase tracking-[0.3em] text-[#7d5305] sm:mt-6 sm:text-xs md:text-sm">
+  {event.subtitle}
+</p>
+
 
             {/* EVENT DESCRIPTION */}
             <p className="mt-5 max-w-2xl text-sm leading-7 text-[#F7EBD0]/85 sm:mt-6 sm:text-base sm:leading-8 md:text-lg">

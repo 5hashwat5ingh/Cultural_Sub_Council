@@ -166,53 +166,109 @@ export default function ClubsPage() {
   <div className="absolute inset-x-0 bottom-0 h-[2%] bg-gradient-to-t from-[#DCD3A4] to-transparent" />
 
   {/* Hero content */}
-  <div className="absolute inset-0 z-10 flex items-center">
-    <div className="mx-auto w-full max-w-[1500px] px-5 sm:px-10 lg:px-20">
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={{
-          hidden: {},
-          visible: {
-            transition: { staggerChildren: 0.15 },
-          },
-        }}
-        className="max-w-5xl"
+  
+<div className="absolute inset-0 z-10 flex items-center justify-center">
+  <div className="mx-auto w-full max-w-[1500px] px-5 sm:px-10 lg:px-20">
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={{
+        hidden: {},
+        visible: {
+          transition: { staggerChildren: 0.15 },
+        },
+      }}
+      className="mx-auto flex max-w-5xl flex-col items-center text-center"
+    >
+      <motion.h1
+        variants={fadeUp}
+        className="font-serif text-3xl leading-[1.02] tracking-tight text-[#F7EBD0] sm:text-5xl md:text-7xl lg:text-[100px] xl:text-[110px]"
       >
-        <motion.h1
-          variants={fadeUp}
-          className="font-serif text-3xl leading-[1.02] tracking-tight text-[#F7EBD0] sm:text-5xl md:text-7xl lg:text-[100px] xl:text-[110px]"
-        >
-          Where
-          <br />
-          <span className="italic text-[#D9B86C]">Creativity</span>
-          <br />
-          Lives.
-        </motion.h1>
+        Where
+        <span className="italic text-[#D9B86C] px-7">
+          Creativity
+        </span>
+        <br />
+        Lives.
+      </motion.h1>
 
-        <motion.p
-          variants={fadeUp}
-          className="mt-3 max-w-[280px] text-[11px] leading-5 text-[#F7EBD0]/90 sm:mt-5 sm:max-w-md sm:text-sm sm:leading-6 md:mt-6 md:text-base md:leading-7 lg:max-w-lg"
-        >
-          Discover the people, passions and creative spaces that bring our
-          campus to life. Find your community and make something extraordinary.
-        </motion.p>
+      <motion.p
+        variants={fadeUp}
+        className="mx-auto mt-3 max-w-[280px] text-center text-[11px] leading-5 text-[#F7EBD0]/90 sm:mt-5 sm:max-w-md sm:text-sm sm:leading-6 md:mt-6 md:max-w-2xl md:text-base md:leading-7"
+      >
+        Discover the people, passions and creative spaces that bring our
+        campus to life. Find your community and make something extraordinary.
+      </motion.p>
 
-        <motion.div
-          variants={fadeUp}
-          className="mt-4 sm:mt-6 md:mt-8"
-        >
-          <a
-            href="#explore-clubs"
-            className="inline-flex items-center gap-3 border border-[#F7EBD0]/60 px-3 py-2.5 text-[9px] font-semibold uppercase tracking-[0.12em] text-[#F7EBD0] transition-all duration-300 hover:border-[#D9B86C] hover:bg-[#D9B86C] hover:text-[#2B0A12] sm:gap-4 sm:px-5 sm:py-3 sm:text-[10px] sm:tracking-[0.16em] md:px-6 md:py-4 md:text-xs"
-          >
-            Discover Our Clubs
-            <span className="text-base sm:text-lg">↓</span>
-          </a>
-        </motion.div>
+      <motion.div
+        variants={fadeUp}
+        className="mt-4 flex justify-center sm:mt-6 md:mt-8"
+      >
+<a
+  href="#explore-clubs"
+  className="
+    group
+    relative
+    inline-flex
+    items-center
+    justify-center
+    gap-4
+    overflow-hidden
+    rounded-full
+    border
+    border-[#D9B86C]/70
+    bg-[#2B0A12]/30
+    px-5
+    py-3
+    text-[9px]
+    font-semibold
+    uppercase
+    tracking-[0.16em]
+    text-[#F7EBD0]
+    shadow-[0_0_25px_rgba(217,184,108,0.08)]
+    backdrop-blur-sm
+    transition-all
+    duration-500
+    hover:border-[#D9B86C]
+    hover:text-[#2B0A12]
+    hover:shadow-[0_0_35px_rgba(217,184,108,0.22)]
+    active:scale-[0.97]
+    sm:gap-5
+    sm:px-7
+    sm:py-4
+    sm:text-[10px]
+    md:px-8
+    md:py-4
+    md:text-xs
+  "
+>
+  {/* Animated gold background */}
+  <span
+    className="
+      absolute
+      inset-0
+      origin-left
+      scale-x-0
+      rounded-full
+      bg-[#D9B86C]
+      transition-transform
+      duration-500
+      ease-out
+      group-hover:scale-x-100
+    "
+  />
+
+  {/* Button label */}
+  <span className="relative z-10">
+    Discover Our Clubs
+  </span>
+
+</a>
       </motion.div>
-    </div>
+    </motion.div>
   </div>
+</div>
+
 </section>
 
       {/* CLUB DIRECTORY */}

@@ -22,6 +22,7 @@ const DEFAULT_STORIES = [
   {
     number: "01",
     title: "Thomso",
+    location:"IIT Roorkee",
     subtitle: "Rap Competition",
     achievement: "Second Position",
     person: "Rachit Singh",
@@ -33,7 +34,8 @@ const DEFAULT_STORIES = [
   },
   {
     number: "02",
-    title: "ITM Gorakhpur",
+    title: "Parampara",
+    location:"ITM Gorakhpur",
     subtitle: "Battle of Bands",
     achievement: "First Position",
     person: "Team Anahat",
@@ -46,6 +48,7 @@ const DEFAULT_STORIES = [
   {
     number: "03",
     title: "Thomso",
+    location:"IIT Roorkee",
     subtitle: "Dress Designing",
     achievement: "Second Position",
     person: "Cultural Achievement",
@@ -58,6 +61,7 @@ const DEFAULT_STORIES = [
   {
     number: "04",
     title: "Thomso",
+    location:"IIT Roorkee",
     subtitle: "Nukkad Natak",
     achievement: "Finalist",
     person: "Team Shunya",
@@ -70,6 +74,7 @@ const DEFAULT_STORIES = [
   {
     number: "05",
     title: "Kashiyatra",
+    location:"IIT BHU",
     subtitle: "Asmita — Monoact",
     achievement: "Third Position",
     person: "Gargi Yadav",
@@ -82,6 +87,7 @@ const DEFAULT_STORIES = [
   {
     number: "06",
     title: "Mood Indigo",
+    location:"IIT Mumbai",
     subtitle: "Group Dance",
     achievement: "Finalist",
     person: "Cultural Dance Team",

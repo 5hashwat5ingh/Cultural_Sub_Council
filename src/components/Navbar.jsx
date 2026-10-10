@@ -21,9 +21,10 @@ const isHome = pathname === "/";
 const isClubs = pathname.startsWith("/clubs");
 const isEvents = pathname.startsWith("/events");
 const isGallery = pathname === "/gallery";
+const isTeam = pathname === "/team";
 
 // Glass effect on Home, Clubs, and Events
-const hasGlassEffect = isHome || isClubs || isEvents;
+const hasGlassEffect = isHome || isClubs || isEvents || isTeam;
 
 // Text color
 const textColor = hasGlassEffect ? "text-white" : "text-black";
@@ -294,28 +295,6 @@ className={headerStyle}
           </Link>
 
           {/* Mobile Register button */}
-          <Link
-            to={registrationUrl}
-            onClick={closeMenu}
-            className="
-              mb-3
-              block
-              rounded-full
-              bg-[#9C762E]
-              px-5
-              py-3.5
-              text-center
-              text-xs
-              font-semibold
-              uppercase
-              tracking-[0.2em]
-              text-white
-              transition-colors
-              hover:bg-[#7A1B2F]
-            "
-          >
-            Register for an Event ↗
-          </Link>
         </nav>
       </motion.div>
     )}

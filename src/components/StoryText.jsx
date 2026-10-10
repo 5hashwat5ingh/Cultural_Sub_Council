@@ -38,24 +38,15 @@ export default function StoryText({
 
       {/* STORY NUMBER */}
 
-      <div className="mb-4 flex items-center gap-3">
-        <span className="text-sm font-medium tracking-[0.25em] text-[#7A1B2F]">
-          {story.number}
-        </span>
-
-        <span className="h-px w-10 bg-[#C6A15B]" />
-
-        <span className="text-[9px] uppercase tracking-[0.2em] text-[#3A0D18]/60">
-          {String(activeIndex + 1).padStart(2, "0")} /{" "}
-          {String(total).padStart(2, "0")}
-        </span>
-      </div>
 
       {/* EVENT TITLE */}
 
-      <h2 className="max-w-xl text-4xl font-semibold leading-[0.98] tracking-[-0.045em] text-[#3A0D18] sm:text-5xl lg:text-6xl">
+      <h2 className="max-w-xl text-4xl font-serif leading-[0.98] tracking-[-0.045em] text-[#3A0D18] sm:text-5xl lg:text-6xl">
         {story.title}
       </h2>
+       <span className="text-s font-semibold uppercase tracking-[0.2em] text-[#7A1B2F]">
+          {story.location}
+        </span>
 
       {/* COMPETITION NAME */}
 

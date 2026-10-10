@@ -80,7 +80,7 @@ export const teamMembers = [
   {
     id: 9,
     name: "Shristi Pandey",
-    role: " Music Club Head",
+    role: "Dance Club Head",
     year: "Final Year",
     image:
       "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791286844/shristi.jpg",
@@ -161,7 +161,7 @@ export const teamMembers = [
   {
     id: 18,
     name: "Shashikant Vishwakarma",
-    role: "Photography Club Head",
+    role: "FineArts Club Joint Head",
     year: "Final Year",
     image:
       "https://i.ibb.co/nMkDFCwY/1000319017-Shashikant-Vishwakarma.jpg",
