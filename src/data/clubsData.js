@@ -695,7 +695,7 @@ export const clubsData = {
         designation:
           "Faculty In-Charge, Technical & Designing Club",
 
-        image: "#",
+        image: "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791389848/WhatsApp_Image_2026-10-07_at_11.51.43_AM.jpg",
 
         message:
           "A photograph can preserve a moment, while technology can transform an idea into an experience. The club encourages students to explore photography, design and digital creativity while developing skills that can be shared across the cultural life of the campus.",

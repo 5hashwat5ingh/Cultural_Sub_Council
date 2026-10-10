@@ -59,7 +59,7 @@ export const teamMembers = [
     role: " Music Club Head",
     year: "Final Year",
     image:
-      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791287226/anurag_sir_updated.jpg",
+      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791390363/WhatsApp_Image_2026-10-07_at_3.44.27_PM.jpg",
   },
 {
     id: 7,
@@ -67,7 +67,7 @@ export const teamMembers = [
     role: " Music Club Head",
     year: "Final Year",
     image:
-      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791291549/anshika_maam.jpg",
+      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791390364/file_00000000f3708211afb61a2a68dc9ee0.png",
   },
   {
     id: 8,
@@ -197,16 +197,16 @@ export const teamMembers = [
     image:
       "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791291035/IMG-20261006-WA0081.jpg",
   },
-
   {
     id:21,
-    name: "Kislay Dubey",
+    name: "Yash Gauba",
     role: "Event Coordinator",
     year: "Pre-Final Year",
     image:
-      "https://i.ibb.co/3Y1Ztdkx/1000159222-30kb-Kislay-Dubey.jpg",
+      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791291367/yash.jpg",
   },
 
+  
   {
     id:22,
     name: "Manjari Yadav",
@@ -215,15 +215,16 @@ export const teamMembers = [
     image:
       "https://i.ibb.co/1Hcp3N9/IMG-20261003-142829-MANJARI-YADAV.jpg",
   },
-
   {
     id:23,
-    name: "Yash Gauba",
+    name: "Kislay Dubey",
     role: "Event Coordinator",
     year: "Pre-Final Year",
     image:
-      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791291367/yash.jpg",
+      "https://i.ibb.co/3Y1Ztdkx/1000159222-30kb-Kislay-Dubey.jpg",
   },
+
+
 {
     id:24,
     name: "Ayush Kumar ",

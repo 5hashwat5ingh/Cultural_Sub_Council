@@ -1,623 +1,326 @@
 import React, { useState } from "react";
+
 import {
-  motion,
-  AnimatePresence,
-  useReducedMotion,
+motion,
+AnimatePresence,
+useReducedMotion,
 } from "framer-motion";
-import { Link } from "react-router-dom";
 
-// =========================================================
-// NAVBAR
-// =========================================================
+import { Link, useLocation } from "react-router-dom";
 
-export default function Navbar({
-  Gallery = false,
-  Home = false,
-}) {
-  const shouldReduceMotion = useReducedMotion();
+export default function Navbar() {
+const [menuOpen, setMenuOpen] = useState(false);
 
-  const [menuOpen, setMenuOpen] = useState(false);
+const shouldReduceMotion = useReducedMotion();
+const location = useLocation();
 
-  // =========================================================
-  // CLOSE MOBILE MENU
-  // =========================================================
+// Detect current page, including nested routes
+const pathname = location.pathname;
 
-  const closeMenu = () => {
-    setMenuOpen(false);
-  };
+const isHome = pathname === "/";
+const isClubs = pathname.startsWith("/clubs");
+const isEvents = pathname.startsWith("/events");
+const isGallery = pathname === "/gallery";
 
-  // =========================================================
-  // MOBILE MENU ANIMATION
-  // =========================================================
+// Glass effect on Home, Clubs, and Events
+const hasGlassEffect = isHome || isClubs || isEvents;
 
-  const menuVariants = {
-    hidden: {
-      opacity: 0,
-      y: -12,
+// Text color
+const textColor = hasGlassEffect ? "text-white" : "text-black";
+const hoverColor = "hover:text-[#D9B86C]";
 
-      transition: {
-        duration: 0.2,
-      },
-    },
+// Page-specific navbar appearance
+const headerStyle = hasGlassEffect
+? `${
+        isEvents ? "fixed" : "absolute"
+      } inset-x-0 top-0 z-[99999] w-full border-b border-white/0 bg-transparent shadow-[0_4px_30px_rgba(0,0,0,0.03)]`
+: "absolute inset-x-0 top-0 z-[99999] w-full border-b border-transparent bg-transparent";
 
-    visible: {
-      opacity: 1,
-      y: 0,
+const closeMenu = () => setMenuOpen(false);
 
-      transition: {
-        duration: shouldReduceMotion ? 0 : 0.35,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
+// Replace this with your direct registration URL when available.
+const registrationUrl = "/events";
 
-    exit: {
-      opacity: 0,
-      y: -12,
+const navLinks = [
+{ label: "Home", to: "/" },
+{ label: "Clubs", to: "/clubs" },
+{ label: "Events", to: "/events" },
+{ label: "Teams", to: "/team" },
+{ label: "Gallery", to: "/gallery" },
+];
 
-      transition: {
-        duration: shouldReduceMotion ? 0 : 0.2,
-      },
-    },
-  };
+const linkClass = `     text-xs
+    font-medium
+    uppercase
+    tracking-[0.2em]
+    ${textColor}
+    transition-colors
+    duration-300
+    ${hoverColor}
+  `;
 
-  return (
-    <motion.header
-      initial={
-        shouldReduceMotion
-          ? { opacity: 1, y: 0 }
-          : { opacity: 0, y: -20 }
-      }
-      animate={{
-        opacity: 1,
-        y: 0,
-      }}
-      transition={{
-        duration: shouldReduceMotion ? 0 : 0.8,
-        ease: [0.22, 1, 0.36, 1],
-        delay: shouldReduceMotion ? 0 : 0.1,
-      }}
+return (
+<motion.header
+initial={shouldReduceMotion ? false : { opacity: 0, y: -15 }}
+animate={{ opacity: 1, y: 0 }}
+transition={{
+duration: shouldReduceMotion ? 0 : 0.5,
+ease: "easeOut",
+}}
+className={headerStyle}
+>
+{/* Navbar content */} <div className="flex w-full items-center justify-between gap-4 px-2 py-3 sm:gap-6 sm:px-4 sm:py-4 lg:gap-8 lg:px-8">
+{/* Logo and brand */} <Link
+       to="/"
+       onClick={closeMenu}
+       aria-label="Cultural Sub Council Home"
+       className="group flex min-w-0 items-center gap-2.5 sm:gap-3"
+     > <img
+         src="/Logo.png"
+         alt="Cultural Sub Council Logo"
+         className="h-9 w-9 shrink-0 object-contain sm:h-10 sm:w-10"
+       />
+      <span
+        className={`
+          whitespace-nowrap
+          text-[10px]
+          font-semibold
+          uppercase
+          tracking-[0.1em]
+          ${textColor}
+          transition-colors
+          duration-300
+          ${hoverColor}
+          sm:text-sm
+          sm:tracking-[0.16em]
+          lg:text-base
+        `}
+      >
+        Cultural Sub Council
+      </span>
+    </Link>
+
+    {/* Desktop navigation */}
+    <nav aria-label="Main navigation" className="hidden lg:block">
+      <ul className="flex items-center gap-5 xl:gap-9">
+        {navLinks.map((link) => (
+          <li key={link.to}>
+            <Link to={link.to} className={linkClass}>
+              {link.label}
+            </Link>
+          </li>
+        ))}
+        {/* Register button */}
+
+
+
+        {/* Contact button */}
+        <li>
+          <Link
+            to="/contact"
+            className={`
+              group
+              relative
+              inline-flex
+              overflow-hidden
+              rounded-full
+              border
+              border-[#9C762E]/60
+              px-6
+              py-3
+              text-xs
+              font-medium
+              uppercase
+              tracking-[0.18em]
+              ${textColor}
+              transition-colors
+              duration-300
+              hover:text-white
+            `}
+          >
+            <span className="absolute inset-0 -translate-x-full bg-[#9C762E] transition-transform duration-300 group-hover:translate-x-0" />
+
+            <span className="relative z-10">Contact</span>
+          </Link>
+        </li>
+
+        
+      </ul>
+    </nav>
+
+    {/* Mobile menu button */}
+    <button
+      type="button"
+      onClick={() => setMenuOpen((open) => !open)}
+      aria-label={menuOpen ? "Close menu" : "Open menu"}
+      aria-expanded={menuOpen}
+      aria-controls="mobile-navigation"
       className={`
-        ${Gallery ? "absolute" : "fixed"}
-
-        top-0
-        left-0
-        z-50
-        w-full
-
-        px-5
-        py-1
-
-        sm:px-8
-        sm:py-7
-
-        lg:px-16
-        lg:py-4
-
+        relative
+        z-[100001]
         flex
+        h-10
+        w-10
+        shrink-0
+        flex-col
         items-center
-        justify-between
-
-        pointer-events-auto
-
-        bg-transparent
-        backdrop-blur-[1px]
+        justify-center
+        gap-[5px]
+        rounded-full
+        border
+        border-current/30
+        ${textColor}
+        transition-colors
+        hover:border-[#9C762E]
+        lg:hidden
       `}
     >
-      {/* =====================================================
-          LOGO / BRAND
-      ===================================================== */}
+      <motion.span
+        animate={
+          menuOpen
+            ? { rotate: 45, y: 6.5 }
+            : { rotate: 0, y: 0 }
+        }
+        transition={{ duration: 0.2 }}
+        className={`h-[1.5px] w-5 ${
+          hasGlassEffect ? "bg-white" : "bg-black"
+        }`}
+      />
 
-      <Link
-        to="/"
-        onClick={closeMenu}
+      <motion.span
+        animate={{
+          opacity: menuOpen ? 0 : 1,
+          x: menuOpen ? 5 : 0,
+        }}
+        transition={{ duration: 0.15 }}
+        className={`h-[1.5px] w-5 ${
+          hasGlassEffect ? "bg-white" : "bg-black"
+        }`}
+      />
+
+      <motion.span
+        animate={
+          menuOpen
+            ? { rotate: -45, y: -6.5 }
+            : { rotate: 0, y: 0 }
+        }
+        transition={{ duration: 0.2 }}
+        className={`h-[1.5px] w-5 ${
+          hasGlassEffect ? "bg-white" : "bg-black"
+        }`}
+      />
+    </button>
+  </div>
+
+  {/* Mobile dropdown */}
+  <AnimatePresence>
+    {menuOpen && (
+      <motion.div
+        id="mobile-navigation"
+        initial={{ opacity: 0, y: -10, height: 0 }}
+        animate={{ opacity: 1, y: 0, height: "auto" }}
+        exit={{ opacity: 0, y: -10, height: 0 }}
+        transition={{
+          duration: shouldReduceMotion ? 0 : 0.25,
+          ease: "easeOut",
+        }}
         className="
-          group
-          flex
-          min-w-0
-          items-center
-          gap-2.5
-          transition-opacity
-          duration-300
-          hover:opacity-80
-          sm:gap-3
+          absolute
+          left-3
+          right-3
+          top-full
+          mt-2
+          overflow-hidden
+          rounded-2xl
+          border
+          border-black/10
+          bg-[#F7EBD0]
+          shadow-lg
+          lg:hidden
         "
-        aria-label="Cultural Sub Council Home"
       >
-        <img
-          src="/Logo.png"
-          alt="Cultural Sub Council"
-          className="
-            h-9
-            w-auto
-            shrink-0
-            object-contain
-            transition-transform
-            duration-500
-            group-hover:scale-105
-            sm:h-10
-          "
-        />
-
-        {/* Desktop Brand */}
-        <span
-          className="
-            hidden
-            text-sm
-            font-semibold
-            uppercase
-            tracking-[0.16em]
-            text-[#EDEDED]
-            sm:block
-            sm:text-base
-            sm:tracking-[0.18em]
-          "
+        <nav
+          aria-label="Mobile navigation"
+          className="px-5 py-2"
         >
-          CULTURAL SUB COUNCIL
-        </span>
-
-        {/* Mobile Brand */}
-        <span
-          className="
-            block
-            text-[11px]
-            font-semibold
-            uppercase
-            tracking-[0.14em]
-            text-[#EDEDED]
-            sm:hidden
-          "
-        >
-          CULTURAL SUB COUNCIL
-        </span>
-      </Link>
-
-      {/* =====================================================
-          DESKTOP NAVIGATION
-      ===================================================== */}
-
-      <nav
-        aria-label="Main Navigation"
-        className="hidden lg:block"
-      >
-        <ul
-          className="
-            flex
-            items-center
-            gap-7
-            xl:gap-10
-            text-[11px]
-            font-medium
-            uppercase
-            tracking-[0.22em]
-            text-[#EDEDED]
-            xl:text-xs
-          "
-        >
-          {/* HOME */}
-
-          <li>
+          {navLinks.map((link) => (
             <Link
-              to="/"
+              key={link.to}
+              to={link.to}
+              onClick={closeMenu}
               className="
-                nav-link
-                py-1
-                transition-colors
-                duration-300
-                hover:text-[#C6A15B]
-              "
-            >
-              Home
-            </Link>
-          </li>
-
-          {/* CLUBS */}
-
-          <li>
-            <Link
-              to="/clubs"
-              className="
-                nav-link
-                py-1
-                transition-colors
-                duration-300
-                hover:text-[#C6A15B]
-              "
-            >
-              Clubs
-            </Link>
-          </li>
-
-          {/* EVENTS */}
-
-          <li>
-            <Link
-              to="/events"
-              className="
-                nav-link
-                py-1
-                transition-colors
-                duration-300
-                hover:text-[#C6A15B]
-              "
-            >
-              Events
-            </Link>
-          </li>
-
-          {/* TEAM */}
-
-          <li>
-            <Link
-              to="/team"
-              className="
-                nav-link
-                py-1
-                transition-colors
-                duration-300
-                hover:text-[#C6A15B]
-              "
-            >
-              Teams
-            </Link>
-          </li>
-
-          {/* GALLERY */}
-
-          <li>
-            <Link
-              to="/gallery"
-              className="
-                nav-link
-                py-1
-                transition-colors
-                duration-300
-                hover:text-[#C6A15B]
-              "
-            >
-              Gallery
-            </Link>
-          </li>
-
-          {/* CONTACT */}
-
-          <li>
-            <Link
-              to="/contact"
-              className="
-                group
-                relative
-                inline-flex
-                items-center
-                gap-2
-                overflow-hidden
-                rounded-full
-                border
-                border-white/25
-                px-5
-                py-2.5
-                text-[10px]
+                block
+                border-b
+                border-black/10
+                py-4
+                text-sm
                 font-medium
                 uppercase
                 tracking-[0.2em]
-                text-[#C6A15B]
-                transition-all
-                duration-500
-                hover:-translate-y-0.5
-                hover:border-[#C6A15B]/60
+                text-black
+                transition-colors
+                hover:text-[#9C762E]
               "
             >
-              {/* Hover background */}
-
-              <span
-                className="
-                  absolute
-                  inset-0
-                  -translate-x-full
-                  bg-[#C6A15B]
-                  transition-transform
-                  duration-500
-                  ease-[cubic-bezier(0.22,1,0.36,1)]
-                  group-hover:translate-x-0
-                "
-              />
-
-              {/* Text */}
-
-              <span
-                className="
-                  relative
-                  z-10
-                  transition-colors
-                  duration-500
-                  group-hover:text-[#2B0A12]
-                "
-              >
-                Contact
-              </span>
+              {link.label}
             </Link>
-          </li>
-        </ul>
-      </nav>
+          ))}
 
-      {/* =====================================================
-          MOBILE MENU BUTTON
-      ===================================================== */}
-
-      <button
-        type="button"
-        onClick={() => setMenuOpen((prev) => !prev)}
-        className="
-          relative
-          z-[60]
-          flex
-          h-10
-          w-10
-          items-center
-          justify-center
-          rounded-full
-          border
-          border-white/25
-          text-[#EDEDED]
-          transition-all
-          duration-300
-          hover:border-[#C6A15B]/70
-          hover:text-[#C6A15B]
-          lg:hidden
-        "
-        aria-label={
-          menuOpen
-            ? "Close navigation menu"
-            : "Open navigation menu"
-        }
-        aria-expanded={menuOpen}
-      >
-        <span className="relative h-4 w-5">
-          {/* Top */}
-
-          <motion.span
-            animate={
-              menuOpen
-                ? {
-                    rotate: 45,
-                    y: 7,
-                  }
-                : {
-                    rotate: 0,
-                    y: 0,
-                  }
-            }
-            transition={{
-              duration: 0.25,
-            }}
+          {/* Mobile Contact button */}
+          <Link
+            to="/contact"
+            onClick={closeMenu}
             className="
-              absolute
-              left-0
-              top-0
-              h-[1.5px]
-              w-5
-              bg-current
-            "
-          />
-
-          {/* Middle */}
-
-          <motion.span
-            animate={{
-              opacity: menuOpen ? 0 : 1,
-              x: menuOpen ? 5 : 0,
-            }}
-            transition={{
-              duration: 0.2,
-            }}
-            className="
-              absolute
-              left-0
-              top-[7px]
-              h-[1.5px]
-              w-5
-              bg-current
-            "
-          />
-
-          {/* Bottom */}
-
-          <motion.span
-            animate={
-              menuOpen
-                ? {
-                    rotate: -45,
-                    y: -7,
-                  }
-                : {
-                    rotate: 0,
-                    y: 0,
-                  }
-            }
-            transition={{
-              duration: 0.25,
-            }}
-            className="
-              absolute
-              left-0
-              top-[14px]
-              h-[1.5px]
-              w-5
-              bg-current
-            "
-          />
-        </span>
-      </button>
-
-      {/* =====================================================
-          MOBILE MENU
-      ===================================================== */}
-
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            variants={menuVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            className="
-              absolute
-              left-4
-              right-4
-              top-[76px]
-              overflow-hidden
-              rounded-2xl
+              mb-3
+              mt-5
+              block
+              rounded-full
               border
-              border-[#C6A15B]/20
-              bg-[#1D070D]/95
-              shadow-2xl
-              shadow-black/20
-              backdrop-blur-xl
-              lg:hidden
+              border-[#9C762E]/60
+              px-5
+              py-3.5
+              text-center
+              text-xs
+              font-medium
+              uppercase
+              tracking-[0.2em]
+              text-black
+              transition-colors
+              hover:bg-[#9C762E]
+              hover:text-white
             "
           >
-            <nav
-              aria-label="Mobile Navigation"
-              className="p-5"
-            >
-              <div className="flex flex-col">
-                {/* HOME */}
+            Contact Us
+          </Link>
 
-                <Link
-                  to="/"
-                  onClick={closeMenu}
-                  className="
-                    border-b
-                    border-white/10
-                    py-4
-                    text-sm
-                    uppercase
-                    tracking-[0.2em]
-                    text-[#D8C7AA]
-                    transition-colors
-                    duration-300
-                    hover:text-[#D9B86C]
-                  "
-                >
-                  Home
-                </Link>
+          {/* Mobile Register button */}
+          <Link
+            to={registrationUrl}
+            onClick={closeMenu}
+            className="
+              mb-3
+              block
+              rounded-full
+              bg-[#9C762E]
+              px-5
+              py-3.5
+              text-center
+              text-xs
+              font-semibold
+              uppercase
+              tracking-[0.2em]
+              text-white
+              transition-colors
+              hover:bg-[#7A1B2F]
+            "
+          >
+            Register for an Event ↗
+          </Link>
+        </nav>
+      </motion.div>
+    )}
+  </AnimatePresence>
+</motion.header>
 
-                {/* CLUBS */}
-
-                <Link
-                  to="/clubs"
-                  onClick={closeMenu}
-                  className="
-                    border-b
-                    border-white/10
-                    py-4
-                    text-sm
-                    uppercase
-                    tracking-[0.2em]
-                    text-[#D8C7AA]
-                    transition-colors
-                    duration-300
-                    hover:text-[#D9B86C]
-                  "
-                >
-                  Clubs
-                </Link>
-
-                {/* EVENTS */}
-
-                <Link
-                  to="/events"
-                  onClick={closeMenu}
-                  className="
-                    border-b
-                    border-white/10
-                    py-4
-                    text-sm
-                    uppercase
-                    tracking-[0.2em]
-                    text-[#D8C7AA]
-                    transition-colors
-                    duration-300
-                    hover:text-[#D9B86C]
-                  "
-                >
-                  Events
-                </Link>
-
-                {/* TEAM */}
-
-                <Link
-                  to="/team"
-                  onClick={closeMenu}
-                  className="
-                    border-b
-                    border-white/10
-                    py-4
-                    text-sm
-                    uppercase
-                    tracking-[0.2em]
-                    text-[#D8C7AA]
-                    transition-colors
-                    duration-300
-                    hover:text-[#D9B86C]
-                  "
-                >
-                  Team
-                </Link>
-
-                {/* GALLERY */}
-
-                <Link
-                  to="/gallery"
-                  onClick={closeMenu}
-                  className="
-                    border-b
-                    border-white/10
-                    py-4
-                    text-sm
-                    uppercase
-                    tracking-[0.2em]
-                    text-[#D8C7AA]
-                    transition-colors
-                    duration-300
-                    hover:text-[#D9B86C]
-                  "
-                >
-                  Gallery
-                </Link>
-
-                {/* CONTACT */}
-
-                <Link
-                  to="/contact"
-                  onClick={closeMenu}
-                  className="
-                    mt-5
-                    flex
-                    items-center
-                    justify-center
-                    rounded-full
-                    border
-                    border-[#C6A15B]/50
-                    px-5
-                    py-3
-                    text-xs
-                    uppercase
-                    tracking-[0.2em]
-                    text-[#F7EBD0]
-                    transition-all
-                    duration-300
-                    hover:border-[#D9B86C]
-                    hover:bg-[#C6A15B]
-                    hover:text-[#2B0A12]
-                  "
-                >
-                  Contact
-                </Link>
-              </div>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.header>
-  );
+);
 }

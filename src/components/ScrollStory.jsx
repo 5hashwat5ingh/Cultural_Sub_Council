@@ -17,65 +17,79 @@ import StoryText from "./StoryText";
    DEFAULT STORIES
 ========================================================= */
 
+
 const DEFAULT_STORIES = [
   {
     number: "01",
     title: "Thomso",
+    subtitle: "Rap Competition",
+    achievement: "Second Position",
+    person: "Rachit Singh",
     description:
-      "Rap competition: Rachit singh secured second position",
+      "Rachit Singh secured second position in the Rap Competition at Thomso, showcasing his talent and performance on an inter-college cultural stage.",
     image:
       "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791320105/Screenshot_2025-11-09-19-01-41-423_com.miui.mediaviewer.jpg.jpg",
-    alt: "Culture",
+    alt: "Rachit Singh's achievement at Thomso",
   },
-
   {
     number: "02",
     title: "ITM Gorakhpur",
+    subtitle: "Battle of Bands",
+    achievement: "First Position",
+    person: "Team Anahat",
     description:
-      "Tem Anahat: secured 1st position, Battle of Bands, Parampara",
+      "Team Anahat secured first position in the Battle of Bands at ITM Gorakhpur during Parampara, marking an important achievement for the institute's music community.",
     image:
       "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791345113/WhatsApp_Image_2026-10-07_at_9.15.26_AM.jpg",
-    alt: "Creativity",
+    alt: "Team Anahat at ITM Gorakhpur",
   },
-
   {
     number: "03",
     title: "Thomso",
+    subtitle: "Dress Designing",
+    achievement: "Second Position",
+    person: "Cultural Achievement",
     description:
-      "Second position in dress designing",
+      "Our participant secured second position in Dress Designing at Thomso, earning recognition for creativity and design in a competitive cultural event.",
     image:
       "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791320185/WhatsApp_Image_2026-10-07_at_2.10.06_AM.jpg",
-    alt: "Expression",
+    alt: "Dress Designing achievement at Thomso",
   },
-
   {
     number: "04",
     title: "Thomso",
+    subtitle: "Nukkad Natak",
+    achievement: "Finalist",
+    person: "Team Shunya",
     description:
-      "Nukkad Natak: Team Shunya finalist competing with 25 teams who participated",
+      "Team Shunya reached the finals of Nukkad Natak at Thomso, competing against 25 participating teams and showcasing the team's dedication to theatrical performance.",
     image:
       "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791345594/WhatsApp_Image_2026-10-07_at_9.29.21_AM.jpg",
-    alt: "Collaboration",
+    alt: "Team Shunya's Nukkad Natak achievement",
   },
-
   {
     number: "05",
     title: "Kashiyatra",
+    subtitle: "Asmita — Monoact",
+    achievement: "Third Position",
+    person: "Gargi Yadav",
     description:
-      "Gargi yadav secured 3rd position in Asmita(Monoact)",
-       image:
+      "Gargi Yadav secured third position in Asmita (Monoact) at Kashiyatra, earning recognition for her individual theatrical performance.",
+    image:
       "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791348685/WhatsApp_Image_2026-10-07_at_10.17.25_AM.jpg",
-    alt: "Experience",
+    alt: "Gargi Yadav's Asmita Monoact achievement",
   },
-
   {
     number: "06",
     title: "Mood Indigo",
+    subtitle: "Group Dance",
+    achievement: "Finalist",
+    person: "Cultural Dance Team",
     description:
-      "Finalist in Group Dance",
+      "Our group dance team reached the finals at Mood Indigo, gaining recognition at one of the institute's major cultural competition appearances.",
     image:
       "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791345213/WhatsApp_Image_2026-10-07_at_12.33.55_AM.jpg",
-    alt: "Together",
+    alt: "Group Dance achievement at Mood Indigo",
   },
 ];
 

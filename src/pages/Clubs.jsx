@@ -1,13 +1,12 @@
+
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-// =========================================================
-// CLUB DATA
-// =========================================================
+const heroImage =
+  "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791232371/Untitled_design_4.png";
 
 const clubs = [
   {
@@ -20,7 +19,6 @@ const clubs = [
       "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791236623/WhatsApp_Image_2026-10-06_at_2.17.13_AM.jpg",
     path: "/clubs/dance",
   },
-
   {
     number: "02",
     name: "Dramatics Club",
@@ -31,7 +29,6 @@ const clubs = [
       "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791237165/WhatsApp_Image_2026-10-06_at_3.21.39_AM.jpg",
     path: "/clubs/dramatics",
   },
-
   {
     number: "03",
     name: "Music Club",
@@ -42,7 +39,6 @@ const clubs = [
       "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791237274/WhatsApp_Image_2026-10-06_at_3.23.09_AM.jpg",
     path: "/clubs/music",
   },
-
   {
     number: "04",
     name: "Fine Arts Club",
@@ -53,7 +49,6 @@ const clubs = [
       "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791236837/WhatsApp_Image_2026-10-06_at_3.16.20_AM.jpg",
     path: "/clubs/fine-arts",
   },
-
   {
     number: "05",
     name: "Technical & Photography Club",
@@ -66,584 +61,178 @@ const clubs = [
   },
 ];
 
-// =========================================================
-// ANIMATIONS
-// =========================================================
-
 const fadeUp = {
-  hidden: {
-    opacity: 0,
-    y: 25,
-  },
-
+  hidden: { opacity: 0, y: 35 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.7,
-      ease: [0.22, 1, 0.36, 1],
-    },
+    transition: { duration: 0.7, ease: "easeOut" },
   },
 };
 
-const stagger = {
-  hidden: {},
-
-  visible: {
-    transition: {
-      staggerChildren: 0.08,
-    },
-  },
-};
-
-// =========================================================
-// CLUBS PAGE
-// =========================================================
-
-export default function ClubsPage() {
-  const heroImage =
-    "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791232371/Untitled_design_4.png";
+function ClubRow({ club, index }) {
+  const reverse = index % 2 !== 0;
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#DCD3A4] text-[#2B0A12]">
-      {/* =====================================================
-          NAVBAR
-      ===================================================== */}
-
-      <Navbar Gallery />
-
-      {/* =====================================================
-          HERO
-          
-          IMPORTANT:
-          Height is now determined by the actual image.
-          This prevents cropping and removes vacant space.
-      ===================================================== */}
-
-      <section
-        className="
-          relative
-          w-full
-          overflow-hidden
-          bg-[#2B0A12]
-        "
+    <motion.article
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      className="group border-t border-[#2B0A12]/20 py-8 sm:py-12 lg:py-16"
+    >
+      <div
+        className={`grid grid-cols-1 items-center gap-7 md:grid-cols-12 md:gap-10 ${
+          reverse ? "md:[&>*:first-child]:order-2" : ""
+        }`}
       >
-        {/* =================================================
-            FULL ORIGINAL IMAGE
-
-            h-auto + w-full means the complete image is
-            displayed using its natural aspect ratio.
-        ================================================= */}
-
-        <img
-          src={heroImage}
-          alt="Cultural Sub Council"
-          className="
-          mt-[39px]
-            block
-            h-auto
-            w-full
-            object-contain
-          "
-        />
-
-        {/* =================================================
-            DARK CINEMATIC OVERLAY
-        ================================================= */}
-
-        <div
-          className="
-            pointer-events-none
-            absolute
-            inset-0
-            bg-[#2B0A12]/20
-          "
-        />
-
-        {/* =================================================
-            TOP GRADIENT
-        ================================================= */}
-
-        <div
-          className="
-            pointer-events-none
-            absolute
-            inset-x-0
-            top-0
-            h-24
-            bg-gradient-to-b
-            from-[#1D070D]/65
-            to-transparent
-            sm:h-32
-            md:h-40
-          "
-        />
-
-        {/* =================================================
-            BOTTOM GRADIENT
-        ================================================= */}
-
-        <div
-          className="
-            pointer-events-none
-            absolute
-            inset-x-0
-            bottom-0
-            h-28
-            bg-gradient-to-t
-            from-[#1D070D]/65
-            via-[#1D070D]/20
-            to-transparent
-            sm:h-36
-            md:h-44
-          "
-        />
-
-        {/* =================================================
-            HERO CONTENT
-        ================================================= */}
-
-        <div
-          className="
-            absolute
-            inset-0
-            z-10
-            flex
-            items-center
-            justify-center
-            px-5
-            py-5
-            sm:px-8
-            md:px-10
-            lg:px-12
-            xl:px-16
-          "
+        {/* Image */}
+        <Link
+          to={club.path}
+          aria-label={`Explore ${club.name}`}
+          className="relative block overflow-hidden bg-[#C6B982] md:col-span-7"
         >
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={stagger}
-            className="
-              w-full
-              max-w-[1250px]
-              text-center
-            "
-          >
-            {/* =================================================
-                EYEBROW
-            ================================================= */}
-
-            <motion.div
-              variants={fadeUp}
-              className="
-                mb-3
-                flex
-                items-center
-                justify-center
-                gap-3
-                sm:mb-5
-                sm:gap-4
-              "
-            >
-              <span
-                className="
-                  h-px
-                  w-5
-                  bg-[#D9B86C]/80
-                  sm:w-9
-                  md:w-12
-                "
-              />
-
-              <span
-                className="
-                  text-[6px]
-                  font-semibold
-                  uppercase
-                  tracking-[0.28em]
-                  text-[#F7EBD0]/90
-                  sm:text-[8px]
-                  sm:tracking-[0.38em]
-                  md:text-[9px]
-                "
-              >
-                Cultural Sub Council
-              </span>
-
-              <span
-                className="
-                  h-px
-                  w-5
-                  bg-[#D9B86C]/80
-                  sm:w-9
-                  md:w-12
-                "
-              />
-            </motion.div>
-
-            {/* =================================================
-                MAIN HEADING
-            ================================================= */}
-
-            <motion.h1
-              variants={fadeUp}
-              className="
-                mx-auto
-                max-w-[1050px]
-                text-[clamp(3rem,13vw,8.5rem)]
-                font-semibold
-                leading-[0.8]
-                tracking-[-0.075em]
-                text-[#F7EBD0]
-                drop-shadow-[0_8px_30px_rgba(29,7,13,0.7)]
-                sm:text-[clamp(3.8rem,10vw,8.5rem)]
-                md:text-[clamp(4.5rem,8.5vw,9rem)]
-              "
-            >
-              Where
-              <br />
-
-              <span className="text-[#D9B86C]">
-                Creativity Lives.
-              </span>
-            </motion.h1>
-
-            {/* =================================================
-                GOLD LINE
-            ================================================= */}
-
-            <motion.div
-              initial={{
-                width: 0,
-                opacity: 0,
-              }}
-              animate={{
-                width: 60,
-                opacity: 1,
-              }}
-              transition={{
-                duration: 0.9,
-                delay: 0.5,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="
-                mx-auto
-                mt-4
-                h-px
-                bg-[#D9B86C]
-                sm:mt-6
-                md:mt-7
-              "
+          <div className="relative aspect-[5/3] overflow-hidden sm:aspect-[16/9]">
+            <img
+              src={club.image}
+              alt={club.name}
+              loading="lazy"
+              className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             />
 
-            {/* =================================================
-                SUBTITLE
-            ================================================= */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#19070B]/65 via-transparent to-transparent opacity-70 transition-opacity duration-500 group-hover:opacity-90" />
 
-           
-          </motion.div>
+            
+
+            <span className="absolute bottom-5 right-5 flex h-11 w-11 items-center justify-center rounded-full border border-[#F7EBD0]/70 text-xl text-[#F7EBD0] transition-all duration-300 group-hover:border-[#D9B86C] group-hover:bg-[#D9B86C] group-hover:text-[#2B0A12] sm:bottom-7 sm:right-7">
+              ↗
+            </span>
+          </div>
+        </Link>
+
+        {/* Content */}
+        <div className="flex flex-col justify-center md:col-span-5 md:px-2 lg:px-5">
+          <div className="mb-5 flex items-center gap-3">
+            <span className="h-px w-8 bg-[#9B783A]" />
+            <span className="text-[10px] font-semibold tracking-[0.19em] text-[#7A1B2F] sm:text-xs">
+              {club.category}
+            </span>
+          </div>
+
+          <h2 className="max-w-lg font-serif text-4xl leading-[1.05] tracking-tight text-[#2B0A12] transition-colors duration-300 group-hover:text-[#7A1B2F] sm:text-5xl lg:text-6xl">
+            {club.name}
+          </h2>
+
+          <p className="mt-5 max-w-md text-sm leading-7 text-[#5C514A] sm:text-base sm:leading-8">
+            {club.description}
+          </p>
+
+          <div className="mt-7">
+            <Link
+              to={club.path}
+              className="inline-flex items-center gap-4 border-b border-[#2B0A12]/40 pb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#2B0A12] transition-all duration-300 hover:gap-6 hover:border-[#7A1B2F] hover:text-[#7A1B2F]"
+            >
+              Explore Club
+              <span className="text-lg leading-none">→</span>
+            </Link>
+          </div>
+
+          
         </div>
+      </div>
+    </motion.article>
+  );
+}
 
-        {/* =================================================
-            SCROLL INDICATOR
-        ================================================= */}
+export default function ClubsPage() {
+  return (
+    <main className="min-h-screen overflow-hidden bg-[#DCD3A4] text-[#2B0A12]">
+      <Navbar Gallery />
+     
+{/* HERO */}
+
+<section className="relative w-full overflow-hidden bg-[#2B0A12]">
+  <img
+    src={heroImage}
+    alt="Cultural Sub Council"
+    className="mt-3 block h-auto w-full object-contain"
+  />
+
+  {/* Overlay */}
+  <div className="absolute inset-0 bg-[#1A080D]/35" />
+  <div className="absolute inset-0 bg-gradient-to-r from-[#1A080D]/70 via-[#1A080D]/20 to-transparent" />
+
+  {/* Bottom gradient */}
+  <div className="absolute inset-x-0 bottom-0 h-[2%] bg-gradient-to-t from-[#DCD3A4] to-transparent" />
+
+  {/* Hero content */}
+  <div className="absolute inset-0 z-10 flex items-center">
+    <div className="mx-auto w-full max-w-[1500px] px-5 sm:px-10 lg:px-20">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: {},
+          visible: {
+            transition: { staggerChildren: 0.15 },
+          },
+        }}
+        className="max-w-5xl"
+      >
+        <motion.h1
+          variants={fadeUp}
+          className="font-serif text-3xl leading-[1.02] tracking-tight text-[#F7EBD0] sm:text-5xl md:text-7xl lg:text-[100px] xl:text-[110px]"
+        >
+          Where
+          <br />
+          <span className="italic text-[#D9B86C]">Creativity</span>
+          <br />
+          Lives.
+        </motion.h1>
+
+        <motion.p
+          variants={fadeUp}
+          className="mt-3 max-w-[280px] text-[11px] leading-5 text-[#F7EBD0]/90 sm:mt-5 sm:max-w-md sm:text-sm sm:leading-6 md:mt-6 md:text-base md:leading-7 lg:max-w-lg"
+        >
+          Discover the people, passions and creative spaces that bring our
+          campus to life. Find your community and make something extraordinary.
+        </motion.p>
+
+        <motion.div
+          variants={fadeUp}
+          className="mt-4 sm:mt-6 md:mt-8"
+        >
+          <a
+            href="#explore-clubs"
+            className="inline-flex items-center gap-3 border border-[#F7EBD0]/60 px-3 py-2.5 text-[9px] font-semibold uppercase tracking-[0.12em] text-[#F7EBD0] transition-all duration-300 hover:border-[#D9B86C] hover:bg-[#D9B86C] hover:text-[#2B0A12] sm:gap-4 sm:px-5 sm:py-3 sm:text-[10px] sm:tracking-[0.16em] md:px-6 md:py-4 md:text-xs"
+          >
+            Discover Our Clubs
+            <span className="text-base sm:text-lg">↓</span>
+          </a>
+        </motion.div>
+      </motion.div>
+    </div>
+  </div>
+</section>
+
+      {/* CLUB DIRECTORY */}
+      <section
+        id="explore-clubs"
+        className="mx-auto max-w-[1500px] scroll-mt-8 px-6 pb-20 pt-10 sm:px-10 sm:pt-16 lg:px-20 lg:pb-28"
+      >
+        
 
        
-      </section>
 
-      {/* =====================================================
-          INTRODUCTION
-      ===================================================== */}
-
-      
-      {/* =====================================================
-          CLUB LIST
-      ===================================================== */}
-
-      <section
-        className="
-          relative
-          overflow-hidden
-          bg-[#DCD3A4]
-          mt-[90px]
-          px-5
-          pb-14
-          sm:px-8
-          sm:pb-18
-          md:px-10
-          md:pb-20
-          lg:px-12
-          xl:px-16
-          xl:pb-24
-        "
-      >
-        <div className="mx-auto max-w-[1450px]">
-          {/* Heading */}
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{
-              once: true,
-              amount: 0.2,
-            }}
-            variants={stagger}
-            className="mb-6 sm:mb-8 md:mb-9"
-          >
-            <motion.p
-              variants={fadeUp}
-              className="
-                text-[8px]
-                font-semibold
-                uppercase
-                tracking-[0.35em]
-                text-[#7A1B2F]
-                sm:text-[9px]
-              "
-            >
-              Explore The Clubs
-            </motion.p>
-
-            <motion.h2
-              variants={fadeUp}
-              className="
-                mt-3
-                text-[clamp(2.7rem,8vw,5.5rem)]
-                font-semibold
-                leading-[0.88]
-                tracking-[-0.065em]
-                text-[#2B0A12]
-                sm:mt-4
-              "
-            >
-              Find your stage.
-            </motion.h2>
-          </motion.div>
-
-          {/* Club list */}
-
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{
-              once: true,
-              amount: 0.03,
-            }}
-            className="border-t border-[#7A1B2F]/20"
-          >
-            {clubs.map((club) => (
-              <motion.div
-                key={club.name}
-                variants={fadeUp}
-                className="group border-b border-[#7A1B2F]/20"
-              >
-                <Link
-                  to={club.path}
-                  aria-label={`Explore ${club.name}`}
-                  className="
-                    grid
-                    gap-4
-                    py-5
-                    sm:gap-6
-                    sm:py-7
-                    md:py-8
-                    lg:grid-cols-[230px_1fr_45px]
-                    lg:items-center
-                    lg:gap-7
-                    xl:grid-cols-[55px_300px_1fr_48px]
-                    xl:gap-8
-                    xl:py-6
-                  "
-                >
-                  {/* Number */}
-
-                  <div className="hidden xl:block">
-                    <span
-                      className="
-                        text-[9px]
-                        tracking-[0.2em]
-                        text-[#7A1B2F]/50
-                        transition-colors
-                        duration-500
-                        group-hover:text-[#7A1B2F]
-                      "
-                    >
-                      {club.number}
-                    </span>
-                  </div>
-
-                  {/* Image */}
-
-                  <div
-                    className="
-                      relative
-                      h-[165px]
-                      w-full
-                      overflow-hidden
-                      rounded-[5px]
-                      sm:h-[210px]
-                      md:h-[230px]
-                      lg:h-[180px]
-                      xl:h-[175px]
-                    "
-                  >
-                    <img
-                      src={club.image}
-                      alt={club.name}
-                      loading="lazy"
-                      className="
-                        h-full
-                        w-full
-                        object-cover
-                        transition-transform
-                        duration-1000
-                        ease-[0.22,1,0.36,1]
-                        group-hover:scale-105
-                      "
-                    />
-
-                    <div
-                      className="
-                        pointer-events-none
-                        absolute
-                        inset-0
-                        bg-gradient-to-t
-                        from-[#2B0A12]/25
-                        via-transparent
-                        to-transparent
-                      "
-                    />
-
-                    <div
-                      className="
-                        pointer-events-none
-                        absolute
-                        bottom-3
-                        left-3
-                        h-6
-                        w-6
-                        border-b
-                        border-l
-                        border-[#D9B86C]
-                        transition-all
-                        duration-500
-                        group-hover:h-9
-                        group-hover:w-9
-                      "
-                    />
-                  </div>
-
-                  {/* Content */}
-
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-3">
-                      <span
-                        className="
-                          text-[7px]
-                          uppercase
-                          tracking-[0.2em]
-                          text-[#7A1B2F]/70
-                          sm:text-[8px]
-                          sm:tracking-[0.25em]
-                        "
-                      >
-                        {club.category}
-                      </span>
-
-                      <span className="h-px w-5 bg-[#C6A15B]/60 sm:w-7" />
-                    </div>
-
-                    <h3
-                      className="
-                        mt-2
-                        text-[clamp(1.75rem,7vw,3.7rem)]
-                        font-semibold
-                        leading-[0.92]
-                        tracking-[-0.055em]
-                        text-[#2B0A12]
-                        transition-all
-                        duration-500
-                        group-hover:translate-x-1
-                        group-hover:text-[#7A1B2F]
-                        sm:mt-3
-                        md:text-[clamp(2rem,5vw,3.7rem)]
-                      "
-                    >
-                      {club.name}
-                    </h3>
-
-                    <p
-                      className="
-                        mt-2
-                        max-w-2xl
-                        text-[11px]
-                        leading-5
-                        text-[#5C514A]
-                        sm:mt-3
-                        sm:text-[13px]
-                        sm:leading-6
-                        md:text-sm
-                      "
-                    >
-                      {club.description}
-                    </p>
-                  </div>
-
-                  {/* Arrow */}
-
-                  <div
-                    className="
-                      flex
-                      h-9
-                      w-9
-                      items-center
-                      justify-center
-                      self-end
-                      rounded-full
-                      border
-                      border-[#7A1B2F]/25
-                      text-base
-                      text-[#7A1B2F]
-                      transition-all
-                      duration-500
-                      group-hover:border-[#C6A15B]
-                      group-hover:bg-[#C6A15B]
-                      group-hover:text-[#2B0A12]
-                      sm:h-10
-                      sm:w-10
-                      md:h-11
-                      md:w-11
-                      lg:self-center
-                    "
-                  >
-                    <span
-                      className="
-                        inline-block
-                        transition-transform
-                        duration-500
-                        group-hover:rotate-45
-                      "
-                    >
-                      ↗
-                    </span>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </motion.div>
+        <div>
+          {clubs.map((club, index) => (
+            <ClubRow key={club.number} club={club} index={index} />
+          ))}
         </div>
       </section>
 
-      {/* =====================================================
-          CLOSING
-      ===================================================== */}
-
-      
-
-      {/* =====================================================
-          FOOTER
-      ===================================================== */}
+      {/* CLOSING */}
+     
 
       <Footer />
     </main>

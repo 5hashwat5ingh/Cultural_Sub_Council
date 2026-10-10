@@ -1,6 +1,7 @@
+
 import React, { useEffect, useRef, useState } from "react";
 
-export default function GalleryVideo({ src, title }) {
+export default function GalleryVideo({ src, title = "Gallery video" }) {
   const containerRef = useRef(null);
   const videoRef = useRef(null);
 
@@ -10,15 +11,22 @@ export default function GalleryVideo({ src, title }) {
 
   useEffect(() => {
     const element = containerRef.current;
+
     if (!element) return;
 
+    if (!("IntersectionObserver" in window)) {
+      setIsNearViewport(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsNearViewport(entry.isIntersecting);
+      (entries) => {
+        entries.forEach((entry) => {
+          setIsNearViewport(entry.isIntersecting);
+        });
       },
       {
         rootMargin: "250px 0px",
-        threshold: 0.05,
       }
     );
 
@@ -29,72 +37,72 @@ export default function GalleryVideo({ src, title }) {
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
 
-    if (isNearViewport) {
-      const playVideo = async () => {
-        try {
-          await video.play();
-        } catch {
-          // Autoplay may be blocked by browser
-        }
-      };
-
-      playVideo();
-    } else {
-      video.pause();
+    if (!video || !isNearViewport || hasError) {
+      if (video) video.pause();
+      return;
     }
-  }, [isNearViewport]);
+
+    const playVideo = async () => {
+      try {
+        await video.play();
+      } catch {
+        // Autoplay can be blocked by browser settings.
+        // The video remains available for manual playback.
+      }
+    };
+
+    playVideo();
+
+    return () => {
+      video.pause();
+    };
+  }, [isNearViewport, hasError, src]);
 
   return (
     <div
       ref={containerRef}
       className="relative w-full overflow-hidden bg-[#1D070D]"
     >
+      {/* Skeleton loading */}
+      {isNearViewport && !isReady && !hasError && (
+        <div
+          className="absolute inset-0 z-10 min-h-[180px] overflow-hidden bg-[#1D070D]"
+          aria-hidden="true"
+        >
+          <div className="skeleton-shimmer absolute inset-0" />
+
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full border border-[#C6A15B]/30 bg-[#3A0D18]/60">
+              <div className="h-4 w-4 rounded-full border-2 border-[#C6A15B]/30 border-t-[#C6A15B] animate-spin" />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Video */}
       {isNearViewport && !hasError && (
         <video
           ref={videoRef}
           src={src}
+          title={title}
           muted
           loop
           playsInline
           autoPlay
           preload="metadata"
+          className={`block h-auto w-full object-cover transition-opacity duration-500 ${
+            isReady ? "opacity-100" : "opacity-0"
+          }`}
           onLoadedData={() => setIsReady(true)}
           onError={() => setHasError(true)}
-          className={`
-            block
-            h-auto
-            w-full
-            object-cover
-            transition-opacity
-            duration-500
-            ${isReady ? "opacity-100" : "opacity-0"}
-          `}
-          aria-label={title}
         />
       )}
 
-      {isNearViewport && !isReady && !hasError && (
-        <div className="absolute inset-0 flex items-center justify-center bg-[#1D070D]">
-          <div
-            className="
-              h-6 w-6
-              animate-spin
-              rounded-full
-              border-2
-              border-[#C6A15B]/20
-              border-t-[#C6A15B]
-            "
-          />
-        </div>
-      )}
-
+      {/* Error fallback */}
       {hasError && (
-        <div className="flex min-h-[200px] items-center justify-center bg-[#3A0D18] px-5 text-center">
-          <span className="text-[9px] uppercase tracking-[0.2em] text-[#8F7663]">
-            Video unavailable
-          </span>
+        <div className="flex min-h-[180px] items-center justify-center bg-[#1D070D] px-4 text-center text-sm text-[#C6A15B]/70">
+          Video unavailable
         </div>
       )}
     </div>

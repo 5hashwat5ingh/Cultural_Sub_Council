@@ -116,3 +116,36 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Skeleton shimmer animation */
+.skeleton-shimmer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(198, 161, 91, 0.03) 30%,
+    rgba(198, 161, 91, 0.16) 50%,
+    rgba(198, 161, 91, 0.03) 70%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: gallery-skeleton-shimmer 1.8s linear infinite;
+}
+
+@keyframes gallery-skeleton-shimmer {
+  from {
+    background-position: 200% 0;
+  }
+
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-shimmer {
+    animation: none;
+  }
+}

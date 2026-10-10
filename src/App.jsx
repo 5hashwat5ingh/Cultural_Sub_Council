@@ -17,6 +17,7 @@ import Events from "./pages/Events";
 import Gallery from "./pages/Gallery";
 import Team from "./pages/Team";
 import Contact from "./pages/Contact";
+import Registration from "./pages/Registration";
 
 // ============================================================
 // CLUB PAGE
@@ -34,9 +35,8 @@ import { clubsData } from "./data/clubsData";
 // EVENT PAGES
 // ============================================================
 
-import Heats25 from "./pages/events/Heats25";
-import Abhyudaya from "./pages/events/Abhyudaya";
-import Pintura from "./pages/events/PinturaDePilares";
+import EventTemplate from "./pages/events/EventTemplate";
+import { eventsData } from "./data/eventsData";
 
 // ============================================================
 // APP
@@ -95,7 +95,10 @@ export default function App() {
           path="/contact"
           element={<Contact />}
         />
-
+        <Route
+          path="/registration"
+          element={<Registration />}
+        /> 
 
         {/* ===================================================
             CLUB PAGES
@@ -144,19 +147,19 @@ export default function App() {
         =================================================== */}
 
         <Route
-          path="/events/heats-25"
-          element={<Heats25 />}
-        />
+  path="/events/heats-25"
+  element={<EventTemplate event={eventsData.heats25} />}
+/>
 
-        <Route
-          path="/events/Abhyudaya"
-          element={<Abhyudaya />}
-        />
+<Route
+  path="/events/Abhyudaya"
+  element={<EventTemplate event={eventsData.abhyudaya} />}
+/>
 
-        <Route
-          path="/events/pintura"
-          element={<Pintura />}
-        />
+<Route
+  path="/events/pintura"
+  element={<EventTemplate event={eventsData.pintura} />}
+/>
 
       </Routes>
     </>
