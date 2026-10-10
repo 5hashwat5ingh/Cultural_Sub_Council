@@ -59,7 +59,7 @@ export const teamMembers = [
     role: " Music Club Head",
     year: "Final Year",
     image:
-      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791390363/WhatsApp_Image_2026-10-07_at_3.44.27_PM.jpg",
+      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791641304/WhatsApp_Image_2026-10-07_at_3.44.27_PM.jpg",
   },
 {
     id: 7,
@@ -239,7 +239,7 @@ export const teamMembers = [
     role: "Technical Club Joint Head",
     year: "Pre-Final Year",
     image:
-      "https://i.ibb.co/wZvtNFgJ/Whats-App-Image-2026-10-06-at-01-55-03.jpg",
+      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791642488/Shashwat_SIngh.jpg",
   },
   {id: 26,
     name: "Anushka Mall",
