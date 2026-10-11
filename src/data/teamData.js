@@ -132,9 +132,25 @@ export const teamMembers = [
     year: "Final Year",
     image:
       "https://i.ibb.co/3ybCdLQ8/IMG-20251230-WA0005-Taruna-Patel.jpg",
-  },
-  {
-    id: 16,
+  }
+   ,{
+    id:16 ,
+    name: "Mahi Mall",
+    role: "FineArts Club Joint Head",
+    year: "Final Year",
+    image:
+      "https://i.ibb.co/hFCtvfCZ/Whats-App-Image-2026-10-06-at-01-43-20.jpg",
+  }
+  ,{
+    id: 17,
+    name: "Shashikant Vishwakarma",
+    role: "FineArts Club Joint Head",
+    year: "Final Year",
+    image:
+      "https://i.ibb.co/nMkDFCwY/1000319017-Shashikant-Vishwakarma.jpg",
+  }
+  ,{
+    id: 18,
     name: "Ajay Kumar",
     role: "Dramatics Club Head",
     year: "Final Year",
@@ -142,7 +158,7 @@ export const teamMembers = [
       "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791286844/ajay.jpg",
   },
   {
-    id: 17,
+    id: 19,
     name: "Muskan Singh",
     role: "Dramatics Club Joint Head",
     year: "Final Year",
@@ -151,29 +167,15 @@ export const teamMembers = [
   },
 
   {
-    id: 18,
+    id: 20,
     name: "Sudhanshu Kumar Yadav",
     role: "Photography Club Head",
     year: "Final Year",
     image:
       "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791289783/sudhanshu.jpg",
   },
-  {
-    id: 18,
-    name: "Shashikant Vishwakarma",
-    role: "FineArts Club Joint Head",
-    year: "Final Year",
-    image:
-      "https://i.ibb.co/nMkDFCwY/1000319017-Shashikant-Vishwakarma.jpg",
-  },
-  {
-    id:38 ,
-    name: "Mahi Mall",
-    role: "FineArts Club Joint Head",
-    year: "Final Year",
-    image:
-      "https://i.ibb.co/hFCtvfCZ/Whats-App-Image-2026-10-06-at-01-43-20.jpg",
-  }
+  
+  
    
 
   /* =======================================================
@@ -181,7 +183,7 @@ export const teamMembers = [
   ======================================================= */
 
   ,{
-    id:19,
+    id:21,
     name: "Nishant Kasana",
     role: "Joint Cultural Secretary",
     year: "Pre-Final Year",
@@ -190,7 +192,7 @@ export const teamMembers = [
   },
 
   {
-    id: 20,
+    id: 22,
     name: "Meenakshi Sharma",
     role: "Joint Cultural Secretary",
     year: "Pre-Final Year",
@@ -198,7 +200,7 @@ export const teamMembers = [
       "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791291035/IMG-20261006-WA0081.jpg",
   },
   {
-    id:21,
+    id:23,
     name: "Yash Gauba",
     role: "Event Coordinator",
     year: "Pre-Final Year",
@@ -208,7 +210,7 @@ export const teamMembers = [
 
   
   {
-    id:22,
+    id:24,
     name: "Manjari Yadav",
     role: "Event Coordinator",
     year: "Pre-Final Year",
@@ -216,7 +218,7 @@ export const teamMembers = [
       "https://i.ibb.co/1Hcp3N9/IMG-20261003-142829-MANJARI-YADAV.jpg",
   },
   {
-    id:23,
+    id:25,
     name: "Kislay Dubey",
     role: "Event Coordinator",
     year: "Pre-Final Year",
@@ -226,7 +228,7 @@ export const teamMembers = [
 
 
 {
-    id:24,
+    id:26,
     name: "Ayush Kumar ",
     role: "Social Media Joint Head",
     year: "Pre-Final Year",
@@ -234,14 +236,14 @@ export const teamMembers = [
       "https://i.ibb.co/9kgL3Xtz/Whats-App-Image-2026-10-06-at-01-48-38.jpg",
   }
   ,{
-    id:25,
+    id:27,
     name: "Shashwat Singh",
     role: "Technical Club Joint Head",
     year: "Pre-Final Year",
     image:
       "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791642488/Shashwat_SIngh.jpg",
   },
-  {id: 26,
+  {id: 28,
     name: "Anushka Mall",
     role: "Technical Club Joint Head",
     year: "Pre-Final Year",
