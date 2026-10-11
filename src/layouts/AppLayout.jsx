@@ -1,53 +1,47 @@
-
-import React, {
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Preloader from "../components/Preloader";
 
 export default function AppLayout() {
   const location = useLocation();
 
-  const [isLoading, setIsLoading] = useState(true);
+  const isHomePage = location.pathname === "/";
+
+  const [isLoading, setIsLoading] = useState(false);
   const [videoKey, setVideoKey] = useState(0);
 
-  const routeKey = `${location.pathname}${location.search}`;
-
   useEffect(() => {
-    setIsLoading(true);
-    setVideoKey((previousKey) => previousKey + 1);
-  }, [routeKey]);
+    if (isHomePage) {
+      setIsLoading(true);
+      setVideoKey((previousKey) => previousKey + 1);
+    } else {
+      setIsLoading(false);
+    }
+  }, [location.pathname, isHomePage]);
 
-  const finishLoading = useCallback(() => {
+  const handlePreloaderComplete = () => {
     setIsLoading(false);
-  }, []);
-
-  useEffect(() => {
-    document.body.style.overflow = isLoading ? "hidden" : "";
-
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isLoading]);
+  };
 
   return (
     <>
+      {isHomePage && (
+        <Preloader
+          isLoading={isLoading}
+          videoKey={videoKey}
+          onComplete={handlePreloaderComplete}
+        />
+      )}
+
       <div
-        style={{
-          visibility: isLoading ? "hidden" : "visible",
-        }}
-        aria-hidden={isLoading}
+        className={
+          isHomePage && isLoading
+            ? "invisible"
+            : "visible"
+        }
       >
         <Outlet />
       </div>
-
-      <Preloader
-        isLoading={isLoading}
-        videoKey={videoKey}
-        onComplete={finishLoading}
-      />
     </>
   );
 }

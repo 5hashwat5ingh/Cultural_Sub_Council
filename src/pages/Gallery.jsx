@@ -42,6 +42,7 @@ function CloseIcon() {
 const shuffleArray = (array) => {
   const shuffled = [...array];
 
+  // Fisher-Yates shuffle
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
 
@@ -123,13 +124,11 @@ export default function Gallery() {
         );
 
   /* =======================================================
-     LOCK BODY SCROLL
+     LOCK BODY SCROLL WHEN VIEWER IS OPEN
   ======================================================= */
 
   useEffect(() => {
-    document.body.style.overflow = selectedItem
-      ? "hidden"
-      : "";
+    document.body.style.overflow = selectedItem ? "hidden" : "";
 
     return () => {
       document.body.style.overflow = "";
@@ -169,7 +168,6 @@ export default function Gallery() {
 
       <section className="relative min-h-screen overflow-hidden bg-[#DCD3A4] px-6 pb-20 pt-32 sm:px-10 sm:pt-40 lg:px-20 lg:pb-28 lg:pt-44">
         {/* HERO BACKGROUND */}
-
         <div
           className="pointer-events-none absolute inset-0 overflow-hidden"
           aria-hidden="true"
@@ -180,11 +178,9 @@ export default function Gallery() {
         </div>
 
         {/* HERO CONTENT */}
-
         <div className="relative z-10 mx-auto flex min-h-[78vh] max-w-[1500px] items-center">
           <div className="grid w-full grid-cols-1 gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-20">
             {/* LEFT */}
-
             <div>
               <motion.div
                 initial={{ opacity: 0, y: 25 }}
@@ -218,7 +214,6 @@ export default function Gallery() {
             </div>
 
             {/* RIGHT — VERTICAL VIDEO */}
-
             <motion.div
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -280,41 +275,38 @@ export default function Gallery() {
       </section>
 
       {/* =====================================================
-          MASONRY GALLERY
+          MASONRY GALLERY — RESPONSIVE, REDUCED FLICKER
       ===================================================== */}
 
-      <section className="relative overflow-hidden bg-[#DCD3A4] px-3 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20 xl:px-12 xl:py-24">
+      <section className="relative overflow-hidden bg-[#DCD3A4] px-3 py-12 sm:px-6 sm:py-16 lg:px-2 lg:py-20 xl:px-2 xl:py-24">
         {/* BACKGROUND DECORATION */}
-
         <div className="pointer-events-none absolute left-[-180px] top-[12%] h-[420px] w-[420px] rounded-full bg-[#7A1B2F]/10" />
 
         <div className="pointer-events-none absolute right-[-180px] top-[42%] h-[420px] w-[420px] rounded-full bg-[#C6A15B]/10" />
 
         <div className="pointer-events-none absolute bottom-[5%] left-[15%] h-[220px] w-[220px] rounded-full border-[55px] border-[#7A1B2F]/5" />
 
-        {/* GALLERY GRID — NO LAYOUT ANIMATIONS */}
-
+        {/* MASONRY GRID */}
         <div className="relative z-10 mx-auto max-w-[1800px]">
-          <div className="columns-2 gap-3 sm:columns-3 sm:gap-4 md:columns-4 md:gap-4 lg:columns-5 lg:gap-5">
+          <div className="columns-2 gap-1 sm:columns-3 sm:gap-2 lg:columns-4 lg:gap-2">
             {filteredItems.map((item) => (
               <button
                 key={item.id}
                 type="button"
                 onClick={() => setSelectedItem(item)}
-                className="group relative mb-3 block w-full break-inside-avoid overflow-hidden bg-transparent p-0 sm:mb-4 lg:mb-5"
+                aria-label={`Open ${item.title}`}
+                className="group relative mb-1 block w-full break-inside-avoid overflow-hidden bg-transparent p-0 text-left sm:mb-2 lg:mb-2"
               >
                 {/* PHOTO */}
-
                 {item.type === "photo" && (
                   <LazyImage
                     src={item.image}
                     alt={item.title}
-                    className="block h-auto w-full object-cover transition-transform duration-700 ease-[0.22,1,0.36,1] group-hover:scale-[1.02]"
+                    className="block h-auto w-full object-cover"
                   />
                 )}
 
                 {/* VIDEO */}
-
                 {item.type === "video" && (
                   <GalleryVideo
                     src={item.video}
@@ -324,6 +316,19 @@ export default function Gallery() {
               </button>
             ))}
           </div>
+
+          {/* EMPTY STATE */}
+          {filteredItems.length === 0 && (
+            <div className="py-20 text-center">
+              <p className="font-serif text-2xl text-[#3A0D18]">
+                No moments found
+              </p>
+
+              <p className="mt-2 text-sm text-[#3A0D18]/65">
+                Try selecting another category.
+              </p>
+            </div>
+          )}
         </div>
       </section>
 
@@ -341,7 +346,6 @@ export default function Gallery() {
             onClick={() => setSelectedItem(null)}
           >
             {/* CLOSE BUTTON */}
-
             <button
               type="button"
               onClick={() => setSelectedItem(null)}
@@ -352,7 +356,6 @@ export default function Gallery() {
             </button>
 
             {/* FULLSCREEN MEDIA */}
-
             <motion.div
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -362,7 +365,6 @@ export default function Gallery() {
               className="relative max-h-[92vh] max-w-6xl overflow-hidden rounded-2xl border border-[#C6A15B]/25 bg-[#2B0A12] shadow-[0_25px_80px_rgba(0,0,0,0.45)]"
             >
               {/* PHOTO */}
-
               {selectedItem.type === "photo" && (
                 <img
                   src={selectedItem.image}
@@ -372,7 +374,6 @@ export default function Gallery() {
               )}
 
               {/* VIDEO */}
-
               {selectedItem.type === "video" && (
                 <video
                   src={selectedItem.video}
@@ -384,33 +385,12 @@ export default function Gallery() {
                   className="max-h-[78vh] max-w-[90vw] object-contain"
                 />
               )}
-
-              {/* VIEWER INFORMATION */}
-
-              <div className="flex items-center justify-between gap-6 border-t border-[#C6A15B]/20 bg-[#2B0A12] px-5 py-4 sm:px-7">
-                <div>
-                  <p className="text-[8px] uppercase tracking-[0.25em] text-[#C6A15B]">
-                    {selectedItem.category}
-                  </p>
-
-                  <h3 className="mt-1 text-sm text-[#F7EBD0] sm:text-base">
-                    {selectedItem.title}
-                  </h3>
-                </div>
-
-                <span className="shrink-0 text-[9px] uppercase tracking-[0.2em] text-[#8F7663]">
-                  {selectedItem.type === "video"
-                    ? "Video"
-                    : "Photography"}
-                </span>
-              </div>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
 
       {/* FOOTER */}
-
       <Footer />
     </main>
   );

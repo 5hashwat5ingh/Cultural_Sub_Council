@@ -111,7 +111,7 @@ export default function Contact() {
   ];
 
   return (
-    <div className="min-h-screen overflow-hidden bg-[#DCD3A4] text-[#2B0A12]">
+    <div className="min-h-screen  bg-[#DCD3A4] text-[#2B0A12]">
       <Navbar />
 
       <main>
@@ -158,10 +158,7 @@ export default function Contact() {
                 memorable together.
               </p>
 
-              <div className="flex items-center gap-3 text-sm font-semibold text-[#7A1B2F]">
-                <span className="h-px w-10 bg-[#7A1B2F]" />
-                GET IN TOUCH
-              </div>
+              
             </motion.div>
           </motion.div>
         </section>
