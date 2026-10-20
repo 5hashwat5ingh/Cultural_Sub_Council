@@ -112,7 +112,18 @@ className={headerStyle}
           </li>
         ))}
         {/* Register button */}
-
+<Link
+  to="/registration"
+  onClick={closeMenu}
+  className="mb-2 mt-3 flex items-center justify-center gap-2 rounded-xl px-2 py-3.5 text-sm font-semibold uppercase tracking-[0.15em] text-white transition-colors  hover:text-red-600"
+>
+  <span className="relative flex h-2.5 w-2.5">
+    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
+    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-red-600" />
+  </span>
+  HEATS ’26
+  
+</Link>
 
 
         {/* Contact button */}
@@ -144,8 +155,9 @@ className={headerStyle}
             <span className="relative z-10">Contact</span>
           </Link>
         </li>
-
         
+
+
       </ul>
     </nav>
 
@@ -266,6 +278,31 @@ className={headerStyle}
               {link.label}
             </Link>
           ))}
+          
+<Link
+  to="/registration"
+  onClick={closeMenu}
+  className="
+    mb-3 mt-5
+    flex w-full items-center justify-center gap-2
+    rounded-full border border-[#9C762E]/60
+    px-4 py-3
+    text-center text-xs font-medium
+    uppercase tracking-[0.15em]
+    text-black
+    transition-colors duration-300
+    hover:bg-[#9C762E] hover:text-white
+    sm:px-5 sm:py-3.5 sm:tracking-[0.2em]
+  "
+>
+  <span className="relative flex h-2 w-2 shrink-0">
+    <span className="absolute inset-0 animate-ping rounded-full bg-red-500 opacity-75" />
+    <span className="relative h-2 w-2 rounded-full bg-red-600" />
+  </span>
+
+  <span className="whitespace-nowrap">HEATS ’26</span>
+</Link>
+
 
           {/* Mobile Contact button */}
           <Link
