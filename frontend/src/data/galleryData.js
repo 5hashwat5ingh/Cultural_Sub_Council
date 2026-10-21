@@ -16,7 +16,7 @@ export const galleryItems = [
     type: "photo",
     category: "Events",
     title: "Cultural Celebration",
-    image: "https://postimg.cc/gallery/kWXWbB7",
+    image: "https://i.postimg.cc/XXSWvpDv/IMG-20261018-WA0101.jpg"
   },
 
   // VIDEO 01
@@ -34,7 +34,7 @@ export const galleryItems = [
     type: "photo",
     category: "Fine Arts",
     title: "Creative Expression",
-    image: "https://postimg.cc/H82RZsmG",
+    image: "https://i.postimg.cc/PNsHqPF5/IMG-20261018-WA0102.jpg",
   },
 
   // PHOTO 03
@@ -43,7 +43,7 @@ export const galleryItems = [
     type: "photo",
     category: "Dramatics",
     title: "Stage Performance",
-    image: "https://postimg.cc/SYr3TNhB",
+    image: "https://i.postimg.cc/fknsbJgy/IMG-20261018-WA0103.jpg",
   },
 
   // VIDEO 02
@@ -61,7 +61,7 @@ export const galleryItems = [
     type: "photo",
     category: "Technical & Photography",
     title: "Behind The Lens",
-    image: "https://i.ibb.co/ds9M1NdC/IMG-0042.jpg",
+    image: "https://i.postimg.cc/3W5hwdbW/IMG-20261018-WA0104.jpg",
   },
 
   // PHOTO 05
@@ -70,7 +70,7 @@ export const galleryItems = [
     type: "photo",
     category: "Dance",
     title: "Performance Moment",
-    image: "https://i.ibb.co/VWgSRVBD/IMG-0182.jpg",
+    image: "https://i.postimg.cc/F15vK7nY/IMG-20261018-WA0105.jpg",
   },
 
   // VIDEO 03
@@ -88,7 +88,7 @@ export const galleryItems = [
     type: "photo",
     category: "Events",
     title: "Fest Celebration",
-    image: "https://i.ibb.co/4ZkRF91p/IMG-0420.jpg",
+    image: "https://i.postimg.cc/G9wRpHSB/IMG-20261018-WA0106.jpg",
   },
 
   // PHOTO 07
@@ -97,7 +97,7 @@ export const galleryItems = [
     type: "photo",
     category: "Music",
     title: "Musical Performance",
-    image: "https://i.ibb.co/WvPFdgN1/IMG-4002.jpg",
+    image: "https://i.postimg.cc/Bt93vXwB/IMG-20261018-WA0109.jpg",
   },
 
   // PHOTO 08
@@ -106,7 +106,7 @@ export const galleryItems = [
     type: "photo",
     category: "Dance",
     title: "Dance Showcase",
-    image: "https://i.ibb.co/jvY3zNRf/2A6A6392.jpg",
+    image: "https://i.postimg.cc/JtV8hGdc/IMG-20261018-WA0110.jpg",
   },
 
   // PHOTO 09
@@ -115,7 +115,7 @@ export const galleryItems = [
     type: "photo",
     category: "Events",
     title: "Event Moments",
-    image: "https://i.ibb.co/whV39yfR/2A6A6482.jpg",
+    image: "https://i.postimg.cc/xqDQdcFP/IMG-20261018-WA0111.jpg",
   },
 
   // PHOTO 10
@@ -124,7 +124,7 @@ export const galleryItems = [
     type: "photo",
     category: "Fine Arts",
     title: "Artistic Vision",
-    image: "https://i.ibb.co/gLPwVhMg/IMG-0037.jpg",
+    image: "https://i.postimg.cc/KcKg4wsq/IMG-20261018-WA0112.jpg",
   },
 
   // PHOTO 11
@@ -133,7 +133,7 @@ export const galleryItems = [
     type: "photo",
     category: "Dramatics",
     title: "Drama Performance",
-    image: "https://i.ibb.co/mVBDvkCV/IMG-0219.jpg",
+    image: "https://i.postimg.cc/Y24mjZyy/IMG-20261018-WA0113.jpg",
   },
 
   // PHOTO 12
@@ -142,7 +142,7 @@ export const galleryItems = [
     type: "photo",
     category: "Music",
     title: "Music Moments",
-    image: "https://i.ibb.co/KjFx98tb/IMG-0409.jpg",
+    image: "https://i.postimg.cc/v816DkSk/IMG-20261018-WA0114.jpg",
   },
 
   // PHOTO 13
@@ -151,7 +151,7 @@ export const galleryItems = [
     type: "photo",
     category: "Fine Arts",
     title: "Creative Showcase",
-    image: "https://i.ibb.co/LXPGfJ6b/IMG-0482.jpg",
+    image: "https://i.postimg.cc/44KhnqFM/IMG-20261018-WA0115.jpg",
   },
 
   // PHOTO 14
@@ -160,7 +160,7 @@ export const galleryItems = [
     type: "photo",
     category: "Technical & Photography",
     title: "Photography",
-    image: "https://i.ibb.co/s9RKMmrW/IMG-4134.jpg",
+    image: "https://i.postimg.cc/kMVtDzh0/IMG-20261018-WA0116.jpg",
   },
 
   // PHOTO 15
@@ -169,7 +169,7 @@ export const galleryItems = [
     type: "photo",
     category: "Events",
     title: "Celebration",
-    image: "https://i.ibb.co/1tHjF3bn/IMG-4244.jpg",
+    image: "https://i.postimg.cc/J7yBtv2V/IMG-20261018-WA0117.jpg",
   },
 
   // PHOTO 16
@@ -178,7 +178,7 @@ export const galleryItems = [
     type: "photo",
     category: "Dance",
     title: "Dance Performance",
-    image: "https://i.ibb.co/vCt2yKGp/2A6A6374.jpg",
+    image: "https://i.postimg.cc/667GTgms/IMG-20261018-WA0118.jpg",
   },
 
   // PHOTO 17
@@ -187,7 +187,7 @@ export const galleryItems = [
     type: "photo",
     category: "Fine Arts",
     title: "Art & Creativity",
-    image: "https://i.ibb.co/ycxdkN1W/2A6A6745.jpg",
+    image: "https://i.postimg.cc/667GTgmx/IMG-20261018-WA0119.jpg",
   },
 
   // PHOTO 18
@@ -196,7 +196,7 @@ export const galleryItems = [
     type: "photo",
     category: "Dramatics",
     title: "Stage Moments",
-    image: "https://i.ibb.co/k2cyjzFh/2A6A6779.jpg",
+    image: "https://i.postimg.cc/HWJ7jRhH/IMG-20261018-WA0120.jpg",
   },
 
   // PHOTO 19
@@ -205,7 +205,7 @@ export const galleryItems = [
     type: "photo",
     category: "Events",
     title: "Festive Moments",
-    image: "https://i.ibb.co/8DD7m0zY/2A6A6832.jpg",
+    image: "https://i.postimg.cc/RC3nqyD4/IMG-20261018-WA0129.jpg",
   },
 
   // PHOTO 20
@@ -214,7 +214,7 @@ export const galleryItems = [
     type: "photo",
     category: "Music",
     title: "Live Performance",
-    image: "https://i.ibb.co/4gKCSF5F/2A6A6861.jpg",
+    image: "https://i.postimg.cc/nVsQMgPH/IMG-20261018-WA0130.jpg",
   },
 
   // PHOTO 21
@@ -223,7 +223,7 @@ export const galleryItems = [
     type: "photo",
     category: "Events",
     title: "Cultural Moments",
-    image: "https://i.ibb.co/Q7jHSwwq/2A6A7026.jpg",
+    image: "https://i.postimg.cc/FFfJ18Br/IMG-20261018-WA0131.jpg",
   },
 
   // PHOTO 22
@@ -232,7 +232,7 @@ export const galleryItems = [
     type: "photo",
     category: "Dance",
     title: "Dance Showcase",
-    image: "https://i.ibb.co/q3dMDywt/IMG-0322.jpg",
+    image: "https://i.postimg.cc/PfL8N9R5/IMG-20261018-WA0132.jpg",
   },
 
   // PHOTO 23
@@ -241,7 +241,7 @@ export const galleryItems = [
     type: "photo",
     category: "Technical & Photography",
     title: "Photography Showcase",
-    image: "https://i.ibb.co/fVWcCLxr/IMG-3925.jpg",
+    image: "https://i.postimg.cc/T2yWhF41/IMG-20261018-WA0133.jpg",
   },
 
   // PHOTO 24
@@ -250,7 +250,7 @@ export const galleryItems = [
     type: "photo",
     category: "Fine Arts",
     title: "Creative Arts",
-    image: "https://i.ibb.co/LFgFZPB/IMG-3946.jpg",
+    image: "https://i.postimg.cc/NGyrLSz5/IMG-20261018-WA0134.jpg",
   },
 
   // PHOTO 25
@@ -259,7 +259,7 @@ export const galleryItems = [
     type: "photo",
     category: "Music",
     title: "Musical Moments",
-    image: "https://i.ibb.co/xqSSGB75/IMG-4317.jpg",
+    image: "https://i.postimg.cc/zDLR36cy/IMG-20261018-WA0135.jpg",
   },
 
   // PHOTO 26
@@ -268,7 +268,7 @@ export const galleryItems = [
     type: "photo",
     category: "Events",
     title: "Cultural Event",
-    image: "https://i.ibb.co/DPctX4HV/2A6A6295.jpg",
+    image: "https://i.postimg.cc/8kFrs90F/IMG-20261018-WA0137.jpg",
   },
 
   // PHOTO 27
@@ -277,7 +277,7 @@ export const galleryItems = [
     type: "photo",
     category: "Dance",
     title: "Performance",
-    image: "https://i.ibb.co/TDvgHPfm/2A6A6450.jpg",
+    image: "https://i.postimg.cc/kMVtDzp6/IMG-20261018-WA0138.jpg",
   },
 
   // PHOTO 28
@@ -286,7 +286,7 @@ export const galleryItems = [
     type: "photo",
     category: "Dramatics",
     title: "Stage Showcase",
-    image: "https://i.ibb.co/r29CtkFK/2A6A6548.jpg",
+    image: "https://i.postimg.cc/1RLVFBky/IMG-20261018-WA0139.jpg",
   },
 
   // PHOTO 29
@@ -295,7 +295,7 @@ export const galleryItems = [
     type: "photo",
     category: "Events",
     title: "Event Celebration",
-    image: "https://i.ibb.co/JWLgbfj2/2A6A6557.jpg",
+    image: "https://i.postimg.cc/dQzZC6bQ/IMG-20261018-WA0140.jpg",
   },
 
   // PHOTO 30
@@ -304,7 +304,7 @@ export const galleryItems = [
     type: "photo",
     category: "Fine Arts",
     title: "Artistic Expression",
-    image: "https://i.ibb.co/nqGp5YLH/2A6A6765.jpg",
+    image: "https://i.postimg.cc/G3ZTDKWm/IMG-20261018-WA0141.jpg",
   },
 
   // PHOTO 31
@@ -313,7 +313,7 @@ export const galleryItems = [
     type: "photo",
     category: "Music",
     title: "Music Night",
-    image: "https://i.ibb.co/LdGq8hkr/2A6A7019.jpg",
+    image: "https://i.postimg.cc/nV69m2yz/IMG-20261018-WA0142.jpg",
   },
 
   // PHOTO 32
@@ -322,7 +322,7 @@ export const galleryItems = [
     type: "photo",
     category: "Dance",
     title: "Dance Night",
-    image: "https://i.ibb.co/pjczRGcs/IMG-0070.jpg",
+    image:"https://i.postimg.cc/dQzZC6bL/IMG-20261018-WA0143.jpg",
   },
 
   // PHOTO 33
@@ -331,7 +331,7 @@ export const galleryItems = [
     type: "photo",
     category: "Dramatics",
     title: "Dramatic Performance",
-    image: "https://i.ibb.co/JwLM2nkN/IMG-0120.jpg",
+    image: "https://i.postimg.cc/RCjJtdk6/IMG-20261018-WA0144.jpg",
   },
 
   // PHOTO 34
@@ -340,7 +340,7 @@ export const galleryItems = [
     type: "photo",
     category: "Technical & Photography",
     title: "Event Photography",
-    image: "https://i.ibb.co/WWnSRFKm/IMG-0490.jpg",
+    image: "https://i.postimg.cc/44rHcPDH/IMG-20261018-WA0145.jpg",
   },
 
   // PHOTO 35
@@ -349,7 +349,7 @@ export const galleryItems = [
     type: "photo",
     category: "Events",
     title: "Fest Memories",
-    image: "https://i.ibb.co/39gSVY7X/2A6A6273.jpg",
+    image: "https://i.postimg.cc/NGW2XD3H/IMG-20261018-WA0147.jpg",
   },
 
   // PHOTO 36
@@ -358,7 +358,7 @@ export const galleryItems = [
     type: "photo",
     category: "Dance",
     title: "Dance Performance",
-    image: "https://i.ibb.co/1YvfbPHM/2A6A6277.jpg",
+    image: "https://i.postimg.cc/ZY1vNHG3/IMG-20261018-WA0149.jpg",
   },
 
   // PHOTO 37
@@ -367,7 +367,7 @@ export const galleryItems = [
     type: "photo",
     category: "Fine Arts",
     title: "Creative Moments",
-    image: "https://i.ibb.co/ZR7nqxv8/2A6A6484.jpg",
+    image: "https://i.postimg.cc/MZhfB5C1/IMG-20261018-WA0151.jpg",
   },
 
   // PHOTO 38
@@ -376,7 +376,7 @@ export const galleryItems = [
     type: "photo",
     category: "Dramatics",
     title: "Stage Performance",
-    image: "https://i.ibb.co/Mx7pRCHt/2A6A6545.jpg",
+    image: "https://i.postimg.cc/kMkRSs0Q/IMG-20261018-WA0152.jpg",
   },
 
   // PHOTO 39
@@ -385,7 +385,7 @@ export const galleryItems = [
     type: "photo",
     category: "Music",
     title: "Music Performance",
-    image: "https://i.ibb.co/932k7sQG/2A6A6553.jpg",
+    image: "https://i.postimg.cc/h4HQmskb/IMG-20261018-WA0153.jpg",
   },
 
   // PHOTO 40
@@ -394,7 +394,7 @@ export const galleryItems = [
     type: "photo",
     category: "Technical & Photography",
     title: "Photography",
-    image: "https://i.ibb.co/t7CVCKX/IMG-0225.jpg",
+    image: "https://i.postimg.cc/Dft4G69P/IMG-20261018-WA0154.jpg",
   },
 
   // PHOTO 41
@@ -403,8 +403,105 @@ export const galleryItems = [
     type: "photo",
     category: "Events",
     title: "Event Highlights",
-    image: "https://i.ibb.co/xKTw4LvP/IMG-0496.jpg",
+    image: "https://i.postimg.cc/T2Z5b0z9/IMG-20261018-WA0155.jpg",
   },
+   // PHOTO 41
+  {
+    id: "photo-41",
+    type: "photo",
+    category: "Events",
+    title: "Event Highlights",
+    image: "https://i.postimg.cc/T2Z5b0z9/IMG-20261018-WA0155.jpg",
+  },
+   // PHOTO 41
+  {
+    id: "photo-41",
+    type: "photo",
+    category: "Events",
+    title: "Event Highlights",
+    image: "https://i.postimg.cc/66D4ZckY/IMG-20261018-WA0156.jpg",
+  },
+   // PHOTO 41
+  {
+    id: "photo-41",
+    type: "photo",
+    category: "Events",
+    title: "Event Highlights",
+    image: "https://i.postimg.cc/G3ZTDKWz/IMG-20261018-WA0157.jpg",
+  },
+   // PHOTO 41
+  {
+    id: "photo-41",
+    type: "photo",
+    category: "Events",
+    title: "Event Highlights",
+    image: "https://i.postimg.cc/xjWNm5w6/IMG-20261018-WA0158.jpg",
+  },
+   // PHOTO 41
+  {
+    id: "photo-41",
+    type: "photo",
+    category: "Events",
+    title: "Event Highlights",
+    image: "https://i.postimg.cc/9Xvw9b6x/IMG-20261018-WA0159.jpg",
+  },
+   // PHOTO 41
+  {
+    id: "photo-41",
+    type: "photo",
+    category: "Events",
+    title: "Event Highlights",
+    image: "https://i.postimg.cc/28hb7vYh/IMG-20261018-WA0160.jpg",
+  },
+   // PHOTO 41
+  {
+    id: "photo-41",
+    type: "photo",
+    category: "Events",
+    title: "Event Highlights",
+    image: "https://i.postimg.cc/yYcgy9KF/IMG-20261018-WA0161.jpg",
+  },
+  // PHOTO 41
+  {
+    id: "photo-41",
+    type: "photo",
+    category: "Events",
+    title: "Event Highlights",
+    image: "https://i.postimg.cc/WbgFwrVG/IMG-20261018-WA0162.jpg",
+  },
+  // PHOTO 41
+  {
+    id: "photo-41",
+    type: "photo",
+    category: "Events",
+    title: "Event Highlights",
+    image: "https://i.postimg.cc/4NV7QtGv/IMG-20261018-WA0163.jpg",
+  },
+  // PHOTO 41
+  {
+    id: "photo-41",
+    type: "photo",
+    category: "Events",
+    title: "Event Highlights",
+    image: "https://i.postimg.cc/Fs3dVcvg/IMG-20261018-WA0164.jpg",
+  },
+  // PHOTO 41
+  {
+    id: "photo-41",
+    type: "photo",
+    category: "Events",
+    title: "Event Highlights",
+    image: "https://i.postimg.cc/KvBkDLbD/IMG-20261018-WA0165.jpg",
+  },
+  // PHOTO 41
+  {
+    id: "photo-41",
+    type: "photo",
+    category: "Events",
+    title: "Event Highlights",
+    image: "https://i.postimg.cc/Qx19J5Dm/IMG-20261018-WA0166.jpg",
+  },
+  
 ];
 
 

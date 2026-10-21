@@ -1,1020 +1,340 @@
 import React, { useState } from "react";
+
 import { Link } from "react-router-dom";
+
+
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
-const EVENT_CATEGORIES = [
-  "Dance",
-  "Music",
-  "Dramatics",
-  "Fine Arts",
-  "Photography",
-  "Technical",
-  "Other",
+const EVENTS = [
+
+  { name: "Dance", icon: "✦", desc: "Movement, choreography and stage energy", types: ["Solo", "Duo", "Team"] },
+
+  { name: "Music", icon: "♫", desc: "Vocal and instrumental performances", types: ["Solo"] },
+
+  { name: "Dramatics", icon: "✧", desc: "Acting, theatre and storytelling", types: ["Solo", "Duo", "Team"] },
+
+  { name: "Fine Arts", icon: "✿", desc: "Painting and visual expression", types: ["Solo"] },
+
+  { name: "Photography", icon: "◎", desc: "Capture a story through your lens", types: ["Solo"] },
+
 ];
 
-const YEARS = ["First Year", "Second Year", "Third Year", "Final Year"];
+const inputClass = "mt-2 w-full rounded-xl border border-[#e8dece] bg-white px-4 py-3 text-sm text-[#32131b] outline-none placeholder:text-[#ad9d90] focus:border-[#7a1b2f] focus:ring-4 focus:ring-[#7a1b2f]/10";
 
-const inputClass =
-  "w-full rounded-xl border border-[#ded5c1] bg-white px-4 py-3 text-sm text-[#2B0A12] outline-none focus:border-[#7A1B2F] focus:ring-2 focus:ring-[#7A1B2F]/10";
+const primary = "inline-flex items-center justify-center gap-2 rounded-xl bg-[#7a1b2f] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#5e1223] disabled:cursor-not-allowed disabled:opacity-50";
 
-const primaryButton =
-  "inline-flex items-center justify-center gap-2 rounded-xl bg-[#7A1B2F] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#5c1221] disabled:cursor-not-allowed disabled:opacity-50";
+const secondary = "inline-flex items-center justify-center rounded-xl border border-[#dfd0b8] bg-white px-5 py-3 text-sm font-bold text-[#6f2435] transition hover:bg-[#fbf4e8] disabled:opacity-50";
 
-const secondaryButton =
-  "inline-flex items-center justify-center rounded-xl border border-[#d8cbb4] bg-white px-6 py-3 text-sm font-semibold text-[#51212a] hover:bg-[#f8f0e4]";
+const blankMember = () => ({ name: "", roll_no: "", branch: "", phone: "", email: "" });
 
-const initialMember = () => ({
-  name: "",
-  phone: "",
-  branch: "",
-  year: "",
-  email: "",
-});
+const blankEntry = (name) => ({ eventName: name, participationType: EVENTS.find((e) => e.name === name).types[0], teamName: "", members: [] });
 
-function isGoogleDriveLink(value) {
-  try {
-    const url = new URL(value.trim());
-    return (
-      url.protocol === "https:" &&
-      ["drive.google.com", "docs.google.com"].includes(url.hostname)
-    );
-  } catch {
-    return false;
-  }
+const isDriveLink = (value) => { try { const url = new URL(value.trim()); return url.protocol === "https:" && ["drive.google.com", "docs.google.com"].includes(url.hostname); } catch { return false; } };
+
+
+
+function Field({ label, hint, error, children }) {
+
+  return <label className="block min-w-0 text-sm font-semibold text-[#48232b]">{label}{hint && <span className="ml-2 text-xs font-normal text-[#9a887a]">{hint}</span>}{children}{error && <span className="mt-1 block text-xs font-medium text-red-600">{error}</span>}</label>;
+
 }
 
-function Field({ label, error, children }) {
-  return (
-    <div>
-      <label className="mb-2 block text-sm font-semibold text-[#40252a]">
-        {label}
-      </label>
-      {children}
-      {error && <p className="mt-2 text-xs text-red-600">{error}</p>}
-    </div>
-  );
+function TextInput({ value, onChange, placeholder, type = "text", ...props }) {
+
+  return <input {...props} type={type} className={inputClass} value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} />;
+
 }
 
-function SummaryRow({ label, value }) {
-  return (
-    <div className="grid grid-cols-[105px_1fr] gap-3 border-b border-[#eee4d4] px-4 py-3 last:border-b-0 sm:grid-cols-[140px_1fr]">
-      <span className="text-xs font-semibold text-[#907c6b]">{label}</span>
-      <span className="break-words text-sm font-medium text-[#40252a]">
-        {value || "—"}
-      </span>
-    </div>
-  );
+function Heading({ eyebrow, title, desc }) {
+
+  return <div className="mb-6"><p className="text-[10px] font-black uppercase tracking-[.24em] text-[#9b7133]">{eyebrow}</p><h2 className="mt-2 text-2xl font-black tracking-tight text-[#32131b] sm:text-3xl">{title}</h2>{desc && <p className="mt-2 max-w-2xl text-sm leading-6 text-[#8a776b]">{desc}</p>}</div>;
+
 }
+
+
 
 export default function Registration() {
-  const [step, setStep] = useState(1);
-  const [submitting, setSubmitting] = useState(false);
-  const [registrationId, setRegistrationId] = useState("");
 
-  const [formData, setFormData] = useState({
-    name: "",
-    branch: "",
-    year: "",
-    phone: "",
-    email: "",
-    events: [],
-    multipleEvents: false,
-    participationType: "Solo",
-    teamName: "",
-    members: [initialMember()],
-    trackLink: "",
-    imageLinks: "",
-    confirmed: false,
-  });
+  const [step, setStep] = useState(1);
+
+  const [submitting, setSubmitting] = useState(false);
+
+  const [registrationId, setRegistrationId] = useState("");
 
   const [errors, setErrors] = useState({});
 
-  const isTeam = formData.participationType !== "Solo";
-  const selectedEvents = formData.events;
+  const [form, setForm] = useState({ name: "", roll_no: "", branch: "", phone: "", email: "", selectedEvents: [], eventEntries: {}, trackLink: "", imageLinks: "", fineArtLinks: "", confirmed: false });
 
-  const updateField = (field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-    setErrors((prev) => ({ ...prev, [field]: "", submit: "" }));
-  };
+  const selectedEvents = EVENTS.filter((e) => form.selectedEvents.includes(e.name));
 
-  const toggleMultipleEvents = (checked) => {
-    setFormData((prev) => ({
-      ...prev,
-      multipleEvents: checked,
-      events: checked ? prev.events : prev.events.slice(0, 1),
-    }));
-    setErrors((prev) => ({ ...prev, events: "" }));
-  };
 
-  const toggleEvent = (eventName) => {
-    setFormData((prev) => {
-      const alreadySelected = prev.events.includes(eventName);
 
-      let events;
+  const update = (key, value) => { setForm((p) => ({ ...p, [key]: value })); setErrors((p) => ({ ...p, [key]: "", submit: "" })); };
 
-      if (alreadySelected) {
-        events = prev.events.filter((event) => event !== eventName);
-      } else if (prev.multipleEvents) {
-        events = [...prev.events, eventName];
-      } else {
-        events = [eventName];
-      }
+  const toggleEvent = (name) => {
 
-      return { ...prev, events };
+    setForm((p) => {
+
+      const exists = p.selectedEvents.includes(name);
+
+      const selected = exists ? p.selectedEvents.filter((n) => n !== name) : [...p.selectedEvents, name];
+
+      const eventEntries = { ...p.eventEntries };
+
+      if (exists) delete eventEntries[name]; else eventEntries[name] = blankEntry(name);
+
+      return { ...p, selectedEvents: selected, eventEntries };
+
     });
 
-    setErrors((prev) => ({ ...prev, events: "" }));
+    setErrors((p) => ({ ...p, selectedEvents: "" }));
+
   };
 
-  const updateMember = (index, field, value) => {
-    setFormData((prev) => ({
-      ...prev,
-      members: prev.members.map((member, i) =>
-        i === index ? { ...member, [field]: value } : member
-      ),
-    }));
+  const updateEntry = (name, key, value) => {
 
-    setErrors((prev) => ({ ...prev, members: "", submit: "" }));
+    setForm((p) => ({ ...p, eventEntries: { ...p.eventEntries, [name]: { ...p.eventEntries[name], [key]: value } } }));
+
+    setErrors((p) => ({ ...p, [`${name}_${key}`]: "", [`${name}_members`]: "" }));
+
   };
 
-  const addMember = () => {
-    if (formData.members.length >= 19) {
-      setErrors((prev) => ({
-        ...prev,
-        members: "You can add a maximum of 19 additional participants.",
-      }));
-      return;
-    }
+  const addMember = (name) => setForm((p) => {
 
-    setFormData((prev) => ({
-      ...prev,
-      members: [...prev.members, initialMember()],
-    }));
-  };
+    const entry = p.eventEntries[name];
 
-  const removeMember = (index) => {
-    setFormData((prev) => ({
-      ...prev,
-      members: prev.members.filter((_, i) => i !== index),
-    }));
+    if (entry.members.length >= (entry.participationType === "Duo" ? 1 : 19)) return p;
 
-    setErrors((prev) => ({ ...prev, members: "" }));
-  };
+    return { ...p, eventEntries: { ...p.eventEntries, [name]: { ...entry, members: [...entry.members, blankMember()] } } };
 
-  const validateStepOne = () => {
-    const newErrors = {};
+  });
 
-    if (!formData.name.trim()) {
-      newErrors.name = "Please enter your full name.";
-    }
+  const updateMember = (eventName, index, key, value) => setForm((p) => {
 
-    if (!formData.branch.trim()) {
-      newErrors.branch = "Please enter your branch.";
-    }
+    const entry = p.eventEntries[eventName];
 
-    if (!formData.year) {
-      newErrors.year = "Please select your academic year.";
-    }
+    return { ...p, eventEntries: { ...p.eventEntries, [eventName]: { ...entry, members: entry.members.map((m, i) => i === index ? { ...m, [key]: value } : m) } } };
 
-    if (!/^[6-9]\d{9}$/.test(formData.phone.trim())) {
-      newErrors.phone = "Enter a valid 10-digit Indian mobile number.";
-    }
+  });
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
-      newErrors.email = "Enter a valid email address.";
-    }
+  const removeMember = (eventName, index) => setForm((p) => {
 
-    if (formData.events.length === 0) {
-      newErrors.events = "Please select at least one event.";
-    }
+    const entry = p.eventEntries[eventName];
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+    return { ...p, eventEntries: { ...p.eventEntries, [eventName]: { ...entry, members: entry.members.filter((_, i) => i !== index) } } };
 
-  const validateStepTwo = () => {
-    const newErrors = {};
+  });
 
-    if (!formData.teamName.trim()) {
-      newErrors.teamName = "Please enter your team name.";
-    }
 
-    if (formData.members.length === 0) {
-      newErrors.members = "Add at least one other participant.";
-    }
 
-    const allPhones = [
-      formData.phone.trim(),
-      ...formData.members.map((member) => member.phone.trim()),
-    ].filter(Boolean);
+  const validateDetails = () => {
 
-    if (new Set(allPhones).size !== allPhones.length) {
-      newErrors.members = "Each participant must have a different phone number.";
-    }
+    const e = {};
 
-    formData.members.forEach((member, index) => {
-      const participant = index + 2;
+    if (!form.name.trim()) e.name = "Enter your full name.";
 
-      if (!member.name.trim()) {
-        newErrors.members = `Enter the name of participant ${participant}.`;
-      } else if (!member.branch.trim()) {
-        newErrors.members = `Enter the branch of participant ${participant}.`;
-      } else if (!member.year) {
-        newErrors.members = `Select the year of participant ${participant}.`;
-      } else if (!/^[6-9]\d{9}$/.test(member.phone.trim())) {
-        newErrors.members = `Enter a valid phone number for participant ${participant}.`;
-      } else if (
-        member.email.trim() &&
-        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(member.email.trim())
-      ) {
-        newErrors.members = `Enter a valid email for participant ${participant}.`;
+    if (!form.roll_no.trim()) e.roll_no = "Enter your roll number.";
+
+    if (!form.branch.trim()) e.branch = "Enter your branch or department.";
+
+    if (!/^[6-9]\d{9}$/.test(form.phone.trim())) e.phone = "Enter a valid 10-digit Indian mobile number.";
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) e.email = "Enter a valid email address.";
+
+    if (!form.selectedEvents.length) e.selectedEvents = "Select at least one event.";
+
+    form.selectedEvents.forEach((name) => {
+
+      const entry = form.eventEntries[name];
+
+      const allowed = EVENTS.find((event) => event.name === name).types;
+
+      if (!allowed.includes(entry.participationType)) e[`${name}_participationType`] = "Choose a valid participation type.";
+
+      if (["Duo", "Team"].includes(entry.participationType)) {
+
+        if (!entry.teamName.trim()) e[`${name}_teamName`] = "Enter a duo or team name.";
+
+        const minimum = entry.participationType === "Duo" ? 1 : 2;
+
+        if (entry.members.length < minimum) e[`${name}_members`] = entry.participationType === "Duo" ? "Add exactly one partner." : "Add at least two other members.";
+
+        if (entry.participationType === "Duo" && entry.members.length > 1) e[`${name}_members`] = "A duo must have exactly one partner in addition to you.";
+
+        entry.members.forEach((m, i) => {
+
+          if (!m.name.trim()) e[`${name}_member_${i}`] = `Enter member ${i + 1}'s name.`;
+
+          else if (!m.roll_no.trim()) e[`${name}_member_${i}`] = `Enter member ${i + 1}'s roll number.`;
+
+          else if (!m.branch.trim()) e[`${name}_member_${i}`] = `Enter member ${i + 1}'s branch.`;
+
+          else if (!/^[6-9]\d{9}$/.test(m.phone.trim())) e[`${name}_member_${i}`] = `Enter a valid phone number for member ${i + 1}.`;
+
+        });
+
       }
+
     });
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    setErrors(e); return Object.keys(e).length === 0;
+
   };
 
-  const validateFinalStep = () => {
-    const newErrors = {};
+  const next = () => {
 
-    if (selectedEvents.includes("Dance")) {
-      if (!formData.trackLink.trim()) {
-        newErrors.trackLink = "Please enter your Dance audio Google Drive link.";
-      } else if (!isGoogleDriveLink(formData.trackLink)) {
-        newErrors.trackLink = "Enter a valid HTTPS Google Drive link.";
-      }
-    }
+    if (!validateDetails()) return;
 
-    if (selectedEvents.includes("Photography")) {
-      const links = formData.imageLinks
-        .split(/\n/)
-        .map((link) => link.trim())
-        .filter(Boolean);
+    setStep((s) => Math.min(3, s + 1)); window.scrollTo({ top: 0, behavior: "smooth" });
 
-      if (links.length < 1 || links.length > 10) {
-        newErrors.imageLinks = "Enter between 1 and 10 Google Drive image links.";
-      } else if (!links.every(isGoogleDriveLink)) {
-        newErrors.imageLinks =
-          "Every image link must be a valid HTTPS Google Drive link.";
-      }
-    }
-
-    if (!formData.confirmed) {
-      newErrors.confirmed = "Please confirm your registration details.";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
   };
 
-  const handleNext = () => {
-    if (step === 1) {
-      if (!validateStepOne()) return;
-      setStep(isTeam ? 2 : 3);
-    } else if (step === 2) {
-      if (!validateStepTwo()) return;
-      setStep(3);
-    }
+  const back = () => { setStep((s) => Math.max(1, s - 1)); setErrors({}); window.scrollTo({ top: 0, behavior: "smooth" }); };
 
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
 
-  const handleBack = () => {
-    if (step === 3) {
-      setStep(isTeam ? 2 : 1);
-    } else if (step === 2) {
-      setStep(1);
-    }
 
-    setErrors({});
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  const submit = async (event) => {
 
-  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!validateFinalStep()) return;
+    if (!validateDetails()) { setStep(1); return; }
 
-    setSubmitting(true);
-    setErrors({});
+    const e = {};
 
-    const imageLinks = formData.imageLinks
-      .split(/\n/)
-      .map((link) => link.trim())
-      .filter(Boolean);
+    if (form.selectedEvents.includes("Dance") && !form.trackLink.trim()) e.trackLink = "Add your Dance audio Google Drive link.";
+
+    else if (form.selectedEvents.includes("Dance") && !isDriveLink(form.trackLink)) e.trackLink = "Enter a valid HTTPS Google Drive link.";
+
+    const images = form.imageLinks.split(/\n/).map((x) => x.trim()).filter(Boolean);
+
+    if (form.selectedEvents.includes("Photography")) {
+
+      if (images.length < 1 || images.length > 10) e.imageLinks = "Add between 1 and 10 Google Drive image links.";
+
+      else if (!images.every(isDriveLink)) e.imageLinks = "Every image must be a valid HTTPS Google Drive link.";
+
+    }
+
+    const fineArtLinks = form.fineArtLinks.split(/\n/).map((x) => x.trim()).filter(Boolean);
+
+    if (form.selectedEvents.includes("Fine Arts")) {
+
+      if (fineArtLinks.length < 1 || fineArtLinks.length > 5) e.fineArtLinks = "Add between 1 and 5 Google Drive artwork links, one per line.";
+
+      else if (!fineArtLinks.every(isDriveLink)) e.fineArtLinks = "Every artwork must be a valid HTTPS Google Drive link.";
+
+    }
+
+    if (!form.confirmed) e.confirmed = "Confirm your registration details.";
+
+    setErrors(e); if (Object.keys(e).length) return;
+
+
 
     const payload = {
-      name: formData.name.trim(),
-      branch: formData.branch.trim(),
-      year: formData.year,
-      phone: formData.phone.trim(),
-      email: formData.email.trim().toLowerCase(),
-      events: formData.events,
-      multipleEvents: formData.multipleEvents,
-      participationType: formData.participationType,
-      teamName: isTeam ? formData.teamName.trim() : "",
-      members: isTeam ? formData.members : [],
-      trackLink: selectedEvents.includes("Dance")
-        ? formData.trackLink.trim()
-        : "",
-      imageLinks: selectedEvents.includes("Photography") ? imageLinks : [],
-      confirmed: formData.confirmed,
+
+      name: form.name.trim(), roll_no: form.roll_no.trim(), branch: form.branch.trim(), phone: form.phone.trim(), email: form.email.trim().toLowerCase(),
+
+      events: form.selectedEvents,
+
+      eventEntries: form.selectedEvents.map((name) => {
+
+        const entry = form.eventEntries[name]; const isGroup = ["Duo", "Team"].includes(entry.participationType);
+
+        return { eventName: name, participationType: entry.participationType, teamName: isGroup ? entry.teamName.trim() : "", members: isGroup ? entry.members.map((m) => ({ name: m.name.trim(), roll_no: m.roll_no.trim(), branch: m.branch.trim(), phone: m.phone.trim(), email: m.email.trim().toLowerCase() })) : [] };
+
+      }),
+
+      trackLink: form.selectedEvents.includes("Dance") ? form.trackLink.trim() : "",
+
+      imageLinks: form.selectedEvents.includes("Photography") ? images : [],
+
+      fineArtLinks: form.selectedEvents.includes("Fine Arts") ? fineArtLinks : [],
+
+      confirmed: form.confirmed,
+
     };
 
+    setSubmitting(true);
+
     try {
+
       const response = await fetch(`${API_URL}/api/registrations`, {
+
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+
+        headers: { "Content-Type": "application/json" },
+
         body: JSON.stringify(payload),
+
       });
 
       const result = await response.json().catch(() => ({}));
 
-      if (!response.ok) {
-        throw new Error(
-          result.message || `Registration failed (${response.status}).`
-        );
-      }
+      if (!response.ok) throw new Error(result.message || `Registration failed (${response.status}).`);
 
-      setRegistrationId(result.registrationId || "");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } catch (error) {
-      console.error("Registration submission failed:", error);
+      setRegistrationId(result.registrationId || result._id || "Submitted"); window.scrollTo({ top: 0, behavior: "smooth" });
 
-      setErrors({
-        submit:
-          error.message ||
-          "Could not connect to the registration server. Please try again.",
-      });
-    } finally {
-      setSubmitting(false);
-    }
+    } catch (err) { setErrors({ submit: err.message || "Could not connect to the registration server." }); }
+
+    finally { setSubmitting(false); }
+
   };
 
-  const resetForm = () => {
-    setStep(1);
-    setRegistrationId("");
-    setErrors({});
+  const reset = () => { setStep(1); setRegistrationId(""); setErrors({}); setForm({ name: "", roll_no: "", branch: "", phone: "", email: "", selectedEvents: [], eventEntries: {}, trackLink: "", imageLinks: "", fineArtLinks: "", confirmed: false }); };
 
-    setFormData({
-      name: "",
-      branch: "",
-      year: "",
-      phone: "",
-      email: "",
-      events: [],
-      multipleEvents: false,
-      participationType: "Solo",
-      teamName: "",
-      members: [initialMember()],
-      trackLink: "",
-      imageLinks: "",
-      confirmed: false,
-    });
-  };
 
-  const progress = step === 1 ? 33 : step === 2 ? 66 : 100;
 
-  if (registrationId) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-[#F7EBD0] px-4 py-12 text-[#2B0A12]">
-        <div className="w-full max-w-xl rounded-3xl border border-[#e5d9c3] bg-white p-8 text-center shadow-xl sm:p-12">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl text-green-700">
-            ✓
-          </div>
+  if (registrationId) return <div className="flex min-h-screen items-center justify-center bg-[#fbf5e9] p-4 text-[#32131b]"><div className="w-full max-w-lg rounded-[2rem] border border-[#e9deca] bg-white p-8 text-center shadow-xl sm:p-12"><div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-green-50 text-3xl text-green-700">✓</div><p className="mt-7 text-xs font-black uppercase tracking-[.24em] text-[#9b7133]">Cultural Sub-Council</p><h1 className="mt-3 text-3xl font-black">You're on the list!</h1><p className="mt-3 text-sm leading-6 text-[#8a776b]">Your registration has been submitted. Keep this reference for future communication.</p><div className="mt-6 rounded-2xl bg-[#fbf5e9] p-4"><p className="text-[10px] font-bold uppercase tracking-[.2em] text-[#9a887a]">Registration reference</p><p className="mt-2 break-all font-black text-[#7a1b2f]">{registrationId}</p></div><div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row"><Link to="/" className={secondary}>Back to home</Link><button className={primary} onClick={reset} type="button">Register another</button></div></div></div>;
 
-          <h1 className="mt-6 text-3xl font-black">Registration successful!</h1>
 
-          <p className="mt-3 leading-7 text-[#755e55]">
-            Your registration has been saved successfully.
-          </p>
 
-          {registrationId && (
-            <div className="mt-6 rounded-xl bg-[#fcf8f0] p-4">
-              <p className="text-xs font-semibold uppercase tracking-wider text-[#907c6b]">
-                Registration reference
-              </p>
-              <p className="mt-2 break-all font-bold text-[#7A1B2F]">
-                {registrationId}
-              </p>
-            </div>
-          )}
+  return <div className="min-h-screen bg-[#fbf5e9] text-[#32131b]">
 
-          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-            <Link to="/" className={secondaryButton}>
-              Back to Home
-            </Link>
-            <button type="button" className={primaryButton} onClick={resetForm}>
-              Register another participant
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+    <header className="border-b border-[#e8dece] bg-[#fbf5e9]"><div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-8"><Link to="/" className="flex items-center gap-3"><div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#32131b] text-lg font-black text-[#e5c47b]">C</div><div><p className="text-xs font-black tracking-[.13em] sm:text-sm">CULTURAL SUB-COUNCIL</p><p className="mt-0.5 text-[9px] uppercase tracking-[.22em] text-[#9a887a]">Registration portal</p></div></Link><Link to="/" className="text-xs font-bold text-[#7a1b2f] sm:text-sm">← Back to home</Link></div></header>
 
-  return (
-    <div className="min-h-screen bg-[#F7EBD0] text-[#2B0A12]">
-      <header className="border-b border-[#d7c8a9] bg-[#F7EBD0]">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
-          <Link to="/" className="flex items-center gap-3" aria-label="Go home">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#2B0A12] text-lg font-black text-[#D9B86C]">
-              C
-            </div>
-            <div>
-              <p className="text-sm font-extrabold tracking-wide">
-                CULTURAL COUNCIL
-              </p>
-              <p className="text-[10px] uppercase tracking-[0.22em] text-[#806b5a]">
-                Registration Portal
-              </p>
-            </div>
-          </Link>
+    <main className="mx-auto grid max-w-7xl gap-8 px-4 py-7 sm:px-8 sm:py-10 lg:grid-cols-[.75fr_1.25fr] lg:gap-12">
 
-          <Link
-            to="/"
-            className="text-sm font-semibold text-[#7A1B2F] hover:text-[#2B0A12]"
-          >
-            ← Back to Home
-          </Link>
-        </div>
-      </header>
+      <aside className="relative overflow-hidden rounded-[2rem] bg-[#32131b] p-7 text-[#fbf5e9] sm:p-10 lg:sticky lg:top-6 lg:h-fit"><div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full border border-[#e5c47b]/20"/><div className="pointer-events-none absolute -bottom-20 -left-10 h-64 w-64 rounded-full bg-[#7a1b2f]/70 blur-3xl"/><div className="relative"><span className="inline-flex items-center gap-2 rounded-full border border-[#e5c47b]/30 bg-white/5 px-3 py-2 text-[10px] font-black uppercase tracking-[.2em] text-[#e5c47b]"><span className="h-1.5 w-1.5 rounded-full bg-[#e5c47b]"/> Registrations open</span><p className="mt-10 text-xs font-bold uppercase tracking-[.25em] text-[#e5c47b]">Make your mark</p><h1 className="mt-4 text-4xl font-black leading-[1.08] sm:text-5xl">Every talent.<br/>Every stage.<br/><span className="text-[#e5c47b]">Your moment.</span></h1><p className="mt-6 max-w-sm text-sm leading-7 text-[#f4e7d3]/75">Choose your disciplines, define your team for each event, and bring your creativity to the spotlight.</p><div className="mt-10"><div className="mb-3 flex justify-between text-xs font-bold"><span className="text-[#f4e7d3]/65">YOUR PROGRESS</span><span className="text-[#e5c47b]">{Math.round(step / 3 * 100)}%</span></div><div className="h-1.5 overflow-hidden rounded-full bg-white/10"><div className="h-full rounded-full bg-[#e5c47b] transition-all" style={{ width: `${step / 3 * 100}%` }}/></div><div className="mt-6 space-y-4">{[["01","Your details"],["02","Event line-up"],["03","Review & submit"]].map(([n,t],i)=><div key={n} className={`flex items-center gap-3 ${step===i+1?"opacity-100":"opacity-45"}`}><div className={`flex h-10 w-10 items-center justify-center rounded-xl border text-xs font-black ${step>i+1?"border-[#e5c47b] bg-[#e5c47b] text-[#32131b]":step===i+1?"border-[#e5c47b] text-[#e5c47b]":"border-white/20"}`}>{step>i+1?"✓":n}</div><p className="text-sm font-bold">{t}</p></div>)}</div></div><div className="mt-10 rounded-2xl border border-[#e5c47b]/20 bg-white/[.04] p-5"><p className="text-xs font-black uppercase tracking-[.18em] text-[#e5c47b]">Good to know</p><ul className="mt-3 space-y-2 text-xs leading-5 text-[#f4e7d3]/70"><li>• Choose a different participation type for each event.</li><li>• Music, Fine Arts and Photography are solo-only.</li><li>• Duo and Team members are tracked separately per event.</li></ul></div></div></aside>
 
-      <main className="mx-auto grid max-w-7xl gap-8 px-4 py-8 sm:px-8 lg:grid-cols-[0.85fr_1.35fr] lg:gap-12 lg:py-12">
-        <aside className="relative overflow-hidden rounded-[2rem] bg-[#2B0A12] p-7 text-[#F7EBD0] sm:p-10 lg:flex lg:min-h-[760px] lg:flex-col lg:justify-between">
-          <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full border border-[#D9B86C]/25" />
-          <div className="pointer-events-none absolute -right-10 -top-10 h-44 w-44 rounded-full border border-[#D9B86C]/25" />
-          <div className="pointer-events-none absolute -bottom-24 -left-16 h-64 w-64 rounded-full bg-[#7A1B2F]/40 blur-2xl" />
+      <section className="min-w-0"><div className="mb-6"><p className="text-[10px] font-black uppercase tracking-[.24em] text-[#9b7133]">Registration form · Step 0{step}</p><h2 className="mt-2 text-3xl font-black tracking-tight sm:text-4xl">{step===1?"Start with you.":step===2?"Build your line-up.":"Ready for the spotlight?"}</h2><p className="mt-2 max-w-xl text-sm leading-6 text-[#8a776b]">{step===1?"Tell us who you are and choose your events.":step===2?"Choose Solo, Duo or Team separately for each event.":"Review event requirements and confirm your details."}</p></div>
 
-          <div className="relative z-10">
-            <span className="inline-flex items-center gap-2 rounded-full border border-[#D9B86C]/40 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#D9B86C]">
-              <span className="h-2 w-2 rounded-full bg-[#D9B86C]" />
-              Registrations Open
-            </span>
+      <form onSubmit={submit} noValidate className="rounded-[1.75rem] border border-[#e9deca] bg-white p-5 shadow-[0_18px_60px_rgba(64,20,31,.06)] sm:p-8">
 
-            <p className="mt-10 text-sm font-semibold uppercase tracking-[0.25em] text-[#D9B86C]">
-              Make your mark
-            </p>
+        {step===1 && <div className="space-y-9"><section><Heading eyebrow="01 / Personal details" title="The essentials" desc="Use contact details where the event team can reach you."/><div className="grid gap-5 sm:grid-cols-2"><Field label="Full name" error={errors.name}><TextInput value={form.name} onChange={v =>update("name",v)} placeholder="Your full name" autoComplete="name"/></Field><Field label="Roll number" error={errors.roll_no}><TextInput value={form.roll_no} onChange={v =>update("roll_no",v)} placeholder="e.g. 2025EE101"/></Field><Field label="Branch / department" error={errors.branch}><TextInput value={form.branch} onChange={v =>update("branch",v)} placeholder="e.g. Electrical Engineering"/></Field><Field label="Mobile number" error={errors.phone}><TextInput type="tel" inputMode="numeric" maxLength={10} value={form.phone} onChange={v =>update("phone",v.replace(/\D/g,"").slice(0,10))} placeholder="10-digit mobile number"/></Field><div className="sm:col-span-2"><Field label="Email address" error={errors.email}><TextInput type="email" value={form.email} onChange={v =>update("email",v)} placeholder="you@example.com" autoComplete="email"/></Field></div></div></section><div className="h-px bg-[#f0e8dc]"/><section><Heading eyebrow="02 / Your interests" title="Choose your events" desc="Select all events you want. Participation type is configured separately for each event in the next step."/><div className="grid gap-3 sm:grid-cols-2">{EVENTS.map(ev =>{const active=form.selectedEvents.includes(ev.name);return <button key={ev.name} type="button" onClick={()=>toggleEvent(ev.name)} aria-pressed={active} className={`rounded-2xl border p-4 text-left transition ${active?"border-[#7a1b2f] bg-[#fcf3f1] ring-2 ring-[#7a1b2f]/5":"border-[#eee5d8] hover:border-[#c6a56d] hover:bg-[#fffcf6]"}`}><div className="flex items-start justify-between"><span className={`flex h-10 w-10 items-center justify-center rounded-xl text-xl ${active?"bg-[#7a1b2f] text-[#f7e8c6]":"bg-[#f8f1e5] text-[#946d32]"}`}>{ev.icon}</span><span className={`flex h-6 w-6 items-center justify-center rounded-full border text-xs ${active?"border-[#7a1b2f] bg-[#7a1b2f] text-white":"border-[#ded2c0] text-transparent"}`}>✓</span></div><p className="mt-4 font-extrabold">{ev.name}</p><p className="mt-1 text-xs leading-5 text-[#958174]">{ev.desc}</p><p className="mt-3 text-[10px] font-bold uppercase tracking-[.13em] text-[#9b7133]">{ev.types.join(" · ")}</p></button>})}</div>{errors.selectedEvents&&<p className="mt-3 text-xs text-red-600">{errors.selectedEvents}</p>}{selectedEvents.length>0&&<p className="mt-4 rounded-xl bg-[#f8f1e5] px-4 py-3 text-xs text-[#795c45]"><strong>{selectedEvents.length} selected:</strong> {selectedEvents.map(e => e.name).join(", ")}</p>}</section><div className="flex justify-end border-t border-[#f0e8dc] pt-6"><button type="button" className={primary} onClick={next}>Continue to event setup →</button></div></div>}
 
-            <h1 className="mt-4 max-w-lg text-4xl font-black leading-[1.12] sm:text-5xl">
-              Your stage.
-              <br />
-              Your story.
-              <br />
-              <span className="text-[#D9B86C]">Your moment.</span>
-            </h1>
 
-            <p className="mt-6 max-w-md text-sm leading-7 text-[#eadfc9]/80 sm:text-base">
-              Bring your talent to the spotlight. Register for cultural events,
-              find your team, and get ready to create something unforgettable.
-            </p>
-          </div>
 
-          <div className="relative z-10 mt-10">
-            <p className="mb-5 text-xs font-bold uppercase tracking-[0.2em] text-[#D9B86C]">
-              Registration progress
-            </p>
+        {step===2 && <div className="space-y-6">{!selectedEvents.length?<div className="rounded-2xl border border-dashed border-[#d8c8ad] bg-[#fffcf6] p-8 text-center"><p className="font-bold">No events selected yet</p><p className="mt-2 text-sm text-[#8a776b]">Go back and select at least one event.</p><button type="button" className={`${secondary} mt-5`} onClick={back}>← Back</button></div>:<><div className="rounded-2xl border border-[#eadfcf] bg-[#fffcf6] p-4 text-sm leading-6 text-[#795c45]"><strong>Each event is independent.</strong> You can choose Duo for Dance and Solo for Music in the same registration.</div>{selectedEvents.map((ev,i)=>{const entry=form.eventEntries[ev.name];const group=["Duo","Team"].includes(entry.participationType);return <section key={ev.name} className="overflow-hidden rounded-2xl border border-[#e9deca]"><div className="flex items-center gap-3 border-b border-[#eee5d8] bg-[#fffcf6] px-4 py-4 sm:px-5"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#f3e6d9] text-xl text-[#7a1b2f]">{ev.icon}</span><div className="min-w-0 flex-1"><p className="text-[10px] font-bold uppercase tracking-[.16em] text-[#9b7133]">Event {String(i+1).padStart(2,"0")}</p><h3 className="font-black">{ev.name}</h3></div><span className="rounded-full border border-[#e5d8c5] bg-white px-3 py-1 text-[10px] font-bold text-[#846f5e]">{ev.types.length===1?"Solo only":"Choose format"}</span></div><div className="space-y-5 p-4 sm:p-5"><div><p className="mb-3 text-sm font-bold">How will you participate?</p><div className={`grid gap-2 ${ev.types.length===1?"grid-cols-1":"grid-cols-3"}`}>{ev.types.length === 1 ? (
+  <div className="rounded-xl border border-[#7a1b2f] bg-[#7a1b2f] px-3 py-3 text-center text-sm font-bold text-white">
+    Solo
+    <span className="mt-1 block text-[10px] font-normal text-white/70">Just me · Required for this event</span>
+  </div>
+) : (
+  ev.types.map(type => (
+    <button
+      key={type}
+      type="button"
+      onClick={() => updateEntry(ev.name, "participationType", type)}
+      className={`rounded-xl border px-3 py-3 text-sm font-bold transition ${entry.participationType === type ? "border-[#7a1b2f] bg-[#7a1b2f] text-white" : "border-[#e9deca] bg-white text-[#795c45] hover:border-[#b89963]"}`}
+    >
+      {type}
+      <span className={`mt-1 block text-[10px] font-normal ${entry.participationType === type ? "text-white/70" : "text-[#a08c7b]"}`}>
+        {type === "Solo" ? "Just me" : type === "Duo" ? "2 people total" : "3+ people total"}
+      </span>
+    </button>
+  ))
+)}</div>{ev.types.length===1&&<p className="mt-2 text-xs text-[#8a776b]">This event accepts solo registrations only.</p>}</div>{group&&<div className="space-y-4 rounded-xl bg-[#fbf5e9] p-4"><Field label={entry.participationType==="Duo"?"Duo name":"Team name"} error={errors[`${ev.name}_teamName`]}><TextInput value={entry.teamName} onChange={v =>updateEntry(ev.name,"teamName",v)} placeholder={entry.participationType==="Duo"?"Give your duo a name":"Enter your team name"}/></Field><div className="flex flex-wrap items-center justify-between gap-3"><div><p className="text-sm font-bold">{entry.participationType==="Duo"?"Your partner":"Other team members"}</p><p className="mt-1 text-xs text-[#958174]">{entry.participationType==="Duo"?"Add exactly one partner. You are already included.":"You are already included as the lead participant."}</p></div><button type="button" className={secondary} disabled={(entry.participationType==="Duo"&&entry.members.length>=1)||entry.members.length>=19} onClick={()=>addMember(ev.name)}>+ Add {entry.participationType==="Duo"?"partner":"member"}</button></div>{entry.members.map((m,j)=><div key={j} className="rounded-xl border border-[#e8dece] bg-white p-4"><div className="mb-3 flex items-center justify-between"><p className="text-xs font-black uppercase tracking-[.12em] text-[#9b7133]">{entry.participationType==="Duo"?"Partner details":`Member ${j+1}`}</p><button type="button" onClick={()=>removeMember(ev.name,j)} className="text-xs font-bold text-red-600">Remove</button></div><div className="grid gap-4 sm:grid-cols-2"><Field label="Full name" error={errors[`${ev.name}_member_${j}`]}><TextInput value={m.name} onChange={v =>updateMember(ev.name,j,"name",v)} placeholder="Member's full name"/></Field><Field label="Roll number"><TextInput value={m.roll_no} onChange={v =>updateMember(ev.name,j,"roll_no",v)} placeholder="Student roll number"/></Field><Field label="Branch / department"><TextInput value={m.branch} onChange={v =>updateMember(ev.name,j,"branch",v)} placeholder="e.g. Electrical Engineering"/></Field><Field label="Mobile number"><TextInput type="tel" inputMode="numeric" maxLength={10} value={m.phone} onChange={v =>updateMember(ev.name,j,"phone",v.replace(/\D/g,"").slice(0,10))} placeholder="10-digit mobile number"/></Field><div className="sm:col-span-2"><Field label="Email address" hint="optional"><TextInput type="email" value={m.email} onChange={v =>updateMember(ev.name,j,"email",v)} placeholder="member@example.com"/></Field></div></div></div>)}{errors[`${ev.name}_members`]&&<p className="text-xs font-medium text-red-600">{errors[`${ev.name}_members`]}</p>}</div>}</div></section>})}</>}<div className="flex flex-col-reverse gap-3 border-t border-[#f0e8dc] pt-6 sm:flex-row sm:justify-between"><button type="button" className={secondary} onClick={back}>← Back</button><button type="button" className={primary} onClick={next}>Continue to review →</button></div></div>}
 
-            <div className="mb-7 h-1.5 overflow-hidden rounded-full bg-white/10">
-              <div
-                className="h-full rounded-full bg-[#D9B86C] transition-all duration-500"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
 
-            <div className="space-y-5">
-              {[
-                { number: 1, title: "Your details" },
-                { number: 2, title: "Your team" },
-                { number: 3, title: "Final review" },
-              ].map((item) => {
-                const active = step === item.number;
-                const completed = step > item.number;
 
-                return (
-                  <div
-                    key={item.number}
-                    className={`flex items-center gap-4 ${
-                      active ? "text-[#F7EBD0]" : "text-[#F7EBD0]/45"
-                    }`}
-                  >
-                    <div
-                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-sm font-bold ${
-                        completed
-                          ? "border-[#D9B86C] bg-[#D9B86C] text-[#2B0A12]"
-                          : active
-                            ? "border-[#D9B86C] text-[#D9B86C]"
-                            : "border-white/20"
-                      }`}
-                    >
-                      {completed ? "✓" : `0${item.number}`}
-                    </div>
-                    <p className="text-sm font-semibold">{item.title}</p>
-                  </div>
-                );
-              })}
-            </div>
+        {step===3 && <div className="space-y-8"><section><Heading eyebrow="01 / Event requirements" title="A few final details" desc="Only the requirements for your selected events appear here."/>{form.selectedEvents.includes("Dance")&&<Field label="Dance audio track" hint="Google Drive link" error={errors.trackLink}><TextInput type="url" value={form.trackLink} onChange={v =>update("trackLink",v)} placeholder="https://drive.google.com/file/d/..."/><span className="mt-2 block text-xs font-normal text-[#9a887a]">Make sure the event team can access the file.</span></Field>}{form.selectedEvents.includes("Photography")&&<div className="mt-5"><Field label="Photography submissions" hint="1–10 links, one per line" error={errors.imageLinks}><textarea className={`${inputClass} min-h-32 resize-y`} value={form.imageLinks} onChange={e =>update("imageLinks",e.target.value)} placeholder={"https://drive.google.com/file/d/IMAGE_ID_1/view\nhttps://drive.google.com/file/d/IMAGE_ID_2/view"}/></Field></div>}{form.selectedEvents.includes("Fine Arts")&&<div className="mt-5 rounded-2xl border border-[#e9deca] bg-[#fffcf6] p-5"><p className="font-bold text-[#48232b]">Fine Arts artwork links</p><p className="mt-1 text-xs leading-5 text-[#8a776b]">Paste 1–5 Google Drive links to your artwork, one link per line. Do not upload the files directly. Make sure link access is set so the event team can view them.</p><Field label="Google Drive links" hint="1–5 links, one per line" error={errors.fineArtLinks}><textarea className={`${inputClass} min-h-32 resize-y`} value={form.fineArtLinks} onChange={e =>update("fineArtLinks",e.target.value)} placeholder={"https://drive.google.com/file/d/ARTWORK_ID_1/view\nhttps://drive.google.com/file/d/ARTWORK_ID_2/view"}/></Field><p className="mt-2 text-xs text-[#9a887a]">Tip: In Google Drive, open Share and change General access if needed so judges can view the artwork.</p></div>}{!form.selectedEvents.includes("Dance")&&!form.selectedEvents.includes("Photography")&&!form.selectedEvents.includes("Fine Arts")&&<p className="rounded-xl border border-dashed border-[#e4d5bf] bg-[#fffcf6] p-5 text-sm text-[#8a776b]">No additional media uploads are required for your selected events.</p>}</section><div className="h-px bg-[#f0e8dc]"/><section><Heading eyebrow="02 / Double-check" title="Registration summary" desc="Participation type and teammates are listed separately for every event."/><div className="overflow-hidden rounded-2xl border border-[#e9deca]"><div className="grid gap-3 bg-[#fffcf6] p-4 sm:grid-cols-2"><div><p className="text-[10px] font-bold uppercase tracking-[.15em] text-[#9a887a]">Participant</p><p className="mt-1 font-bold">{form.name||"—"}</p><p className="mt-1 text-xs text-[#8a776b]">{form.roll_no} · {form.branch}</p></div><div><p className="text-[10px] font-bold uppercase tracking-[.15em] text-[#9a887a]">Contact</p><p className="mt-1 text-sm font-semibold">{form.phone||"—"}</p><p className="mt-1 break-all text-xs text-[#8a776b]">{form.email||"—"}</p></div></div><div className="divide-y divide-[#eee5d8]">{selectedEvents.map(ev =>{const entry=form.eventEntries[ev.name];return <div key={ev.name} className="p-4 sm:p-5"><div className="flex flex-wrap items-center justify-between gap-2"><p className="font-black">{ev.name}</p><span className="rounded-full bg-[#f7eadb] px-3 py-1 text-xs font-bold text-[#7a1b2f]">{entry.participationType}</span></div>{["Duo","Team"].includes(entry.participationType)&&<><p className="mt-2 text-sm text-[#795c45]">Name: {entry.teamName||"Not entered"}</p><p className="mt-1 text-xs text-[#8a776b]">Additional participants: {entry.members.length}</p>{entry.members.map((m,j)=><p key={j} className="mt-1 text-xs text-[#8a776b]">{m.name||`Member ${j+1}`} · {m.roll_no||"No roll number"}</p>)}</>}</div>})}</div></div></section><section><label className="flex cursor-pointer items-start gap-3 rounded-xl border border-[#e9deca] bg-[#fffcf6] p-4"><input type="checkbox" className="mt-1 accent-[#7a1b2f]" checked={form.confirmed} onChange={e =>update("confirmed",e.target.checked)}/><span className="text-sm leading-6 text-[#795c45]">I confirm that my details, participation type and team members are correct for each selected event.</span></label>{errors.confirmed&&<p className="mt-2 text-xs font-medium text-red-600">{errors.confirmed}</p>}</section>{errors.submit&&<div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">{errors.submit}</div>}<div className="flex flex-col-reverse gap-3 border-t border-[#f0e8dc] pt-6 sm:flex-row sm:justify-between"><button type="button" className={secondary} onClick={back} disabled={submitting}>← Edit registration</button><button type="submit" className={primary} disabled={submitting}>{submitting?"Submitting registration…":"Submit registration →"}</button></div><p className="text-center text-xs leading-5 text-[#a08c7b]">Your details are saved when the registration server accepts them.</p></div>}
 
-            <div className="mt-10 rounded-2xl border border-[#D9B86C]/20 bg-white/[0.04] p-5">
-              <p className="text-sm font-bold text-[#D9B86C]">Before you begin</p>
-              <ul className="mt-3 space-y-2 text-sm leading-6 text-[#F7EBD0]/75">
-                <li>• Keep your contact details ready.</li>
-                <li>• Choose your events carefully.</li>
-                <li>• Prepare any required Google Drive links.</li>
-              </ul>
-            </div>
-          </div>
+      </form><p className="mt-5 text-center text-xs text-[#a08c7b]">Celebrate creativity. Celebrate culture.</p></section>
 
-          <p className="relative z-10 mt-8 text-xs text-[#F7EBD0]/40">
-            Celebrate creativity. Celebrate culture.
-          </p>
-        </aside>
+    </main>
 
-        <section className="min-w-0">
-          <div className="mb-6">
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#9C762E]">
-              Registration form
-            </p>
+  </div>;
 
-            <h2 className="mt-2 text-3xl font-black tracking-tight sm:text-4xl">
-              {step === 1
-                ? "Let's get to know you."
-                : step === 2
-                  ? "Meet your team."
-                  : "One last thing."}
-            </h2>
-
-            <p className="mt-3 text-sm leading-6 text-[#755e55]">
-              {step === 1
-                ? "Fill in your details and choose the events you want to participate in."
-                : step === 2
-                  ? "Add the details of your fellow participants."
-                  : "Add the required Google Drive links, review your details, and confirm your information."}
-            </p>
-          </div>
-
-          <form
-            onSubmit={handleSubmit}
-            className="rounded-[1.75rem] border border-[#e5d9c3] bg-white p-5 shadow-[0_20px_70px_rgba(43,10,18,0.07)] sm:p-8"
-            noValidate
-          >
-            {step === 1 && (
-              <div className="space-y-8">
-                <section>
-                  <h3 className="mb-5 font-bold">Personal information</h3>
-
-                  <div className="grid gap-5 sm:grid-cols-2">
-                    <Field label="Full name" error={errors.name}>
-                      <input
-                        className={inputClass}
-                        value={formData.name}
-                        onChange={(e) => updateField("name", e.target.value)}
-                        placeholder="Enter your full name"
-                        autoComplete="name"
-                      />
-                    </Field>
-
-                    <Field label="Branch / Department" error={errors.branch}>
-                      <input
-                        className={inputClass}
-                        value={formData.branch}
-                        onChange={(e) => updateField("branch", e.target.value)}
-                        placeholder="e.g. Electrical Engineering"
-                      />
-                    </Field>
-
-                    <Field label="Academic year" error={errors.year}>
-                      <select
-                        className={inputClass}
-                        value={formData.year}
-                        onChange={(e) => updateField("year", e.target.value)}
-                      >
-                        <option value="">Select your year</option>
-                        {YEARS.map((year) => (
-                          <option key={year} value={year}>
-                            {year}
-                          </option>
-                        ))}
-                      </select>
-                    </Field>
-
-                    <Field label="Mobile number" error={errors.phone}>
-                      <input
-                        className={inputClass}
-                        type="tel"
-                        inputMode="numeric"
-                        maxLength={10}
-                        value={formData.phone}
-                        onChange={(e) =>
-                          updateField(
-                            "phone",
-                            e.target.value.replace(/\D/g, "").slice(0, 10)
-                          )
-                        }
-                        placeholder="10-digit mobile number"
-                      />
-                    </Field>
-
-                    <div className="sm:col-span-2">
-                      <Field label="Email address" error={errors.email}>
-                        <input
-                          className={inputClass}
-                          type="email"
-                          value={formData.email}
-                          onChange={(e) => updateField("email", e.target.value)}
-                          placeholder="you@example.com"
-                        />
-                      </Field>
-                    </div>
-                  </div>
-                </section>
-
-                <div className="h-px bg-[#eee4d4]" />
-
-                <section>
-                  <h3 className="font-bold">Choose your events</h3>
-                  <p className="mb-4 mt-1 text-xs text-[#907c6b]">
-                    Enable multiple events to select more than one category.
-                  </p>
-
-                  <label className="mb-4 flex cursor-pointer items-start gap-3 rounded-xl border border-[#e8ddc9] bg-[#fcf8f0] p-4">
-                    <input
-                      type="checkbox"
-                      className="mt-1 accent-[#7A1B2F]"
-                      checked={formData.multipleEvents}
-                      onChange={(e) => toggleMultipleEvents(e.target.checked)}
-                    />
-                    <span className="text-sm font-semibold">
-                      I want to participate in multiple events
-                    </span>
-                  </label>
-
-                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-                    {EVENT_CATEGORIES.map((eventName) => {
-                      const selected = formData.events.includes(eventName);
-
-                      return (
-                        <button
-                          key={eventName}
-                          type="button"
-                          onClick={() => toggleEvent(eventName)}
-                          className={`rounded-xl border p-4 text-left transition ${
-                            selected
-                              ? "border-[#7A1B2F] bg-[#7A1B2F] text-white"
-                              : "border-[#e7dcc9] bg-white text-[#5d4242] hover:border-[#b18a56]"
-                          }`}
-                        >
-                          <span className="mb-3 block text-lg">
-                            {selected ? "✓" : "+"}
-                          </span>
-                          <span className="text-sm font-semibold">{eventName}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  {errors.events && (
-                    <p className="mt-2 text-xs text-red-600">{errors.events}</p>
-                  )}
-
-                  {selectedEvents.length > 0 && (
-                    <p className="mt-3 text-xs text-[#806b5a]">
-                      Selected: {selectedEvents.join(", ")}
-                    </p>
-                  )}
-                </section>
-
-                <div className="h-px bg-[#eee4d4]" />
-
-                <section>
-                  <h3 className="mb-4 font-bold">Participation type</h3>
-
-                  <div className="grid grid-cols-3 gap-3">
-                    {["Solo", "Duo", "Team"].map((type) => (
-                      <button
-                        type="button"
-                        key={type}
-                        onClick={() => updateField("participationType", type)}
-                        className={`rounded-xl border px-3 py-4 text-sm font-bold ${
-                          formData.participationType === type
-                            ? "border-[#7A1B2F] bg-[#f9edf0] text-[#7A1B2F]"
-                            : "border-[#e7dcc9] bg-white text-[#6f5b52]"
-                        }`}
-                      >
-                        {type}
-                      </button>
-                    ))}
-                  </div>
-                </section>
-
-                <div className="flex justify-end border-t border-[#eee4d4] pt-6">
-                  <button type="button" className={primaryButton} onClick={handleNext}>
-                    Continue →
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {step === 2 && isTeam && (
-              <div className="space-y-7">
-                <Field label="Team name" error={errors.teamName}>
-                  <input
-                    className={inputClass}
-                    value={formData.teamName}
-                    onChange={(e) => updateField("teamName", e.target.value)}
-                    placeholder="Enter your team name"
-                  />
-                </Field>
-
-                <section>
-                  <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-                    <div>
-                      <h3 className="font-bold">Other participants</h3>
-                      <p className="mt-1 text-xs text-[#907c6b]">
-                        Your details are already included as the first participant.
-                      </p>
-                    </div>
-                    <button type="button" className={secondaryButton} onClick={addMember}>
-                      + Add member
-                    </button>
-                  </div>
-
-                  {errors.members && (
-                    <p className="mb-4 text-xs text-red-600">{errors.members}</p>
-                  )}
-
-                  <div className="space-y-5">
-                    {formData.members.map((member, index) => (
-                      <div
-                        key={index}
-                        className="rounded-2xl border border-[#e7dcc9] bg-[#fcf8f0] p-4 sm:p-5"
-                      >
-                        <div className="mb-4 flex items-center justify-between">
-                          <h4 className="font-bold">Participant {index + 2}</h4>
-                          <button
-                            type="button"
-                            className="text-xs font-semibold text-[#a12e40]"
-                            onClick={() => removeMember(index)}
-                          >
-                            Remove
-                          </button>
-                        </div>
-
-                        <div className="grid gap-4 sm:grid-cols-2">
-                          <Field label="Full name">
-                            <input
-                              className={inputClass}
-                              value={member.name}
-                              onChange={(e) =>
-                                updateMember(index, "name", e.target.value)
-                              }
-                              placeholder="Participant name"
-                            />
-                          </Field>
-
-                          <Field label="Mobile number">
-                            <input
-                              className={inputClass}
-                              type="tel"
-                              inputMode="numeric"
-                              maxLength={10}
-                              value={member.phone}
-                              onChange={(e) =>
-                                updateMember(
-                                  index,
-                                  "phone",
-                                  e.target.value.replace(/\D/g, "").slice(0, 10)
-                                )
-                              }
-                              placeholder="10-digit mobile number"
-                            />
-                          </Field>
-
-                          <Field label="Branch / Department">
-                            <input
-                              className={inputClass}
-                              value={member.branch}
-                              onChange={(e) =>
-                                updateMember(index, "branch", e.target.value)
-                              }
-                              placeholder="Enter branch"
-                            />
-                          </Field>
-
-                          <Field label="Academic year">
-                            <select
-                              className={inputClass}
-                              value={member.year}
-                              onChange={(e) =>
-                                updateMember(index, "year", e.target.value)
-                              }
-                            >
-                              <option value="">Select year</option>
-                              {YEARS.map((year) => (
-                                <option key={year} value={year}>
-                                  {year}
-                                </option>
-                              ))}
-                            </select>
-                          </Field>
-
-                          <div className="sm:col-span-2">
-                            <Field label="Email address (optional)">
-                              <input
-                                className={inputClass}
-                                type="email"
-                                value={member.email}
-                                onChange={(e) =>
-                                  updateMember(index, "email", e.target.value)
-                                }
-                                placeholder="participant@example.com"
-                              />
-                            </Field>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </section>
-
-                <div className="flex flex-col-reverse gap-3 border-t border-[#eee4d4] pt-6 sm:flex-row sm:justify-between">
-                  <button type="button" className={secondaryButton} onClick={handleBack}>
-                    ← Back
-                  </button>
-                  <button type="button" className={primaryButton} onClick={handleNext}>
-                    Continue →
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {step === 3 && (
-              <div className="space-y-7">
-                <section>
-                  <h3 className="text-lg font-bold">Event requirements</h3>
-                  <p className="mb-5 mt-1 text-sm leading-6 text-[#907c6b]">
-                    Paste Google Drive links for the selected events. Make sure
-                    the files are shared with the required access permissions.
-                  </p>
-
-                  {selectedEvents.includes("Dance") && (
-                    <div className="mb-5 rounded-2xl border border-[#e7dcc9] p-5">
-                      <h4 className="font-bold">Dance audio track</h4>
-                      <p className="mt-1 text-xs leading-5 text-[#907c6b]">
-                        Paste a Google Drive link to your audio file.
-                      </p>
-
-                      <input
-                        className={`${inputClass} mt-4`}
-                        type="url"
-                        value={formData.trackLink}
-                        onChange={(e) => updateField("trackLink", e.target.value)}
-                        placeholder="https://drive.google.com/file/d/..."
-                      />
-
-                      {errors.trackLink && (
-                        <p className="mt-2 text-xs text-red-600">
-                          {errors.trackLink}
-                        </p>
-                      )}
-                    </div>
-                  )}
-
-                  {selectedEvents.includes("Photography") && (
-                    <div className="rounded-2xl border border-[#e7dcc9] p-5">
-                      <h4 className="font-bold">Photography submissions</h4>
-                      <p className="mt-1 text-xs leading-5 text-[#907c6b]">
-                        Paste 1–10 Google Drive image links, one per line.
-                      </p>
-
-                      <textarea
-                        className={`${inputClass} mt-4 min-h-36`}
-                        value={formData.imageLinks}
-                        onChange={(e) => updateField("imageLinks", e.target.value)}
-                        placeholder={
-                          "https://drive.google.com/file/d/IMAGE_ID_1/view\nhttps://drive.google.com/file/d/IMAGE_ID_2/view"
-                        }
-                      />
-
-                      {errors.imageLinks && (
-                        <p className="mt-2 text-xs text-red-600">
-                          {errors.imageLinks}
-                        </p>
-                      )}
-                    </div>
-                  )}
-
-                  {!selectedEvents.includes("Dance") &&
-                    !selectedEvents.includes("Photography") && (
-                      <div className="rounded-2xl border border-dashed border-[#d8cbb4] bg-[#fcf8f0] p-6 text-center">
-                        <p className="font-semibold">No links required</p>
-                        <p className="mt-1 text-sm text-[#907c6b]">
-                          Your selected categories do not require media links at this stage.
-                        </p>
-                      </div>
-                    )}
-                </section>
-
-                <div className="h-px bg-[#eee4d4]" />
-
-                <section>
-                  <h3 className="text-lg font-bold">Review your details</h3>
-                  <div className="mt-4 overflow-hidden rounded-2xl border border-[#e7dcc9]">
-                    <SummaryRow label="Name" value={formData.name} />
-                    <SummaryRow label="Branch" value={formData.branch} />
-                    <SummaryRow label="Year" value={formData.year} />
-                    <SummaryRow label="Phone" value={formData.phone} />
-                    <SummaryRow label="Email" value={formData.email} />
-                    <SummaryRow label="Events" value={formData.events.join(", ")} />
-                    <SummaryRow label="Participation" value={formData.participationType} />
-
-                    {isTeam && (
-                      <>
-                        <SummaryRow label="Team name" value={formData.teamName} />
-                        <SummaryRow
-                          label="Other members"
-                          value={String(formData.members.length)}
-                        />
-                      </>
-                    )}
-
-                    {selectedEvents.includes("Dance") && (
-                      <SummaryRow label="Audio link" value={formData.trackLink} />
-                    )}
-
-                    {selectedEvents.includes("Photography") && (
-                      <SummaryRow
-                        label="Image links"
-                        value={`${formData.imageLinks
-                          .split(/\n/)
-                          .filter((link) => link.trim()).length} link(s) provided`}
-                      />
-                    )}
-                  </div>
-                </section>
-
-                <section>
-                  <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-[#e7dcc9] bg-[#fcf8f0] p-4">
-                    <input
-                      type="checkbox"
-                      className="mt-1 accent-[#7A1B2F]"
-                      checked={formData.confirmed}
-                      onChange={(e) => updateField("confirmed", e.target.checked)}
-                    />
-                    <span className="text-sm leading-6 text-[#5d4242]">
-                      I confirm that the information provided is accurate and
-                      that I have checked the event requirements.
-                    </span>
-                  </label>
-
-                  {errors.confirmed && (
-                    <p className="mt-2 text-xs text-red-600">{errors.confirmed}</p>
-                  )}
-                </section>
-
-                {errors.submit && (
-                  <div className="rounded-xl bg-red-50 p-4 text-sm text-red-700">
-                    {errors.submit}
-                  </div>
-                )}
-
-                <div className="flex flex-col-reverse gap-3 border-t border-[#eee4d4] pt-6 sm:flex-row sm:justify-between">
-                  <button
-                    type="button"
-                    className={secondaryButton}
-                    onClick={handleBack}
-                    disabled={submitting}
-                  >
-                    ← Back
-                  </button>
-
-                  <button
-                    type="submit"
-                    className={primaryButton}
-                    disabled={submitting}
-                  >
-                    {submitting ? "Saving registration..." : "Complete registration"}
-                    {!submitting && <span aria-hidden="true">→</span>}
-                  </button>
-                </div>
-
-                <p className="text-center text-xs leading-5 text-[#907c6b]">
-                  Your registration will be saved to the database when the server
-                  accepts it.
-                </p>
-              </div>
-            )}
-          </form>
-
-          <p className="mt-6 text-center text-xs text-[#907c6b]">
-            Need help? Contact your Cultural Council registration team.
-          </p>
-        </section>
-      </main>
-    </div>
-  );
 }
