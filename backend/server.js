@@ -133,17 +133,17 @@ app.use((error, req, res, next) => {
 // Export the Express application for Vercel.
 module.exports = app;
 
-// Start a persistent server only when running locally.
-if (require.main === module) {
-  ensureDatabaseConnection()
-    .then(() => {
-      app.listen(PORT, () => {
-        console.log(`HEATS API running at http://localhost:${PORT}`);
-        console.log(`Frontend origin: ${CLIENT_URL}`);
-      });
-    })
-    .catch((error) => {
-      console.error("Failed to start server:", error.message);
-      process.exitCode = 1;
+    app.listen(PORT, () => {
+      console.log(`HEATS API running at http://localhost:${PORT}`);
+      console.log(`Frontend origin: ${CLIENT_URL}`);
+      console.log("Admin login: POST /api/admin/login");
+      console.log("Admin session: GET /api/admin/me");
+      console.log("Candidates: GET /api/admin/candidates");
     });
+  } catch (error) {
+    console.error("Failed to start server:", error.message);
+    process.exit(1);
+  }
 }
+
+startServer();
