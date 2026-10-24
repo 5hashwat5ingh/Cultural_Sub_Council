@@ -260,7 +260,7 @@ export default function Registration() {
 
     try {
 
-      const response = await fetch(`${API_URL}api/registrations`, {
+      const response = await fetch(`${API_URL}/api/registrations`, {
 
         method: "POST",
 
