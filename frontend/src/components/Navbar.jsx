@@ -300,7 +300,7 @@ className={headerStyle}
     <span className="relative h-2 w-2 rounded-full bg-red-600" />
   </span>
 
-  <span className="whitespace-nowrap">HEATS ’26</span>
+  <span className="whitespace-nowrap">HEATS ’26 Registration</span>
 </Link>
 
 
