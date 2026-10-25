@@ -277,9 +277,12 @@ export default function ClubPage({ club }) {
             max-w-[1500px]
             items-end
             px-6
+            pt-28
             pb-20
             sm:px-12
+            sm:pt-32
             lg:px-20
+            lg:pt-36
             lg:pb-28
           "
         >
@@ -309,7 +312,7 @@ export default function ClubPage({ club }) {
             <motion.h1
               variants={fadeUp}
               className="
-                text-[clamp(4rem,11vw,10rem)]
+                text-[clamp(2.5rem,8vw,6rem)]
                 font-semibold
                 leading-[0.82]
                 tracking-[-0.06em]
