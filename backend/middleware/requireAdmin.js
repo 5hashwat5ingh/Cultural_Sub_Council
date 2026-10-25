@@ -1,56 +1,48 @@
 
 const jwt = require("jsonwebtoken");
-const Admin = require("../models/Admin");
 
-async function requireAdmin(req, res, next) {
+function requireAdmin(req, res, next) {
+  const token = req.cookies?.adminToken;
+  const secret = process.env.JWT_SECRET;
+
+  if (!token || !secret) {
+    return res.status(401).json({
+      message: "Authentication required.",
+    });
+  }
+
   try {
-    const token = req.cookies?.adminToken;
+    const decoded = jwt.verify(token, secret, {
+      issuer: "heats-registration-api",
+      audience: "heats-admin",
+    });
 
-    if (!token) {
-      return res.status(401).json({
-        message: "Please log in to continue."
-      });
-    }
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    const allowedEmail = process.env.ADMIN_EMAIL
+    const configuredEmail = process.env.ADMIN_EMAIL
       ?.trim()
       .toLowerCase();
 
-    if (!allowedEmail || decoded.email !== allowedEmail) {
-      return res.status(401).json({
-        message: "Unauthorized admin account."
-      });
-    }
-
-    const admin = await Admin.findById(decoded.sub);
-
     if (
-      !admin ||
-      !admin.active ||
-      admin.email !== allowedEmail
+      decoded.role !== "admin" ||
+      !configuredEmail ||
+      typeof decoded.email !== "string" ||
+      decoded.email.toLowerCase() !== configuredEmail
     ) {
-      return res.status(401).json({
-        message: "Admin account is unavailable."
+      return res.status(403).json({
+        message: "Admin access denied.",
       });
     }
 
     req.admin = {
-      id: admin._id.toString(),
-      name: admin.name,
-      email: admin.email
+      id: decoded.sub || decoded.email,
+      email: decoded.email,
+      role: decoded.role,
     };
 
-    next();
+    return next();
   } catch (error) {
-    if (error.name === "TokenExpiredError" || error.name === "JsonWebTokenError") {
-      return res.status(401).json({
-        message: "Your session is invalid or expired. Please log in again."
-      });
-    }
-
-    next(error);
+    return res.status(401).json({
+      message: "Invalid or expired authentication token.",
+    });
   }
 }
 
