@@ -32,34 +32,35 @@ if (!MONGODB_URI) {
   throw new Error("MONGODB_URI is missing from environment variables.");
 }
 
+
 const allowedOrigins = [
-  CLIENT_URL,
-  "http://localhost:5174",
+  process.env.CLIENT_URL,
+  "https://cultural-sub-council-seven.vercel.app",
+  "https://cultural-sub-council-git-main-shashwat-singhs-projects-663f3556.vercel.app",
   "http://localhost:5173",
-  "http://127.0.0.1:5174",
+  "http://localhost:5174",
   "http://127.0.0.1:5173",
-].filter(Boolean).map((origin) => origin.replace(/\/$/, ""));
+  "http://127.0.0.1:5174",
+]
+  .filter(Boolean)
+  .map((origin) => origin.trim().replace(/\/$/, ""));
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin) {
+      if (!origin || allowedOrigins.includes(origin.replace(/\/$/, ""))) {
         return callback(null, true);
       }
 
-      const normalizedOrigin = origin.replace(/\/$/, "");
-
-      if (allowedOrigins.includes(normalizedOrigin)) {
-        return callback(null, true);
-      }
-
-      return callback(new Error(`CORS blocked for origin: ${origin}`));
+      console.error("CORS blocked origin:", origin);
+      return callback(new Error("Origin not allowed by CORS"));
     },
     credentials: true,
     methods: ["GET", "POST", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
 
 app.use(express.json({ limit: "1mb" }));
 app.use(cookieParser());
