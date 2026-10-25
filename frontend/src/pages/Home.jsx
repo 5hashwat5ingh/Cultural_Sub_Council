@@ -218,13 +218,18 @@ function HeroSlider() {
             }}
             className="
               mb-5
+              inline-block
+              bg-white
+              px-3
+              py-1
               text-[10px]
               font-bold
               uppercase
               tracking-[0.3em]
-              text-[#E6C777]
-              drop-shadow-md
+              text-black
               sm:mb-7
+              sm:px-4
+              sm:py-1
               sm:text-sm
               sm:tracking-[0.45em]
             "
@@ -257,7 +262,7 @@ function HeroSlider() {
                 sm:text-6xl
                 md:text-7xl
                 lg:text-8xl
-                xl:text-9xl
+                xl:text-8xl
               "
             >
               {firstLine}
@@ -270,12 +275,12 @@ function HeroSlider() {
                 text-4xl
                 font-bold
                 italic
-                text-[#D9B86C]
+                text-[oklch(0.70_0.125_78)]
                 sm:mt-3
                 sm:text-6xl
                 md:text-7xl
                 lg:text-8xl
-                xl:text-9xl
+                xl:text-8xl
               "
             >
               {secondLine}
@@ -335,11 +340,11 @@ function HeroSlider() {
             "
           >
             Celebrating{" "}
-            <span className="font-semibold text-[#E6C777]">
+            <span className="font-semibold text-[oklch(0.70_0.125_78)]">
               creativity
             </span>
             ,{" "}
-            <span className="font-semibold text-[#E6C777]">
+            <span className="font-semibold text-[oklch(0.70_0.125_78)]">
               talent
             </span>
             , and the spirit of togetherness.

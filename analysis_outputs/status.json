@@ -1,0 +1,40 @@
+{
+  "project": "Cultural Sub Council - Frontend Audit",
+  "target_directory": "frontend",
+  "timestamp": "2026-10-25T21:18:00+05:30",
+  "stack": {
+    "bundler": "Vite 8.3.0",
+    "framework": "React 19.2.8",
+    "router": "React Router DOM 7.18.4",
+    "styling": "Tailwind CSS 3.4.19 + PostCSS + Autoprefixer",
+    "animation": "Framer Motion 13.3.0",
+    "icons": "Lucide React 1.50.0 + React Icons 5.7.0",
+    "linter": "Oxlint 1.81.0"
+  },
+  "metrics": {
+    "total_pages": 11,
+    "total_components": 11,
+    "total_data_stores": 4,
+    "unused_heavy_dependencies": [
+      "@react-three/fiber",
+      "@react-three/drei",
+      "three",
+      "@bible-strong/avatar-react"
+    ],
+    "dead_source_files": [
+      "src/components/GalleryVideo.jsx",
+      "src/components/TypingText.jsx",
+      "src/components/ScrollTextReveal.jsx",
+      "src/Color",
+      "src/data/notes"
+    ],
+    "unreferenced_media_weight_mb": 35.4
+  },
+  "audit_findings": {
+    "critical": 4,
+    "high": 6,
+    "medium": 8,
+    "low": 5
+  },
+  "status": "completed"
+}

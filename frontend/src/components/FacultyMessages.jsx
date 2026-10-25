@@ -7,16 +7,16 @@ import { motion } from "framer-motion";
 
 const facultyMessages = [
   {
-    name: "Prof. Anupma Kaushik Sharma",
+    name: "Prof. Anupama Kaushik Sharma",
     designation: "Vice-chancellor, MMMUT",
     image:
       "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791629908/Professional_Portrait_of_Indian_Woman_at_Desk.png",
     message:
-      "Culture is not just an expression of talent, but a reflection of values, creativity and the collective spirit of our community.",
+      "Culture is the silent agreement a community makes to remember who they are, no matter how fast the world changes.",
   },
 
   {
-    name: "Dr. B.K. Pandey",
+    name: "Dr. Rajan Mishra",
     designation: "Chairman, Council of Student Activities",
     image:
       "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791016591/CSA.jpg",
