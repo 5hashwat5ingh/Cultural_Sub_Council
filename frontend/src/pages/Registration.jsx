@@ -345,7 +345,37 @@ if (registrationId) {
 
   return <div className="min-h-screen bg-[#fbf5e9] text-[#32131b]">
 
-    <header className="border-b border-[#e8dece] bg-[#fbf5e9]"><div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-8"><Link to="/" className="flex items-center gap-3"><div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#32131b] text-lg font-black text-[#e5c47b]">C</div><div><p className="text-xs font-black tracking-[.13em] sm:text-sm">CULTURAL SUB-COUNCIL</p><p className="mt-0.5 text-[9px] uppercase tracking-[.22em] text-[#9a887a]">Registration portal</p></div></Link><Link to="/" className="text-xs font-bold text-[#7a1b2f] sm:text-sm">← Back to home</Link></div></header>
+    
+<header className="border-b border-[#e8dece] bg-[#fbf5e9]">
+  <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-8">
+    <Link to="/" className="flex items-center gap-3">
+      <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white">
+        <img
+         src="/Logo.png"
+         alt="Cultural Sub Council Logo"
+         className="h-9 w-9 shrink-0 object-contain sm:h-10 sm:w-10"
+       />
+      </div>
+
+      <div>
+        <p className="text-xs font-black tracking-[.13em] sm:text-sm">
+          CULTURAL SUB-COUNCIL
+        </p>
+        <p className="mt-0.5 text-[9px] uppercase tracking-[.22em] text-[#9a887a]">
+          Registration portal
+        </p>
+      </div>
+    </Link>
+
+    <Link
+      to="/"
+      className="text-xs font-bold text-[#7a1b2f] transition hover:text-[#9b7133] sm:text-sm"
+    >
+      ← Back to home
+    </Link>
+  </div>
+</header>
+
 
     <main className="mx-auto grid max-w-7xl gap-8 px-4 py-7 sm:px-8 sm:py-10 lg:grid-cols-[.75fr_1.25fr] lg:gap-12">
 

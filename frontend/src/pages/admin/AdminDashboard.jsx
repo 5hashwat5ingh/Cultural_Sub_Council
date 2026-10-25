@@ -765,11 +765,11 @@ export default function AdminDashboard() {
           <div className="flex min-w-0 items-center gap-3">
 
              <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white">
-        <img
-          src="/Logo.png"
-          alt="Cultural Sub-Council Logo"
-          className="h-full w-full object-contain"
-        />
+       <img
+         src="/Logo.png"
+         alt="Cultural Sub Council Logo"
+         className="h-9 w-9 shrink-0 object-contain sm:h-10 sm:w-10"
+       />
       </div>
 
             <div className="min-w-0"><p className="truncate text-xs font-black tracking-[.16em] sm:text-sm">CULTURAL SUB-COUNCIL</p><p className="mt-0.5 truncate text-[10px] text-white/40">HEATS · ADMINISTRATION PORTAL</p></div>
