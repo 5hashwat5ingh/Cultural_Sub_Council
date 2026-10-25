@@ -286,7 +286,60 @@ export default function Registration() {
 
 
 
-  if (registrationId) return <div className="flex min-h-screen items-center justify-center bg-[#fbf5e9] p-4 text-[#32131b]"><div className="w-full max-w-lg rounded-[2rem] border border-[#e9deca] bg-white p-8 text-center shadow-xl sm:p-12"><div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-green-50 text-3xl text-green-700">✓</div><p className="mt-7 text-xs font-black uppercase tracking-[.24em] text-[#9b7133]">Cultural Sub-Council</p><h1 className="mt-3 text-3xl font-black">You're on the list!</h1><p className="mt-3 text-sm leading-6 text-[#8a776b]">Your registration has been submitted. Keep this reference for future communication.</p><div className="mt-6 rounded-2xl bg-[#fbf5e9] p-4"><p className="text-[10px] font-bold uppercase tracking-[.2em] text-[#9a887a]">Registration reference</p><p className="mt-2 break-all font-black text-[#7a1b2f]">{registrationId}</p></div><div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row"><Link to="/" className={secondary}>Back to home</Link><button className={primary} onClick={reset} type="button">Register another</button></div></div></div>;
+if (registrationId) {
+  const reference = `${roll_no}${String(registrationId).slice(10)}`;
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-[#fbf5e9] p-4 text-[#32131b]">
+      <div className="w-full max-w-lg rounded-[2rem] border border-[#e9deca] bg-white p-8 text-center shadow-xl sm:p-12">
+        {/* Cultural Sub-Council Logo */}
+        <div className="mx-auto flex h-20 w-20 items-center justify-center overflow-hidden rounded-2xl bg-white">
+          <img
+            src="/Logo.png"
+            alt="Cultural Sub-Council Logo"
+            className="h-full w-full object-contain"
+          />
+        </div>
+
+        <p className="mt-7 text-xs font-black uppercase tracking-[.24em] text-[#9b7133]">
+          Cultural Sub-Council
+        </p>
+
+        <h1 className="mt-3 text-3xl font-black">
+          You're on the list!
+        </h1>
+
+        <p className="mt-3 text-sm leading-6 text-[#8a776b]">
+          Your registration has been submitted. Keep this reference for future communication.
+        </p>
+
+        <div className="mt-6 rounded-2xl bg-[#fbf5e9] p-4">
+          <p className="text-[10px] font-bold uppercase tracking-[.2em] text-[#9a887a]">
+            Registration Reference
+          </p>
+
+          <p className="mt-2 break-all font-black text-[#7a1b2f]">
+            {reference}
+          </p>
+        </div>
+
+        <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+          <Link to="/" className={secondary}>
+            Back to home
+          </Link>
+
+          <button
+            className={primary}
+            onClick={reset}
+            type="button"
+          >
+            Register another
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 
 

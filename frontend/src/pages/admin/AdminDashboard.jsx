@@ -764,7 +764,13 @@ export default function AdminDashboard() {
 
           <div className="flex min-w-0 items-center gap-3">
 
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-[#F1DDA8]/50 bg-gradient-to-br from-[#F5DEA0] to-[#C99A45] text-lg font-black text-[#21150A] shadow-lg shadow-[#E8C879]/10">C</div>
+             <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white">
+        <img
+          src="/Logo.png"
+          alt="Cultural Sub-Council Logo"
+          className="h-full w-full object-contain"
+        />
+      </div>
 
             <div className="min-w-0"><p className="truncate text-xs font-black tracking-[.16em] sm:text-sm">CULTURAL SUB-COUNCIL</p><p className="mt-0.5 truncate text-[10px] text-white/40">HEATS · ADMINISTRATION PORTAL</p></div>
 
