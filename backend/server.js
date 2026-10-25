@@ -15,6 +15,7 @@ app.disable("x-powered-by");
 
 const PORT = Number(process.env.PORT) || 5000;
 const CLIENT_URL = process.env.CLIENT_URL;
+const MONGODB_URI= process.env.MONGODB_URI;
 
 if (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32) {
   throw new Error("JWT_SECRET must be at least 32 characters.");
@@ -27,13 +28,36 @@ if (!process.env.ADMIN_EMAIL) {
 if (!CLIENT_URL) {
   throw new Error("CLIENT_URL is missing from environment variables.");
 }
+if (!MONGODB_URI) {
+  throw new Error("MONGODB_URI is missing from environment variables.");
+}
+
+const allowedOrigins = [
+  CLIENT_URL,
+  "http://localhost:5174",
+  "http://localhost:5173",
+  "http://127.0.0.1:5174",
+  "http://127.0.0.1:5173",
+].filter(Boolean).map((origin) => origin.replace(/\/$/, ""));
 
 app.use(
   cors({
-    origin: CLIENT_URL,
+    origin: (origin, callback) => {
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      const normalizedOrigin = origin.replace(/\/$/, "");
+
+      if (allowedOrigins.includes(normalizedOrigin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error(`CORS blocked for origin: ${origin}`));
+    },
     credentials: true,
     methods: ["GET", "POST", "PATCH", "OPTIONS"],
-    allowedHeaders: ["Content-Type"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
