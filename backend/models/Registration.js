@@ -1,82 +1,66 @@
+
 const mongoose = require("mongoose");
 
-const EVENT_OPTIONS = [
-  "Dance",
-  "Music",
-  "Dramatics",
-  "Fine Arts",
-  "Photography",
-  "Technical",
-  "Other",
-];
-
-const PARTICIPATION_TYPES = ["Solo", "Duo", "Team"];
-
-// Team member details
 const memberSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
       trim: true,
-      maxlength: 100,
+      default: "",
     },
     roll_no: {
       type: String,
-      required: true,
       trim: true,
-      uppercase: true,
-      maxlength: 30,
+      default: "",
     },
     branch: {
       type: String,
-      required: true,
       trim: true,
-      maxlength: 100,
+      default: "",
+    },
+    year: {
+      type: String,
+      trim: true,
+      default: "",
     },
     phone: {
       type: String,
-      required: true,
       trim: true,
-      match: /^[6-9]\d{9}$/,
+      default: "",
     },
     email: {
       type: String,
       trim: true,
       lowercase: true,
       default: "",
-      validate: {
-        validator(value) {
-          return (
-            !value ||
-            /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
-          );
-        },
-        message: "Please enter a valid team member email.",
-      },
     },
   },
   { _id: false }
 );
 
-// Participation information for each selected event
 const eventEntrySchema = new mongoose.Schema(
   {
-    eventName: {
+    event: {
       type: String,
+      enum: [
+        "Dance",
+        "Music",
+        "Dramatics",
+        "Fine Arts",
+        "Photography",
+        "Technical",
+        "Other",
+      ],
       required: true,
-      enum: EVENT_OPTIONS,
     },
     participationType: {
       type: String,
+      enum: ["Solo", "Duo", "Team"],
       required: true,
-      enum: PARTICIPATION_TYPES,
-      default: "Solo",
     },
     teamName: {
       type: String,
       trim: true,
-      maxlength: 100,
       default: "",
     },
     members: {
@@ -87,47 +71,44 @@ const eventEntrySchema = new mongoose.Schema(
   { _id: false }
 );
 
-// Main registration model
 const registrationSchema = new mongoose.Schema(
   {
-    // Primary participant
+    // Primary participant details
     name: {
       type: String,
       required: true,
       trim: true,
-      minlength: 2,
-      maxlength: 100,
     },
+
     roll_no: {
       type: String,
       required: true,
       trim: true,
-      uppercase: true,
-      maxlength: 30,
     },
+
     branch: {
       type: String,
       required: true,
       trim: true,
-      maxlength: 100,
     },
+
     year: {
       type: String,
-      default: "",
       trim: true,
+      default: "",
     },
+
     phone: {
       type: String,
       required: true,
       trim: true,
-      match: /^[6-9]\d{9}$/,
     },
+
     email: {
       type: String,
       required: true,
       trim: true,
       lowercase: true,
-      match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
     },
 
     // Selected events
@@ -135,133 +116,122 @@ const registrationSchema = new mongoose.Schema(
       type: [
         {
           type: String,
-          enum: EVENT_OPTIONS,
+          enum: [
+            "Dance",
+            "Music",
+            "Dramatics",
+            "Fine Arts",
+            "Photography",
+            "Technical",
+            "Other",
+          ],
         },
       ],
       required: true,
-      validate: [
-        {
-          validator(value) {
-            return Array.isArray(value) && value.length > 0;
-          },
-          message: "At least one event must be selected.",
+      validate: {
+        validator: function (events) {
+          return Array.isArray(events) && events.length > 0;
         },
-        {
-          validator(value) {
-            return (
-              Array.isArray(value) &&
-              new Set(value).size === value.length
-            );
-          },
-          message: "Duplicate events are not allowed.",
-        },
-      ],
+        message: "At least one event must be selected.",
+      },
     },
+
     multipleEvents: {
       type: Boolean,
       default: false,
     },
 
-    // Current frontend and route use eventEntries
+    // Event-wise participation details
     eventEntries: {
       type: [eventEntrySchema],
-      required: true,
-      validate: {
-        validator(entries) {
-          if (!Array.isArray(entries) || entries.length === 0) {
-            return false;
-          }
-
-          const eventNames = entries.map(
-            (entry) => entry.eventName
-          );
-
-          return new Set(eventNames).size === eventNames.length;
-        },
-        message:
-          "Each selected event must have one unique entry.",
-      },
+      default: [],
     },
 
-    // Legacy fields retained for compatibility with older records
-    // and any existing admin code that still reads these properties.
+    // Legacy participation fields
     participationType: {
       type: String,
-      enum: [...PARTICIPATION_TYPES, null],
-      default: undefined,
+      enum: ["Solo", "Duo", "Team", ""],
+      default: "",
     },
+
     teamName: {
       type: String,
       trim: true,
       default: "",
     },
+
     members: {
       type: [memberSchema],
-      default: undefined,
+      default: [],
     },
 
     // Event-specific submissions
+    // Dance: one Google Drive link for the audio track
     trackLink: {
       type: String,
       trim: true,
       default: "",
     },
+
+    // Photography: Google Drive image links
     imageLinks: {
       type: [String],
       default: [],
     },
+
+    // Fine Arts: Google Drive artwork links
     fineArtLinks: {
       type: [String],
       default: [],
     },
 
-    // Participant confirmation
+    // Registration confirmation
     confirmed: {
       type: Boolean,
-      required: true,
       default: false,
     },
 
-    // Admin dashboard fields
-    adminStatus: {
+    // Admin evaluation fields
+    status: {
       type: String,
+      enum: [
+        "Pending",
+        "Under Review",
+        "Shortlisted",
+        "Selected",
+        "Rejected",
+      ],
       default: "Pending",
-      trim: true,
     },
+
     scores: {
       type: mongoose.Schema.Types.Mixed,
       default: {},
     },
-    adminNotes: {
+
+    notes: {
       type: String,
-      default: "",
       trim: true,
+      default: "",
     },
+
     lastUpdatedBy: {
       type: String,
       default: "",
-      trim: true,
     },
   },
   {
     timestamps: true,
-    minimize: false,
   }
 );
 
-// Keep the saved multipleEvents value consistent with events.
-registrationSchema.pre("validate", function () {
-  if (Array.isArray(this.events)) {
-    this.multipleEvents = this.events.length > 1;
-  }
-});
-
-// Prevent the same student from submitting multiple registrations.
-// Remove this index if your event rules permit multiple registrations
-// from the same roll number.
+// One registration per roll number
 registrationSchema.index(
   { roll_no: 1 },
-  { unique: true, name: "unique_registration_roll_no" }
+  {
+    unique: true,
+    name: "unique_registration_roll_no",
+  }
 );
 
 module.exports =

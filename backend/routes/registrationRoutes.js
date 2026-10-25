@@ -1,3 +1,4 @@
+
 const express = require("express");
 const Registration = require("../models/Registration");
 
@@ -23,13 +24,19 @@ const SOLO_ONLY_EVENTS = [
 
 const ALLOWED_TYPES = ["Solo", "Duo", "Team"];
 
-function isValidDriveLink(value) {
+// Validate a Google Drive URL.
+function isGoogleDriveLink(value) {
+  if (typeof value !== "string" || !value.trim()) {
+    return false;
+  }
+
   try {
-    const url = new URL(value);
+    const url = new URL(value.trim());
+
     return (
       url.protocol === "https:" &&
       ["drive.google.com", "docs.google.com"].includes(
-        url.hostname
+        url.hostname.toLowerCase()
       )
     );
   } catch {
@@ -37,12 +44,51 @@ function isValidDriveLink(value) {
   }
 }
 
+// Validate an email address.
 function isValidEmail(value) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  return (
+    typeof value === "string" &&
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())
+  );
 }
 
+// Validate an array of Google Drive links.
+function validateDriveLinks(value, min, max, label) {
+  if (!Array.isArray(value)) {
+    return {
+      error: `${label} links must be provided as a list.`,
+      links: [],
+    };
+  }
+
+  const links = value.map((link) =>
+    typeof link === "string" ? link.trim() : ""
+  );
+
+  if (links.length < min || links.length > max) {
+    return {
+      error: `${label} requires ${min} to ${max} Google Drive links.`,
+      links: [],
+    };
+  }
+
+  if (links.some((link) => !isGoogleDriveLink(link))) {
+    return {
+      error: `Every ${label} submission must be a valid Google Drive link.`,
+      links: [],
+    };
+  }
+
+  return { error: null, links };
+}
+
+// Validate team member details.
 function validateMember(member) {
-  if (!member || typeof member !== "object" || Array.isArray(member)) {
+  if (
+    !member ||
+    typeof member !== "object" ||
+    Array.isArray(member)
+  ) {
     return "Invalid team member details.";
   }
 
@@ -69,8 +115,8 @@ function validateMember(member) {
   }
 
   if (
-    email &&
-    (typeof email !== "string" || !isValidEmail(email.trim()))
+    typeof email !== "string" ||
+    (email.trim() && !isValidEmail(email))
   ) {
     return `Enter a valid email address for ${name.trim()}.`;
   }
@@ -78,12 +124,14 @@ function validateMember(member) {
   return null;
 }
 
+// POST /api/registrations
 router.post("/", async (req, res) => {
   try {
     const {
       name,
       roll_no,
       branch,
+      year,
       phone,
       email,
       events,
@@ -94,7 +142,7 @@ router.post("/", async (req, res) => {
       confirmed,
     } = req.body || {};
 
-    // Validate main participant
+    // Validate primary participant details.
     if (
       ![name, roll_no, branch, phone, email].every(
         (value) => typeof value === "string" && value.trim()
@@ -112,15 +160,15 @@ router.post("/", async (req, res) => {
       });
     }
 
-    if (roll_no.trim().length > 30) {
+    if (roll_no.trim().length > 30 || branch.trim().length > 100) {
       return res.status(400).json({
-        message: "Roll number must not exceed 30 characters.",
+        message: "Roll number or branch exceeds the allowed length.",
       });
     }
 
-    if (branch.trim().length > 100) {
+    if (typeof year !== "undefined" && typeof year !== "string") {
       return res.status(400).json({
-        message: "Branch must not exceed 100 characters.",
+        message: "Year must be text.",
       });
     }
 
@@ -130,13 +178,13 @@ router.post("/", async (req, res) => {
       });
     }
 
-    if (!isValidEmail(email.trim())) {
+    if (!isValidEmail(email)) {
       return res.status(400).json({
         message: "Enter a valid email address.",
       });
     }
 
-    // Validate selected events
+    // Validate selected events.
     if (
       !Array.isArray(events) ||
       events.length === 0 ||
@@ -148,22 +196,44 @@ router.post("/", async (req, res) => {
       });
     }
 
-    // Require one entry per selected event
+    // Accept either "event" or "eventName" from the frontend.
+    // Store the field as "event" to match Registration.js.
     if (
       !Array.isArray(eventEntries) ||
-      eventEntries.length !== events.length ||
-      eventEntries.some(
-        (entry) =>
-          !entry ||
-          typeof entry !== "object" ||
-          Array.isArray(entry) ||
-          !events.includes(entry.eventName)
+      eventEntries.length !== events.length
+    ) {
+      return res.status(400).json({
+        message:
+          "Participation details are required for every selected event.",
+      });
+    }
+
+    const normalizedEntries = eventEntries.map((entry) => {
+      if (
+        !entry ||
+        typeof entry !== "object" ||
+        Array.isArray(entry)
+      ) {
+        return null;
+      }
+
+      return {
+        event: entry.event || entry.eventName,
+        participationType: entry.participationType,
+        teamName: entry.teamName,
+        members: entry.members,
+      };
+    });
+
+    if (
+      normalizedEntries.some(
+        (entry) => !entry || !events.includes(entry.event)
       ) ||
-      new Set(eventEntries.map((entry) => entry.eventName)).size !==
+      new Set(normalizedEntries.map((entry) => entry.event)).size !==
         events.length ||
       events.some(
         (event) =>
-          !eventEntries.some((entry) => entry.eventName === event)
+          !normalizedEntries.some((entry) => entry.event === event)
       )
     ) {
       return res.status(400).json({
@@ -172,82 +242,75 @@ router.post("/", async (req, res) => {
       });
     }
 
+    // Validate each event's participation details.
     const cleanEventEntries = [];
 
-    for (const entry of eventEntries) {
-      const {
-        eventName,
-        participationType,
-        teamName,
-        members,
-      } = entry;
+    for (const entry of normalizedEntries) {
+      const { event, participationType, teamName, members } = entry;
 
       if (!ALLOWED_TYPES.includes(participationType)) {
         return res.status(400).json({
-          message: `Choose a valid participation type for ${eventName}.`,
+          message: `Choose a valid participation type for ${event}.`,
         });
       }
 
       if (
-        SOLO_ONLY_EVENTS.includes(eventName) &&
+        SOLO_ONLY_EVENTS.includes(event) &&
         participationType !== "Solo"
       ) {
         return res.status(400).json({
-          message: `${eventName} only allows Solo participation.`,
+          message: `${event} only allows Solo participation.`,
         });
       }
 
-      const group = ["Duo", "Team"].includes(participationType);
+      const isGroup = ["Duo", "Team"].includes(participationType);
       const cleanTeamName =
         typeof teamName === "string" ? teamName.trim() : "";
 
-      if (group && !cleanTeamName) {
+      if (isGroup && !cleanTeamName) {
         return res.status(400).json({
-          message: `A team name is required for ${eventName}.`,
+          message: `A team name is required for ${event}.`,
         });
       }
 
-      if (
-        !Array.isArray(members) ||
-        members.length > 19
-      ) {
+      if (cleanTeamName.length > 100) {
         return res.status(400).json({
-          message: `Invalid member list for ${eventName}.`,
+          message: `Team name for ${event} is too long.`,
+        });
+      }
+
+      if (!Array.isArray(members) || members.length > 19) {
+        return res.status(400).json({
+          message: `Invalid member list for ${event}.`,
         });
       }
 
       if (participationType === "Solo" && members.length !== 0) {
         return res.status(400).json({
-          message: `Solo participation for ${eventName} cannot include additional members.`,
+          message: `Solo participation for ${event} cannot include extra members.`,
         });
       }
 
-      if (
-        participationType === "Duo" &&
-        members.length !== 1
-      ) {
+      if (participationType === "Duo" && members.length !== 1) {
         return res.status(400).json({
-          message: `A Duo for ${eventName} must have exactly one partner.`,
+          message: `A Duo for ${event} must have exactly one partner.`,
         });
       }
 
-      if (
-        participationType === "Team" &&
-        members.length < 2
-      ) {
+      if (participationType === "Team" && members.length < 2) {
         return res.status(400).json({
-          message: `A Team for ${eventName} must have at least two additional members.`,
+          message: `A Team for ${event} must have at least two additional members.`,
         });
       }
 
       const cleanMembers = [];
 
       for (const member of members) {
-        const error = validateMember(member);
+        const memberError = validateMember(member);
 
-        if (error) {
+        if (memberError) {
           return res.status(400).json({
-            message: `${eventName}: ${error}`,
+            message: `${event}: ${memberError}`,
           });
         }
 
@@ -256,103 +319,95 @@ router.post("/", async (req, res) => {
           roll_no: member.roll_no.trim().toUpperCase(),
           branch: member.branch.trim(),
           phone: member.phone.trim(),
-          email:
-            typeof member.email === "string"
-              ? member.email.trim().toLowerCase()
-              : "",
+          email: (member.email || "").trim().toLowerCase(),
         });
       }
 
       cleanEventEntries.push({
-        eventName,
+        event,
         participationType,
-        teamName: group ? cleanTeamName : "",
+        teamName: isGroup ? cleanTeamName : "",
         members: cleanMembers,
       });
     }
 
-    // Dance audio
+    // Dance: exactly one Google Drive audio link.
     let cleanTrackLink = "";
 
     if (events.includes("Dance")) {
-      if (
-        typeof trackLink !== "string" ||
-        !isGoogleDriveLink(trackLink.trim())
-      ) {
+      if (!isGoogleDriveLink(trackLink)) {
         return res.status(400).json({
-          message:
-            "Provide an HTTPS Google Drive link for the Dance audio.",
+          message: "Dance requires a valid Google Drive audio link.",
         });
       }
 
       cleanTrackLink = trackLink.trim();
     }
 
-    // Photography links
+    // Photography: 1–10 Google Drive links.
     let cleanImageLinks = [];
 
     if (events.includes("Photography")) {
-      if (
-        !Array.isArray(imageLinks) ||
-        imageLinks.length < 1 ||
-        imageLinks.length > 10 ||
-        imageLinks.some(
-          (link) =>
-            typeof link !== "string" ||
-            !isGoogleDriveLink(link.trim())
-        )
-      ) {
+      const result = validateDriveLinks(
+        imageLinks,
+        1,
+        10,
+        "Photography"
+      );
+
+      if (result.error) {
         return res.status(400).json({
-          message:
-            "Provide 1 to 10 valid HTTPS Google Drive links for Photography.",
+          message: result.error,
         });
       }
 
-      cleanImageLinks = imageLinks.map((link) => link.trim());
+      cleanImageLinks = result.links;
     }
 
-    // Fine Arts links
+    // Fine Arts: 1–5 Google Drive links.
     let cleanFineArtLinks = [];
 
     if (events.includes("Fine Arts")) {
-      if (
-        !Array.isArray(fineArtLinks) ||
-        fineArtLinks.length < 1 ||
-        fineArtLinks.length > 5 ||
-        fineArtLinks.some(
-          (link) =>
-            typeof link !== "string" ||
-            !isGoogleDriveLink(link.trim())
-        )
-      ) {
+      const result = validateDriveLinks(
+        fineArtLinks,
+        1,
+        5,
+        "Fine Arts"
+      );
+
+      if (result.error) {
         return res.status(400).json({
-          message:
-            "Provide 1 to 5 valid HTTPS Google Drive links for Fine Arts.",
+          message: result.error,
         });
       }
 
-      cleanFineArtLinks = fineArtLinks.map((link) => link.trim());
+      cleanFineArtLinks = result.links;
     }
 
+    // Require the participant to confirm the registration.
     if (confirmed !== true) {
       return res.status(400).json({
         message: "Please confirm your registration details.",
       });
     }
 
-    // Save registration
+    // Save the registration.
     const registration = await Registration.create({
       name: name.trim(),
       roll_no: roll_no.trim().toUpperCase(),
       branch: branch.trim(),
+      year: typeof year === "string" ? year.trim() : "",
       phone: phone.trim(),
       email: email.trim().toLowerCase(),
       events,
       multipleEvents: events.length > 1,
       eventEntries: cleanEventEntries,
+
+      // Only these three events use Drive submissions.
       trackLink: cleanTrackLink,
       imageLinks: cleanImageLinks,
       fineArtLinks: cleanFineArtLinks,
+
       confirmed: true,
     });
 
@@ -364,7 +419,7 @@ router.post("/", async (req, res) => {
     if (error.code === 11000) {
       return res.status(409).json({
         message:
-          "A registration with these details already exists.",
+          "A registration with this roll number already exists.",
       });
     }
 
@@ -382,8 +437,7 @@ router.post("/", async (req, res) => {
     console.error("Registration save error:", error);
 
     return res.status(500).json({
-      message:
-        "Could not save registration. Please try again later.",
+      message: "Could not save registration. Please try again later.",
     });
   }
 });
