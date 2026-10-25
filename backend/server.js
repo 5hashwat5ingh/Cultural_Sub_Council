@@ -1,3 +1,4 @@
+
 require("dotenv").config();
 
 const express = require("express");
@@ -9,32 +10,43 @@ const connectDB = require("./config/db");
 const registrationRoutes = require("./routes/registrationRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 
+// This file must exist if OTP authentication is handled separately.
+// If your OTP routes are already inside adminRoutes.js, remove this import
+// and the corresponding app.use("/api/admin/auth", adminAuthRoutes) below.
+const adminAuthRoutes = require("./routes/adminAuth");
+
 const app = express();
 
 app.disable("x-powered-by");
 
 const PORT = Number(process.env.PORT) || 5000;
+
 const CLIENT_URL = process.env.CLIENT_URL;
 const MONGODB_URI = process.env.MONGODB_URI;
+const JWT_SECRET = process.env.JWT_SECRET;
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
 
-if (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32) {
+// Validate required environment variables.
+if (!JWT_SECRET || JWT_SECRET.length < 32) {
   throw new Error("JWT_SECRET must be at least 32 characters.");
 }
 
-if (!process.env.ADMIN_EMAIL) {
+if (!ADMIN_EMAIL) {
   throw new Error("ADMIN_EMAIL is missing from environment variables.");
 }
 
 if (!CLIENT_URL) {
   throw new Error("CLIENT_URL is missing from environment variables.");
 }
+
 if (!MONGODB_URI) {
   throw new Error("MONGODB_URI is missing from environment variables.");
 }
 
-
+// Allowed frontend origins.
 const allowedOrigins = [
-  process.env.CLIENT_URL,
+  CLIENT_URL,
+  "https://cultural-sub-council-ay5bp7d48.vercel.app",
   "https://cultural-sub-council-seven.vercel.app",
   "https://cultural-sub-council-git-main-shashwat-singhs-projects-663f3556.vercel.app",
   "http://localhost:5173",
@@ -48,6 +60,8 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: (origin, callback) => {
+      // Requests without an Origin header may include health checks
+      // or server-to-server requests.
       if (!origin || allowedOrigins.includes(origin.replace(/\/$/, ""))) {
         return callback(null, true);
       }
@@ -61,19 +75,20 @@ app.use(
   })
 );
 
-
 app.use(express.json({ limit: "1mb" }));
 app.use(cookieParser());
 
+// Root endpoint.
 app.get("/", (req, res) => {
-  res.json({
+  res.status(200).json({
     message: "HEATS Registration API is running.",
     health: "/api/health",
   });
 });
 
+// Health endpoint.
 app.get("/api/health", (req, res) => {
-  res.json({
+  res.status(200).json({
     status: "ok",
     service: "HEATS Registration API",
     database:
@@ -83,8 +98,8 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-// Reuse the MongoDB connection across requests.
-let dbConnectionPromise;
+// Reuse the MongoDB connection between serverless invocations.
+let dbConnectionPromise = null;
 
 async function ensureDatabaseConnection() {
   if (mongoose.connection.readyState === 1) {
@@ -101,22 +116,33 @@ async function ensureDatabaseConnection() {
   await dbConnectionPromise;
 }
 
-// Connect to MongoDB before handling API requests.
+// Ensure MongoDB is connected before processing API requests.
 app.use("/api", async (req, res, next) => {
   try {
     await ensureDatabaseConnection();
     next();
   } catch (error) {
     console.error("MongoDB connection failed:", error.message);
-    res.status(503).json({
+
+    return res.status(503).json({
       message: "Database temporarily unavailable.",
     });
   }
 });
 
+// API routes.
 app.use("/api/registrations", registrationRoutes);
+
+// Admin OTP authentication routes:
+// POST /api/admin/auth/request-otp
+// POST /api/admin/auth/verify-otp
+// POST /api/admin/auth/logout
+app.use("/api/admin/auth", adminAuthRoutes);
+
+// Existing admin management routes.
 app.use("/api/admin", adminRoutes);
 
+// Handle unknown routes.
 app.use((req, res) => {
   res.status(404).json({
     message: "API route not found.",
@@ -125,6 +151,7 @@ app.use((req, res) => {
   });
 });
 
+// Central error handler.
 app.use((error, req, res, next) => {
   console.error("API error:", error);
 
@@ -150,15 +177,21 @@ app.use((error, req, res, next) => {
     });
   }
 
+  if (error.message === "Origin not allowed by CORS") {
+    return res.status(403).json({
+      message: "Origin not allowed.",
+    });
+  }
+
   return res.status(500).json({
     message: "Internal server error.",
   });
 });
 
-// Export the Express application for Vercel.
+// Export the Express app for Vercel.
 module.exports = app;
 
-// Start a persistent server only when running locally.
+// Start a persistent server when running locally.
 if (require.main === module) {
   ensureDatabaseConnection()
     .then(() => {
