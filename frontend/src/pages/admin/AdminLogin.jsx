@@ -73,7 +73,7 @@ export default function AdminLogin() {
         throw new Error(data.message || "OTP verification failed");
       }
 
-      navigate("/admin", { replace: true });
+      navigate("/admin/dashboard", { replace: true });
     } catch (err) {
       setError(err.message || "Unable to verify OTP.");
     } finally {
