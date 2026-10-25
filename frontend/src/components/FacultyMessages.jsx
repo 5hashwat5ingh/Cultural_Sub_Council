@@ -19,7 +19,7 @@ const facultyMessages = [
     name: "Dr. Rajan Mishra",
     designation: "Chairman, Council of Student Activities",
     image:
-      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791016591/CSA.jpg",
+      "https://i.postimg.cc/3RnC9XWn/Whats-App-Image-2026-10-25-at-11-05-09-PM.jpg",
     message:
       "Culture is not just an expression of talent, but a reflection of values, creativity and the collective spirit of our community.",
   },

@@ -92,13 +92,7 @@ export const galleryItems = [
   },
 
   // PHOTO 07
-  {
-    id: "photo-07",
-    type: "photo",
-    category: "Music",
-    title: "Musical Performance",
-    image: "https://i.postimg.cc/Bt93vXwB/IMG-20261018-WA0109.jpg",
-  },
+ 
 
   // PHOTO 08
   {
@@ -272,13 +266,7 @@ export const galleryItems = [
   },
 
   // PHOTO 27
-  {
-    id: "photo-27",
-    type: "photo",
-    category: "Dance",
-    title: "Performance",
-    image: "https://i.postimg.cc/kMVtDzp6/IMG-20261018-WA0138.jpg",
-  },
+ 
 
   // PHOTO 28
   {
@@ -398,12 +386,41 @@ export const galleryItems = [
   },
 
   // PHOTO 41
+   {
+    id: "photo-41",
+    type: "photo",
+    category: "Events",
+    title: "Event Highlights",
+    image: "https://i.postimg.cc/nV0SCTPq/photo-2026-10-25-22-28-12.jpg",
+  },
+
+ {
+    id: "photo-41",
+    type: "photo",
+    category: "Events",
+    title: "Event Highlights",
+    image: " https://i.postimg.cc/jWQjgSSV/photo-2026-10-25-22-30-33.jpg",
+  },
+   {
+    id: "photo-41",
+    type: "photo",
+    category: "Events",
+    title: "Event Highlights",
+    image: "https://i.postimg.cc/DWdzjwyR/photo-2026-10-25-22-30-37.jpg",
+  },
   {
     id: "photo-41",
     type: "photo",
     category: "Events",
     title: "Event Highlights",
-    image: "https://i.postimg.cc/T2Z5b0z9/IMG-20261018-WA0155.jpg",
+    image: "https://i.postimg.cc/rdCpnwFB/photo-2026-10-25-22-30-40.jpg",
+  },
+  {
+    id: "photo-41",
+    type: "photo",
+    category: "Events",
+    title: "Event Highlights",
+    image: "https://i.postimg.cc/1gczC35L/photo-2026-10-25-22-30-45.jpg",
   },
    // PHOTO 41
   {
@@ -461,6 +478,7 @@ export const galleryItems = [
     title: "Event Highlights",
     image: "https://i.postimg.cc/yYcgy9KF/IMG-20261018-WA0161.jpg",
   },
+
   // PHOTO 41
   {
     id: "photo-41",
