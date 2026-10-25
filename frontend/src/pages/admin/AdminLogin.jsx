@@ -84,12 +84,14 @@ export default function AdminLogin() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-[#f7edda] px-4 py-10 font-sans text-[#300d17]">
       <section className="w-full max-w-md rounded-[28px] border border-[#eddfc4] bg-white p-7 shadow-[0_18px_40px_rgba(48,13,23,0.12)] sm:p-9">
-        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#300d17] text-2xl font-bold text-[#e4bd62]">
-          C
-        </div>
+        <img
+         src="/Logo.png"
+         alt="Cultural Sub Council Logo"
+         className="h-9 w-9 shrink-0 object-contain sm:h-10 sm:w-10"
+       />
 
         <p className="mt-6 text-xs font-bold tracking-[0.28em] text-[#a57627]">
-          CULTURAL SYNOD
+          CULTURAL SUB-COUNCIL
         </p>
 
         <h1 className="mt-2 text-3xl font-bold tracking-tight">
