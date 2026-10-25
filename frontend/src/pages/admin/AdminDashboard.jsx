@@ -838,17 +838,108 @@ export default function AdminDashboard() {
 
 
 
-          <section className="mt-5">
+<section className="mt-6">
+  <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      <div className="flex items-center gap-2">
+        <span className="h-5 w-1 rounded-full bg-[#E8C879]" />
+        <h2 className="text-sm font-black uppercase tracking-[0.16em] text-white">
+          Registrations by Club
+        </h2>
+      </div>
+      <p className="mt-1.5 pl-3 text-xs text-white/40">
+        Select a club to filter its registrations.
+      </p>
+    </div>
 
-            <div className="mb-3 flex items-center gap-2"><Filter size={16} className="text-[#E8C879]"/><h2 className="text-sm font-black uppercase tracking-[.14em] text-white/75">Browse by event</h2></div>
+    {club && (
+      <button
+        type="button"
+        onClick={() => {
+          setClub("");
+          setPage(1);
+        }}
+        className="self-start text-xs font-semibold text-[#E8C879] transition hover:text-white sm:self-auto"
+      >
+        Clear selection
+      </button>
+    )}
+  </div>
 
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-7">
+  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+    {CLUBS.map((item) => {
+      const active = club === item;
+      const count = clubCounts[item] ?? 0;
 
-              {CLUBS.map((item) => <button key={item} onClick={() => { setClub(club === item ? "" : item); setPage(1); }} className={`rounded-xl border p-3 text-left transition ${club === item ? "border-[#E8C879]/60 bg-[#E8C879]/10" : "border-white/10 bg-[#17151A] hover:border-white/20"}`}><p className="text-[10px] font-bold uppercase tracking-wider text-white/40">Event filter</p><p className={`mt-1 text-xs font-bold ${club === item ? "text-[#E8C879]" : "text-white/80"}`}>{item}</p><p className="mt-2 text-xl font-black">{clubCounts[item] ?? 0}</p></button>)}
+      return (
+        <button
+          key={item}
+          type="button"
+          aria-pressed={active}
+          onClick={() => {
+            setClub(active ? "" : item);
+            setPage(1);
+          }}
+          className={`group relative overflow-hidden rounded-2xl border p-4 text-left transition-all duration-200 ${
+            active
+              ? "border-[#E8C879]/60 bg-[#E8C879]/[0.09] shadow-lg shadow-[#E8C879]/[0.04]"
+              : "border-white/[0.08] bg-[#151418] hover:border-[#E8C879]/30 hover:bg-[#1B191D]"
+          }`}
+        >
+          {active && (
+            <span className="absolute inset-x-0 top-0 h-[2px] bg-[#E8C879]" />
+          )}
 
-            </div>
+          <div className="flex items-start justify-between gap-2">
+            <p
+              className={`text-sm font-bold ${
+                active
+                  ? "text-[#E8C879]"
+                  : "text-white/80 group-hover:text-white"
+              }`}
+            >
+              {item}
+            </p>
 
-          </section>
+            <span
+              className={`rounded-lg px-2 py-1 text-[10px] font-bold ${
+                active
+                  ? "bg-[#E8C879]/15 text-[#E8C879]"
+                  : "bg-white/[0.06] text-white/40"
+              }`}
+            >
+              {active ? "Active" : "View"}
+            </span>
+          </div>
+
+          <div className="mt-5 flex items-baseline gap-2">
+            <span
+              className={`text-3xl font-black tracking-tight ${
+                active ? "text-[#E8C879]" : "text-white"
+              }`}
+            >
+              {count}
+            </span>
+            <span className="text-[11px] text-white/40">
+              {count === 1 ? "registration" : "registrations"}
+            </span>
+          </div>
+
+          <div className="mt-4 h-1 overflow-hidden rounded-full bg-white/[0.06]">
+            <div
+              className={`h-full rounded-full transition-all ${
+                active ? "bg-[#E8C879]" : "bg-white/15"
+              }`}
+              style={{
+                width: `${count > 0 ? Math.min(count * 10, 100) : 0}%`,
+              }}
+            />
+          </div>
+        </button>
+      );
+    })}
+  </div>
+</section>
 
 
 
