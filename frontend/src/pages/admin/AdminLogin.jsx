@@ -17,6 +17,7 @@ export default function AdminLogin() {
 
   async function requestOtp(event) {
     event?.preventDefault();
+
     setLoading(true);
     setError("");
     setMessage("");
@@ -39,9 +40,10 @@ export default function AdminLogin() {
       }
 
       setOtpSent(true);
+      setOtp("");
       setMessage("OTP sent. Check your email.");
     } catch (err) {
-      setError(err.message);
+      setError(err.message || "Unable to send OTP");
     } finally {
       setLoading(false);
     }
@@ -49,6 +51,7 @@ export default function AdminLogin() {
 
   async function verifyOtp(event) {
     event.preventDefault();
+
     setLoading(true);
     setError("");
     setMessage("");
@@ -72,7 +75,7 @@ export default function AdminLogin() {
 
       navigate("/admin", { replace: true });
     } catch (err) {
-      setError(err.message);
+      setError(err.message || "OTP verification failed");
     } finally {
       setLoading(false);
     }
@@ -86,10 +89,12 @@ export default function AdminLogin() {
       {!otpSent ? (
         <form onSubmit={requestOtp}>
           <label htmlFor="admin-email">Admin email</label>
+
           <input
             id="admin-email"
             type="email"
             autoComplete="email"
+            placeholder="Enter your authorized email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             required
@@ -101,24 +106,33 @@ export default function AdminLogin() {
         </form>
       ) : (
         <form onSubmit={verifyOtp}>
-          <p>OTP sent to {email}</p>
+          <p>
+            OTP sent to <strong>{email}</strong>
+          </p>
 
           <label htmlFor="admin-otp">Six-digit OTP</label>
+
           <input
             id="admin-otp"
             type="text"
             inputMode="numeric"
             autoComplete="one-time-code"
+            placeholder="Enter your 6-digit OTP"
             pattern="[0-9]{6}"
             maxLength={6}
             value={otp}
             onChange={(event) =>
-              setOtp(event.target.value.replace(/\D/g, "").slice(0, 6))
+              setOtp(
+                event.target.value.replace(/\D/g, "").slice(0, 6)
+              )
             }
             required
           />
 
-          <button type="submit" disabled={loading || otp.length !== 6}>
+          <button
+            type="submit"
+            disabled={loading || otp.length !== 6}
+          >
             {loading ? "Verifying..." : "Verify & Login"}
           </button>
 
@@ -129,11 +143,28 @@ export default function AdminLogin() {
           >
             Resend OTP
           </button>
+
+          <button
+            type="button"
+            disabled={loading}
+            onClick={() => {
+              setOtpSent(false);
+              setOtp("");
+              setError("");
+              setMessage("");
+            }}
+          >
+            Change email
+          </button>
         </form>
       )}
 
       {message && <p role="status">{message}</p>}
       {error && <p role="alert">{error}</p>}
+
+      <p className="admin-login-footer">
+        Authorized administrators only
+      </p>
     </main>
   );
 }
