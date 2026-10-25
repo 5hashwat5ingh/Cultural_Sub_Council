@@ -18,7 +18,7 @@ import {
 
 const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:5000").replace(/\/+$/, "");
 
-const CLUBS = ["Dance", "Music", "Dramatics", "Fine Arts", "Photography", "Technical", "Other"];
+const CLUBS = ["Dance", "Music", "Dramatics", "Fine Arts", "Photography"];
 
 const GOLD = "#E8C879";
 
