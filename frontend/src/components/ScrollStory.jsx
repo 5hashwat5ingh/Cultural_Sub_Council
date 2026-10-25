@@ -92,7 +92,6 @@ const DEFAULT_STORIES = [
 ];
 
 const CARD_HEIGHT = 58;
-const MOBILE_CARD_HEIGHT = 40;
 
 export default function ScrollStory({
   stories = DEFAULT_STORIES,
@@ -122,13 +121,13 @@ export default function ScrollStory({
 
   const mobileMaxTranslate = Math.max(
     0,
-    (totalStories - 1) * MOBILE_CARD_HEIGHT
+    (totalStories - 1) * 100
   );
 
   const mobileTranslateY = useTransform(
     scrollYProgress,
     [0, 1],
-    ["0vh", `-${mobileMaxTranslate}vh`]
+    ["0%", `-${mobileMaxTranslate}%`]
   );
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
@@ -147,7 +146,6 @@ export default function ScrollStory({
   if (totalStories === 0) return null;
 
   const desktopSpacer = (100 - CARD_HEIGHT) / 2;
-  const mobileSpacer = (100 - MOBILE_CARD_HEIGHT) / 2;
 
   return (
     <section
@@ -269,23 +267,17 @@ export default function ScrollStory({
             <div className="relative h-full min-h-0 max-h-[50vh] w-full max-w-[500px] overflow-hidden rounded-xl sm:max-h-[38vh]">
               <motion.div
                 style={{
-                  y: reduceMotion ? "0vh" : mobileTranslateY,
+                  y: reduceMotion ? "0%" : mobileTranslateY,
                 }}
-                className="flex flex-col will-change-transform"
+                className="flex h-full w-full flex-col will-change-transform"
               >
-                <div
-                  className="shrink-0"
-                  style={{ height: `${mobileSpacer}vh` }}
-                />
-
                 {stories.map((story, index) => {
                   const active = index === activeIndex;
 
                   return (
                     <div
                       key={story.number}
-                      className="flex shrink-0 items-center justify-center px-0"
-                      style={{ height: `${MOBILE_CARD_HEIGHT}vh` }}
+                      className="flex h-full w-full shrink-0 items-center justify-center px-0"
                     >
                       <motion.div
                         animate={{ scale: active ? 1 : 0.92 }}
@@ -326,11 +318,6 @@ export default function ScrollStory({
                     </div>
                   );
                 })}
-
-                <div
-                  className="shrink-0"
-                  style={{ height: `${mobileSpacer}vh` }}
-                />
               </motion.div>
             </div>
           </div>
