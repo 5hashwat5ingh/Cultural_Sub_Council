@@ -22,7 +22,7 @@ const socialLinks = [
   },
   {
     name: "LinkedIn",
-    href: "https://www.linkedin.com/in/csc-mmmut?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+    href: "https://www.linkedin.com/company/csc-mmmut/home/",
     icon: FaLinkedinIn,
   },
   {
