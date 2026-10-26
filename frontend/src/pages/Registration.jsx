@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -1230,7 +1229,7 @@ export default function Registration() {
                         placeholder="https://drive.google.com/file/d/..."
                       />
                       <span className="mt-2 block text-xs font-normal text-[#9a887a]">
-                        Make sure the event team can access the file.
+                        *Ensure that the uploaded Google Drive link is set to “Anyone with the link – Viewer”
                       </span>
                     </Field>
                   )}
