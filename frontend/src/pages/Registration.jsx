@@ -814,7 +814,7 @@ export default function Registration() {
                   <Heading
                     eyebrow="02 / Your interests"
                     title="Choose your events"
-                    desc="Select all events you want. Participation type is configured separately for each event in the next step."
+                    desc="*You can participate in multiple events."
                   />
 
                   <div className="grid gap-3 sm:grid-cols-2">
