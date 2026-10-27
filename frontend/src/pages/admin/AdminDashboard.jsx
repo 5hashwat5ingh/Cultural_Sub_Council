@@ -18,7 +18,7 @@ import {
 
 const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:5000").replace(/\/+$/, "");
 
-const CLUBS = ["Dance", "Music", "Dramatics", "Fine Arts", "Photography", "Technical", "Other"];
+const CLUBS = ["Dance", "Music", "Dramatics", "Fine Arts", "Photography"];
 
 const GOLD = "#E8C879";
 
@@ -841,7 +841,40 @@ export default function AdminDashboard() {
 
               {CLUBS.map((item) => <button key={item} onClick={() => { setClub(club === item ? "" : item); setPage(1); }} className={`rounded-xl border p-3 text-left transition ${club === item ? "border-[#E8C879]/60 bg-[#E8C879]/10" : "border-white/10 bg-[#17151A] hover:border-white/20"}`}><p className="text-[10px] font-bold uppercase tracking-wider text-white/40">Event filter</p><p className={`mt-1 text-xs font-bold ${club === item ? "text-[#E8C879]" : "text-white/80"}`}>{item}</p><p className="mt-2 text-xl font-black">{clubCounts[item] ?? 0}</p></button>)}
 
-            </div>
+            </div><div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-5">
+  {CLUBS.map((item) => (
+    <button
+      key={item}
+      onClick={() => {
+        setClub(club === item ? "" : item);
+        setPage(1);
+      }}
+      className={`flex min-h-[120px] flex-col justify-between rounded-xl border p-4 text-left transition ${
+        club === item
+          ? "border-[#E8C879]/60 bg-[#E8C879]/10"
+          : "border-white/10 bg-[#17151A] hover:border-white/20"
+      }`}
+    >
+      <div>
+        <p className="text-[10px] font-bold uppercase tracking-wider text-white/40">
+          Event filter
+        </p>
+
+        <p
+          className={`mt-2 text-sm font-bold ${
+            club === item ? "text-[#E8C879]" : "text-white/80"
+          }`}
+        >
+          {item}
+        </p>
+      </div>
+
+      <p className="mt-3 text-2xl font-black tabular-nums">
+        {clubCounts[item] ?? 0}
+      </p>
+    </button>
+  ))}
+</div>
 
           </section>
 
