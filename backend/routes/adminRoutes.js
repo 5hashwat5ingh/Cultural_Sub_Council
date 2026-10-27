@@ -1,3 +1,4 @@
+
 const express = require("express");
 const mongoose = require("mongoose");
 
@@ -6,6 +7,16 @@ const requireAdmin = require("../middleware/requireAdmin");
 const { WEIGHTS, calculateTotal } = require("../utils/scoring");
 
 const router = express.Router();
+
+const CLUBS = [
+  "Dance",
+  "Music",
+  "Dramatics",
+  "Fine Arts",
+  "Photography",
+  "Technical",
+  "Other",
+];
 
 const STATUSES = [
   "Pending",
@@ -31,9 +42,7 @@ const toCandidate = (doc) => {
 router.use(requireAdmin);
 
 router.get("/me", (req, res) => {
-  res.json({
-    admin: req.admin,
-  });
+  res.json({ admin: req.admin });
 });
 
 router.get("/candidates", async (req, res) => {
@@ -42,19 +51,27 @@ router.get("/candidates", async (req, res) => {
     const club = String(req.query.club || "").trim();
     const status = String(req.query.status || "").trim();
 
-    const page = Math.max(1, Number.parseInt(req.query.page, 10) || 1);
+    const page = Math.max(
+      1,
+      Number.parseInt(req.query.page, 10) || 1
+    );
+
     const limit = Math.min(
       100,
       Math.max(1, Number.parseInt(req.query.limit, 10) || 50)
     );
 
-    const filter = {};
+    // Search and status filters apply to the dashboard statistics.
+    // The selected club is deliberately excluded so the club cards
+    // remain stable when the user clicks a club.
+    const statsFilter = {};
 
     if (search) {
       const regex = new RegExp(escapeRegex(search), "i");
 
-      filter.$or = [
+      statsFilter.$or = [
         { name: regex },
+        { roll_no: regex },
         { email: regex },
         { phone: regex },
         { branch: regex },
@@ -62,35 +79,83 @@ router.get("/candidates", async (req, res) => {
       ];
     }
 
-    if (club) {
-      filter["events"] = club;
-    }
-
     if (status && STATUSES.includes(status)) {
-      filter.adminStatus = status;
+      statsFilter.adminStatus = status;
     }
 
-    const [docs, total] = await Promise.all([
+    // The candidate list and total respect the selected club.
+    const filter = { ...statsFilter };
+
+    if (club && CLUBS.includes(club)) {
+      filter.events = club;
+    }
+
+    const [docs, total, statsDocs] = await Promise.all([
       Registration.find(filter)
         .sort({ createdAt: -1 })
         .skip((page - 1) * limit)
         .limit(limit),
+
       Registration.countDocuments(filter),
+
+      Registration.find(statsFilter)
+        .select("events adminStatus")
+        .lean(),
     ]);
 
-    res.json({
+    // Count each registration once per club, even if legacy data
+    // accidentally contains duplicate event values.
+    const clubCounts = Object.fromEntries(
+      CLUBS.map((name) => [name, 0])
+    );
+
+    const decisionCounts = {
+      selected: 0,
+      rejected: 0,
+      pending: 0,
+    };
+
+    for (const doc of statsDocs) {
+      const events = Array.isArray(doc.events)
+        ? new Set(doc.events)
+        : new Set();
+
+      for (const event of events) {
+        if (
+          Object.prototype.hasOwnProperty.call(clubCounts, event)
+        ) {
+          clubCounts[event]++;
+        }
+      }
+
+      if (doc.adminStatus === "Selected") {
+        decisionCounts.selected++;
+      } else if (doc.adminStatus === "Rejected") {
+        decisionCounts.rejected++;
+      } else {
+        decisionCounts.pending++;
+      }
+    }
+
+    return res.json({
       candidates: docs.map(toCandidate),
+
       pagination: {
         page,
         limit,
         total,
         totalPages: Math.ceil(total / limit),
+        pages: Math.ceil(total / limit),
       },
+
+      clubCounts,
+      decisionCounts,
       weights: WEIGHTS,
     });
   } catch (error) {
-    console.error("Get candidates error:", error.message);
-    res.status(500).json({
+    console.error("Get candidates error:", error);
+
+    return res.status(500).json({
       message: "Unable to fetch candidates",
     });
   }
@@ -112,13 +177,14 @@ router.get("/candidates/:id", async (req, res) => {
       });
     }
 
-    res.json({
+    return res.json({
       candidate: toCandidate(candidate),
       weights: WEIGHTS,
     });
   } catch (error) {
-    console.error("Get candidate error:", error.message);
-    res.status(500).json({
+    console.error("Get candidate error:", error);
+
+    return res.status(500).json({
       message: "Unable to fetch candidate",
     });
   }
@@ -132,7 +198,12 @@ router.patch("/candidates/:id", async (req, res) => {
       });
     }
 
-    const allowedScoreFields = ["written", "interview1", "interview2"];
+    const allowedScoreFields = [
+      "written",
+      "interview1",
+      "interview2",
+    ];
+
     const updates = {};
 
     if (req.body.scores !== undefined) {
@@ -206,13 +277,14 @@ router.patch("/candidates/:id", async (req, res) => {
       });
     }
 
-    res.json({
+    return res.json({
       candidate: toCandidate(candidate),
       weights: WEIGHTS,
     });
   } catch (error) {
-    console.error("Update candidate error:", error.message);
-    res.status(500).json({
+    console.error("Update candidate error:", error);
+
+    return res.status(500).json({
       message: "Unable to update candidate",
     });
   }

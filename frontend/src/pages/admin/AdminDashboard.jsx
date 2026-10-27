@@ -18,7 +18,7 @@ import {
 
 const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:5000").replace(/\/+$/, "");
 
-const CLUBS = ["Dance", "Music", "Dramatics", "Fine Arts", "Photography"];
+const CLUBS = ["Dance", "Music", "Dramatics", "Fine Arts", "Photography", "Technical", "Other"];
 
 const GOLD = "#E8C879";
 
@@ -465,6 +465,8 @@ export default function AdminDashboard() {
   const [admin, setAdmin] = useState(null);
 
   const [candidates, setCandidates] = useState([]);
+  const [clubCountsFromApi, setClubCountsFromApi] = useState({});
+  const [decisionCountsFromApi, setDecisionCountsFromApi] = useState({ selected: 0, rejected: 0, pending: 0 });
 
   const [search, setSearch] = useState("");
 
@@ -521,6 +523,8 @@ export default function AdminDashboard() {
       const rows = result.candidates || [];
 
       setCandidates(rows);
+      setClubCountsFromApi(result.clubCounts || {});
+      setDecisionCountsFromApi(result.decisionCounts || { selected: 0, rejected: 0, pending: 0 });
 
       setPagination(result.pagination || { page: 1, pages: 1, total: rows.length, limit: 50 });
 
@@ -542,23 +546,14 @@ export default function AdminDashboard() {
 
 
 
+  // Counts come from the backend across all matching records, not just this page.
   const clubCounts = useMemo(() => {
+    return Object.fromEntries(CLUBS.map((item) => [item, Number(clubCountsFromApi[item] || 0)]));
+  }, [clubCountsFromApi]);
 
-    const counts = Object.fromEntries(CLUBS.map((item) => [item, 0]));
-
-    candidates.forEach((candidate) => (candidate.events || []).forEach((event) => { if (event in counts) counts[event] += 1; }));
-
-    return counts;
-
-  }, [candidates]);
-
-
-
-  const selectedCount = candidates.filter((candidate) => candidate.adminStatus === "Selected").length;
-
-  const notSelectedCount = candidates.filter((candidate) => candidate.adminStatus === "Rejected").length;
-
-  const pendingCount = candidates.filter((candidate) => !["Selected", "Rejected"].includes(candidate.adminStatus)).length;
+  const selectedCount = Number(decisionCountsFromApi.selected || 0);
+  const notSelectedCount = Number(decisionCountsFromApi.rejected || 0);
+  const pendingCount = Number(decisionCountsFromApi.pending || 0);
 
   const visibleCandidates = candidates.filter((candidate) => {
 
@@ -764,13 +759,7 @@ export default function AdminDashboard() {
 
           <div className="flex min-w-0 items-center gap-3">
 
-             <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white">
-       <img
-         src="/Logo.png"
-         alt="Cultural Sub Council Logo"
-         className="h-9 w-9 shrink-0 object-contain sm:h-10 sm:w-10"
-       />
-      </div>
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-[#F1DDA8]/50 bg-gradient-to-br from-[#F5DEA0] to-[#C99A45] text-lg font-black text-[#21150A] shadow-lg shadow-[#E8C879]/10">C</div>
 
             <div className="min-w-0"><p className="truncate text-xs font-black tracking-[.16em] sm:text-sm">CULTURAL SUB-COUNCIL</p><p className="mt-0.5 truncate text-[10px] text-white/40">HEATS · ADMINISTRATION PORTAL</p></div>
 
@@ -834,118 +823,27 @@ export default function AdminDashboard() {
 
             <StatCard title="Total registrations" value={pagination.total} icon={Users} detail="Matching current search and event"/>
 
-            <StatCard title="Selected" value={selectedCount} icon={Check} detail="On this page"/>
+            <StatCard title="Selected" value={selectedCount} icon={Check} detail="Matching search"/>
 
-            <StatCard title="Not selected" value={notSelectedCount} icon={X} detail="On this page"/>
+            <StatCard title="Not selected" value={notSelectedCount} icon={X} detail="Matching search"/>
 
-            <StatCard title="Pending decision" value={pendingCount} icon={ClipboardList} detail="On this page"/>
+            <StatCard title="Pending decision" value={pendingCount} icon={ClipboardList} detail="Matching search"/>
 
           </section>
 
 
 
-<section className="mt-6">
-  <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
-    <div>
-      <div className="flex items-center gap-2">
-        <span className="h-5 w-1 rounded-full bg-[#E8C879]" />
-        <h2 className="text-sm font-black uppercase tracking-[0.16em] text-white">
-          Registrations by Club
-        </h2>
-      </div>
-      <p className="mt-1.5 pl-3 text-xs text-white/40">
-        Select a club to filter its registrations.
-      </p>
-    </div>
+          <section className="mt-5">
 
-    {club && (
-      <button
-        type="button"
-        onClick={() => {
-          setClub("");
-          setPage(1);
-        }}
-        className="self-start text-xs font-semibold text-[#E8C879] transition hover:text-white sm:self-auto"
-      >
-        Clear selection
-      </button>
-    )}
-  </div>
+            <div className="mb-3 flex items-center gap-2"><Filter size={16} className="text-[#E8C879]"/><h2 className="text-sm font-black uppercase tracking-[.14em] text-white/75">Browse by event</h2></div>
 
-  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-    {CLUBS.map((item) => {
-      const active = club === item;
-      const count = clubCounts[item] ?? 0;
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-7">
 
-      return (
-        <button
-          key={item}
-          type="button"
-          aria-pressed={active}
-          onClick={() => {
-            setClub(active ? "" : item);
-            setPage(1);
-          }}
-          className={`group relative overflow-hidden rounded-2xl border p-4 text-left transition-all duration-200 ${
-            active
-              ? "border-[#E8C879]/60 bg-[#E8C879]/[0.09] shadow-lg shadow-[#E8C879]/[0.04]"
-              : "border-white/[0.08] bg-[#151418] hover:border-[#E8C879]/30 hover:bg-[#1B191D]"
-          }`}
-        >
-          {active && (
-            <span className="absolute inset-x-0 top-0 h-[2px] bg-[#E8C879]" />
-          )}
+              {CLUBS.map((item) => <button key={item} onClick={() => { setClub(club === item ? "" : item); setPage(1); }} className={`rounded-xl border p-3 text-left transition ${club === item ? "border-[#E8C879]/60 bg-[#E8C879]/10" : "border-white/10 bg-[#17151A] hover:border-white/20"}`}><p className="text-[10px] font-bold uppercase tracking-wider text-white/40">Event filter</p><p className={`mt-1 text-xs font-bold ${club === item ? "text-[#E8C879]" : "text-white/80"}`}>{item}</p><p className="mt-2 text-xl font-black">{clubCounts[item] ?? 0}</p></button>)}
 
-          <div className="flex items-start justify-between gap-2">
-            <p
-              className={`text-sm font-bold ${
-                active
-                  ? "text-[#E8C879]"
-                  : "text-white/80 group-hover:text-white"
-              }`}
-            >
-              {item}
-            </p>
+            </div>
 
-            <span
-              className={`rounded-lg px-2 py-1 text-[10px] font-bold ${
-                active
-                  ? "bg-[#E8C879]/15 text-[#E8C879]"
-                  : "bg-white/[0.06] text-white/40"
-              }`}
-            >
-              {active ? "Active" : "View"}
-            </span>
-          </div>
-
-          <div className="mt-5 flex items-baseline gap-2">
-            <span
-              className={`text-3xl font-black tracking-tight ${
-                active ? "text-[#E8C879]" : "text-white"
-              }`}
-            >
-              {count}
-            </span>
-            <span className="text-[11px] text-white/40">
-              {count === 1 ? "registration" : "registrations"}
-            </span>
-          </div>
-
-          <div className="mt-4 h-1 overflow-hidden rounded-full bg-white/[0.06]">
-            <div
-              className={`h-full rounded-full transition-all ${
-                active ? "bg-[#E8C879]" : "bg-white/15"
-              }`}
-              style={{
-                width: `${count > 0 ? Math.min(count * 10, 100) : 0}%`,
-              }}
-            />
-          </div>
-        </button>
-      );
-    })}
-  </div>
-</section>
+          </section>
 
 
 
