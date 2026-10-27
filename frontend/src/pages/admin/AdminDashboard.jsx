@@ -831,52 +831,56 @@ export default function AdminDashboard() {
 
           </section>
 
+<section className="mt-5">
+  <div className="mb-3 flex items-center gap-2">
+    <Filter size={16} className="text-[#E8C879]" />
+    <h2 className="text-sm font-black uppercase tracking-[.14em] text-white/75">
+      Browse by event
+    </h2>
+  </div>
 
+  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-5">
+    {CLUBS.map((item) => {
+      const isActive = club === item;
 
-          <section className="mt-5">
-
-            <div className="mb-3 flex items-center gap-2"><Filter size={16} className="text-[#E8C879]"/><h2 className="text-sm font-black uppercase tracking-[.14em] text-white/75">Browse by event</h2></div>
-
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-7">
-
-              {CLUBS.map((item) => <button key={item} onClick={() => { setClub(club === item ? "" : item); setPage(1); }} className={`rounded-xl border p-3 text-left transition ${club === item ? "border-[#E8C879]/60 bg-[#E8C879]/10" : "border-white/10 bg-[#17151A] hover:border-white/20"}`}><p className="text-[10px] font-bold uppercase tracking-wider text-white/40">Event filter</p><p className={`mt-1 text-xs font-bold ${club === item ? "text-[#E8C879]" : "text-white/80"}`}>{item}</p><p className="mt-2 text-xl font-black">{clubCounts[item] ?? 0}</p></button>)}
-
-            </div><div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-5">
-  {CLUBS.map((item) => (
-    <button
-      key={item}
-      onClick={() => {
-        setClub(club === item ? "" : item);
-        setPage(1);
-      }}
-      className={`flex min-h-[120px] flex-col justify-between rounded-xl border p-4 text-left transition ${
-        club === item
-          ? "border-[#E8C879]/60 bg-[#E8C879]/10"
-          : "border-white/10 bg-[#17151A] hover:border-white/20"
-      }`}
-    >
-      <div>
-        <p className="text-[10px] font-bold uppercase tracking-wider text-white/40">
-          Event filter
-        </p>
-
-        <p
-          className={`mt-2 text-sm font-bold ${
-            club === item ? "text-[#E8C879]" : "text-white/80"
+      return (
+        <button
+          key={item}
+          type="button"
+          onClick={() => {
+            setClub(isActive ? "" : item);
+            setPage(1);
+          }}
+          aria-pressed={isActive}
+          className={`flex min-h-[120px] min-w-0 flex-col justify-between rounded-xl border p-4 text-left transition duration-200 ${
+            isActive
+              ? "border-[#E8C879]/60 bg-[#E8C879]/10 shadow-lg shadow-[#E8C879]/5"
+              : "border-white/10 bg-[#17151A] hover:border-[#E8C879]/30 hover:bg-white/[.03]"
           }`}
         >
-          {item}
-        </p>
-      </div>
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-wider text-white/40">
+              Event filter
+            </p>
 
-      <p className="mt-3 text-2xl font-black tabular-nums">
-        {clubCounts[item] ?? 0}
-      </p>
-    </button>
-  ))}
-</div>
+            <p
+              className={`mt-2 break-words text-sm font-bold ${
+                isActive ? "text-[#E8C879]" : "text-white/80"
+              }`}
+            >
+              {item}
+            </p>
+          </div>
 
-          </section>
+          <p className="mt-3 text-2xl font-black tabular-nums text-white">
+            {clubCounts[item] ?? 0}
+          </p>
+        </button>
+      );
+    })}
+  </div>
+</section>
+
 
 
 
