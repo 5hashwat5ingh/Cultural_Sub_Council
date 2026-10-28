@@ -18,7 +18,7 @@ import {
 
 const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:5000").replace(/\/+$/, "");
 
-const CLUBS = ["Dance", "Music", "Dramatics", "Fine Arts", "Photography", "Technical", "Other"];
+const CLUBS = ["Dance", "Music", "Dramatics", "Fine Arts", "Photography"];
 
 const GOLD = "#E8C879";
 
@@ -892,16 +892,46 @@ export default function AdminDashboard() {
 
 
           <section className="mt-5">
+  <div className="mb-3 flex items-center gap-2">
+    <Filter size={16} className="text-[#E8C879]" />
+    <h2 className="text-sm font-black uppercase tracking-[.14em] text-white/75">
+      Browse by event
+    </h2>
+  </div>
 
-            <div className="mb-3 flex items-center gap-2"><Filter size={16} className="text-[#E8C879]"/><h2 className="text-sm font-black uppercase tracking-[.14em] text-white/75">Browse by event</h2></div>
+  <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-5">
+    {CLUBS.map((item) => (
+      <button
+        key={item}
+        onClick={() => {
+          setClub(club === item ? "" : item);
+          setPage(1);
+        }}
+        className={`rounded-xl border p-3 text-left transition ${
+          club === item
+            ? "border-[#E8C879]/60 bg-[#E8C879]/10"
+            : "border-white/10 bg-[#17151A] hover:border-white/20"
+        }`}
+      >
+        <p className="text-[10px] font-bold uppercase tracking-wider text-white/40">
+          Event filter
+        </p>
 
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-7">
+        <p
+          className={`mt-1 text-xs font-bold ${
+            club === item ? "text-[#E8C879]" : "text-white/80"
+          }`}
+        >
+          {item}
+        </p>
 
-              {CLUBS.map((item) => <button key={item} onClick={() => { setClub(club === item ? "" : item); setPage(1); }} className={`rounded-xl border p-3 text-left transition ${club === item ? "border-[#E8C879]/60 bg-[#E8C879]/10" : "border-white/10 bg-[#17151A] hover:border-white/20"}`}><p className="text-[10px] font-bold uppercase tracking-wider text-white/40">Event filter</p><p className={`mt-1 text-xs font-bold ${club === item ? "text-[#E8C879]" : "text-white/80"}`}>{item}</p><p className="mt-2 text-xl font-black">{clubCounts[item] ?? 0}</p></button>)}
-
-            </div>
-
-          </section>
+        <p className="mt-2 text-xl font-black">
+          {clubCounts[item] ?? 0}
+        </p>
+      </button>
+    ))}
+  </div>
+</section>
 
 
 
