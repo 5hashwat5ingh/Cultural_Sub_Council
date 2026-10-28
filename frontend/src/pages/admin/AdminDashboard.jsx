@@ -18,7 +18,7 @@ import {
 
 const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:5000").replace(/\/+$/, "");
 
-const CLUBS = ["Dance", "Music", "Dramatics", "Fine Arts", "Photography"];
+const CLUBS = ["Dance", "Music", "Dramatics", "Fine Arts", "Photography", "Technical", "Other"];
 
 const GOLD = "#E8C879";
 
@@ -482,6 +482,8 @@ export default function AdminDashboard() {
 
   const [loading, setLoading] = useState(true);
 
+  const [exportLoading, setExportLoading] = useState(false);
+
   const [busyId, setBusyId] = useState("");
 
   const [loggingOut, setLoggingOut] = useState(false);
@@ -713,40 +715,96 @@ export default function AdminDashboard() {
 
 
 
-  function exportCSV() {
+  async function exportCSV() {
+    const exportLimit = 100;
+    const allCandidates = [];
+    let currentPage = 1;
+    let totalPages = 1;
 
-    const columns = ["Name", "Roll Number", "Email", "Phone", "Branch", "Year", "Events", "Event Participation Details", "Next Round Decision", "Registration Date"];
+    setExportLoading(true);
+    setError("");
+    setNotice("");
 
-    const rows = candidates.map((candidate) => [
+    try {
+      // Re-fetch every page from the API using the active search and club filters.
+      // This avoids exporting only the 50 rows currently shown on the dashboard.
+      do {
+        const params = new URLSearchParams({
+          search: search.trim(),
+          club,
+          page: String(currentPage),
+          limit: String(exportLimit),
+        });
 
-      candidate.name, candidate.roll_no, candidate.email, candidate.phone, candidate.branch, candidate.year,
+        const result = await apiRequest(`/api/admin/candidates?${params.toString()}`);
+        const pageRows = Array.isArray(result.candidates) ? result.candidates : [];
+        allCandidates.push(...pageRows);
 
-      (candidate.events || []).join(", "),
+        const reportedPages = Number(result.pagination?.pages);
+        if (Number.isFinite(reportedPages) && reportedPages >= 1) {
+          totalPages = reportedPages;
+        } else {
+          // Fallback for APIs that do not return pagination metadata.
+          totalPages = pageRows.length === exportLimit ? currentPage + 1 : currentPage;
+        }
 
-      getEventEntries(candidate).map((entry) => `${entry.eventName || entry.event}: ${entry.participationType}${entry.teamName ? ` (${entry.teamName})` : ""}; Members: ${(entry.members || []).map((m) => `${m.name} / ${m.roll_no} / ${m.branch} / ${m.phone} / ${m.email}`).join(" | ")}`).join(" | "),
+        currentPage += 1;
+      } while (currentPage <= totalPages);
 
-      candidate.adminStatus === "Selected" ? "Selected for next round" : candidate.adminStatus === "Rejected" ? "Not selected for next round" : "Pending",
+      const columns = [
+        "Name", "Roll Number", "Email", "Phone", "Branch", "Year",
+        "Events", "Event Participation Details", "Next Round Decision", "Registration Date",
+      ];
 
-      candidate.createdAt ? new Date(candidate.createdAt).toLocaleString() : "",
+      const rows = allCandidates.map((candidate) => [
+        candidate.name,
+        candidate.roll_no,
+        candidate.email,
+        candidate.phone,
+        candidate.branch,
+        candidate.year,
+        (candidate.events || []).join(", "),
+        getEventEntries(candidate).map((entry) =>
+          `${entry.eventName || entry.event}: ${entry.participationType}${entry.teamName ? ` (${entry.teamName})` : ""}; Members: ${(entry.members || []).map((member) => `${member.name} / ${member.roll_no} / ${member.branch} / ${member.phone} / ${member.email}`).join(" | ")}`
+        ).join(" | "),
+        candidate.adminStatus === "Selected"
+          ? "Selected for next round"
+          : candidate.adminStatus === "Rejected"
+            ? "Not selected for next round"
+            : "Pending",
+        candidate.createdAt ? new Date(candidate.createdAt).toLocaleString() : "",
+      ]);
 
-    ]);
+      const escapeCSV = (value) => `"${String(value ?? "").replace(/"/g, '""')}"`;
+      const csv = [columns, ...rows]
+        .map((row) => row.map(escapeCSV).join(","))
+        .join("\r\n");
+      const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      const clubSlug = club ? `-${club.toLowerCase().replace(/[^a-z0-9]+/g, "-")}` : "-all-clubs";
 
-    const escapeCSV = (value) => `"${String(value ?? "").replace(/"/g, '""')}"`;
+      link.href = url;
+      link.download = `cultural-sub-council-registrations${clubSlug}.csv`;
+      link.style.display = "none";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      // Do not revoke the blob URL immediately; some browsers need a short
+      // delay to begin the download reliably.
+      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 
-    const csv = [columns, ...rows].map((row) => row.map(escapeCSV).join(",")).join("\r\n");
-
-    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
-
-    const url = URL.createObjectURL(blob);
-
-    const link = document.createElement("a");
-
-    link.href = url; link.download = `cultural-sub-council-registrations-page-${page}.csv`; link.click();
-
-    URL.revokeObjectURL(url);
-
+      setNotice(`Exported ${allCandidates.length} registration(s)${club ? ` for ${club}` : " across all clubs"}.`);
+    } catch (err) {
+      if (err.message === "SESSION_EXPIRED") {
+        navigate("/admin/login", { replace: true });
+        return;
+      }
+      setError(err.message || "Could not export registrations.");
+    } finally {
+      setExportLoading(false);
+    }
   }
-
 
 
   return (
@@ -813,7 +871,7 @@ export default function AdminDashboard() {
 
             <div><p className="text-[10px] font-black uppercase tracking-[.25em] text-[#E8C879]">Registration management</p><h1 className="mt-2 text-2xl font-black tracking-tight sm:text-4xl">Candidate dashboard</h1><p className="mt-2 max-w-2xl text-sm leading-6 text-white/45">All participant information at a glance, with per-event team details available in each profile.</p></div>
 
-            <button onClick={exportCSV} disabled={candidates.length === 0} className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#E8C879] px-4 py-3 text-xs font-black text-[#21150A] transition hover:bg-[#F2DDA5] disabled:cursor-not-allowed disabled:opacity-40"><Download size={16}/> Export current page</button>
+            <button type="button" onClick={exportCSV} disabled={exportLoading || loading || pagination.total === 0} className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#E8C879] px-4 py-3 text-xs font-black text-[#21150A] transition hover:bg-[#F2DDA5] disabled:cursor-not-allowed disabled:opacity-40"><Download size={16}/> {exportLoading ? "Exporting all registrations…" : `Export all ${club ? `${club} ` : ""}registrations`}</button>
 
           </div></div>
 
@@ -831,56 +889,19 @@ export default function AdminDashboard() {
 
           </section>
 
-<section className="mt-5">
-  <div className="mb-3 flex items-center gap-2">
-    <Filter size={16} className="text-[#E8C879]" />
-    <h2 className="text-sm font-black uppercase tracking-[.14em] text-white/75">
-      Browse by event
-    </h2>
-  </div>
 
-  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-5">
-    {CLUBS.map((item) => {
-      const isActive = club === item;
 
-      return (
-        <button
-          key={item}
-          type="button"
-          onClick={() => {
-            setClub(isActive ? "" : item);
-            setPage(1);
-          }}
-          aria-pressed={isActive}
-          className={`flex min-h-[120px] min-w-0 flex-col justify-between rounded-xl border p-4 text-left transition duration-200 ${
-            isActive
-              ? "border-[#E8C879]/60 bg-[#E8C879]/10 shadow-lg shadow-[#E8C879]/5"
-              : "border-white/10 bg-[#17151A] hover:border-[#E8C879]/30 hover:bg-white/[.03]"
-          }`}
-        >
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-wider text-white/40">
-              Event filter
-            </p>
+          <section className="mt-5">
 
-            <p
-              className={`mt-2 break-words text-sm font-bold ${
-                isActive ? "text-[#E8C879]" : "text-white/80"
-              }`}
-            >
-              {item}
-            </p>
-          </div>
+            <div className="mb-3 flex items-center gap-2"><Filter size={16} className="text-[#E8C879]"/><h2 className="text-sm font-black uppercase tracking-[.14em] text-white/75">Browse by event</h2></div>
 
-          <p className="mt-3 text-2xl font-black tabular-nums text-white">
-            {clubCounts[item] ?? 0}
-          </p>
-        </button>
-      );
-    })}
-  </div>
-</section>
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-7">
 
+              {CLUBS.map((item) => <button key={item} onClick={() => { setClub(club === item ? "" : item); setPage(1); }} className={`rounded-xl border p-3 text-left transition ${club === item ? "border-[#E8C879]/60 bg-[#E8C879]/10" : "border-white/10 bg-[#17151A] hover:border-white/20"}`}><p className="text-[10px] font-bold uppercase tracking-wider text-white/40">Event filter</p><p className={`mt-1 text-xs font-bold ${club === item ? "text-[#E8C879]" : "text-white/80"}`}>{item}</p><p className="mt-2 text-xl font-black">{clubCounts[item] ?? 0}</p></button>)}
+
+            </div>
+
+          </section>
 
 
 
