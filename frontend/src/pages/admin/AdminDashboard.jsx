@@ -10,7 +10,7 @@ import {
 
   GraduationCap, CalendarDays, Filter, UserRound, Music, Image as ImageIcon,
 
-  FileText, ClipboardList, Lock, Unlock
+  FileText, ClipboardList
 
 } from "lucide-react";
 
@@ -476,8 +476,6 @@ export default function AdminDashboard() {
 
   const [decisionFilter, setDecisionFilter] = useState("");
 
-  const [participationFilter, setParticipationFilter] = useState("");
-
   const [page, setPage] = useState(1);
 
   const [pagination, setPagination] = useState({ page: 1, pages: 1, total: 0, limit: 50 });
@@ -485,8 +483,6 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
 
   const [exportLoading, setExportLoading] = useState(false);
-  const [registrationOpen, setRegistrationOpen] = useState(true);
-  const [registrationStatusLoading, setRegistrationStatusLoading] = useState(false);
 
   const [busyId, setBusyId] = useState("");
 
@@ -521,10 +517,8 @@ export default function AdminDashboard() {
       const me = await apiRequest("/api/admin/me");
 
       setAdmin(me.admin);
-      const registrationStatus = await apiRequest("/api/registrations/status");
-      setRegistrationOpen(registrationStatus.isOpen !== false);
 
-      const params = new URLSearchParams({ search, club, participationType: participationFilter, page: String(page), limit: "50" });
+      const params = new URLSearchParams({ search, club, page: String(page), limit: "50" });
 
       const result = await apiRequest(`/api/admin/candidates?${params.toString()}`);
 
@@ -546,42 +540,11 @@ export default function AdminDashboard() {
 
     } finally { setLoading(false); }
 
-  }, [navigate, search, club, participationFilter, page]);
+  }, [navigate, search, club, page]);
 
 
 
   useEffect(() => { loadDashboard(); }, [loadDashboard]);
-
-  async function toggleRegistrationStatus() {
-    const nextStatus = !registrationOpen;
-    const action = nextStatus ? "OPEN" : "CLOSE";
-    const confirmed = window.confirm(
-      nextStatus
-        ? "Are you sure you want to reopen registrations? Students will be able to submit the form again."
-        : "Are you sure you want to close registrations? Students will no longer be able to submit the form."
-    );
-    if (!confirmed) return;
-
-    setRegistrationStatusLoading(true);
-    setError("");
-    setNotice("");
-    try {
-      const result = await apiRequest("/api/admin/registration-status", {
-        method: "PATCH",
-        body: JSON.stringify({ isOpen: nextStatus }),
-      });
-      setRegistrationOpen(result.isOpen !== false);
-      setNotice(result.message || `Registrations ${action.toLowerCase()}ed successfully.`);
-    } catch (err) {
-      if (err.message === "SESSION_EXPIRED") {
-        navigate("/admin/login", { replace: true });
-        return;
-      }
-      setError(err.message || "Could not update registration status.");
-    } finally {
-      setRegistrationStatusLoading(false);
-    }
-  }
 
 
 
@@ -595,20 +558,15 @@ export default function AdminDashboard() {
   const pendingCount = Number(decisionCountsFromApi.pending || 0);
 
   const visibleCandidates = candidates.filter((candidate) => {
-    const entries = getEventEntries(candidate);
-    const participationTypes = entries.length
-      ? entries.map((entry) => String(entry.participationType || "").trim().toLowerCase())
-      : [String(candidate.participationType || "").trim().toLowerCase()];
 
-    if (participationFilter && !participationTypes.includes(participationFilter.toLowerCase())) {
-      return false;
-    }
+    if (decisionFilter === "Selected") return candidate.adminStatus === "Selected";
 
-    if (decisionFilter === "Selected" && candidate.adminStatus !== "Selected") return false;
-    if (decisionFilter === "Rejected" && candidate.adminStatus !== "Rejected") return false;
-    if (decisionFilter === "Pending" && ["Selected", "Rejected"].includes(candidate.adminStatus)) return false;
+    if (decisionFilter === "Rejected") return candidate.adminStatus === "Rejected";
+
+    if (decisionFilter === "Pending") return !["Selected", "Rejected"].includes(candidate.adminStatus);
 
     return true;
+
   });
 
 
@@ -661,7 +619,7 @@ export default function AdminDashboard() {
 
 
 
-  function clearFilters() { setSearch(""); setSearchInput(""); setClub(""); setDecisionFilter(""); setParticipationFilter(""); setPage(1); }
+  function clearFilters() { setSearch(""); setSearchInput(""); setClub(""); setDecisionFilter(""); setPage(1); }
 
 
 
@@ -758,90 +716,56 @@ export default function AdminDashboard() {
 
 
   async function exportCSV() {
-    // Use the same page size as the dashboard API. Keep requesting pages until
-    // the API returns no more rows, rather than trusting possibly incorrect
-    // pagination metadata to decide when to stop.
-    const exportLimit = 50;
+    const exportLimit = 100;
     const allCandidates = [];
-    const seenIds = new Set();
     let currentPage = 1;
-    const maxPages = 10000;
+    let totalPages = 1;
 
     setExportLoading(true);
     setError("");
     setNotice("");
 
     try {
-      while (currentPage <= maxPages) {
+      // Re-fetch every page from the API using the active search and club filters.
+      // This avoids exporting only the 50 rows currently shown on the dashboard.
+      do {
         const params = new URLSearchParams({
           search: search.trim(),
           club,
-          participationType: participationFilter,
           page: String(currentPage),
           limit: String(exportLimit),
         });
 
         const result = await apiRequest(`/api/admin/candidates?${params.toString()}`);
         const pageRows = Array.isArray(result.candidates) ? result.candidates : [];
+        allCandidates.push(...pageRows);
 
-        if (pageRows.length === 0) break;
-
-        // Detect APIs that ignore the page parameter; otherwise export could
-        // loop forever or silently repeat the first page.
-        let newRows = 0;
-        for (const candidate of pageRows) {
-          const id = candidate?._id;
-          if (id && seenIds.has(String(id))) continue;
-          if (id) seenIds.add(String(id));
-          allCandidates.push(candidate);
-          newRows += 1;
+        const reportedPages = Number(result.pagination?.pages);
+        if (Number.isFinite(reportedPages) && reportedPages >= 1) {
+          totalPages = reportedPages;
+        } else {
+          // Fallback for APIs that do not return pagination metadata.
+          totalPages = pageRows.length === exportLimit ? currentPage + 1 : currentPage;
         }
 
-        if (newRows === 0) {
-          throw new Error("The registrations API returned the same page more than once. Check pagination in /api/admin/candidates.");
-        }
-
-        if (pageRows.length < exportLimit) break;
         currentPage += 1;
-      }
-
-      if (currentPage > maxPages) {
-        throw new Error("Export stopped for safety after too many pages. Check the registrations API pagination.");
-      }
-
-      if (allCandidates.length === 0) {
-        throw new Error("No registrations were returned by the API. Clear filters or check the backend route.");
-      }
-
-      const filteredCandidates = participationFilter
-        ? allCandidates.filter((candidate) => {
-            const entries = getEventEntries(candidate);
-            const types = entries.length
-              ? entries.map((entry) => String(entry.participationType || "").trim().toLowerCase())
-              : [String(candidate.participationType || "").trim().toLowerCase()];
-            return types.includes(participationFilter.toLowerCase());
-          })
-        : allCandidates;
-
-      if (filteredCandidates.length === 0) {
-        throw new Error("No registrations match the selected participation type.");
-      }
+      } while (currentPage <= totalPages);
 
       const columns = [
         "Name", "Roll Number", "Email", "Phone", "Branch", "Year",
         "Events", "Event Participation Details", "Next Round Decision", "Registration Date",
       ];
 
-      const rows = filteredCandidates.map((candidate) => [
+      const rows = allCandidates.map((candidate) => [
         candidate.name,
         candidate.roll_no,
         candidate.email,
         candidate.phone,
         candidate.branch,
         candidate.year,
-        (Array.isArray(candidate.events) ? candidate.events : []).join(", "),
+        (candidate.events || []).join(", "),
         getEventEntries(candidate).map((entry) =>
-          `${entry.eventName || entry.event}: ${entry.participationType}${entry.teamName ? ` (${entry.teamName})` : ""}; Members: ${(Array.isArray(entry.members) ? entry.members : []).map((member) => `${member.name || ""} / ${member.roll_no || ""} / ${member.branch || ""} / ${member.phone || ""} / ${member.email || ""}`).join(" | ")}`
+          `${entry.eventName || entry.event}: ${entry.participationType}${entry.teamName ? ` (${entry.teamName})` : ""}; Members: ${(entry.members || []).map((member) => `${member.name} / ${member.roll_no} / ${member.branch} / ${member.phone} / ${member.email}`).join(" | ")}`
         ).join(" | "),
         candidate.adminStatus === "Selected"
           ? "Selected for next round"
@@ -866,9 +790,11 @@ export default function AdminDashboard() {
       document.body.appendChild(link);
       link.click();
       link.remove();
+      // Do not revoke the blob URL immediately; some browsers need a short
+      // delay to begin the download reliably.
       window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 
-      setNotice(`Exported ${filteredCandidates.length} registration(s)${club ? ` for ${club}` : " across all clubs"}${participationFilter ? ` (${participationFilter})` : ""}.`);
+      setNotice(`Exported ${allCandidates.length} registration(s)${club ? ` for ${club}` : " across all clubs"}.`);
     } catch (err) {
       if (err.message === "SESSION_EXPIRED") {
         navigate("/admin/login", { replace: true });
@@ -943,15 +869,9 @@ export default function AdminDashboard() {
 
           <div className="relative mb-7 overflow-hidden rounded-[1.75rem] border border-[#E8C879]/20 bg-gradient-to-br from-[#35101F] via-[#171319] to-[#111014] p-5 shadow-2xl shadow-black/20 sm:p-8"><div aria-hidden="true" className="pointer-events-none absolute -right-8 -top-12 h-48 w-48 rounded-full border border-[#E8C879]/15 sm:h-64 sm:w-64" /><div className="relative flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
 
-            <div><p className="text-[10px] font-black uppercase tracking-[.25em] text-[#E8C879]">Registration management</p><h1 className="mt-2 text-2xl font-black tracking-tight sm:text-4xl">Candidate dashboard</h1><p className="mt-2 max-w-2xl text-sm leading-6 text-white/45">All participant information at a glance, with per-event team details available in each profile.</p><p className={`mt-3 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-bold ${registrationOpen ? "border-emerald-400/20 bg-emerald-400/10 text-emerald-200" : "border-rose-400/20 bg-rose-400/10 text-rose-200"}`}><span className={`h-2 w-2 rounded-full ${registrationOpen ? "bg-emerald-400" : "bg-rose-400"}`}/>{registrationOpen ? "Registrations are currently OPEN" : "Registrations are currently CLOSED"}</p></div>
+            <div><p className="text-[10px] font-black uppercase tracking-[.25em] text-[#E8C879]">Registration management</p><h1 className="mt-2 text-2xl font-black tracking-tight sm:text-4xl">Candidate dashboard</h1><p className="mt-2 max-w-2xl text-sm leading-6 text-white/45">All participant information at a glance, with per-event team details available in each profile.</p></div>
 
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-              <button type="button" onClick={toggleRegistrationStatus} disabled={registrationStatusLoading || loading} className={`inline-flex items-center justify-center gap-2 rounded-xl border px-4 py-3 text-xs font-black transition disabled:cursor-not-allowed disabled:opacity-50 ${registrationOpen ? "border-rose-400/30 bg-rose-500/10 text-rose-200 hover:bg-rose-500/20" : "border-emerald-400/30 bg-emerald-500/10 text-emerald-200 hover:bg-emerald-500/20"}`}>
-                {registrationOpen ? <Lock size={16}/> : <Unlock size={16}/>}
-                {registrationStatusLoading ? "Updating…" : registrationOpen ? "Close Registrations" : "Open Registrations"}
-              </button>
-              <button type="button" onClick={exportCSV} disabled={exportLoading || loading || pagination.total === 0} className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#E8C879] px-4 py-3 text-xs font-black text-[#21150A] transition hover:bg-[#F2DDA5] disabled:cursor-not-allowed disabled:opacity-40"><Download size={16}/> {exportLoading ? "Exporting all registrations…" : `Export all ${club ? `${club} ` : ""}registrations`}</button>
-            </div>
+            <button type="button" onClick={exportCSV} disabled={exportLoading || loading || pagination.total === 0} className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#E8C879] px-4 py-3 text-xs font-black text-[#21150A] transition hover:bg-[#F2DDA5] disabled:cursor-not-allowed disabled:opacity-40"><Download size={16}/> {exportLoading ? "Exporting all registrations…" : `Export all ${club ? `${club} ` : ""}registrations`}</button>
 
           </div></div>
 
@@ -972,30 +892,58 @@ export default function AdminDashboard() {
 
 
           <section className="mt-5">
+  <div className="mb-3 flex items-center gap-2">
+    <Filter size={16} className="text-[#E8C879]" />
+    <h2 className="text-sm font-black uppercase tracking-[.14em] text-white/75">
+      Browse by event
+    </h2>
+  </div>
 
-            <div className="mb-3 flex items-center gap-2"><Filter size={16} className="text-[#E8C879]"/><h2 className="text-sm font-black uppercase tracking-[.14em] text-white/75">Browse by event</h2></div>
+  <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-5">
+    {CLUBS.map((item) => (
+      <button
+        key={item}
+        onClick={() => {
+          setClub(club === item ? "" : item);
+          setPage(1);
+        }}
+        className={`rounded-xl border p-3 text-left transition ${
+          club === item
+            ? "border-[#E8C879]/60 bg-[#E8C879]/10"
+            : "border-white/10 bg-[#17151A] hover:border-white/20"
+        }`}
+      >
+        <p className="text-[10px] font-bold uppercase tracking-wider text-white/40">
+          Event filter
+        </p>
 
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-5">
+        <p
+          className={`mt-1 text-xs font-bold ${
+            club === item ? "text-[#E8C879]" : "text-white/80"
+          }`}
+        >
+          {item}
+        </p>
 
-              {CLUBS.map((item) => <button key={item} onClick={() => { setClub(club === item ? "" : item); setPage(1); }} className={`rounded-xl border p-3 text-left transition ${club === item ? "border-[#E8C879]/60 bg-[#E8C879]/10" : "border-white/10 bg-[#17151A] hover:border-white/20"}`}><p className="text-[10px] font-bold uppercase tracking-wider text-white/40">Event filter</p><p className={`mt-1 text-xs font-bold ${club === item ? "text-[#E8C879]" : "text-white/80"}`}>{item}</p><p className="mt-2 text-xl font-black">{clubCounts[item] ?? 0}</p></button>)}
-
-            </div>
-
-          </section>
+        <p className="mt-2 text-xl font-black">
+          {clubCounts[item] ?? 0}
+        </p>
+      </button>
+    ))}
+  </div>
+</section>
 
 
 
           <section className="mt-5 rounded-2xl border border-white/10 bg-[#131216] p-3 sm:p-4">
 
-            <form className="grid gap-2 sm:grid-cols-2 xl:grid-cols-[minmax(220px,1.5fr)_minmax(140px,1fr)_minmax(150px,1fr)_minmax(150px,1fr)_auto]" onSubmit={(event) => { event.preventDefault(); setPage(1); setSearch(searchInput.trim()); }}>
+            <form className="grid gap-2 sm:grid-cols-2 xl:grid-cols-[minmax(220px,1.5fr)_minmax(140px,1fr)_minmax(170px,1fr)_auto]" onSubmit={(event) => { event.preventDefault(); setPage(1); setSearch(searchInput.trim()); }}>
 
               <label className="relative block"><Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/35"/><input type="search" value={searchInput} onChange={(event) => setSearchInput(event.target.value)} placeholder="Search name, roll no., email, phone…" className="w-full rounded-xl border border-white/10 bg-[#0B0A0D] py-3 pl-10 pr-3 text-xs text-white outline-none placeholder:text-white/30 focus:border-[#E8C879]/50"/></label>
 
               <select value={club} onChange={(event) => { setClub(event.target.value); setPage(1); }} className="rounded-xl border border-white/10 bg-[#0B0A0D] px-3 py-3 text-xs text-white outline-none focus:border-[#E8C879]/50"><option value="">All events</option>{CLUBS.map((item) => <option key={item} value={item}>{item}</option>)}</select>
 
-              <select value={participationFilter} onChange={(event) => { setParticipationFilter(event.target.value); setPage(1); }} className="rounded-xl border border-white/10 bg-[#0B0A0D] px-3 py-3 text-xs text-white outline-none focus:border-[#E8C879]/50"><option value="">All participation types</option><option value="Solo">Solo</option><option value="Duo">Duo</option><option value="Team">Team</option></select>
-
-              <select value={decisionFilter} onChange={(event) => { setDecisionFilter(event.target.value); setPage(1); }} className="rounded-xl border border-white/10 bg-[#0B0A0D] px-3 py-3 text-xs text-white outline-none focus:border-[#E8C879]/50"><option value="">All decisions</option><option value="Pending">Pending</option><option value="Selected">Selected for next round</option><option value="Rejected">Not selected</option></select>
+              <select value={decisionFilter} onChange={(event) => setDecisionFilter(event.target.value)} className="rounded-xl border border-white/10 bg-[#0B0A0D] px-3 py-3 text-xs text-white outline-none focus:border-[#E8C879]/50"><option value="">All decisions</option><option value="Pending">Pending</option><option value="Selected">Selected for next round</option><option value="Rejected">Not selected</option></select>
 
               <button type="submit" className="rounded-xl bg-white px-5 py-3 text-xs font-black text-[#17151A] transition hover:bg-[#E8C879]">Search</button>
 
