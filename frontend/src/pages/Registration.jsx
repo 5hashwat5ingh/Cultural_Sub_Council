@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const API_URL = (
@@ -45,7 +45,7 @@ const primary =
   "inline-flex items-center justify-center gap-2 rounded-xl bg-[#7a1b2f] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#5e1223] disabled:cursor-not-allowed disabled:opacity-50";
 
 const secondary =
-  "inline-flex items-center justify-center rounded-xl border border-[#dfd0b8] bg-white px-5 py-3 text-sm font-bold text-[#6f2435] transition hover:bg-[#fbf4e8] disabled:opacity-50";
+  "inline-flex items-center justify-center rounded-xl border border-[#dfd0b8] bg-white px-5 py-3 text-sm font-bold text-[#6f2435] transition hover:bg-[#fbf4e8] disabled:cursor-not-allowed disabled:opacity-50";
 
 const blankMember = () => ({
   name: "",
@@ -57,14 +57,15 @@ const blankMember = () => ({
 
 const blankEntry = (name) => ({
   eventName: name,
-  participationType: EVENTS.find((e) => e.name === name).types[0],
+  participationType: EVENTS.find((event) => event.name === name).types[0],
   teamName: "",
   members: [],
 });
 
 const isValidRollNumber = (value) => /^2026\d{6}$/.test(value.trim());
-
 const isValidPhone = (value) => /^[6-9]\d{9}$/.test(value.trim());
+const isValidEmail = (value) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 
 const isDriveLink = (value) => {
   try {
@@ -77,6 +78,12 @@ const isDriveLink = (value) => {
     return false;
   }
 };
+
+const parseDriveLinks = (value) =>
+  value
+    .split(/\r?\n/)
+    .map((item) => item.trim())
+    .filter(Boolean);
 
 function Field({ label, hint, error, children }) {
   return (
@@ -110,7 +117,7 @@ function TextInput({
       type={type}
       className={inputClass}
       value={value}
-      onChange={(e) => onChange(e.target.value)}
+      onChange={(event) => onChange(event.target.value)}
       placeholder={placeholder}
     />
   );
@@ -134,11 +141,44 @@ function Heading({ eyebrow, title, desc }) {
   );
 }
 
+function StatusScreen({ title, message, children }) {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-[#fbf5e9] p-4 text-[#32131b]">
+      <div className="w-full max-w-lg rounded-[2rem] border border-[#e9deca] bg-white p-8 text-center shadow-xl sm:p-12">
+        <div className="mx-auto flex h-20 w-20 items-center justify-center overflow-hidden rounded-2xl bg-white">
+          <img
+            src="/Logo.png"
+            alt="Cultural Sub-Council Logo"
+            className="h-full w-full object-contain"
+          />
+        </div>
+        <p className="mt-7 text-xs font-black uppercase tracking-[.24em] text-[#9b7133]">
+          Cultural Sub-Council
+        </p>
+        <h1 className="mt-3 text-3xl font-black">{title}</h1>
+        <p className="mt-3 text-sm leading-6 text-[#8a776b]">{message}</p>
+        <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+          {children}
+          <Link to="/" className={secondary}>
+            Back to home
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Registration() {
   const [step, setStep] = useState(1);
   const [submitting, setSubmitting] = useState(false);
   const [registrationId, setRegistrationId] = useState("");
   const [errors, setErrors] = useState({});
+
+  // null means the status has not yet been verified.
+  const [registrationOpen, setRegistrationOpen] = useState(null);
+  const [registrationStatusLoading, setRegistrationStatusLoading] =
+    useState(true);
+  const [registrationStatusError, setRegistrationStatusError] = useState("");
 
   const [form, setForm] = useState({
     name: "",
@@ -154,74 +194,101 @@ export default function Registration() {
     confirmed: false,
   });
 
-  const selectedEvents = EVENTS.filter((e) =>
-    form.selectedEvents.includes(e.name)
+  const selectedEvents = EVENTS.filter((event) =>
+    form.selectedEvents.includes(event.name)
   );
 
+  // Public endpoint; no admin authentication is required.
+  const loadRegistrationStatus = useCallback(async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/registrations/status`, {
+        method: "GET",
+        cache: "no-store",
+      });
+
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok || typeof result.registrationOpen !== "boolean") {
+        throw new Error(
+          result.message || "Could not verify registration availability."
+        );
+      }
+
+      setRegistrationOpen(result.registrationOpen);
+      setRegistrationStatusError("");
+    } catch (error) {
+      // Keep the last verified status during a temporary polling failure.
+      // On the first load, null means the page remains safely unavailable.
+      setRegistrationStatusError(
+        error.message || "Unable to connect to the registration server."
+      );
+    } finally {
+      setRegistrationStatusLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadRegistrationStatus();
+    const intervalId = window.setInterval(loadRegistrationStatus, 15000);
+    return () => window.clearInterval(intervalId);
+  }, [loadRegistrationStatus]);
+
   const update = (key, value) => {
-    setForm((prev) => ({ ...prev, [key]: value }));
-    setErrors((prev) => ({ ...prev, [key]: "", submit: "" }));
+    setForm((previous) => ({ ...previous, [key]: value }));
+    setErrors((previous) => ({ ...previous, [key]: "", submit: "" }));
   };
 
   const toggleEvent = (name) => {
-    setForm((prev) => {
-      const exists = prev.selectedEvents.includes(name);
+    setForm((previous) => {
+      const exists = previous.selectedEvents.includes(name);
+      const selectedEvents = exists
+        ? previous.selectedEvents.filter((item) => item !== name)
+        : [...previous.selectedEvents, name];
 
-      const selected = exists
-        ? prev.selectedEvents.filter((n) => n !== name)
-        : [...prev.selectedEvents, name];
-
-      const eventEntries = { ...prev.eventEntries };
-
+      const eventEntries = { ...previous.eventEntries };
       if (exists) {
         delete eventEntries[name];
       } else {
         eventEntries[name] = blankEntry(name);
       }
 
-      return {
-        ...prev,
-        selectedEvents: selected,
-        eventEntries,
-      };
+      return { ...previous, selectedEvents, eventEntries };
     });
 
-    setErrors((prev) => ({ ...prev, selectedEvents: "" }));
+    setErrors((previous) => ({ ...previous, selectedEvents: "" }));
   };
 
   const updateEntry = (name, key, value) => {
-    setForm((prev) => ({
-      ...prev,
+    setForm((previous) => ({
+      ...previous,
       eventEntries: {
-        ...prev.eventEntries,
+        ...previous.eventEntries,
         [name]: {
-          ...prev.eventEntries[name],
+          ...previous.eventEntries[name],
           [key]: value,
         },
       },
     }));
 
-    setErrors((prev) => ({
-      ...prev,
+    setErrors((previous) => ({
+      ...previous,
       [`${name}_${key}`]: "",
       [`${name}_members`]: "",
     }));
   };
 
   const addMember = (name) => {
-    setForm((prev) => {
-      const entry = prev.eventEntries[name];
-
-      if (!entry) return prev;
+    setForm((previous) => {
+      const entry = previous.eventEntries[name];
+      if (!entry) return previous;
 
       const maxMembers = entry.participationType === "Duo" ? 1 : 19;
-
-      if (entry.members.length >= maxMembers) return prev;
+      if (entry.members.length >= maxMembers) return previous;
 
       return {
-        ...prev,
+        ...previous,
         eventEntries: {
-          ...prev.eventEntries,
+          ...previous.eventEntries,
           [name]: {
             ...entry,
             members: [...entry.members, blankMember()],
@@ -232,40 +299,40 @@ export default function Registration() {
   };
 
   const updateMember = (eventName, index, key, value) => {
-    setForm((prev) => {
-      const entry = prev.eventEntries[eventName];
-
+    setForm((previous) => {
+      const entry = previous.eventEntries[eventName];
       return {
-        ...prev,
+        ...previous,
         eventEntries: {
-          ...prev.eventEntries,
+          ...previous.eventEntries,
           [eventName]: {
             ...entry,
-            members: entry.members.map((member, i) =>
-              i === index ? { ...member, [key]: value } : member
+            members: entry.members.map((member, memberIndex) =>
+              memberIndex === index ? { ...member, [key]: value } : member
             ),
           },
         },
       };
     });
 
-    setErrors((prev) => ({
-      ...prev,
+    setErrors((previous) => ({
+      ...previous,
       [`${eventName}_member_${index}`]: "",
     }));
   };
 
   const removeMember = (eventName, index) => {
-    setForm((prev) => {
-      const entry = prev.eventEntries[eventName];
-
+    setForm((previous) => {
+      const entry = previous.eventEntries[eventName];
       return {
-        ...prev,
+        ...previous,
         eventEntries: {
-          ...prev.eventEntries,
+          ...previous.eventEntries,
           [eventName]: {
             ...entry,
-            members: entry.members.filter((_, i) => i !== index),
+            members: entry.members.filter(
+              (_, memberIndex) => memberIndex !== index
+            ),
           },
         },
       };
@@ -273,59 +340,55 @@ export default function Registration() {
   };
 
   const validateDetails = () => {
-    const e = {};
+    const nextErrors = {};
 
-    if (!form.name.trim()) {
-      e.name = "Enter your full name.";
-    }
+    if (!form.name.trim()) nextErrors.name = "Enter your full name.";
 
     if (!form.roll_no.trim()) {
-      e.roll_no = "Enter your roll number.";
+      nextErrors.roll_no = "Enter your roll number.";
     } else if (!isValidRollNumber(form.roll_no)) {
-      e.roll_no =
+      nextErrors.roll_no =
         "Roll number must contain exactly 10 digits and start with 2026.";
     }
 
     if (!form.branch.trim()) {
-      e.branch = "Enter your branch or department.";
+      nextErrors.branch = "Enter your branch or department.";
     }
 
     if (!isValidPhone(form.phone)) {
-      e.phone = "Enter a valid 10-digit Indian mobile number.";
+      nextErrors.phone = "Enter a valid 10-digit Indian mobile number.";
     }
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
-      e.email = "Enter a valid email address.";
+    if (!isValidEmail(form.email)) {
+      nextErrors.email = "Enter a valid email address.";
     }
 
     if (!form.selectedEvents.length) {
-      e.selectedEvents = "Select at least one event.";
+      nextErrors.selectedEvents = "Select at least one event.";
     }
 
     form.selectedEvents.forEach((name) => {
       const entry = form.eventEntries[name];
+      const event = EVENTS.find((item) => item.name === name);
 
-      if (!entry) {
-        e.selectedEvents = "Please reselect your event.";
+      if (!entry || !event) {
+        nextErrors.selectedEvents = "Please reselect your event.";
         return;
       }
 
-      const allowed = EVENTS.find((event) => event.name === name).types;
-
-      if (!allowed.includes(entry.participationType)) {
-        e[`${name}_participationType`] =
+      if (!event.types.includes(entry.participationType)) {
+        nextErrors[`${name}_participationType`] =
           "Choose a valid participation type.";
       }
 
       if (["Duo", "Team"].includes(entry.participationType)) {
         if (!entry.teamName.trim()) {
-          e[`${name}_teamName`] = "Enter a duo or team name.";
+          nextErrors[`${name}_teamName`] = "Enter a duo or team name.";
         }
 
         const minimum = entry.participationType === "Duo" ? 1 : 2;
-
         if (entry.members.length < minimum) {
-          e[`${name}_members`] =
+          nextErrors[`${name}_members`] =
             entry.participationType === "Duo"
               ? "Add exactly one partner."
               : "Add at least two other members.";
@@ -335,51 +398,50 @@ export default function Registration() {
           entry.participationType === "Duo" &&
           entry.members.length > 1
         ) {
-          e[`${name}_members`] =
+          nextErrors[`${name}_members`] =
             "A duo must have exactly one partner in addition to you.";
         }
 
-        entry.members.forEach((member, i) => {
-          const errorKey = `${name}_member_${i}`;
+        entry.members.forEach((member, index) => {
+          const errorKey = `${name}_member_${index}`;
 
           if (!member.name.trim()) {
-            e[errorKey] = `Enter member ${i + 1}'s name.`;
+            nextErrors[errorKey] = `Enter member ${index + 1}'s name.`;
           } else if (!isValidRollNumber(member.roll_no)) {
-            e[errorKey] =
-              `Member ${i + 1}'s roll number must be 10 digits starting with 2026.`;
+            nextErrors[errorKey] =
+              `Member ${index + 1}'s roll number must be 10 digits starting with 2026.`;
           } else if (!member.branch.trim()) {
-            e[errorKey] = `Enter member ${i + 1}'s branch.`;
+            nextErrors[errorKey] = `Enter member ${index + 1}'s branch.`;
           } else if (!isValidPhone(member.phone)) {
-            e[errorKey] =
-              `Enter a valid phone number for member ${i + 1}.`;
-          } else if (
-            member.email.trim() &&
-            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(member.email.trim())
-          ) {
-            e[errorKey] =
-              `Enter a valid email address for member ${i + 1}.`;
+            nextErrors[errorKey] =
+              `Enter a valid phone number for member ${index + 1}.`;
+          } else if (member.email.trim() && !isValidEmail(member.email)) {
+            nextErrors[errorKey] =
+              `Enter a valid email address for member ${index + 1}.`;
           }
         });
       }
     });
 
-    setErrors(e);
-    return Object.keys(e).length === 0;
+    setErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
   };
 
   const next = () => {
+    if (registrationOpen !== true || registrationStatusLoading) return;
+
     if (!validateDetails()) {
       setStep(1);
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
-    setStep((s) => Math.min(3, s + 1));
+    setStep((current) => Math.min(3, current + 1));
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const back = () => {
-    setStep((s) => Math.max(1, s - 1));
+    setStep((current) => Math.max(1, current - 1));
     setErrors({});
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -387,58 +449,57 @@ export default function Registration() {
   const submit = async (event) => {
     event.preventDefault();
 
+    if (registrationOpen !== true || registrationStatusLoading) {
+      setErrors({
+        submit: "Registration is currently unavailable. Please refresh and try again.",
+      });
+      return;
+    }
+
     if (!validateDetails()) {
       setStep(1);
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
-    const e = {};
+    const nextErrors = {};
 
     if (form.selectedEvents.includes("Dance")) {
       if (!form.trackLink.trim()) {
-        e.trackLink = "Add your Dance audio Google Drive link.";
+        nextErrors.trackLink = "Add your Dance audio Google Drive link.";
       } else if (!isDriveLink(form.trackLink)) {
-        e.trackLink = "Enter a valid HTTPS Google Drive link.";
+        nextErrors.trackLink = "Enter a valid HTTPS Google Drive link.";
       }
     }
 
-    const images = form.imageLinks
-      .split(/\n/)
-      .map((x) => x.trim())
-      .filter(Boolean);
-
+    const images = parseDriveLinks(form.imageLinks);
     if (form.selectedEvents.includes("Photography")) {
       if (images.length < 1 || images.length > 10) {
-        e.imageLinks = "Add between 1 and 10 Google Drive image links.";
+        nextErrors.imageLinks =
+          "Add between 1 and 10 Google Drive image links.";
       } else if (!images.every(isDriveLink)) {
-        e.imageLinks =
+        nextErrors.imageLinks =
           "Every image must be a valid HTTPS Google Drive link.";
       }
     }
 
-    const fineArtLinks = form.fineArtLinks
-      .split(/\n/)
-      .map((x) => x.trim())
-      .filter(Boolean);
-
+    const fineArtLinks = parseDriveLinks(form.fineArtLinks);
     if (form.selectedEvents.includes("Fine Arts")) {
       if (fineArtLinks.length < 1 || fineArtLinks.length > 5) {
-        e.fineArtLinks =
+        nextErrors.fineArtLinks =
           "Add between 1 and 5 Google Drive artwork links, one per line.";
       } else if (!fineArtLinks.every(isDriveLink)) {
-        e.fineArtLinks =
+        nextErrors.fineArtLinks =
           "Every artwork must be a valid HTTPS Google Drive link.";
       }
     }
 
     if (!form.confirmed) {
-      e.confirmed = "Confirm your registration details.";
+      nextErrors.confirmed = "Confirm your registration details.";
     }
 
-    setErrors(e);
-
-    if (Object.keys(e).length) return;
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length) return;
 
     const payload = {
       name: form.name.trim(),
@@ -447,12 +508,9 @@ export default function Registration() {
       phone: form.phone.trim(),
       email: form.email.trim().toLowerCase(),
       events: form.selectedEvents,
-
       eventEntries: form.selectedEvents.map((name) => {
         const entry = form.eventEntries[name];
-        const isGroup = ["Duo", "Team"].includes(
-          entry.participationType
-        );
+        const isGroup = ["Duo", "Team"].includes(entry.participationType);
 
         return {
           eventName: name,
@@ -469,23 +527,18 @@ export default function Registration() {
             : [],
         };
       }),
-
       trackLink: form.selectedEvents.includes("Dance")
         ? form.trackLink.trim()
         : "",
-
-      imageLinks: form.selectedEvents.includes("Photography")
-        ? images
-        : [],
-
+      imageLinks: form.selectedEvents.includes("Photography") ? images : [],
       fineArtLinks: form.selectedEvents.includes("Fine Arts")
         ? fineArtLinks
         : [],
-
       confirmed: form.confirmed,
     };
 
     setSubmitting(true);
+    setErrors({});
 
     try {
       const response = await fetch(`${API_URL}/api/registrations`, {
@@ -496,6 +549,19 @@ export default function Registration() {
 
       const result = await response.json().catch(() => ({}));
 
+      if (response.status === 403) {
+        setRegistrationOpen(false);
+        setRegistrationStatusError(
+          result.message || "Registration has been closed by the administrator."
+        );
+        setErrors({
+          submit:
+            result.message ||
+            "Registration closed before your form could be submitted. Your entered details have been kept on this page.",
+        });
+        return;
+      }
+
       if (!response.ok) {
         throw new Error(
           result.message || `Registration failed (${response.status}).`
@@ -505,12 +571,11 @@ export default function Registration() {
       setRegistrationId(
         result.registrationId || result._id || "Submitted"
       );
-
       window.scrollTo({ top: 0, behavior: "smooth" });
-    } catch (err) {
+    } catch (error) {
       setErrors({
         submit:
-          err.message || "Could not connect to the registration server.",
+          error.message || "Could not connect to the registration server.",
       });
     } finally {
       setSubmitting(false);
@@ -535,13 +600,66 @@ export default function Registration() {
       confirmed: false,
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
+    loadRegistrationStatus();
   };
 
-  // Successful registration screen
+  if (registrationStatusLoading && registrationOpen === null) {
+    return (
+      <StatusScreen
+        title="Checking registration"
+        message="Please wait while we check whether the registration portal is open."
+      />
+    );
+  }
+
+  if (registrationOpen === null) {
+    return (
+      <StatusScreen
+        title="Unable to verify status"
+        message={
+          registrationStatusError ||
+          "The registration server could not be reached. Please try again."
+        }
+      >
+        <button
+          type="button"
+          className={primary}
+          onClick={() => {
+            setRegistrationStatusLoading(true);
+            loadRegistrationStatus();
+          }}
+        >
+          Retry
+        </button>
+      </StatusScreen>
+    );
+  }
+
+  if (registrationOpen === false && !registrationId) {
+    return (
+      <StatusScreen
+        title="Registrations are closed"
+        message={
+          registrationStatusError ||
+          "The registration window is currently closed. Please check again later for updates."
+        }
+      >
+        <button
+          type="button"
+          className={primary}
+          onClick={() => {
+            setRegistrationStatusLoading(true);
+            loadRegistrationStatus();
+          }}
+        >
+          Check again
+        </button>
+      </StatusScreen>
+    );
+  }
+
   if (registrationId) {
-    const reference = `${form.roll_no.trim()}${String(
-      registrationId
-    ).slice(10)}`;
+    const reference = `${form.roll_no.trim()}${String(registrationId).slice(10)}`;
 
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#fbf5e9] p-4 text-[#32131b]">
@@ -553,20 +671,14 @@ export default function Registration() {
               className="h-full w-full object-contain"
             />
           </div>
-
           <p className="mt-7 text-xs font-black uppercase tracking-[.24em] text-[#9b7133]">
             Cultural Sub-Council
           </p>
-
-          <h1 className="mt-3 text-3xl font-black">
-            You're on the list!
-          </h1>
-
+          <h1 className="mt-3 text-3xl font-black">You're on the list!</h1>
           <p className="mt-3 text-sm leading-6 text-[#8a776b]">
-            Your registration has been submitted. Keep this reference
-            for future communication.
+            Your registration has been submitted. Keep this reference for
+            future communication.
           </p>
-
           <div className="mt-6 rounded-2xl bg-[#fbf5e9] p-4">
             <p className="text-[10px] font-bold uppercase tracking-[.2em] text-[#9a887a]">
               Registration Reference
@@ -575,17 +687,11 @@ export default function Registration() {
               {reference}
             </p>
           </div>
-
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Link to="/" className={secondary}>
               Back to home
             </Link>
-
-            <button
-              className={primary}
-              onClick={reset}
-              type="button"
-            >
+            <button className={primary} onClick={reset} type="button">
               Register another
             </button>
           </div>
@@ -606,7 +712,6 @@ export default function Registration() {
                 className="h-9 w-9 shrink-0 object-contain sm:h-10 sm:w-10"
               />
             </div>
-
             <div>
               <p className="text-xs font-black tracking-[.13em] sm:text-sm">
                 CULTURAL SUB-COUNCIL
@@ -616,7 +721,6 @@ export default function Registration() {
               </p>
             </div>
           </Link>
-
           <Link
             to="/"
             className="text-xs font-bold text-[#7a1b2f] transition hover:text-[#9b7133] sm:text-sm"
@@ -629,578 +733,446 @@ export default function Registration() {
       <main className="mx-auto grid max-w-7xl gap-8 px-4 py-7 sm:px-8 sm:py-10 lg:grid-cols-[.75fr_1.25fr] lg:gap-12">
         <aside className="relative overflow-hidden rounded-[2rem] bg-[#32131b] p-7 text-[#fbf5e9] sm:p-10 lg:sticky lg:top-6 lg:h-fit">
           <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full border border-[#e5c47b]/20" />
-          <div className="pointer-events-none absolute -bottom-20 -left-10 h-64 w-64 rounded-full bg-[#7a1b2f]/70 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-20 -left-16 h-56 w-56 rounded-full border border-[#e5c47b]/20" />
 
           <div className="relative">
-            <span className="inline-flex items-center gap-2 rounded-full border border-[#e5c47b]/30 bg-white/5 px-3 py-2 text-[10px] font-black uppercase tracking-[.2em] text-[#e5c47b]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#e5c47b]" />
-              Registrations open
-            </span>
-
-            <p className="mt-10 text-xs font-bold uppercase tracking-[.25em] text-[#e5c47b]">
-              Make your mark
+            <p className="text-[10px] font-black uppercase tracking-[.25em] text-[#e5c47b]">
+              HEATS · Cultural Sub-Council
             </p>
-
-            <h1 className="mt-4 text-4xl font-black leading-[1.08] sm:text-5xl">
-              Every talent.
-              <br />
-              Every stage.
-              <br />
-              <span className="text-[#e5c47b]">Your moment.</span>
+            <h1 className="mt-5 text-4xl font-black leading-tight sm:text-5xl">
+              Let your talent take the stage.
             </h1>
-
-            <p className="mt-6 max-w-sm text-sm leading-7 text-[#f4e7d3]/75">
-              Choose your disciplines, define your team for each event,
-              and bring your creativity to the spotlight.
+            <p className="mt-5 text-sm leading-7 text-[#e8d9c5]">
+              Be a part of the celebration. Register for the events that
+              inspire you and showcase your creativity.
             </p>
 
-            <div className="mt-10">
-              <div className="mb-3 flex justify-between text-xs font-bold">
-                <span className="text-[#f4e7d3]/65">YOUR PROGRESS</span>
-                <span className="text-[#e5c47b]">
-                  {Math.round((step / 3) * 100)}%
+            <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-4">
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#e8d9c5]">
+                  Registration status
+                </span>
+                <span className="rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-bold text-emerald-200">
+                  OPEN
                 </span>
               </div>
-
-              <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
-                <div
-                  className="h-full rounded-full bg-[#e5c47b] transition-all"
-                  style={{ width: `${(step / 3) * 100}%` }}
-                />
-              </div>
-
-              <div className="mt-6 space-y-4">
-                {[
-                  ["01", "Your details"],
-                  ["02", "Event line-up"],
-                  ["03", "Review & submit"],
-                ].map(([number, title], index) => (
-                  <div
-                    key={number}
-                    className={`flex items-center gap-3 ${
-                      step === index + 1 ? "opacity-100" : "opacity-45"
-                    }`}
-                  >
-                    <div
-                      className={`flex h-10 w-10 items-center justify-center rounded-xl border text-xs font-black ${
-                        step > index + 1
-                          ? "border-[#e5c47b] bg-[#e5c47b] text-[#32131b]"
-                          : step === index + 1
-                            ? "border-[#e5c47b] text-[#e5c47b]"
-                            : "border-white/20"
-                      }`}
-                    >
-                      {step > index + 1 ? "✓" : number}
-                    </div>
-                    <p className="text-sm font-bold">{title}</p>
-                  </div>
-                ))}
-              </div>
+              <p className="mt-2 text-xs leading-5 text-[#d6c3ad]">
+                You can participate in multiple events. Select all the events
+                you wish to enter.
+              </p>
             </div>
 
-            <div className="mt-10 rounded-2xl border border-[#e5c47b]/20 bg-white/[.04] p-5">
-              <p className="text-xs font-black uppercase tracking-[.18em] text-[#e5c47b]">
-                Good to know
-              </p>
-              <ul className="mt-3 space-y-2 text-xs leading-5 text-[#f4e7d3]/70">
-                <li>• Choose a different participation type for each event.</li>
-                <li>• Music, Fine Arts and Photography are solo-only.</li>
-                <li>• Duo and Team members are tracked separately per event.</li>
-                <li>• Roll numbers must be 10 digits starting with 2026.</li>
-              </ul>
+            <div className="mt-8 space-y-5">
+              {[
+                ["01", "Your details", "Basic participant information"],
+                ["02", "Event format", "Solo, duo or team participation"],
+                ["03", "Final review", "Media links and confirmation"],
+              ].map(([number, title, description], index) => (
+                <div key={number} className="flex items-start gap-4">
+                  <div
+                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-black ${
+                      step === index + 1
+                        ? "bg-[#e5c47b] text-[#32131b]"
+                        : "border border-white/15 bg-white/5 text-[#e5c47b]"
+                    }`}
+                  >
+                    {number}
+                  </div>
+                  <div>
+                    <p className="font-bold">{title}</p>
+                    <p className="mt-1 text-xs text-[#cbb8a2]">
+                      {description}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </aside>
 
-        <section className="min-w-0">
-          <div className="mb-6">
-            <p className="text-[10px] font-black uppercase tracking-[.24em] text-[#9b7133]">
-              Registration form · Step 0{step}
-            </p>
-            <h2 className="mt-2 text-3xl font-black tracking-tight sm:text-4xl">
-              {step === 1
-                ? "Start with you."
-                : step === 2
-                  ? "Build your line-up."
-                  : "Ready for the spotlight?"}
-            </h2>
-            <p className="mt-2 max-w-xl text-sm leading-6 text-[#8a776b]">
-              {step === 1
-                ? "Tell us who you are and choose your events."
-                : step === 2
-                  ? "Choose Solo, Duo or Team separately for each event."
-                  : "Review event requirements and confirm your details."}
+        <section className="min-w-0 rounded-[2rem] border border-[#e9deca] bg-white p-5 shadow-sm sm:p-8 lg:p-10">
+          <div className="mb-8">
+            <div className="flex items-center justify-between gap-4">
+              <p className="text-xs font-bold uppercase tracking-[.18em] text-[#9b7133]">
+                Registration form
+              </p>
+              <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700">
+                ● Registrations open
+              </span>
+            </div>
+            <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-[#f1e9dc]">
+              <div
+                className="h-full rounded-full bg-[#7a1b2f] transition-all"
+                style={{ width: `${(step / 3) * 100}%` }}
+              />
+            </div>
+            <p className="mt-2 text-right text-xs text-[#9a887a]">
+              Step {step} of 3
             </p>
           </div>
 
-          <form
-            onSubmit={submit}
-            noValidate
-            className="rounded-[1.75rem] border border-[#e9deca] bg-white p-5 shadow-[0_18px_60px_rgba(64,20,31,.06)] sm:p-8"
-          >
+          <form onSubmit={submit} className="space-y-8">
             {step === 1 && (
-              <div className="space-y-9">
-                <section>
-                  <Heading
-                    eyebrow="01 / Personal details"
-                    title="The essentials"
-                    desc="Use contact details where the event team can reach you."
-                  />
+              <div>
+                <Heading
+                  eyebrow="01 / Personal information"
+                  title="Tell us about yourself"
+                  desc="Enter your details carefully. Your roll number and contact information will be used for event communication."
+                />
 
-                  <div className="grid gap-5 sm:grid-cols-2">
-                    <Field label="Full name" error={errors.name}>
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <Field label="Full name" error={errors.name}>
+                    <TextInput
+                      value={form.name}
+                      onChange={(value) => update("name", value)}
+                      placeholder="Enter your full name"
+                      autoComplete="name"
+                    />
+                  </Field>
+
+                  <Field
+                    label="Roll number"
+                    hint="10 digits, starts with 2026"
+                    error={errors.roll_no}
+                  >
+                    <TextInput
+                      value={form.roll_no}
+                      onChange={(value) =>
+                        update("roll_no", value.replace(/\D/g, "").slice(0, 10))
+                      }
+                      placeholder="e.g. 2026123456"
+                      inputMode="numeric"
+                      maxLength={10}
+                      autoComplete="off"
+                    />
+                  </Field>
+
+                  <Field label="Branch / department" error={errors.branch}>
+                    <TextInput
+                      value={form.branch}
+                      onChange={(value) => update("branch", value)}
+                      placeholder="e.g. Electrical Engineering"
+                    />
+                  </Field>
+
+                  <Field label="Mobile number" error={errors.phone}>
+                    <TextInput
+                      type="tel"
+                      value={form.phone}
+                      onChange={(value) =>
+                        update("phone", value.replace(/\D/g, "").slice(0, 10))
+                      }
+                      placeholder="10-digit mobile number"
+                      inputMode="numeric"
+                      maxLength={10}
+                      autoComplete="tel"
+                    />
+                  </Field>
+
+                  <div className="sm:col-span-2">
+                    <Field label="Email address" error={errors.email}>
                       <TextInput
-                        value={form.name}
-                        onChange={(v) => update("name", v)}
-                        placeholder="Your full name"
-                        autoComplete="name"
+                        type="email"
+                        value={form.email}
+                        onChange={(value) => update("email", value)}
+                        placeholder="you@example.com"
+                        autoComplete="email"
                       />
                     </Field>
-
-                    <Field label="Roll number" error={errors.roll_no}>
-                      <TextInput
-                        value={form.roll_no}
-                        onChange={(v) =>
-                          update("roll_no", v.replace(/\D/g, "").slice(0, 10))
-                        }
-                        placeholder="e.g. 2026123456"
-                        inputMode="numeric"
-                        maxLength={10}
-                        autoComplete="off"
-                      />
-                      <span className="mt-1 block text-xs font-normal text-[#9a887a]">
-                        Enter exactly 10 digits beginning with 2026.
-                      </span>
-                    </Field>
-
-                    <Field label="Branch / department" error={errors.branch}>
-                      <TextInput
-                        value={form.branch}
-                        onChange={(v) => update("branch", v)}
-                        placeholder="e.g. Electrical Engineering"
-                      />
-                    </Field>
-
-                    <Field label="Mobile number" error={errors.phone}>
-                      <TextInput
-                        type="tel"
-                        inputMode="numeric"
-                        maxLength={10}
-                        value={form.phone}
-                        onChange={(v) =>
-                          update("phone", v.replace(/\D/g, "").slice(0, 10))
-                        }
-                        placeholder="10-digit mobile number"
-                      />
-                    </Field>
-
-                    <div className="sm:col-span-2">
-                      <Field label="Email address" error={errors.email}>
-                        <TextInput
-                          type="email"
-                          value={form.email}
-                          onChange={(v) => update("email", v)}
-                          placeholder="you@example.com"
-                          autoComplete="email"
-                        />
-                      </Field>
-                    </div>
                   </div>
-                </section>
+                </div>
 
-                <div className="h-px bg-[#f0e8dc]" />
-
-                <section>
+                <div className="mt-9 border-t border-[#f0e8dc] pt-7">
                   <Heading
-                    eyebrow="02 / Your interests"
-                    title="Choose your events"
-                    desc="*You can participate in multiple events."
+                    eyebrow="02 / Choose your events"
+                    title="Where would you like to participate?"
+                    desc="You can participate in multiple events. Select all the events you want; participation type is configured separately for each event in the next step."
                   />
 
                   <div className="grid gap-3 sm:grid-cols-2">
-                    {EVENTS.map((ev) => {
-                      const active = form.selectedEvents.includes(ev.name);
-
+                    {EVENTS.map((event) => {
+                      const selected = form.selectedEvents.includes(event.name);
                       return (
                         <button
-                          key={ev.name}
                           type="button"
-                          onClick={() => toggleEvent(ev.name)}
-                          aria-pressed={active}
+                          key={event.name}
+                          onClick={() => toggleEvent(event.name)}
+                          aria-pressed={selected}
                           className={`rounded-2xl border p-4 text-left transition ${
-                            active
-                              ? "border-[#7a1b2f] bg-[#fcf3f1] ring-2 ring-[#7a1b2f]/5"
-                              : "border-[#eee5d8] hover:border-[#c6a56d] hover:bg-[#fffcf6]"
+                            selected
+                              ? "border-[#7a1b2f] bg-[#fbf2ed] ring-2 ring-[#7a1b2f]/10"
+                              : "border-[#e9deca] bg-[#fffcf6] hover:border-[#c9ad87]"
                           }`}
                         >
-                          <div className="flex items-start justify-between">
-                            <span
-                              className={`flex h-10 w-10 items-center justify-center rounded-xl text-xl ${
-                                active
-                                  ? "bg-[#7a1b2f] text-[#f7e8c6]"
-                                  : "bg-[#f8f1e5] text-[#946d32]"
-                              }`}
-                            >
-                              {ev.icon}
+                          <div className="flex items-center justify-between gap-3">
+                            <span className="text-2xl text-[#9b7133]">
+                              {event.icon}
                             </span>
                             <span
-                              className={`flex h-6 w-6 items-center justify-center rounded-full border text-xs ${
-                                active
+                              className={`flex h-5 w-5 items-center justify-center rounded-md border text-xs ${
+                                selected
                                   ? "border-[#7a1b2f] bg-[#7a1b2f] text-white"
-                                  : "border-[#ded2c0] text-transparent"
+                                  : "border-[#d8c8b2] bg-white"
                               }`}
                             >
-                              ✓
+                              {selected ? "✓" : ""}
                             </span>
                           </div>
-
-                          <p className="mt-4 font-extrabold">{ev.name}</p>
-                          <p className="mt-1 text-xs leading-5 text-[#958174]">
-                            {ev.desc}
+                          <p className="mt-3 font-black">{event.name}</p>
+                          <p className="mt-1 text-xs leading-5 text-[#8a776b]">
+                            {event.desc}
                           </p>
-                          <p className="mt-3 text-[10px] font-bold uppercase tracking-[.13em] text-[#9b7133]">
-                            {ev.types.join(" · ")}
+                          <p className="mt-3 text-[10px] font-bold uppercase tracking-wider text-[#9b7133]">
+                            {event.types.join(" · ")}
                           </p>
                         </button>
                       );
                     })}
                   </div>
-
                   {errors.selectedEvents && (
-                    <p className="mt-3 text-xs text-red-600">
+                    <p className="mt-2 text-xs font-medium text-red-600">
                       {errors.selectedEvents}
                     </p>
                   )}
+                </div>
 
-                  {selectedEvents.length > 0 && (
-                    <p className="mt-4 rounded-xl bg-[#f8f1e5] px-4 py-3 text-xs text-[#795c45]">
-                      <strong>{selectedEvents.length} selected:</strong>{" "}
-                      {selectedEvents.map((e) => e.name).join(", ")}
-                    </p>
-                  )}
-                </section>
-
-                <div className="flex justify-end border-t border-[#f0e8dc] pt-6">
+                <div className="mt-8 flex justify-end border-t border-[#f0e8dc] pt-6">
                   <button type="button" className={primary} onClick={next}>
-                    Continue to event setup →
+                    Continue to event format →
                   </button>
                 </div>
               </div>
             )}
 
             {step === 2 && (
-              <div className="space-y-6">
-                {!selectedEvents.length ? (
-                  <div className="rounded-2xl border border-dashed border-[#d8c8ad] bg-[#fffcf6] p-8 text-center">
-                    <p className="font-bold">No events selected yet</p>
-                    <p className="mt-2 text-sm text-[#8a776b]">
-                      Go back and select at least one event.
-                    </p>
-                    <button
-                      type="button"
-                      className={`${secondary} mt-5`}
-                      onClick={back}
+              <div className="space-y-8">
+                <Heading
+                  eyebrow="02 / Participation details"
+                  title="Choose your format"
+                  desc="Select a participation type separately for every event. For duo and team entries, add the details of your fellow participants."
+                />
+
+                {selectedEvents.map((event) => {
+                  const entry = form.eventEntries[event.name];
+                  if (!entry) return null;
+
+                  return (
+                    <section
+                      key={event.name}
+                      className="rounded-2xl border border-[#e9deca] bg-[#fffcf6] p-5"
                     >
-                      ← Back
-                    </button>
-                  </div>
-                ) : (
-                  <>
-                    <div className="rounded-2xl border border-[#eadfcf] bg-[#fffcf6] p-4 text-sm leading-6 text-[#795c45]">
-                      <strong>Each event is independent.</strong> You can
-                      choose Duo for Dance and Solo for Music in the same
-                      registration.
-                    </div>
+                      <div className="flex flex-wrap items-center justify-between gap-3">
+                        <div>
+                          <p className="text-[10px] font-black uppercase tracking-[.2em] text-[#9b7133]">
+                            Selected event
+                          </p>
+                          <h3 className="mt-1 text-xl font-black">
+                            {event.name}
+                          </h3>
+                        </div>
+                        <span className="rounded-full bg-[#f7eadb] px-3 py-1 text-xs font-bold text-[#7a1b2f]">
+                          {event.types.join(" / ")}
+                        </span>
+                      </div>
 
-                    {selectedEvents.map((ev, i) => {
-                      const entry = form.eventEntries[ev.name];
-                      const group = ["Duo", "Team"].includes(
-                        entry.participationType
-                      );
-
-                      return (
-                        <section
-                          key={ev.name}
-                          className="overflow-hidden rounded-2xl border border-[#e9deca]"
+                      <Field
+                        label="Participation type"
+                        error={errors[`${event.name}_participationType`]}
+                      >
+                        <select
+                          className={inputClass}
+                          value={entry.participationType}
+                          onChange={(eventChange) =>
+                            updateEntry(
+                              event.name,
+                              "participationType",
+                              eventChange.target.value
+                            )
+                          }
                         >
-                          <div className="flex items-center gap-3 border-b border-[#eee5d8] bg-[#fffcf6] px-4 py-4 sm:px-5">
-                            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#f3e6d9] text-xl text-[#7a1b2f]">
-                              {ev.icon}
-                            </span>
-                            <div className="min-w-0 flex-1">
-                              <p className="text-[10px] font-bold uppercase tracking-[.16em] text-[#9b7133]">
-                                Event {String(i + 1).padStart(2, "0")}
+                          {event.types.map((type) => (
+                            <option key={type} value={type}>
+                              {type}
+                            </option>
+                          ))}
+                        </select>
+                      </Field>
+
+                      {["Duo", "Team"].includes(entry.participationType) && (
+                        <div className="mt-5 space-y-5">
+                          <Field
+                            label={
+                              entry.participationType === "Duo"
+                                ? "Duo name"
+                                : "Team name"
+                            }
+                            error={errors[`${event.name}_teamName`]}
+                          >
+                            <TextInput
+                              value={entry.teamName}
+                              onChange={(value) =>
+                                updateEntry(event.name, "teamName", value)
+                              }
+                              placeholder="Enter your duo / team name"
+                            />
+                          </Field>
+
+                          <div className="flex flex-wrap items-center justify-between gap-3">
+                            <div>
+                              <p className="font-bold text-[#48232b]">
+                                Other participants
                               </p>
-                              <h3 className="font-black">{ev.name}</h3>
+                              <p className="mt-1 text-xs text-[#8a776b]">
+                                {entry.participationType === "Duo"
+                                  ? "Add exactly one partner."
+                                  : "Add at least two other team members."}
+                              </p>
                             </div>
-                            <span className="rounded-full border border-[#e5d8c5] bg-white px-3 py-1 text-[10px] font-bold text-[#846f5e]">
-                              {ev.types.length === 1
-                                ? "Solo only"
-                                : "Choose format"}
-                            </span>
+                            <button
+                              type="button"
+                              className={secondary}
+                              onClick={() => addMember(event.name)}
+                              disabled={
+                                entry.members.length >=
+                                (entry.participationType === "Duo" ? 1 : 19)
+                              }
+                            >
+                              + Add member
+                            </button>
                           </div>
 
-                          <div className="space-y-5 p-4 sm:p-5">
-                            <div>
-                              <p className="mb-3 text-sm font-bold">
-                                How will you participate?
-                              </p>
-
-                              <div
-                                className={`grid gap-2 ${
-                                  ev.types.length === 1
-                                    ? "grid-cols-1"
-                                    : "grid-cols-3"
-                                }`}
-                              >
-                                {ev.types.length === 1 ? (
-                                  <div className="rounded-xl border border-[#7a1b2f] bg-[#7a1b2f] px-3 py-3 text-center text-sm font-bold text-white">
-                                    Solo
-                                    <span className="mt-1 block text-[10px] font-normal text-white/70">
-                                      Just me · Required for this event
-                                    </span>
-                                  </div>
-                                ) : (
-                                  ev.types.map((type) => (
-                                    <button
-                                      key={type}
-                                      type="button"
-                                      onClick={() =>
-                                        updateEntry(
-                                          ev.name,
-                                          "participationType",
-                                          type
-                                        )
-                                      }
-                                      className={`rounded-xl border px-3 py-3 text-sm font-bold transition ${
-                                        entry.participationType === type
-                                          ? "border-[#7a1b2f] bg-[#7a1b2f] text-white"
-                                          : "border-[#e9deca] bg-white text-[#795c45] hover:border-[#b89963]"
-                                      }`}
-                                    >
-                                      {type}
-                                      <span
-                                        className={`mt-1 block text-[10px] font-normal ${
-                                          entry.participationType === type
-                                            ? "text-white/70"
-                                            : "text-[#a08c7b]"
-                                        }`}
-                                      >
-                                        {type === "Solo"
-                                          ? "Just me"
-                                          : type === "Duo"
-                                            ? "2 people total"
-                                            : "3+ people total"}
-                                      </span>
-                                    </button>
-                                  ))
-                                )}
+                          {entry.members.map((member, index) => (
+                            <div
+                              key={`${event.name}-${index}`}
+                              className="rounded-xl border border-[#eee3d4] bg-white p-4"
+                            >
+                              <div className="mb-4 flex items-center justify-between">
+                                <p className="text-sm font-black">
+                                  {entry.participationType === "Duo"
+                                    ? "Partner"
+                                    : `Member ${index + 1}`}
+                                </p>
+                                <button
+                                  type="button"
+                                  onClick={() => removeMember(event.name, index)}
+                                  className="text-xs font-bold text-red-600 hover:text-red-800"
+                                >
+                                  Remove
+                                </button>
                               </div>
 
-                              {ev.types.length === 1 && (
-                                <p className="mt-2 text-xs text-[#8a776b]">
-                                  This event accepts solo registrations only.
-                                </p>
-                              )}
-                            </div>
-
-                            {group && (
-                              <div className="space-y-4 rounded-xl bg-[#fbf5e9] p-4">
-                                <Field
-                                  label={
-                                    entry.participationType === "Duo"
-                                      ? "Duo name"
-                                      : "Team name"
-                                  }
-                                  error={errors[`${ev.name}_teamName`]}
-                                >
+                              <div className="grid gap-4 sm:grid-cols-2">
+                                <Field label="Full name">
                                   <TextInput
-                                    value={entry.teamName}
-                                    onChange={(v) =>
-                                      updateEntry(ev.name, "teamName", v)
+                                    value={member.name}
+                                    onChange={(value) =>
+                                      updateMember(
+                                        event.name,
+                                        index,
+                                        "name",
+                                        value
+                                      )
                                     }
-                                    placeholder={
-                                      entry.participationType === "Duo"
-                                        ? "Give your duo a name"
-                                        : "Enter your team name"
-                                    }
+                                    placeholder="Member full name"
                                   />
                                 </Field>
 
-                                <div className="flex flex-wrap items-center justify-between gap-3">
-                                  <div>
-                                    <p className="text-sm font-bold">
-                                      {entry.participationType === "Duo"
-                                        ? "Your partner"
-                                        : "Other team members"}
-                                    </p>
-                                    <p className="mt-1 text-xs text-[#958174]">
-                                      {entry.participationType === "Duo"
-                                        ? "Add exactly one partner. You are already included."
-                                        : "You are already included as the lead participant."}
-                                    </p>
-                                  </div>
-
-                                  <button
-                                    type="button"
-                                    className={secondary}
-                                    disabled={
-                                      (entry.participationType === "Duo" &&
-                                        entry.members.length >= 1) ||
-                                      entry.members.length >= 19
+                                <Field label="Roll number">
+                                  <TextInput
+                                    value={member.roll_no}
+                                    onChange={(value) =>
+                                      updateMember(
+                                        event.name,
+                                        index,
+                                        "roll_no",
+                                        value.replace(/\D/g, "").slice(0, 10)
+                                      )
                                     }
-                                    onClick={() => addMember(ev.name)}
+                                    placeholder="e.g. 2026123456"
+                                    inputMode="numeric"
+                                    maxLength={10}
+                                  />
+                                </Field>
+
+                                <Field label="Branch / department">
+                                  <TextInput
+                                    value={member.branch}
+                                    onChange={(value) =>
+                                      updateMember(
+                                        event.name,
+                                        index,
+                                        "branch",
+                                        value
+                                      )
+                                    }
+                                    placeholder="e.g. Electrical Engineering"
+                                  />
+                                </Field>
+
+                                <Field label="Mobile number">
+                                  <TextInput
+                                    type="tel"
+                                    value={member.phone}
+                                    onChange={(value) =>
+                                      updateMember(
+                                        event.name,
+                                        index,
+                                        "phone",
+                                        value.replace(/\D/g, "").slice(0, 10)
+                                      )
+                                    }
+                                    placeholder="10-digit mobile number"
+                                    inputMode="numeric"
+                                    maxLength={10}
+                                  />
+                                </Field>
+
+                                <div className="sm:col-span-2">
+                                  <Field
+                                    label="Email address"
+                                    hint="optional"
                                   >
-                                    + Add{" "}
-                                    {entry.participationType === "Duo"
-                                      ? "partner"
-                                      : "member"}
-                                  </button>
+                                    <TextInput
+                                      type="email"
+                                      value={member.email}
+                                      onChange={(value) =>
+                                        updateMember(
+                                          event.name,
+                                          index,
+                                          "email",
+                                          value
+                                        )
+                                      }
+                                      placeholder="member@example.com"
+                                    />
+                                  </Field>
                                 </div>
-
-                                {entry.members.map((member, j) => (
-                                  <div
-                                    key={j}
-                                    className="rounded-xl border border-[#e8dece] bg-white p-4"
-                                  >
-                                    <div className="mb-3 flex items-center justify-between">
-                                      <p className="text-xs font-black uppercase tracking-[.12em] text-[#9b7133]">
-                                        {entry.participationType === "Duo"
-                                          ? "Partner details"
-                                          : `Member ${j + 1}`}
-                                      </p>
-                                      <button
-                                        type="button"
-                                        onClick={() =>
-                                          removeMember(ev.name, j)
-                                        }
-                                        className="text-xs font-bold text-red-600"
-                                      >
-                                        Remove
-                                      </button>
-                                    </div>
-
-                                    <div className="grid gap-4 sm:grid-cols-2">
-                                      <Field label="Full name">
-                                        <TextInput
-                                          value={member.name}
-                                          onChange={(v) =>
-                                            updateMember(
-                                              ev.name,
-                                              j,
-                                              "name",
-                                              v
-                                            )
-                                          }
-                                          placeholder="Member's full name"
-                                        />
-                                      </Field>
-
-                                      <Field
-                                        label="Roll number"
-                                        error={errors[`${ev.name}_member_${j}`]}
-                                      >
-                                        <TextInput
-                                          value={member.roll_no}
-                                          onChange={(v) =>
-                                            updateMember(
-                                              ev.name,
-                                              j,
-                                              "roll_no",
-                                              v.replace(/\D/g, "").slice(0, 10)
-                                            )
-                                          }
-                                          placeholder="e.g. 2026123456"
-                                          inputMode="numeric"
-                                          maxLength={10}
-                                          autoComplete="off"
-                                        />
-                                      </Field>
-
-                                      <Field label="Branch / department">
-                                        <TextInput
-                                          value={member.branch}
-                                          onChange={(v) =>
-                                            updateMember(
-                                              ev.name,
-                                              j,
-                                              "branch",
-                                              v
-                                            )
-                                          }
-                                          placeholder="e.g. Electrical Engineering"
-                                        />
-                                      </Field>
-
-                                      <Field label="Mobile number">
-                                        <TextInput
-                                          type="tel"
-                                          inputMode="numeric"
-                                          maxLength={10}
-                                          value={member.phone}
-                                          onChange={(v) =>
-                                            updateMember(
-                                              ev.name,
-                                              j,
-                                              "phone",
-                                              v.replace(/\D/g, "").slice(0, 10)
-                                            )
-                                          }
-                                          placeholder="10-digit mobile number"
-                                        />
-                                      </Field>
-
-                                      <div className="sm:col-span-2">
-                                        <Field
-                                          label="Email address"
-                                          hint="optional"
-                                        >
-                                          <TextInput
-                                            type="email"
-                                            value={member.email}
-                                            onChange={(v) =>
-                                              updateMember(
-                                                ev.name,
-                                                j,
-                                                "email",
-                                                v
-                                              )
-                                            }
-                                            placeholder="member@example.com"
-                                          />
-                                        </Field>
-                                      </div>
-                                    </div>
-                                  </div>
-                                ))}
-
-                                {errors[`${ev.name}_members`] && (
-                                  <p className="text-xs font-medium text-red-600">
-                                    {errors[`${ev.name}_members`]}
-                                  </p>
-                                )}
                               </div>
-                            )}
-                          </div>
-                        </section>
-                      );
-                    })}
-                  </>
-                )}
+
+                              {errors[`${event.name}_member_${index}`] && (
+                                <p className="mt-3 text-xs font-medium text-red-600">
+                                  {errors[`${event.name}_member_${index}`]}
+                                </p>
+                              )}
+                            </div>
+                          ))}
+
+                          {errors[`${event.name}_members`] && (
+                            <p className="text-xs font-medium text-red-600">
+                              {errors[`${event.name}_members`]}
+                            </p>
+                          )}
+                        </div>
+                      )}
+                    </section>
+                  );
+                })}
 
                 <div className="flex flex-col-reverse gap-3 border-t border-[#f0e8dc] pt-6 sm:flex-row sm:justify-between">
-                  <button
-                    type="button"
-                    className={secondary}
-                    onClick={back}
-                  >
+                  <button type="button" className={secondary} onClick={back}>
                     ← Back
                   </button>
-                  <button
-                    type="button"
-                    className={primary}
-                    onClick={next}
-                  >
+                  <button type="button" className={primary} onClick={next}>
                     Continue to review →
                   </button>
                 </div>
@@ -1225,11 +1197,12 @@ export default function Registration() {
                       <TextInput
                         type="url"
                         value={form.trackLink}
-                        onChange={(v) => update("trackLink", v)}
+                        onChange={(value) => update("trackLink", value)}
                         placeholder="https://drive.google.com/file/d/..."
                       />
                       <span className="mt-2 block text-xs font-normal text-[#9a887a]">
-                        *Ensure that the uploaded Google Drive link is set to “Anyone with the link – Viewer”
+                        Ensure that the uploaded Google Drive link is set to
+                        “Anyone with the link – Viewer”.
                       </span>
                     </Field>
                   )}
@@ -1244,8 +1217,8 @@ export default function Registration() {
                         <textarea
                           className={`${inputClass} min-h-32 resize-y`}
                           value={form.imageLinks}
-                          onChange={(e) =>
-                            update("imageLinks", e.target.value)
+                          onChange={(event) =>
+                            update("imageLinks", event.target.value)
                           }
                           placeholder={
                             "https://drive.google.com/file/d/IMAGE_ID_1/view\nhttps://drive.google.com/file/d/IMAGE_ID_2/view"
@@ -1261,10 +1234,9 @@ export default function Registration() {
                         Fine Arts artwork links
                       </p>
                       <p className="mt-1 text-xs leading-5 text-[#8a776b]">
-                        Paste 1–5 Google Drive links to your artwork, one
-                        link per line. Ensure the event team can view them.
+                        Paste 1–5 Google Drive links to your artwork, one link
+                        per line. Ensure the event team can view them.
                       </p>
-
                       <div className="mt-4">
                         <Field
                           label="Google Drive links"
@@ -1274,8 +1246,8 @@ export default function Registration() {
                           <textarea
                             className={`${inputClass} min-h-32 resize-y`}
                             value={form.fineArtLinks}
-                            onChange={(e) =>
-                              update("fineArtLinks", e.target.value)
+                            onChange={(event) =>
+                              update("fineArtLinks", event.target.value)
                             }
                             placeholder={
                               "https://drive.google.com/file/d/ARTWORK_ID_1/view\nhttps://drive.google.com/file/d/ARTWORK_ID_2/view"
@@ -1283,10 +1255,9 @@ export default function Registration() {
                           />
                         </Field>
                       </div>
-
                       <p className="mt-2 text-xs text-[#9a887a]">
-                        Tip: In Google Drive, open Share and set access so
-                        the event team can view the artwork.
+                        In Google Drive, open Share and set access so the
+                        event team can view the artwork.
                       </p>
                     </div>
                   )}
@@ -1295,8 +1266,8 @@ export default function Registration() {
                     !form.selectedEvents.includes("Photography") &&
                     !form.selectedEvents.includes("Fine Arts") && (
                       <p className="rounded-xl border border-dashed border-[#e4d5bf] bg-[#fffcf6] p-5 text-sm text-[#8a776b]">
-                        No additional media submissions are required for
-                        your selected events.
+                        No additional media submissions are required for your
+                        selected events.
                       </p>
                     )}
                 </section>
@@ -1316,14 +1287,11 @@ export default function Registration() {
                         <p className="text-[10px] font-bold uppercase tracking-[.15em] text-[#9a887a]">
                           Participant
                         </p>
-                        <p className="mt-1 font-bold">
-                          {form.name || "—"}
-                        </p>
+                        <p className="mt-1 font-bold">{form.name || "—"}</p>
                         <p className="mt-1 text-xs text-[#8a776b]">
                           {form.roll_no} · {form.branch}
                         </p>
                       </div>
-
                       <div>
                         <p className="text-[10px] font-bold uppercase tracking-[.15em] text-[#9a887a]">
                           Contact
@@ -1338,13 +1306,12 @@ export default function Registration() {
                     </div>
 
                     <div className="divide-y divide-[#eee5d8]">
-                      {selectedEvents.map((ev) => {
-                        const entry = form.eventEntries[ev.name];
-
+                      {selectedEvents.map((event) => {
+                        const entry = form.eventEntries[event.name];
                         return (
-                          <div key={ev.name} className="p-4 sm:p-5">
+                          <div key={event.name} className="p-4 sm:p-5">
                             <div className="flex flex-wrap items-center justify-between gap-2">
-                              <p className="font-black">{ev.name}</p>
+                              <p className="font-black">{event.name}</p>
                               <span className="rounded-full bg-[#f7eadb] px-3 py-1 text-xs font-bold text-[#7a1b2f]">
                                 {entry.participationType}
                               </span>
@@ -1361,12 +1328,12 @@ export default function Registration() {
                                   Additional participants:{" "}
                                   {entry.members.length}
                                 </p>
-                                {entry.members.map((member, j) => (
+                                {entry.members.map((member, index) => (
                                   <p
-                                    key={j}
+                                    key={index}
                                     className="mt-1 text-xs text-[#8a776b]"
                                   >
-                                    {member.name || `Member ${j + 1}`} ·{" "}
+                                    {member.name || `Member ${index + 1}`} ·{" "}
                                     {member.roll_no || "No roll number"}
                                   </p>
                                 ))}
@@ -1385,8 +1352,8 @@ export default function Registration() {
                       type="checkbox"
                       className="mt-1 accent-[#7a1b2f]"
                       checked={form.confirmed}
-                      onChange={(e) =>
-                        update("confirmed", e.target.checked)
+                      onChange={(event) =>
+                        update("confirmed", event.target.checked)
                       }
                     />
                     <span className="text-sm leading-6 text-[#795c45]">
@@ -1394,7 +1361,6 @@ export default function Registration() {
                       members are correct for each selected event.
                     </span>
                   </label>
-
                   {errors.confirmed && (
                     <p className="mt-2 text-xs font-medium text-red-600">
                       {errors.confirmed}
@@ -1420,11 +1386,10 @@ export default function Registration() {
                   >
                     ← Edit registration
                   </button>
-
                   <button
                     type="submit"
                     className={primary}
-                    disabled={submitting}
+                    disabled={submitting || registrationOpen !== true}
                   >
                     {submitting
                       ? "Submitting registration…"
@@ -1433,8 +1398,8 @@ export default function Registration() {
                 </div>
 
                 <p className="text-center text-xs leading-5 text-[#a08c7b]">
-                  Your details are saved when the registration server
-                  accepts them.
+                  Your details are saved when the registration server accepts
+                  them.
                 </p>
               </div>
             )}
