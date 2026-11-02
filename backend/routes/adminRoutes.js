@@ -3,10 +3,16 @@ const express = require("express");
 const mongoose = require("mongoose");
 
 const Registration = require("../models/Registration");
+const RegistrationSetting = require("../models/RegistrationSetting");
+
 const requireAdmin = require("../middleware/requireAdmin");
 const { WEIGHTS, calculateTotal } = require("../utils/scoring");
 
 const router = express.Router();
+
+// ==========================================
+// CONSTANTS
+// ==========================================
 
 const CLUBS = [
   "Dance",
@@ -27,6 +33,10 @@ const STATUSES = [
   "On Hold",
 ];
 
+// ==========================================
+// HELPERS
+// ==========================================
+
 const escapeRegex = (value) =>
   value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
@@ -39,11 +49,100 @@ const toCandidate = (doc) => {
   };
 };
 
+// ==========================================
+// ADMIN AUTHENTICATION
+// All routes below require admin authentication.
+// ==========================================
+
 router.use(requireAdmin);
+
+// ==========================================
+// GET ADMIN PROFILE
+// ==========================================
 
 router.get("/me", (req, res) => {
   res.json({ admin: req.admin });
 });
+
+// ==========================================
+// REGISTRATION MANAGEMENT
+// ==========================================
+
+// GET REGISTRATION STATUS
+
+router.get("/registration-status", async (req, res) => {
+  try {
+    const setting = await RegistrationSetting.findOne({
+      key: "global",
+    }).lean();
+
+    return res.json({
+      success: true,
+      registrationOpen: setting
+        ? setting.registrationOpen
+        : true,
+    });
+  } catch (error) {
+    console.error("Get registration status error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Unable to fetch registration status.",
+    });
+  }
+});
+
+// OPEN / CLOSE REGISTRATIONS
+
+router.patch("/registration-status", async (req, res) => {
+  try {
+    const { registrationOpen } = req.body;
+
+    if (typeof registrationOpen !== "boolean") {
+      return res.status(400).json({
+        success: false,
+        message: "registrationOpen must be a boolean.",
+      });
+    }
+
+    const setting = await RegistrationSetting.findOneAndUpdate(
+      { key: "global" },
+      {
+        $set: {
+          registrationOpen,
+        },
+        $setOnInsert: {
+          key: "global",
+        },
+      },
+      {
+        new: true,
+        upsert: true,
+        runValidators: true,
+        setDefaultsOnInsert: true,
+      }
+    );
+
+    return res.json({
+      success: true,
+      registrationOpen: setting.registrationOpen,
+      message: registrationOpen
+        ? "Registrations opened successfully."
+        : "Registrations closed successfully.",
+    });
+  } catch (error) {
+    console.error("Update registration status error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Unable to update registration status.",
+    });
+  }
+});
+
+// ==========================================
+// GET CANDIDATES
+// ==========================================
 
 router.get("/candidates", async (req, res) => {
   try {
@@ -61,9 +160,9 @@ router.get("/candidates", async (req, res) => {
       Math.max(1, Number.parseInt(req.query.limit, 10) || 50)
     );
 
-    // Search and status filters apply to the dashboard statistics.
-    // The selected club is deliberately excluded so the club cards
-    // remain stable when the user clicks a club.
+    // Search and status filters apply to dashboard statistics.
+    // Club selection is excluded so club cards remain stable.
+
     const statsFilter = {};
 
     if (search) {
@@ -83,7 +182,8 @@ router.get("/candidates", async (req, res) => {
       statsFilter.adminStatus = status;
     }
 
-    // The candidate list and total respect the selected club.
+    // Candidate list respects selected club.
+
     const filter = { ...statsFilter };
 
     if (club && CLUBS.includes(club)) {
@@ -103,11 +203,13 @@ router.get("/candidates", async (req, res) => {
         .lean(),
     ]);
 
-    // Count each registration once per club, even if legacy data
-    // accidentally contains duplicate event values.
+    // CLUB-WISE COUNTS
+
     const clubCounts = Object.fromEntries(
       CLUBS.map((name) => [name, 0])
     );
+
+    // DECISION COUNTS
 
     const decisionCounts = {
       selected: 0,
@@ -122,7 +224,10 @@ router.get("/candidates", async (req, res) => {
 
       for (const event of events) {
         if (
-          Object.prototype.hasOwnProperty.call(clubCounts, event)
+          Object.prototype.hasOwnProperty.call(
+            clubCounts,
+            event
+          )
         ) {
           clubCounts[event]++;
         }
@@ -161,6 +266,10 @@ router.get("/candidates", async (req, res) => {
   }
 });
 
+// ==========================================
+// GET SINGLE CANDIDATE
+// ==========================================
+
 router.get("/candidates/:id", async (req, res) => {
   try {
     if (!mongoose.isValidObjectId(req.params.id)) {
@@ -190,6 +299,11 @@ router.get("/candidates/:id", async (req, res) => {
   }
 });
 
+// ==========================================
+// UPDATE CANDIDATE
+// SCORES / ADMIN STATUS / ADMIN NOTES
+// ==========================================
+
 router.patch("/candidates/:id", async (req, res) => {
   try {
     if (!mongoose.isValidObjectId(req.params.id)) {
@@ -205,6 +319,8 @@ router.patch("/candidates/:id", async (req, res) => {
     ];
 
     const updates = {};
+
+    // UPDATE SCORES
 
     if (req.body.scores !== undefined) {
       if (
@@ -234,6 +350,8 @@ router.patch("/candidates/:id", async (req, res) => {
       }
     }
 
+    // UPDATE ADMIN STATUS
+
     if (req.body.adminStatus !== undefined) {
       if (!STATUSES.includes(req.body.adminStatus)) {
         return res.status(400).json({
@@ -243,6 +361,8 @@ router.patch("/candidates/:id", async (req, res) => {
 
       updates.adminStatus = req.body.adminStatus;
     }
+
+    // UPDATE ADMIN NOTES
 
     if (req.body.adminNotes !== undefined) {
       if (
@@ -268,7 +388,10 @@ router.patch("/candidates/:id", async (req, res) => {
     const candidate = await Registration.findByIdAndUpdate(
       req.params.id,
       { $set: updates },
-      { new: true, runValidators: true }
+      {
+        new: true,
+        runValidators: true,
+      }
     );
 
     if (!candidate) {
@@ -289,5 +412,9 @@ router.patch("/candidates/:id", async (req, res) => {
     });
   }
 });
+
+// ==========================================
+// EXPORT ROUTER
+// ==========================================
 
 module.exports = router;

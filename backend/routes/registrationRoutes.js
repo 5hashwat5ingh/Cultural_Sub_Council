@@ -1,6 +1,7 @@
-
 const express = require("express");
+
 const Registration = require("../models/Registration");
+const RegistrationSetting = require("../models/RegistrationSetting");
 
 const router = express.Router();
 
@@ -124,9 +125,46 @@ function validateMember(member) {
   return null;
 }
 
+// GET /api/registrations/status
+// Public route: checks whether registrations are open.
+router.get("/status", async (req, res) => {
+  try {
+    const setting = await RegistrationSetting.findOne({
+      key: "global",
+    }).lean();
+
+    return res.status(200).json({
+      success: true,
+      registrationOpen: setting
+        ? setting.registrationOpen
+        : true,
+    });
+  } catch (error) {
+    console.error("Registration status fetch error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Unable to fetch registration status.",
+    });
+  }
+});
+
 // POST /api/registrations
 router.post("/", async (req, res) => {
   try {
+    // Check registration status before processing the submission.
+    const setting = await RegistrationSetting.findOne({
+      key: "global",
+    }).lean();
+
+    if (setting && setting.registrationOpen === false) {
+      return res.status(403).json({
+        success: false,
+        registrationOpen: false,
+        message: "Registrations for HEATS '26 are currently closed.",
+      });
+    }
+
     const {
       name,
       roll_no,
@@ -264,6 +302,7 @@ router.post("/", async (req, res) => {
       }
 
       const isGroup = ["Duo", "Team"].includes(participationType);
+
       const cleanTeamName =
         typeof teamName === "string" ? teamName.trim() : "";
 
@@ -438,6 +477,43 @@ router.post("/", async (req, res) => {
 
     return res.status(500).json({
       message: "Could not save registration. Please try again later.",
+    });
+  }
+});
+router.get("/status", async (req, res) => {
+  console.log("[STATUS] Route reached");
+
+  try {
+    console.log("[STATUS] Checking RegistrationSetting model...");
+    console.log(
+      "[STATUS] MongoDB state:",
+      require("mongoose").connection.readyState
+    );
+
+    const setting = await RegistrationSetting.findOne({
+      key: "global",
+    })
+      .maxTimeMS(5000)
+      .lean();
+
+    console.log("[STATUS] Query completed:", setting);
+
+    return res.status(200).json({
+      success: true,
+      registrationOpen: setting
+        ? setting.registrationOpen
+        : true,
+    });
+  } catch (error) {
+    console.error("[STATUS] Query error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Unable to fetch registration status.",
+      error:
+        process.env.NODE_ENV !== "production"
+          ? error.message
+          : undefined,
     });
   }
 });

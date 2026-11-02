@@ -10,19 +10,15 @@ import {
 
   GraduationCap, CalendarDays, Filter, UserRound, Music, Image as ImageIcon,
 
-  FileText, ClipboardList
+  FileText, ClipboardList, Lock, Unlock
 
 } from "lucide-react";
-
-
 
 const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:5000").replace(/\/+$/, "");
 
 const CLUBS = ["Dance", "Music", "Dramatics", "Fine Arts", "Photography"];
 
 const GOLD = "#E8C879";
-
-
 
 async function apiRequest(path, options = {}) {
 
@@ -52,8 +48,6 @@ async function apiRequest(path, options = {}) {
 
 }
 
-
-
 const display = (value) => value === undefined || value === null || value === "" ? "—" : value;
 
 const dateLabel = (value) => value ? new Date(value).toLocaleString() : "—";
@@ -69,8 +63,6 @@ const getLinks = (candidate) => [
   ...(Array.isArray(candidate.fineArtLinks) ? candidate.fineArtLinks.map((url, i) => ({ label: `Fine Arts artwork ${i + 1}`, url })) : []),
 
 ];
-
-
 
 function StatusBadge({ status }) {
 
@@ -89,8 +81,6 @@ function StatusBadge({ status }) {
   return <span className={`inline-flex items-center rounded-full border px-3 py-1 text-[11px] font-bold ${styles}`}>{label}</span>;
 
 }
-
-
 
 function StatCard({ title, value, icon: Icon, detail }) {
 
@@ -116,8 +106,6 @@ function StatCard({ title, value, icon: Icon, detail }) {
 
 }
 
-
-
 function InfoTile({ label, value, icon: Icon }) {
 
   return (
@@ -138,8 +126,6 @@ function InfoTile({ label, value, icon: Icon }) {
 
 }
 
-
-
 function ReviewModal({ candidate, onClose, onDecision, busy }) {
 
   if (!candidate) return null;
@@ -159,8 +145,6 @@ function ReviewModal({ candidate, onClose, onDecision, busy }) {
     ["Year", candidate.year],
 
   ];
-
-
 
   return (
 
@@ -185,8 +169,6 @@ function ReviewModal({ candidate, onClose, onDecision, busy }) {
           <button type="button" onClick={onClose} aria-label="Close profile" className="rounded-xl border border-white/10 p-2.5 text-white/70 transition hover:border-white/25 hover:bg-white/10"><X size={20} /></button>
 
         </header>
-
-
 
         <div className="space-y-7 p-4 sm:p-7">
 
@@ -213,8 +195,6 @@ function ReviewModal({ candidate, onClose, onDecision, busy }) {
             </div>
 
           </section>
-
-
 
           <section>
 
@@ -308,8 +288,6 @@ function ReviewModal({ candidate, onClose, onDecision, busy }) {
 
           </section>
 
-
-
           <section>
 
             <h3 className="mb-3 flex items-center gap-2 text-sm font-black uppercase tracking-[.14em] text-[#E8C879]"><ExternalLink size={17} /> Submitted work & links</h3>
@@ -331,8 +309,6 @@ function ReviewModal({ candidate, onClose, onDecision, busy }) {
             <p className="mt-2 text-xs text-white/35">Google Drive files must be shared with the reviewer or set to an appropriate viewing permission.</p>
 
           </section>
-
-
 
           <div className="flex flex-col-reverse gap-2 border-t border-white/10 pt-5 sm:flex-row sm:justify-between">
 
@@ -357,8 +333,6 @@ function ReviewModal({ candidate, onClose, onDecision, busy }) {
   );
 
 }
-
-
 
 function CandidateCard({ candidate, onOpen, onDecision, busy }) {
 
@@ -454,8 +428,6 @@ function CandidateCard({ candidate, onOpen, onDecision, busy }) {
 
 }
 
-
-
 export default function AdminDashboard() {
 
   const navigate = useNavigate();
@@ -463,9 +435,14 @@ export default function AdminDashboard() {
   const [driveLinksOpen, setDriveLinksOpen] = useState(false);
 
   const [admin, setAdmin] = useState(null);
+  const [registrationOpen, setRegistrationOpen] = useState(true);
+  const [registrationStatusLoading, setRegistrationStatusLoading] = useState(true);
+  const [registrationStatusSaving, setRegistrationStatusSaving] = useState(false);
 
   const [candidates, setCandidates] = useState([]);
+
   const [clubCountsFromApi, setClubCountsFromApi] = useState({});
+
   const [decisionCountsFromApi, setDecisionCountsFromApi] = useState({ selected: 0, rejected: 0, pending: 0 });
 
   const [search, setSearch] = useState("");
@@ -497,14 +474,11 @@ export default function AdminDashboard() {
   const [candidateNameInput, setCandidateNameInput] = useState("");
 
   const [candidateRollInput, setCandidateRollInput] = useState("");
-
-  const [candidateLookupLoading, setCandidateLookupLoading] = useState(false);
+const [candidateLookupLoading, setCandidateLookupLoading] = useState(false);
 
   const [candidateLookupError, setCandidateLookupError] = useState("");
 
   const [candidateLookupResults, setCandidateLookupResults] = useState([]);
-
-
 
   const loadDashboard = useCallback(async () => {
 
@@ -525,7 +499,9 @@ export default function AdminDashboard() {
       const rows = result.candidates || [];
 
       setCandidates(rows);
+
       setClubCountsFromApi(result.clubCounts || {});
+
       setDecisionCountsFromApi(result.decisionCounts || { selected: 0, rejected: 0, pending: 0 });
 
       setPagination(result.pagination || { page: 1, pages: 1, total: rows.length, limit: 50 });
@@ -542,19 +518,79 @@ export default function AdminDashboard() {
 
   }, [navigate, search, club, page]);
 
-
-
   useEffect(() => { loadDashboard(); }, [loadDashboard]);
 
+  const loadRegistrationStatus = useCallback(async () => {
+    setRegistrationStatusLoading(true);
+    try {
+      const result = await apiRequest("/api/admin/registration-status");
+      if (typeof result.registrationOpen !== "boolean") {
+        throw new Error("The server returned an invalid registration status.");
+      }
+      setRegistrationOpen(result.registrationOpen);
+    } catch (err) {
+      if (err.message === "SESSION_EXPIRED") {
+        navigate("/admin/login", { replace: true });
+        return;
+      }
+      setError(err.message || "Could not load registration status.");
+    } finally {
+      setRegistrationStatusLoading(false);
+    }
+  }, [navigate]);
 
+  useEffect(() => {
+    loadRegistrationStatus();
+  }, [loadRegistrationStatus]);
+
+  async function toggleRegistrationStatus() {
+    const nextStatus = !registrationOpen;
+    const confirmation = nextStatus
+      ? "Open registrations? Participants will be able to submit new registrations."
+      : "Close registrations? New registration submissions will be blocked.";
+
+    if (!window.confirm(confirmation)) return;
+
+    setRegistrationStatusSaving(true);
+    setError("");
+    setNotice("");
+    try {
+      const result = await apiRequest("/api/admin/registration-status", {
+        method: "PATCH",
+        body: JSON.stringify({ registrationOpen: nextStatus }),
+      });
+
+      if (typeof result.registrationOpen !== "boolean") {
+        throw new Error("The server did not confirm the updated registration status.");
+      }
+
+      setRegistrationOpen(result.registrationOpen);
+      setNotice(result.registrationOpen
+        ? "Registrations are now OPEN."
+        : "Registrations are now CLOSED.");
+    } catch (err) {
+      if (err.message === "SESSION_EXPIRED") {
+        navigate("/admin/login", { replace: true });
+        return;
+      }
+      setError(err.message || "Could not update registration status.");
+    } finally {
+      setRegistrationStatusSaving(false);
+    }
+  }
 
   // Counts come from the backend across all matching records, not just this page.
+
   const clubCounts = useMemo(() => {
+
     return Object.fromEntries(CLUBS.map((item) => [item, Number(clubCountsFromApi[item] || 0)]));
+
   }, [clubCountsFromApi]);
 
   const selectedCount = Number(decisionCountsFromApi.selected || 0);
+
   const notSelectedCount = Number(decisionCountsFromApi.rejected || 0);
+
   const pendingCount = Number(decisionCountsFromApi.pending || 0);
 
   const visibleCandidates = candidates.filter((candidate) => {
@@ -568,8 +604,6 @@ export default function AdminDashboard() {
     return true;
 
   });
-
-
 
   async function quickDecision(candidate, decision) {
 
@@ -603,25 +637,19 @@ export default function AdminDashboard() {
 
   }
 
-
-
   async function handleLogout() {
 
     setLoggingOut(true);
 
     try { await apiRequest("/api/admin/logout", { method: "POST" }); }
 
-    catch { /* Always return to login, even if logout request fails. */ }
+    catch { /\* Always return to login, even if logout request fails. \*/ }
 
     finally { navigate("/admin/login", { replace: true }); setLoggingOut(false); }
 
   }
 
-
-
   function clearFilters() { setSearch(""); setSearchInput(""); setClub(""); setDecisionFilter(""); setPage(1); }
-
-
 
   async function lookupCandidate(event) {
 
@@ -640,8 +668,6 @@ export default function AdminDashboard() {
       return;
 
     }
-
-
 
     setCandidateLookupLoading(true);
 
@@ -667,8 +693,6 @@ export default function AdminDashboard() {
 
       );
 
-
-
       // If the API's search behavior doesn't return a roll-number match, search by name.
 
       if (matches.length === 0) {
@@ -688,8 +712,6 @@ export default function AdminDashboard() {
         );
 
       }
-
-
 
       setCandidateLookupResults(matches);
 
@@ -713,99 +735,165 @@ export default function AdminDashboard() {
 
   }
 
-
-
   async function exportCSV() {
+
     const exportLimit = 100;
+
     const allCandidates = [];
+
     let currentPage = 1;
+
     let totalPages = 1;
 
     setExportLoading(true);
+
     setError("");
+
     setNotice("");
 
     try {
+
       // Re-fetch every page from the API using the active search and club filters.
+
       // This avoids exporting only the 50 rows currently shown on the dashboard.
+
       do {
+
         const params = new URLSearchParams({
+
           search: search.trim(),
+
           club,
+
           page: String(currentPage),
+
           limit: String(exportLimit),
+
         });
 
         const result = await apiRequest(`/api/admin/candidates?${params.toString()}`);
+
         const pageRows = Array.isArray(result.candidates) ? result.candidates : [];
+
         allCandidates.push(...pageRows);
 
         const reportedPages = Number(result.pagination?.pages);
+
         if (Number.isFinite(reportedPages) && reportedPages >= 1) {
+
           totalPages = reportedPages;
+
         } else {
+
           // Fallback for APIs that do not return pagination metadata.
+
           totalPages = pageRows.length === exportLimit ? currentPage + 1 : currentPage;
+
         }
 
         currentPage += 1;
+
       } while (currentPage <= totalPages);
 
       const columns = [
+
         "Name", "Roll Number", "Email", "Phone", "Branch", "Year",
+
         "Events", "Event Participation Details", "Next Round Decision", "Registration Date",
+
       ];
 
       const rows = allCandidates.map((candidate) => [
+
         candidate.name,
+
         candidate.roll_no,
+
         candidate.email,
+
         candidate.phone,
+
         candidate.branch,
+
         candidate.year,
+
         (candidate.events || []).join(", "),
+
         getEventEntries(candidate).map((entry) =>
+
           `${entry.eventName || entry.event}: ${entry.participationType}${entry.teamName ? ` (${entry.teamName})` : ""}; Members: ${(entry.members || []).map((member) => `${member.name} / ${member.roll_no} / ${member.branch} / ${member.phone} / ${member.email}`).join(" | ")}`
+
         ).join(" | "),
+
         candidate.adminStatus === "Selected"
+
           ? "Selected for next round"
+
           : candidate.adminStatus === "Rejected"
+
             ? "Not selected for next round"
+
             : "Pending",
+
         candidate.createdAt ? new Date(candidate.createdAt).toLocaleString() : "",
+
       ]);
 
       const escapeCSV = (value) => `"${String(value ?? "").replace(/"/g, '""')}"`;
+
       const csv = [columns, ...rows]
+
         .map((row) => row.map(escapeCSV).join(","))
+
         .join("\r\n");
+
       const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+
       const url = URL.createObjectURL(blob);
+
       const link = document.createElement("a");
+
       const clubSlug = club ? `-${club.toLowerCase().replace(/[^a-z0-9]+/g, "-")}` : "-all-clubs";
 
       link.href = url;
+
       link.download = `cultural-sub-council-registrations${clubSlug}.csv`;
+
       link.style.display = "none";
+
       document.body.appendChild(link);
+
       link.click();
+
       link.remove();
+
       // Do not revoke the blob URL immediately; some browsers need a short
+
       // delay to begin the download reliably.
+
       window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 
       setNotice(`Exported ${allCandidates.length} registration(s)${club ? ` for ${club}` : " across all clubs"}.`);
-    } catch (err) {
-      if (err.message === "SESSION_EXPIRED") {
-        navigate("/admin/login", { replace: true });
-        return;
-      }
-      setError(err.message || "Could not export registrations.");
-    } finally {
-      setExportLoading(false);
-    }
-  }
 
+    } catch (err) {
+
+      if (err.message === "SESSION_EXPIRED") {
+
+        navigate("/admin/login", { replace: true });
+
+        return;
+
+      }
+
+      setError(err.message || "Could not export registrations.");
+
+    } finally {
+
+      setExportLoading(false);
+
+    }
+
+  }
 
   return (
 
@@ -827,7 +915,7 @@ export default function AdminDashboard() {
 
             <span className="hidden max-w-48 truncate text-xs text-white/45 sm:inline">{admin?.email || "Administrator"}</span>
 
-            <button onClick={loadDashboard} disabled={loading} className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2.5 text-xs font-bold text-white/75 transition hover:border-[#E8C879]/30 hover:text-[#E8C879] disabled:opacity-50"><RefreshCw size={15} className={loading ? "animate-spin" : ""}/><span className="hidden sm:inline">Refresh</span></button>
+            <button onClick={() => { loadDashboard(); loadRegistrationStatus(); }} disabled={loading || registrationStatusLoading} className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2.5 text-xs font-bold text-white/75 transition hover:border-[#E8C879]/30 hover:text-[#E8C879] disabled:opacity-50"><RefreshCw size={15} className={loading || registrationStatusLoading ? "animate-spin" : ""}/><span className="hidden sm:inline">Refresh</span></button>
 
             <button onClick={handleLogout} disabled={loggingOut} className="inline-flex items-center gap-2 rounded-xl border border-rose-400/20 px-3 py-2.5 text-xs font-bold text-rose-200 transition hover:bg-rose-500/10 disabled:opacity-50"><LogOut size={15}/><span className="hidden sm:inline">{loggingOut ? "Signing out…" : "Sign out"}</span></button>
 
@@ -836,8 +924,6 @@ export default function AdminDashboard() {
         </div>
 
       </header>
-
-
 
       <div className="relative z-10 mx-auto grid max-w-[1800px] lg:grid-cols-[230px_minmax(0,1fr)]">
 
@@ -863,8 +949,6 @@ export default function AdminDashboard() {
 
         </aside>
 
-
-
         <main id="overview" className="min-w-0 px-3 py-5 sm:px-5 sm:py-7 lg:px-8">
 
           <div className="relative mb-7 overflow-hidden rounded-[1.75rem] border border-[#E8C879]/20 bg-gradient-to-br from-[#35101F] via-[#171319] to-[#111014] p-5 shadow-2xl shadow-black/20 sm:p-8"><div aria-hidden="true" className="pointer-events-none absolute -right-8 -top-12 h-48 w-48 rounded-full border border-[#E8C879]/15 sm:h-64 sm:w-64" /><div className="relative flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
@@ -875,7 +959,31 @@ export default function AdminDashboard() {
 
           </div></div>
 
-
+          <section className={`mb-5 flex flex-col gap-4 rounded-2xl border p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5 ${registrationOpen ? "border-emerald-400/25 bg-emerald-500/[.06]" : "border-rose-400/25 bg-rose-500/[.06]"}`}>
+            <div className="flex min-w-0 items-start gap-3">
+              <span className={`rounded-xl p-3 ${registrationOpen ? "bg-emerald-400/10 text-emerald-300" : "bg-rose-400/10 text-rose-300"}`}>
+                {registrationOpen ? <Unlock size={21} /> : <Lock size={21} />}
+              </span>
+              <div className="min-w-0">
+                <p className="text-[10px] font-black uppercase tracking-[.18em] text-white/45">Public registration control</p>
+                <h2 className={`mt-1 text-lg font-black ${registrationOpen ? "text-emerald-300" : "text-rose-300"}`}>
+                  {registrationStatusLoading ? "Checking registration status…" : registrationOpen ? "Registrations are OPEN" : "Registrations are CLOSED"}
+                </h2>
+                <p className="mt-1 text-xs leading-5 text-white/50">
+                  {registrationOpen ? "Participants can submit new registrations." : "New registration submissions are blocked until you reopen registrations."}
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={toggleRegistrationStatus}
+              disabled={registrationStatusLoading || registrationStatusSaving}
+              className={`inline-flex shrink-0 items-center justify-center gap-2 rounded-xl px-5 py-3 text-xs font-black transition disabled:cursor-not-allowed disabled:opacity-50 ${registrationOpen ? "bg-rose-500 text-white hover:bg-rose-400" : "bg-emerald-500 text-[#07130D] hover:bg-emerald-400"}`}
+            >
+              {registrationStatusSaving ? <RefreshCw size={15} className="animate-spin" /> : registrationOpen ? <Lock size={15} /> : <Unlock size={15} />}
+              {registrationStatusSaving ? "Updating…" : registrationOpen ? "Close registrations" : "Open registrations"}
+            </button>
+          </section>
 
           <section className="grid grid-cols-2 gap-3 xl:grid-cols-4">
 
@@ -889,51 +997,80 @@ export default function AdminDashboard() {
 
           </section>
 
-
-
           <section className="mt-5">
-  <div className="mb-3 flex items-center gap-2">
-    <Filter size={16} className="text-[#E8C879]" />
-    <h2 className="text-sm font-black uppercase tracking-[.14em] text-white/75">
-      Browse by event
-    </h2>
-  </div>
 
-  <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-5">
+  <div className="mb-3 flex items-center gap-2">
+
+    <Filter size={16} className="text-[#E8C879]" />
+
+    <h2 className="text-sm font-black uppercase tracking-[.14em] text-white/75">
+
+      Browse by event
+
+    </h2>
+
+  </div>
+<div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-5">
+
     {CLUBS.map((item) => (
+
       <button
+
         key={item}
+
         onClick={() => {
+
           setClub(club === item ? "" : item);
+
           setPage(1);
+
         }}
+
         className={`rounded-xl border p-3 text-left transition ${
+
           club === item
+
             ? "border-[#E8C879]/60 bg-[#E8C879]/10"
+
             : "border-white/10 bg-[#17151A] hover:border-white/20"
+
         }`}
+
       >
+
         <p className="text-[10px] font-bold uppercase tracking-wider text-white/40">
+
           Event filter
+
         </p>
 
         <p
+
           className={`mt-1 text-xs font-bold ${
+
             club === item ? "text-[#E8C879]" : "text-white/80"
+
           }`}
+
         >
+
           {item}
+
         </p>
 
         <p className="mt-2 text-xl font-black">
+
           {clubCounts[item] ?? 0}
+
         </p>
+
       </button>
+
     ))}
+
   </div>
+
 </section>
-
-
 
           <section className="mt-5 rounded-2xl border border-white/10 bg-[#131216] p-3 sm:p-4">
 
@@ -952,8 +1089,6 @@ export default function AdminDashboard() {
             <button onClick={clearFilters} className="mt-2 rounded-lg px-2 py-2 text-xs font-semibold text-white/40 transition hover:text-[#E8C879]">Clear all filters</button>
 
           </section>
-
-
 
           <section id="candidate-lookup" className="mt-7 scroll-mt-24 rounded-2xl border border-[#E8C879]/20 bg-[#131216] p-4 sm:p-6">
 
@@ -986,8 +1121,6 @@ export default function AdminDashboard() {
             {candidateLookupResults.length > 0 && <div className="mt-4 space-y-3">{candidateLookupResults.map((candidate) => <div key={candidate._id} className="flex flex-col gap-3 rounded-xl border border-white/10 bg-black/20 p-4 sm:flex-row sm:items-center sm:justify-between"><div className="min-w-0"><p className="break-words font-bold text-white">{display(candidate.name)}</p><p className="mt-1 text-xs text-white/45">Roll no. {display(candidate.roll_no)} · {display(candidate.branch)} · {display(candidate.email)}</p><div className="mt-2"><StatusBadge status={candidate.adminStatus}/></div></div><button type="button" onClick={() => setReviewCandidate(candidate)} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border border-[#E8C879]/30 bg-[#E8C879]/10 px-4 py-3 text-xs font-black text-[#F1DDA8] transition hover:bg-[#E8C879]/20"><Eye size={15}/> Open full details</button></div>)}</div>}
 
           </section>
-
-
 
           <section id="registrations" className="mt-7 scroll-mt-24">
 
