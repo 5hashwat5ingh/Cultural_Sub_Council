@@ -159,7 +159,7 @@ function StatusScreen({ title, message, children }) {
         <p className="mt-3 text-sm leading-6 text-[#8a776b]">{message}</p>
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
           {children}
-          <Link to="/" className={secondary}>
+          <Link to="/" className={primary}>
             Back to home
           </Link>
         </div>
@@ -644,16 +644,7 @@ export default function Registration() {
           "The registration window is currently closed. Please check again later for updates."
         }
       >
-        <button
-          type="button"
-          className={primary}
-          onClick={() => {
-            setRegistrationStatusLoading(true);
-            loadRegistrationStatus();
-          }}
-        >
-          Check again
-        </button>
+       
       </StatusScreen>
     );
   }
@@ -688,7 +679,7 @@ export default function Registration() {
             </p>
           </div>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-            <Link to="/" className={secondary}>
+            <Link to="/" className={primary}>
               Back to home
             </Link>
             <button className={primary} onClick={reset} type="button">
