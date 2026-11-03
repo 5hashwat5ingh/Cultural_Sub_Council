@@ -34,7 +34,7 @@ export const teamMembers = [
     role: "Additional Cultural Secretary",
     year: "Final Year",
     image:
-      "https://i.ibb.co/gFhKLVwL/IMG-20261003-WA0007-Amit-Chaurasiya.jpg",
+      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1793717224/Amit_chaurasiya_sir.jpg",
   }
   ,{
     id: 4,
@@ -59,7 +59,7 @@ export const teamMembers = [
     role: " Music Club Head",
     year: "Final Year",
     image:
-      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1791641304/WhatsApp_Image_2026-10-07_at_3.44.27_PM.jpg",
+      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1793717224/WhatsApp_Image_2026-11-03_at_12.58.38_AM.jpg",
   },
 {
     id: 7,
@@ -147,7 +147,7 @@ export const teamMembers = [
     role: "Dramatics Club Joint Head",
     year: "Final Year",
     image:
-      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791291791/muskan_maam.jpg",
+      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1793717224/WhatsApp_Image_2026-10-29_at_7.11.27_PM.jpg",
   },
 
   {
@@ -172,7 +172,7 @@ export const teamMembers = [
     role: "FineArts Club Joint Head",
     year: "Final Year",
     image:
-      "https://i.ibb.co/hFCtvfCZ/Whats-App-Image-2026-10-06-at-01-43-20.jpg",
+      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1793717224/Mahi_Mall.jpg",
   }
    
 
@@ -353,7 +353,7 @@ id: 27,
     role: "FineArts Club Executive",
     year: "Pre-Final Year",
     image:
-      "https://i.ibb.co/jqqhCVK/file-0000000012d481faaab885536b4a4060-Ashish-Gupta.jpg",
+      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1793717223/WhatsApp_Image_2026-11-03_at_8.15.17_PM.jpg",
   },
 {
     id:42 ,
@@ -369,7 +369,7 @@ id: 27,
     role: "Dramatics Club Joint Head",
     year: "Pre-Final Year",
     image:
-      "https://i.ibb.co/Y7MFG2Rj/IMG-20260905-WA0057-Nancy-Singh.jpg",
+      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1793717224/WhatsApp_Image_2026-11-03_at_8.15.34_PM.jpg",
   },
   {
     id:44 ,
@@ -380,20 +380,12 @@ id: 27,
       "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791293050/ujala.jpg",
   }
   ,{
-    id:45 ,
-    name: "Anshi Yadav",
-    role: "Dramatics Club Executive",
-    year: "Pre-Final Year",
-    image:
-      "https://res.cloudinary.com/ttlzk1ac/image/upload/v1791292893/anshi.jpg",
-  }
-  ,{
     id:46 ,
     name: "Divyanand Chauhan ",
     role: "Photography Club Joint Head",
     year: "Pre-Final Year",
     image:
-      "https://i.ibb.co/1fnYMDNr/2-Divyanand-Chauhan.jpg",
+      "https://res.cloudinary.com/yh0rqnnu/image/upload/v1793717224/WhatsApp_Image_2026-11-03_at_8.15.49_PM.jpg",
   }
   ,{
     id:47 ,
