@@ -406,7 +406,7 @@ export const galleryItems = [
     type: "photo",
     category: "Events",
     title: "Event Highlights",
-    image: "https://i.postimg.cc/DWdzjwyR/photo-2026-10-25-22-30-37.jpg",
+    image: "https://i.postimg.cc/DWdzjwyR",
   },
   {
     id: "photo-41",

@@ -128,7 +128,7 @@ export const teamMembers = [
   {
     id: 15,
     name: "Taruna Patel",
-    role: "FineArts Club Head",
+    role: "FineArts Club Joint Head",
     year: "Final Year",
     image:
       "https://i.ibb.co/3ybCdLQ8/IMG-20251230-WA0005-Taruna-Patel.jpg",
